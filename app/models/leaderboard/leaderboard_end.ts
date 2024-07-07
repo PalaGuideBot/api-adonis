@@ -1,16 +1,16 @@
 import { model, Schema } from 'mongoose'
 
-interface EggHuntData {
+interface EndData {
   username: string
   value: number
 }
 
-interface EggHunt {
+interface End {
   date: string
-  data: EggHuntData[]
+  data: EndData[]
 }
 
-const leaderboardEggHuntSchema = new Schema<EggHunt>({
+const leaderboardEndSchema = new Schema<End>({
   date: { type: String, required: true },
   data: [
     {
@@ -20,6 +20,6 @@ const leaderboardEggHuntSchema = new Schema<EggHunt>({
   ],
 })
 
-const LeaderboardEggHunt = model<EggHunt>('LeaderboardEggHunt', leaderboardEggHuntSchema)
+const LeadearboardEnd = model<End>('LeadEnd', leaderboardEndSchema)
 
-export default LeaderboardEggHunt
+export default LeadearboardEnd

@@ -1,16 +1,16 @@
 import { model, Schema } from 'mongoose'
 
-interface MoneyData {
+interface EggHuntData {
   username: string
   value: number
 }
 
-interface Money {
+interface EggHunt {
   date: string
-  data: MoneyData[]
+  data: EggHuntData[]
 }
 
-const moneySchema = new Schema<Money>({
+const leaderboardEggHuntSchema = new Schema<EggHunt>({
   date: { type: String, required: true },
   data: [
     {
@@ -20,6 +20,6 @@ const moneySchema = new Schema<Money>({
   ],
 })
 
-const LeaderboardMoney = model<Money>('LeaderboardMoney', moneySchema)
+const LeaderboardEggHunt = model<EggHunt>('LeadEggHunt', leaderboardEggHuntSchema)
 
-export default LeaderboardMoney
+export default LeaderboardEggHunt

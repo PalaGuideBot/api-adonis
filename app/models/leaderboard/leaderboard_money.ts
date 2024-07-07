@@ -1,16 +1,16 @@
 import { model, Schema } from 'mongoose'
 
-interface BossData {
+interface MoneyData {
   username: string
   value: number
 }
 
-interface Boss {
+interface Money {
   date: string
-  data: BossData[]
+  data: MoneyData[]
 }
 
-const leaderboardBossSchema: Schema = new Schema<Boss>({
+const moneySchema = new Schema<Money>({
   date: { type: String, required: true },
   data: [
     {
@@ -20,6 +20,6 @@ const leaderboardBossSchema: Schema = new Schema<Boss>({
   ],
 })
 
-const LeaderboardBoss = model<Boss>('LeaderboardBoss', leaderboardBossSchema)
+const LeaderboardMoney = model<Money>('LeadMoney', moneySchema)
 
-export default LeaderboardBoss
+export default LeaderboardMoney

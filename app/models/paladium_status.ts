@@ -42,6 +42,6 @@ const paladiumStatusSchema = new Schema<PaladiumStatusData>({
   },
 })
 
-const PaladiumStatus = model<PaladiumStatusData>('PaladiumStatus', paladiumStatusSchema)
+const PaladiumStatus = model<PaladiumStatusData>('MapStatus', paladiumStatusSchema)
 
 export default PaladiumStatus

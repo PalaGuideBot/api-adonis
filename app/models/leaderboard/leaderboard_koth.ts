@@ -20,6 +20,6 @@ const leaderboardKothSchema = new Schema<Koth>({
   ],
 })
 
-const LeaderboardKoth = model<Koth>('LeaderboardKoth', leaderboardKothSchema)
+const LeaderboardKoth = model<Koth>('LeadKoth', leaderboardKothSchema)
 
 export default LeaderboardKoth

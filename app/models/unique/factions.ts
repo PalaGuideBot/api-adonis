@@ -60,6 +60,6 @@ const factionSchema = new Schema<Faction>({
   data: [factionDataSchema],
 })
 
-const Factions = model<Faction>('Factions', factionSchema)
+const Factions = model<Faction>('LeadFactions', factionSchema)
 
 export default Factions

@@ -25,7 +25,7 @@ const leaderboardTrixiumFactionSchema = new Schema<TrixiumFaction>({
 })
 
 const LeaderboardTrixiumFaction = model<TrixiumFaction>(
-  'LeaderboardTrixiumFaction',
+  'LeadTrixFactions',
   leaderboardTrixiumFactionSchema
 )
 

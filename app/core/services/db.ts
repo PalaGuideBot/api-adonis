@@ -1,16 +1,18 @@
-import Factions from '#models/factions'
-import LeaderboardBoss from '#models/leaderboard_boss'
-import LeaderboardChorus from '#models/leaderboard_chorus'
-import LeaderboardClicker from '#models/leaderboard_clicker'
-import LeaderboardEggHunt from '#models/leaderboard_egg_hunt'
-import LeadearboardEnd from '#models/leaderboard_end'
-import LeaderboardFactions from '#models/leaderboard_factions'
-import LeaderboardKoth from '#models/leaderboard_koth'
-import LeaderboardMoney from '#models/leaderboard_money'
-import LeaderboardTrixiumFaction from '#models/leaderboard_trixium_faction'
-import LeaderboardTrixiumUser from '#models/leaderboard_trixium_user'
+import Factions from '#models/unique/factions'
+import LeaderboardBoss from '#models/leaderboard/leaderboard_boss'
+import LeaderboardChorus from '#models/leaderboard/leaderboard_chorus'
+import LeaderboardClicker from '#models/leaderboard/leaderboard_clicker'
+import LeaderboardEggHunt from '#models/leaderboard/leaderboard_egg_hunt'
+import LeadearboardEnd from '#models/leaderboard/leaderboard_end'
+import LeaderboardFactions from '#models/leaderboard/leaderboard_factions'
+import LeaderboardKoth from '#models/leaderboard/leaderboard_koth'
+import LeaderboardMoney from '#models/leaderboard/leaderboard_money'
+import LeaderboardTrixiumFaction from '#models/leaderboard/leaderboard_trixium_faction'
+import LeaderboardTrixiumUser from '#models/leaderboard/leaderboard_trixium_user'
+import Users from '#models/unique/users'
 import PaladiumStatus from '#models/paladium_status'
-import Users from '#models/users'
+import EndpointAndKey from '#models/endpoint_and_key'
+import MinecraftLink from '#models/minecraft_link'
 
 export const db = {
   factions: Factions,
@@ -26,4 +28,6 @@ export const db = {
   leaderboardTrixiumFaction: LeaderboardTrixiumFaction,
   leaderboardTrixiumUser: LeaderboardTrixiumUser,
   paladiumStatus: PaladiumStatus,
+  endpointAndKey: EndpointAndKey,
+  minecraftLink: MinecraftLink,
 }

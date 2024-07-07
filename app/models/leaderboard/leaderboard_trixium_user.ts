@@ -20,9 +20,6 @@ const leaderboardTrixiumUserSchema = new Schema<TrixiumUser>({
   ],
 })
 
-const LeaderboardTrixiumUser = model<TrixiumUser>(
-  'LeaderboardTrixiumUser',
-  leaderboardTrixiumUserSchema
-)
+const LeaderboardTrixiumUser = model<TrixiumUser>('LeadTrixUsers', leaderboardTrixiumUserSchema)
 
 export default LeaderboardTrixiumUser

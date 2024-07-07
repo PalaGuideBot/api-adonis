@@ -20,6 +20,6 @@ const leaderboardClickerSchema = new Schema<Clicker>({
   ],
 })
 
-const LeaderboardClicker = model<Clicker>('LeadboardClicker', leaderboardClickerSchema)
+const LeaderboardClicker = model<Clicker>('LeadClicker', leaderboardClickerSchema)
 
 export default LeaderboardClicker

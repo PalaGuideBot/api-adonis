@@ -52,6 +52,6 @@ const userSchema: Schema = new Schema<User>({
   },
 })
 
-const Users = model<User>('Users', userSchema)
+const Users = model<User>('MapUsers', userSchema)
 
 export default Users

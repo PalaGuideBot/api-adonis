@@ -1,16 +1,16 @@
 import { model, Schema } from 'mongoose'
 
-interface ChorusData {
+interface BossData {
   username: string
   value: number
 }
 
-interface Chorus {
+interface Boss {
   date: string
-  data: ChorusData[]
+  data: BossData[]
 }
 
-const leaderboardChorusSchema = new Schema<Chorus>({
+const leaderboardBossSchema: Schema = new Schema<Boss>({
   date: { type: String, required: true },
   data: [
     {
@@ -20,6 +20,6 @@ const leaderboardChorusSchema = new Schema<Chorus>({
   ],
 })
 
-const LeaderboardChorus = model<Chorus>('LeaderboardChorus', leaderboardChorusSchema)
+const LeaderboardBoss = model<Boss>('LeadBoss', leaderboardBossSchema)
 
-export default LeaderboardChorus
+export default LeaderboardBoss
