@@ -4,7 +4,7 @@ import { HttpContext } from '@adonisjs/core/http'
 export default class LeaderboardController {
   async show({ response, params }: HttpContext) {
     const id = params.id as string
-    const leaderboard = await db.leaderboardClicker.findMany()
+    const leaderboard = await db.leaderboardClicker.find()
     return response.ok(leaderboard)
   }
 }
