@@ -1,23 +1,23 @@
 import ky, { HTTPError } from 'ky'
 import env from '#start/env'
-import { playerNameToUuidValidator } from '../validators/paladium/player_name_to_uuid.js'
+import { playerNameToUuidValidator } from '../validators/player_name_to_uuid.js'
 import {
   playerProfileValidator,
   playerRankValidator,
   playerTrixiumRankingValidator,
   playerAchievementsValidator,
-} from '../validators/paladium/player.js'
+} from '../validators/player.js'
 
-import { factionProfileValidator, factionMembersValidator } from '../validators/paladium/faction.js'
+import { factionProfileValidator, factionMembersValidator } from '../validators/faction.js'
 
 import {
   factionsLeaderboardValidator,
   leaderboardCategoryValidator,
   leaderboardTrixiumPlayersValidator,
   leaderboardTrixiumFactionsValidator,
-} from '../validators/paladium/leaderboard.js'
+} from '../validators/leaderboard.js'
 
-import { statusValidator } from '../validators/paladium/status.js'
+import { statusValidator } from '../validators/status.js'
 
 const paladiumClient = ky.create({
   prefixUrl: env.get('PALADIUM_BASE_URL'),
@@ -28,7 +28,7 @@ const mojangClient = ky.create({
   prefixUrl: env.get('MOJANG_API_URL'),
 })
 
-export class PaladiumApi {
+export class PaladiumAPI {
   // MOJANG REQUESt
 
   async getPlayerNameToUUID(username: string) {

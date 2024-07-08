@@ -1,7 +1,7 @@
 import ky, { HTTPError } from 'ky'
 import env from '#start/env'
 
-import { imageValidator } from '../validators/me/image.js'
+import { imageValidator } from '../validators/image.js'
 
 const meClient = ky.create({
   prefixUrl: env.get('PALAGUIDEBOT_BASE_URL'),
@@ -19,7 +19,7 @@ const imageClient = ky.create({
   },
 })
 
-export class MeApi {
+export class MeAPI {
   async postMeNewPlayer(name: string) {
     try {
       const response = await meClient.post('/players/' + name)

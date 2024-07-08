@@ -1,8 +1,8 @@
-import { PaladiumApi } from '#core/api/services/paladium'
+import { PaladiumAPI } from '#paladium/services/paladium'
 import router from '@adonisjs/core/services/router'
 
 // Initialize the Paladium API
-const Paladium = new PaladiumApi()
+const Paladium = new PaladiumAPI()
 
 // Leaderboard routes
 router

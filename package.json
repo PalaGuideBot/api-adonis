@@ -15,6 +15,7 @@
   },
   "imports": {
     "#core/*": "./app/core/*.js",
+    "#paladium/*": "./app/paladium/*.js",
     "#leaderboard/*": "./app/leaderboard/*.js",
     "#controllers/*": "./app/controllers/*.js",
     "#exceptions/*": "./app/exceptions/*.js",
