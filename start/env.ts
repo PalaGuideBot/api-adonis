@@ -19,4 +19,15 @@ export default await Env.create(new URL('../', import.meta.url), {
   LOG_LEVEL: Env.schema.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']),
 
   DATABASE_URL: Env.schema.string(),
+
+  PALADIUM_BASE_URL: Env.schema.string(),
+  PALADIUM_API_KEY: Env.schema.string(),
+
+  PALAGUIDEBOT_BASE_URL: Env.schema.string(),
+  PALAGUIDEBOT_KEY: Env.schema.string(),
+
+  PALAGUIDEBOT_IMAGE_URL: Env.schema.string(),
+  PALAGUIDEBOT_IMAGE_KEY: Env.schema.string(),
+
+  MOJANG_API_URL: Env.schema.string(),
 })
