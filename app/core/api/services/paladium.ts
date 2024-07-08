@@ -31,7 +31,7 @@ const mojangClient = ky.create({
 export class PaladiumApi {
   // MOJANG REQUESt
 
-  async playerNameToUUID(username: string) {
+  async getPlayerNameToUUID(username: string) {
     try {
       const response = await mojangClient.get(`users/profiles/minecraft/${username}`)
       const data = (await response.json()) as Record<string, string>

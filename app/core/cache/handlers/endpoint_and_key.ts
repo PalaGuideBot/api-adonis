@@ -1,6 +1,5 @@
-import cache from '#core/cache/cache'
-
 import EndpointAndKey from '#models/endpoint_and_key'
+import cache from '#core/cache/cache'
 
 async function updateCache() {
   try {
