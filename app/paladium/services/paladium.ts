@@ -52,7 +52,7 @@ export class PaladiumAPI {
 
   async getPlayerProfile(uuid: string) {
     try {
-      const response = await paladiumClient.get('/paladium/player/profile/' + uuid)
+      const response = await paladiumClient.get(`paladium/player/profile/${uuid}`)
       const data = (await response.json()) as Record<string, string>
 
       const dataType = await playerProfileValidator.validate(data)
@@ -67,7 +67,7 @@ export class PaladiumAPI {
 
   async getPlayerRank(uuid: string) {
     try {
-      const response = await paladiumClient.get('/paladium/ranking/position/' + uuid)
+      const response = await paladiumClient.get(`paladium/ranking/position/${uuid}`)
       const data = (await response.json()) as Record<string, string>
 
       const dataType = await playerRankValidator.validate(data)
@@ -82,7 +82,7 @@ export class PaladiumAPI {
 
   async getPlayerTrixium(uuid: string) {
     try {
-      const response = await paladiumClient.get('/paladium/ranking/trixium/player/' + uuid)
+      const response = await paladiumClient.get(`paladium/ranking/trixium/player/${uuid}`)
       const data = (await response.json()) as Record<string, string>
 
       const dataType = await playerTrixiumRankingValidator.validate(data)
@@ -98,7 +98,7 @@ export class PaladiumAPI {
   async getPlayerAchievements(uuid: string) {
     try {
       const response = await paladiumClient.get(
-        '/paladium/player/profile/' + uuid + '/achievements?limit=250'
+        `paladium/player/profile/${uuid}/achievements?limit=250`
       )
       const data = (await response.json()) as Record<string, string>
 
@@ -116,7 +116,7 @@ export class PaladiumAPI {
 
   async getFactionProfile(name: string) {
     try {
-      const response = await paladiumClient.get('/paladium/faction/profile/' + name)
+      const response = await paladiumClient.get(`paladium/faction/profile/${name}`)
       const data = (await response.json()) as Record<string, string>
 
       const dataType = await factionProfileValidator.validate(data)
@@ -132,7 +132,7 @@ export class PaladiumAPI {
   async getFactionMembers(uuid: string) {
     try {
       const response = await paladiumClient.get(
-        '/paladium/faction/profile/' + uuid + '/players?limit=100'
+        `paladium/faction/profile/${uuid}/players?limit=100`
       )
       const data = (await response.json()) as Record<string, string>
 
@@ -150,7 +150,7 @@ export class PaladiumAPI {
 
   async getFactionsLeaderboard() {
     try {
-      const response = await paladiumClient.get('/paladium/faction/leaderboard')
+      const response = await paladiumClient.get(`paladium/faction/leaderboard`)
       const data = (await response.json()) as Record<string, string>
 
       const dataType = await factionsLeaderboardValidator.validate(data)
@@ -168,7 +168,7 @@ export class PaladiumAPI {
       const value = []
       for (let i = 0; i < 50; i++) {
         const response = await paladiumClient.get(
-          '/paladium/ranking/leaderboard/' + category + '/' + (i + 1)
+          `paladium/ranking/leaderboard/${category}/${i + 1}`
         )
         const data = (await response.json()) as Record<string, string>
 
@@ -190,7 +190,7 @@ export class PaladiumAPI {
       const value = []
       for (let i = 0; i < 5; i++) {
         const response = await paladiumClient.get(
-          '/paladium/ranking/trixium/' + category + '?offset=' + i * 100 + '&limit=100'
+          `paladium/ranking/trixium/${category}?offset=${i * 100}&limit=100`
         )
         const data = (await response.json()) as Record<string, string>
 
@@ -214,7 +214,7 @@ export class PaladiumAPI {
 
   async getStatus() {
     try {
-      const response = await paladiumClient.get('/status')
+      const response = await paladiumClient.get('status')
       const data = (await response.json()) as Record<string, string>
 
       const dataType = await statusValidator.validate(data)

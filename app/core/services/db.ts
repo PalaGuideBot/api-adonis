@@ -13,6 +13,7 @@ import Users from '#models/unique/users'
 import PaladiumStatus from '#models/paladium_status'
 import EndpointAndKey from '#models/endpoint_and_key'
 import MinecraftLink from '#models/minecraft_link'
+import Bot from '#models/bot'
 
 export const db = {
   factions: Factions,
@@ -30,4 +31,5 @@ export const db = {
   paladiumStatus: PaladiumStatus,
   endpointAndKey: EndpointAndKey,
   minecraftLink: MinecraftLink,
+  bot: Bot,
 }
