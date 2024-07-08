@@ -10,7 +10,7 @@ export const playerProfileValidator = vine.compile(
     faction: vine.string(),
     firstJoin: vine.number(),
     jobs: vine.object({
-      alchimist: jobs,
+      alchemist: jobs,
       farmer: jobs,
       hunter: jobs,
       miner: jobs,
@@ -25,17 +25,17 @@ export const playerProfileValidator = vine.compile(
 
 export const playerRankValidator = vine.compile(
   vine.object({
-    'boss': vine.number(),
-    'money': vine.number(),
-    'job-farmer': vine.number(),
-    'job-miner': vine.number(),
-    'job-hunter': vine.number(),
-    'job-alchimist': vine.number(),
-    'end': vine.number(),
-    'koth': vine.number(),
-    'chorus': vine.number(),
-    'egghunt': vine.number(),
-    'clicker': vine.number(),
+    boss: vine.number(),
+    money: vine.number(),
+    job_farmer: vine.number(),
+    job_miner: vine.number(),
+    job_hunter: vine.number(),
+    job_alchemist: vine.number(),
+    end: vine.number(),
+    koth: vine.number(),
+    chorus: vine.number(),
+    egghunt: vine.number(),
+    clicker: vine.number(),
   })
 )
 

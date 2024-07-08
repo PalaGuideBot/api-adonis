@@ -27,16 +27,16 @@ router
 
     router.get('/trixium/players', async ({ response }) => {
       try {
-        const result = await Paladium.getRankingTrixium('players')
+        const result = await Paladium.getRankingTrixium('player')
         response.json(result)
       } catch (error) {
-        response.status(500).send(error.message)
+        response.json(error)
       }
     })
 
     router.get('/trixium/factions', async ({ response }) => {
       try {
-        const result = await Paladium.getRankingTrixium('factions')
+        const result = await Paladium.getRankingTrixium('faction')
         response.json(result)
       } catch (error) {
         response.status(500).send(error.message)
@@ -72,13 +72,14 @@ router
         const result = await Paladium.getPlayerProfile('tonykun7')
         response.json(result)
       } catch (error) {
-        response.status(500).send(error.message)
+        console.log(error)
+        response.json(error)
       }
     })
 
     router.get('/profile/rank', async ({ response }) => {
       try {
-        const result = await Paladium.getPlayerRank('tonykun7')
+        const result = await Paladium.getPlayerRank('b38dc660-1e1e-4272-9ed9-d7acfe27c913')
         response.json(result)
       } catch (error) {
         response.status(500).send(error.message)
@@ -87,7 +88,7 @@ router
 
     router.get('/profile/trixium', async ({ response }) => {
       try {
-        const result = await Paladium.getPlayerTrixium('tonykun7')
+        const result = await Paladium.getPlayerTrixium('b38dc660-1e1e-4272-9ed9-d7acfe27c913')
         response.json(result)
       } catch (error) {
         response.status(500).send(error.message)
@@ -96,7 +97,7 @@ router
 
     router.get('/profile/achievements', async ({ response }) => {
       try {
-        const result = await Paladium.getPlayerAchievements('tonykun7')
+        const result = await Paladium.getPlayerAchievements('b38dc660-1e1e-4272-9ed9-d7acfe27c913')
         response.json(result)
       } catch (error) {
         response.status(500).send(error.message)
@@ -110,7 +111,7 @@ router
   .group(() => {
     router.get('/profile', async ({ response }) => {
       try {
-        const result = await Paladium.getFactionProfile('tonykun7')
+        const result = await Paladium.getFactionProfile('rarecrew')
         response.json(result)
       } catch (error) {
         response.status(500).send(error.message)
@@ -119,7 +120,7 @@ router
 
     router.get('/profile/player', async ({ response }) => {
       try {
-        const result = await Paladium.getFactionMembers('tonykun7')
+        const result = await Paladium.getFactionMembers('rarecrew')
         response.json(result)
       } catch (error) {
         response.status(500).send(error.message)

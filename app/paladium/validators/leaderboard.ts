@@ -19,19 +19,25 @@ export const leaderboardCategoryValidator = vine.compile(
 )
 
 export const leaderboardTrixiumPlayersValidator = vine.compile(
-  vine.array(
-    vine.object({
-      username: vine.string(),
-      value: vine.number(),
-    })
-  )
+  vine.object({
+    data: vine.array(
+      vine.object({
+        username: vine.string(),
+        value: vine.number(),
+      })
+    ),
+    totalCount: vine.number(),
+  })
 )
 
 export const leaderboardTrixiumFactionsValidator = vine.compile(
-  vine.array(
-    vine.object({
-      uuid: vine.string(),
-      value: vine.number(),
-    })
-  )
+  vine.object({
+    data: vine.array(
+      vine.object({
+        uuid: vine.string(),
+        value: vine.number(),
+      })
+    ),
+    totalCount: vine.number(),
+  })
 )

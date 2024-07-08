@@ -5,4 +5,4 @@ router
   .group(() => {
     router.get('/:id', [LeaderboardController, 'show'])
   })
-  .prefix('leaderboard')
+  .prefix('leaderboardold')

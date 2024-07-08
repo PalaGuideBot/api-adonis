@@ -2,18 +2,9 @@ import vine from '@vinejs/vine'
 
 export const factionProfileValidator = vine.compile(
   vine.object({
-    createdAt: vine.string(),
+    createdAt: vine.number(),
     description: vine.string(),
-    emblem: vine.object({
-      backgroundColor: vine.number(),
-      backgroundId: vine.number(),
-      borderColor: vine.number(),
-      foregroundColor: vine.number(),
-      foregroundId: vine.number(),
-      iconBorderColor: vine.number(),
-      iconColor: vine.number(),
-      iconId: vine.number(),
-    }),
+    emblem: vine.array(vine.number()),
     name: vine.string(),
     uuid: vine.string(),
   })

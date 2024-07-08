@@ -28,6 +28,25 @@ const mojangClient = ky.create({
   prefixUrl: env.get('MOJANG_API_URL'),
 })
 
+async function errorFormatter(e: any) {
+  if (e.code === 'E_VALIDATION_ERROR') {
+    return {
+      message: 'Model failed to validate the request',
+      details: e,
+    }
+  } else if (e instanceof HTTPError && e.response.status === 404) {
+    return {
+      message: 'HTTP Error',
+      details: e.response.status,
+    }
+  } else {
+    return {
+      message: 'An error occurred while processing the request',
+      details: e,
+    }
+  }
+}
+
 export class PaladiumAPI {
   // MOJANG REQUESt
 
@@ -40,9 +59,7 @@ export class PaladiumAPI {
 
       return dataType.id.replace(/(.{8})(.{4})(.{4})(.{4})(.{12})/, '$1-$2-$3-$4-$5')
     } catch (e) {
-      if (e instanceof HTTPError && e.response.status === 404) {
-        throw new Error('Player not found')
-      }
+      return errorFormatter(e)
     }
   }
 
@@ -59,9 +76,7 @@ export class PaladiumAPI {
 
       return dataType
     } catch (e) {
-      if (e instanceof HTTPError && e.response.status === 404) {
-        throw new Error('Player not found')
-      }
+      return errorFormatter(e)
     }
   }
 
@@ -70,13 +85,17 @@ export class PaladiumAPI {
       const response = await paladiumClient.get(`paladium/ranking/position/${uuid}`)
       const data = (await response.json()) as Record<string, string>
 
-      const dataType = await playerRankValidator.validate(data)
+      const modifiedData: Record<string, string> = {}
+      for (const key in data) {
+        if (key.includes('-')) modifiedData[key.replace(/-/g, '_')] = data[key]
+        else modifiedData[key] = data[key]
+      }
+
+      const dataType = await playerRankValidator.validate(modifiedData)
 
       return dataType
     } catch (e) {
-      if (e instanceof HTTPError && e.response.status === 404) {
-        throw new Error('Player not found')
-      }
+      return errorFormatter(e)
     }
   }
 
@@ -89,9 +108,7 @@ export class PaladiumAPI {
 
       return dataType
     } catch (e) {
-      if (e instanceof HTTPError && e.response.status === 404) {
-        throw new Error('Player not found')
-      }
+      return errorFormatter(e)
     }
   }
 
@@ -106,9 +123,7 @@ export class PaladiumAPI {
 
       return dataType
     } catch (e) {
-      if (e instanceof HTTPError && e.response.status === 404) {
-        throw new Error('Player not found')
-      }
+      return errorFormatter(e)
     }
   }
 
@@ -117,15 +132,20 @@ export class PaladiumAPI {
   async getFactionProfile(name: string) {
     try {
       const response = await paladiumClient.get(`paladium/faction/profile/${name}`)
-      const data = (await response.json()) as Record<string, string>
+      const data = (await response.json()) as Record<string, any>
+
+      if (data.emblem) {
+        const newEmblem = Object.values(data.emblem)
+        data.emblem = newEmblem
+      }
 
       const dataType = await factionProfileValidator.validate(data)
 
+      console.log(dataType)
+
       return dataType
     } catch (e) {
-      if (e instanceof HTTPError && e.response.status === 404) {
-        throw new Error('Faction not found')
-      }
+      return errorFormatter(e)
     }
   }
 
@@ -139,10 +159,8 @@ export class PaladiumAPI {
       const dataType = await factionMembersValidator.validate(data)
 
       return dataType
-    } catch (e) {
-      if (e instanceof HTTPError && e.response.status === 404) {
-        throw new Error('Faction not found')
-      }
+    } catch (e: any) {
+      return errorFormatter(e)
     }
   }
 
@@ -157,9 +175,7 @@ export class PaladiumAPI {
 
       return dataType
     } catch (e) {
-      if (e instanceof HTTPError && e.response.status === 404) {
-        throw new Error('Leaderboard not found')
-      }
+      return errorFormatter(e)
     }
   }
 
@@ -179,9 +195,7 @@ export class PaladiumAPI {
 
       return value
     } catch (e) {
-      if (e instanceof HTTPError && e.response.status === 404) {
-        throw new Error('Leaderboard not found')
-      }
+      return errorFormatter(e)
     }
   }
 
@@ -195,18 +209,16 @@ export class PaladiumAPI {
         const data = (await response.json()) as Record<string, string>
 
         const dataType =
-          category === 'players'
+          category === 'player'
             ? await leaderboardTrixiumPlayersValidator.validate(data)
             : await leaderboardTrixiumFactionsValidator.validate(data)
 
-        value.push(dataType)
+        value.push(...dataType.data)
       }
 
       return value
     } catch (e) {
-      if (e instanceof HTTPError && e.response.status === 404) {
-        throw new Error('Leaderboard not found')
-      }
+      return errorFormatter(e)
     }
   }
 
@@ -221,9 +233,7 @@ export class PaladiumAPI {
 
       return dataType
     } catch (e) {
-      if (e instanceof HTTPError && e.response.status === 404) {
-        throw new Error('Status not found')
-      }
+      return errorFormatter(e)
     }
   }
 }
