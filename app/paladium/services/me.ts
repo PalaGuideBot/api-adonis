@@ -51,9 +51,9 @@ export class MeAPI {
       const response = await imageClient.post('embleme', { body })
       const data = (await response.json()) as Record<string, string>
 
-      await imageValidator.validate(data)
+      const dataType = await imageValidator.validate(data)
 
-      return data
+      return dataType
     } catch (e) {
       if (e instanceof HTTPError && e.response.status === 404) {
         throw new Error('Image not found')

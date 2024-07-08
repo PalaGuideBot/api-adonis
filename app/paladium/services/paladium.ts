@@ -36,9 +36,9 @@ export class PaladiumAPI {
       const response = await mojangClient.get(`users/profiles/minecraft/${username}`)
       const data = (await response.json()) as Record<string, string>
 
-      await playerNameToUuidValidator.validate(data)
+      const dataType = await playerNameToUuidValidator.validate(data)
 
-      return data.id.replace(/(.{8})(.{4})(.{4})(.{4})(.{12})/, '$1-$2-$3-$4-$5')
+      return dataType.id.replace(/(.{8})(.{4})(.{4})(.{4})(.{12})/, '$1-$2-$3-$4-$5')
     } catch (e) {
       if (e instanceof HTTPError && e.response.status === 404) {
         throw new Error('Player not found')
@@ -55,9 +55,9 @@ export class PaladiumAPI {
       const response = await paladiumClient.get('/paladium/player/profile/' + uuid)
       const data = (await response.json()) as Record<string, string>
 
-      await playerProfileValidator.validate(data)
+      const dataType = await playerProfileValidator.validate(data)
 
-      return data
+      return dataType
     } catch (e) {
       if (e instanceof HTTPError && e.response.status === 404) {
         throw new Error('Player not found')
@@ -70,9 +70,9 @@ export class PaladiumAPI {
       const response = await paladiumClient.get('/paladium/ranking/position/' + uuid)
       const data = (await response.json()) as Record<string, string>
 
-      await playerRankValidator.validate(data)
+      const dataType = await playerRankValidator.validate(data)
 
-      return data
+      return dataType
     } catch (e) {
       if (e instanceof HTTPError && e.response.status === 404) {
         throw new Error('Player not found')
@@ -85,9 +85,9 @@ export class PaladiumAPI {
       const response = await paladiumClient.get('/paladium/ranking/trixium/player/' + uuid)
       const data = (await response.json()) as Record<string, string>
 
-      await playerTrixiumRankingValidator.validate(data)
+      const dataType = await playerTrixiumRankingValidator.validate(data)
 
-      return data
+      return dataType
     } catch (e) {
       if (e instanceof HTTPError && e.response.status === 404) {
         throw new Error('Player not found')
@@ -102,9 +102,9 @@ export class PaladiumAPI {
       )
       const data = (await response.json()) as Record<string, string>
 
-      await playerAchievementsValidator.validate(data)
+      const dataType = await playerAchievementsValidator.validate(data)
 
-      return data
+      return dataType
     } catch (e) {
       if (e instanceof HTTPError && e.response.status === 404) {
         throw new Error('Player not found')
@@ -119,9 +119,9 @@ export class PaladiumAPI {
       const response = await paladiumClient.get('/paladium/faction/profile/' + name)
       const data = (await response.json()) as Record<string, string>
 
-      await factionProfileValidator.validate(data)
+      const dataType = await factionProfileValidator.validate(data)
 
-      return data
+      return dataType
     } catch (e) {
       if (e instanceof HTTPError && e.response.status === 404) {
         throw new Error('Faction not found')
@@ -136,9 +136,9 @@ export class PaladiumAPI {
       )
       const data = (await response.json()) as Record<string, string>
 
-      await factionMembersValidator.validate(data)
+      const dataType = await factionMembersValidator.validate(data)
 
-      return data
+      return dataType
     } catch (e) {
       if (e instanceof HTTPError && e.response.status === 404) {
         throw new Error('Faction not found')
@@ -153,9 +153,9 @@ export class PaladiumAPI {
       const response = await paladiumClient.get('/paladium/faction/leaderboard')
       const data = (await response.json()) as Record<string, string>
 
-      await factionsLeaderboardValidator.validate(data)
+      const dataType = await factionsLeaderboardValidator.validate(data)
 
-      return data
+      return dataType
     } catch (e) {
       if (e instanceof HTTPError && e.response.status === 404) {
         throw new Error('Leaderboard not found')
@@ -172,9 +172,9 @@ export class PaladiumAPI {
         )
         const data = (await response.json()) as Record<string, string>
 
-        await leaderboardCategoryValidator.validate(data)
+        const dataType = await leaderboardCategoryValidator.validate(data)
 
-        value.push(data)
+        value.push(dataType)
       }
 
       return value
@@ -194,10 +194,12 @@ export class PaladiumAPI {
         )
         const data = (await response.json()) as Record<string, string>
 
-        if (category === 'players') await leaderboardTrixiumPlayersValidator.validate(data)
-        else await leaderboardTrixiumFactionsValidator.validate(data)
+        const dataType =
+          category === 'players'
+            ? await leaderboardTrixiumPlayersValidator.validate(data)
+            : await leaderboardTrixiumFactionsValidator.validate(data)
 
-        value.push(data)
+        value.push(dataType)
       }
 
       return value
@@ -215,7 +217,9 @@ export class PaladiumAPI {
       const response = await paladiumClient.get('/status')
       const data = (await response.json()) as Record<string, string>
 
-      await statusValidator.validate(data)
+      const dataType = await statusValidator.validate(data)
+
+      return dataType
     } catch (e) {
       if (e instanceof HTTPError && e.response.status === 404) {
         throw new Error('Status not found')
