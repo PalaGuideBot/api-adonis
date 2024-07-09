@@ -1,0 +1,26 @@
+import { formatUUID } from '#core/helpers'
+import env from '#start/env'
+import { Exception } from '@adonisjs/core/exceptions'
+import ky from 'ky'
+
+import { minecraftUserProfileValidator } from '#minecraft/validators/mojang_validator'
+
+class MojangService {
+  protected client = ky.create({
+    prefixUrl: env.get('MOJANG_API_URL'),
+  })
+
+  async getUUIDByUsername(username: string) {
+    try {
+      const response = await this.client.get(`users/profiles/minecraft/${username}`)
+      const data = await response.json()
+
+      const result = await minecraftUserProfileValidator.validate(data)
+      return formatUUID(result.id)
+    } catch (error: unknown) {
+      throw new Exception('Player not found', { status: 404, code: 'E_MOJANG_PLAYER_NOT_FOUND' })
+    }
+  }
+}
+
+export { MojangService }

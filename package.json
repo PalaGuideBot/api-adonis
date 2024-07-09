@@ -18,6 +18,7 @@
     "#core/*": "./app/core/*.js",
     "#paladium/*": "./app/paladium/*.js",
     "#leaderboard/*": "./app/leaderboard/*.js",
+    "#minecraft/*": "./app/minecraft/*.js",
     "#controllers/*": "./app/controllers/*.js",
     "#exceptions/*": "./app/exceptions/*.js",
     "#models/*": "./app/models/*.js",

@@ -1,6 +1,6 @@
 import vine from '@vinejs/vine'
 
-export const playerNameToUuidValidator = vine.compile(
+export const minecraftUserProfileValidator = vine.compile(
   vine.object({
     name: vine.string(),
     id: vine.string(),

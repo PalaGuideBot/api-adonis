@@ -1,4 +1,5 @@
-import vine from '@vinejs/vine'
+import type { LeaderboardTrixiumCategory } from '#paladium/types'
+import vine, { VineValidator } from '@vinejs/vine'
 
 export const factionsLeaderboardValidator = vine.compile(
   vine.array(
@@ -18,7 +19,7 @@ export const leaderboardCategoryValidator = vine.compile(
   )
 )
 
-export const leaderboardTrixiumPlayersValidator = vine.compile(
+const leaderboardTrixiumPlayersValidator = vine.compile(
   vine.object({
     data: vine.array(
       vine.object({
@@ -30,7 +31,7 @@ export const leaderboardTrixiumPlayersValidator = vine.compile(
   })
 )
 
-export const leaderboardTrixiumFactionsValidator = vine.compile(
+const leaderboardTrixiumFactionsValidator = vine.compile(
   vine.object({
     data: vine.array(
       vine.object({
@@ -41,3 +42,8 @@ export const leaderboardTrixiumFactionsValidator = vine.compile(
     totalCount: vine.number(),
   })
 )
+
+export const trixiumValidators = {
+  player: leaderboardTrixiumPlayersValidator,
+  faction: leaderboardTrixiumFactionsValidator,
+} satisfies Record<LeaderboardTrixiumCategory, VineValidator<any, any>>

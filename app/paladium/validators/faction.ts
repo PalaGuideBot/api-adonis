@@ -4,7 +4,9 @@ export const factionProfileValidator = vine.compile(
   vine.object({
     createdAt: vine.number(),
     description: vine.string(),
-    emblem: vine.array(vine.number()),
+    emblem: vine
+      .array(vine.number())
+      .parse((value) => (value ? Object.values(value) : ([] as number[]))),
     name: vine.string(),
     uuid: vine.string(),
   })
