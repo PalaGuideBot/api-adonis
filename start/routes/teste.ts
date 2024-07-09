@@ -1,49 +1,11 @@
-import { PaladiumAPI } from '#paladium/services/paladium'
 import router from '@adonisjs/core/services/router'
 
-// Initialize the Paladium API
-const Paladium = new PaladiumAPI()
+import { MojangService } from '#minecraft/services/mojang'
+import { PaladiumService } from '#paladium/services/paladium'
 
-// Leaderboard routes
-router
-  .group(() => {
-    router.get('/factions', async ({ response }) => {
-      try {
-        const result = await Paladium.getFactionsLeaderboard()
-        response.json(result)
-      } catch (error) {
-        response.status(500).send(error.message)
-      }
-    })
-
-    router.get('/category', async ({ response }) => {
-      try {
-        const result = await Paladium.getRankingCategory('money')
-        response.json(result)
-      } catch (error) {
-        response.status(500).send(error.message)
-      }
-    })
-
-    router.get('/trixium/players', async ({ response }) => {
-      try {
-        const result = await Paladium.getRankingTrixium('player')
-        response.json(result)
-      } catch (error) {
-        response.json(error)
-      }
-    })
-
-    router.get('/trixium/factions', async ({ response }) => {
-      try {
-        const result = await Paladium.getRankingTrixium('faction')
-        response.json(result)
-      } catch (error) {
-        response.status(500).send(error.message)
-      }
-    })
-  })
-  .prefix('leaderboard')
+// Initialize the Paladium and Mojang services
+const Paladium = new PaladiumService()
+const Mojang = new MojangService()
 
 // Status route
 router.get('/status', async ({ response }) => {
@@ -60,7 +22,7 @@ router
   .group(() => {
     router.get('/name', async ({ response }) => {
       try {
-        const result = await Paladium.getPlayerNameToUUID('tonykun7')
+        const result = await Mojang.getUUIDByUsername('tonykun7')
         response.json(result)
       } catch (error) {
         response.status(500).send(error.message)
@@ -88,7 +50,7 @@ router
 
     router.get('/profile/trixium', async ({ response }) => {
       try {
-        const result = await Paladium.getPlayerTrixium('b38dc660-1e1e-4272-9ed9-d7acfe27c913')
+        const result = await Paladium.getPlayerTrixiumRank('b38dc660-1e1e-4272-9ed9-d7acfe27c913')
         response.json(result)
       } catch (error) {
         response.status(500).send(error.message)
