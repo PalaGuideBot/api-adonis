@@ -83,17 +83,9 @@ export class PaladiumAPI {
   async getPlayerRank(uuid: string) {
     try {
       const response = await paladiumClient.get(`paladium/ranking/position/${uuid}`)
-      const data = (await response.json()) as Record<string, string>
+      const data = await response.json()
 
-      const modifiedData: Record<string, string> = {}
-      for (const key in data) {
-        if (key.includes('-')) modifiedData[key.replace(/-/g, '_')] = data[key]
-        else modifiedData[key] = data[key]
-      }
-
-      const dataType = await playerRankValidator.validate(modifiedData)
-
-      return dataType
+      return await playerRankValidator.validate(data)
     } catch (e) {
       return errorFormatter(e)
     }
