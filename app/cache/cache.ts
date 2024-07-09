@@ -1,5 +1,11 @@
-import NodeCache from 'node-cache'
+import stores from '#cache/stores'
+import app from '@adonisjs/core/services/app'
+import { BentoCache } from 'bentocache'
 
-const cache = new NodeCache()
+let cache: BentoCache<typeof stores>
 
-export default cache
+app.booted(async () => {
+  cache = await app.container.make('cache')
+})
+
+export { cache as default }

@@ -14,6 +14,7 @@
     "typecheck": "tsc --noEmit"
   },
   "imports": {
+    "#cache/*": "./app/cache/*.js",
     "#core/*": "./app/core/*.js",
     "#paladium/*": "./app/paladium/*.js",
     "#leaderboard/*": "./app/leaderboard/*.js",
@@ -56,9 +57,9 @@
     "@adonisjs/core": "^6.12.0",
     "@adonisjs/cors": "^2.2.1",
     "@vinejs/vine": "^2.1.0",
+    "bentocache": "^1.0.0-beta.9",
     "ky": "^1.4.0",
     "mongoose": "^8.4.5",
-    "node-cache": "^5.1.2",
     "reflect-metadata": "^0.2.2"
   },
   "hotHook": {
