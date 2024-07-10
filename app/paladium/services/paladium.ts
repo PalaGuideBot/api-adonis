@@ -15,6 +15,8 @@ import {
   playerTrixiumRankingValidator,
 } from '#paladium/validators/player'
 import { statusValidator } from '#paladium/validators/status'
+import { Exception } from '@adonisjs/core/exceptions'
+import { errors } from '@vinejs/vine'
 import { Infer } from '@vinejs/vine/types'
 
 class PaladiumService {
@@ -32,7 +34,7 @@ class PaladiumService {
 
       return playerProfileValidator.validate(data)
     } catch (error: unknown) {
-      return errorFormatter(error)
+      throw buildError(error)
     }
   }
 
@@ -43,7 +45,7 @@ class PaladiumService {
 
       return playerRankValidator.validate(data)
     } catch (error: unknown) {
-      return errorFormatter(error)
+      throw buildError(error)
     }
   }
 
@@ -54,7 +56,7 @@ class PaladiumService {
 
       return playerTrixiumRankingValidator.validate(data)
     } catch (error: unknown) {
-      return errorFormatter(error)
+      throw buildError(error)
     }
   }
 
@@ -67,7 +69,7 @@ class PaladiumService {
 
       return playerAchievementsValidator.validate(data)
     } catch (error: unknown) {
-      return errorFormatter(error)
+      throw buildError(error)
     }
   }
 
@@ -80,7 +82,7 @@ class PaladiumService {
 
       return factionProfileValidator.validate(data)
     } catch (error: unknown) {
-      return errorFormatter(error)
+      throw buildError(error)
     }
   }
 
@@ -91,7 +93,7 @@ class PaladiumService {
 
       return factionMembersValidator.validate(data)
     } catch (error: unknown) {
-      return errorFormatter(error)
+      throw buildError(error)
     }
   }
 
@@ -104,7 +106,7 @@ class PaladiumService {
 
       return factionsLeaderboardValidator.validate(data)
     } catch (error: unknown) {
-      return errorFormatter(error)
+      throw buildError(error)
     }
   }
 
@@ -122,7 +124,7 @@ class PaladiumService {
 
       return result
     } catch (error: unknown) {
-      return errorFormatter(error)
+      throw buildError(error)
     }
   }
 
@@ -143,7 +145,7 @@ class PaladiumService {
 
       return result as Infer<(typeof trixiumValidators)[Category]>['data']
     } catch (error: unknown) {
-      throw errorFormatter(error)
+      throw buildError(error)
     }
   }
 
@@ -156,28 +158,28 @@ class PaladiumService {
 
       return statusValidator.validate(data)
     } catch (error: unknown) {
-      return errorFormatter(error)
+      throw buildError(error)
     }
   }
 }
 
-function errorFormatter(error: any) {
-  if (error.code === 'E_VALIDATION_ERROR') {
-    return {
-      message: 'Model failed to validate the request',
-      details: error,
-    }
-  } else if (error instanceof HTTPError && error.response.status === 404) {
-    return {
-      message: 'HTTP Error',
-      details: error.response.status,
-    }
-  } else {
-    return {
-      message: 'An error occurred while processing the request',
-      details: error,
-    }
+function buildError(error: unknown) {
+  if (error instanceof HTTPError) {
+    return new Exception('An error occurred while processing the request', {
+      status: error.response.status,
+      code: 'E_PALADIUM_API_ERROR',
+    })
   }
+  if (error instanceof errors.E_VALIDATION_ERROR) {
+    return new Exception('Unable to validate data', {
+      code: 'E_PALADIUM_API_VALIDATION_ERROR',
+      status: 500,
+    })
+  }
+  return new Exception('Internal error', {
+    code: 'E_PALADIUM_ERROR',
+    status: 500,
+  })
 }
 
 export { PaladiumService }
