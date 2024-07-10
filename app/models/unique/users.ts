@@ -21,11 +21,42 @@ interface UserAchievements {
   incomplete: number
 }
 
+interface UserData {
+  date: string
+  data: {
+    faction: string
+    username: string
+    jobs: {
+      alchemist: {
+        level: number
+        xp: number
+      }
+      farmer: {
+        level: number
+        xp: number
+      }
+      hunter: {
+        level: number
+        xp: number
+      }
+      miner: {
+        level: number
+        xp: number
+      }
+    }
+    money: number
+    rank: string
+    timePlayed: number
+  }
+}
+
 interface User {
   uuid: string
   username: string
   leaderboard: UserLeaderboard
   achievements: UserAchievements
+  firstJoin: number
+  data: UserData[]
 }
 
 const userSchema: Schema = new Schema<User>({
@@ -50,6 +81,37 @@ const userSchema: Schema = new Schema<User>({
     completed: Number,
     incomplete: Number,
   },
+  firstJoin: Number,
+  data: [
+    {
+      date: String,
+      data: {
+        faction: String,
+        username: String,
+        jobs: {
+          alchemist: {
+            level: Number,
+            xp: Number,
+          },
+          farmer: {
+            level: Number,
+            xp: Number,
+          },
+          hunter: {
+            level: Number,
+            xp: Number,
+          },
+          miner: {
+            level: Number,
+            xp: Number,
+          },
+        },
+        money: Number,
+        rank: String,
+        timePlayed: Number,
+      },
+    },
+  ],
 })
 
 const Users = model<User>('MapUsers', userSchema)

@@ -1,7 +1,11 @@
 import env from '#start/env'
 import ky, { HTTPError } from 'ky'
 
-import type { LeaderboardCategory, LeaderboardTrixiumCategory } from '#paladium/types'
+import type {
+  ApiResponseError,
+  LeaderboardCategory,
+  LeaderboardTrixiumCategory,
+} from '#paladium/types'
 import { factionMembersValidator, factionProfileValidator } from '#paladium/validators/faction'
 import {
   factionsLeaderboardValidator,
@@ -34,7 +38,7 @@ class PaladiumService {
 
       return playerProfileValidator.validate(data)
     } catch (error: unknown) {
-      throw buildError(error)
+      throw await buildError(error)
     }
   }
 
@@ -45,7 +49,7 @@ class PaladiumService {
 
       return playerRankValidator.validate(data)
     } catch (error: unknown) {
-      throw buildError(error)
+      throw await buildError(error)
     }
   }
 
@@ -56,7 +60,7 @@ class PaladiumService {
 
       return playerTrixiumRankingValidator.validate(data)
     } catch (error: unknown) {
-      throw buildError(error)
+      throw await buildError(error)
     }
   }
 
@@ -69,7 +73,32 @@ class PaladiumService {
 
       return playerAchievementsValidator.validate(data)
     } catch (error: unknown) {
-      throw buildError(error)
+      throw await buildError(error)
+    }
+  }
+
+  async getAllPlayerData(uuid: string) {
+    const profile = await this.getPlayerProfile(uuid)
+    const ranks = await this.getPlayerRank(uuid)
+    const trixiumRank = await this.getPlayerTrixiumRank(uuid)
+    const achievements = await this.getPlayerAchievements(uuid)
+
+    return {
+      profile,
+      ranks: { ...ranks, trixium: trixiumRank.position },
+      achievements: achievements.data.reduce(
+        (acc, achievement) => {
+          if (achievement.completed) acc.completed++
+          else acc.incomplete++
+          acc.total++
+          return acc
+        },
+        {
+          completed: 0,
+          incomplete: 0,
+          total: 0,
+        }
+      ),
     }
   }
 
@@ -82,7 +111,7 @@ class PaladiumService {
 
       return factionProfileValidator.validate(data)
     } catch (error: unknown) {
-      throw buildError(error)
+      throw await buildError(error)
     }
   }
 
@@ -93,7 +122,7 @@ class PaladiumService {
 
       return factionMembersValidator.validate(data)
     } catch (error: unknown) {
-      throw buildError(error)
+      throw await buildError(error)
     }
   }
 
@@ -106,7 +135,7 @@ class PaladiumService {
 
       return factionsLeaderboardValidator.validate(data)
     } catch (error: unknown) {
-      throw buildError(error)
+      throw await buildError(error)
     }
   }
 
@@ -124,7 +153,7 @@ class PaladiumService {
 
       return result
     } catch (error: unknown) {
-      throw buildError(error)
+      throw await buildError(error)
     }
   }
 
@@ -145,7 +174,7 @@ class PaladiumService {
 
       return result as Infer<(typeof trixiumValidators)[Category]>['data']
     } catch (error: unknown) {
-      throw buildError(error)
+      throw await buildError(error)
     }
   }
 
@@ -158,16 +187,17 @@ class PaladiumService {
 
       return statusValidator.validate(data)
     } catch (error: unknown) {
-      throw buildError(error)
+      throw await buildError(error)
     }
   }
 }
 
-function buildError(error: unknown) {
+async function buildError(error: unknown) {
   if (error instanceof HTTPError) {
-    return new Exception('An error occurred while processing the request', {
+    const data = (await error.response.json()) as ApiResponseError
+    return new Exception(data.message ?? 'An error occurred while processing the request', {
       status: error.response.status,
-      code: 'E_PALADIUM_API_ERROR',
+      code: data.type ?? 'E_PALADIUM_API_ERROR',
     })
   }
   if (error instanceof errors.E_VALIDATION_ERROR) {

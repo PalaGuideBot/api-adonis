@@ -1,9 +1,11 @@
 import vine from '@vinejs/vine'
 
-const jobs = vine.object({
-  level: vine.number(),
-  xp: vine.number(),
-})
+const jobs = vine
+  .object({
+    level: vine.number(),
+    xp: vine.number(),
+  })
+  .optional()
 
 export const playerProfileValidator = vine.compile(
   vine.object({
