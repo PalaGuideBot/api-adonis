@@ -10,7 +10,7 @@ export default defineConfig({
   | will be scanned automatically from the "./commands" directory.
   |
   */
-  commands: [() => import('@adonisjs/core/commands')],
+  commands: [() => import('@adonisjs/core/commands'), () => import('adonisjs-scheduler/commands')],
 
   /*
   |--------------------------------------------------------------------------
@@ -32,6 +32,10 @@ export default defineConfig({
     () => import('@adonisjs/cors/cors_provider'),
     () => import('#providers/mongoose_provider'),
     () => import('#cache/providers/cache_provider'),
+    {
+      file: () => import('adonisjs-scheduler/scheduler_provider'),
+      environment: ['console'],
+    },
   ],
 
   /*
@@ -46,6 +50,10 @@ export default defineConfig({
     () => import('#start/routes'),
     () => import('#start/kernel'),
     () => import('#start/events'),
+    {
+      file: () => import('#start/scheduler'),
+      environment: ['console'],
+    },
   ],
 
   /*
