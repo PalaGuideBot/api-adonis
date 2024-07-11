@@ -1,9 +1,9 @@
-import { formatUUID } from '#core/helpers'
-import env from '#start/env'
 import { Exception } from '@adonisjs/core/exceptions'
 import ky from 'ky'
 
+import { formatUUID } from '#core/helpers'
 import { minecraftUserProfileValidator } from '#minecraft/validators/mojang_validator'
+import env from '#start/env'
 
 class MojangService {
   protected client = ky.create({

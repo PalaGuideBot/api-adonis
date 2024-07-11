@@ -1,4 +1,6 @@
-import env from '#start/env'
+import { Exception } from '@adonisjs/core/exceptions'
+import { errors } from '@vinejs/vine'
+import { Infer } from '@vinejs/vine/types'
 import ky, { HTTPError } from 'ky'
 
 import type {
@@ -19,9 +21,7 @@ import {
   playerTrixiumRankingValidator,
 } from '#paladium/validators/player'
 import { statusValidator } from '#paladium/validators/status'
-import { Exception } from '@adonisjs/core/exceptions'
-import { errors } from '@vinejs/vine'
-import { Infer } from '@vinejs/vine/types'
+import env from '#start/env'
 
 class PaladiumService {
   protected client = ky.create({

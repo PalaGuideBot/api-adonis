@@ -1,6 +1,7 @@
-import stores from '#cache/stores'
 import type { ApplicationService } from '@adonisjs/core/types'
 import { BentoCache } from 'bentocache'
+
+import stores from '#cache/stores'
 
 export default class CacheProvider {
   constructor(protected app: ApplicationService) {}

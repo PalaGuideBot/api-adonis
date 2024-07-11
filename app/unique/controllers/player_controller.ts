@@ -1,9 +1,9 @@
+import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 import emitter from '@adonisjs/core/services/emitter'
 
 import { MojangService } from '#minecraft/services/mojang'
 import { PlayerRepository } from '#unique/repositories/player_repository'
-import { inject } from '@adonisjs/core'
 
 @inject()
 export default class PlayerController {
