@@ -14,7 +14,7 @@ interface Guild {
 
 interface Bot {
   date: string
-  interaction: Interaction[]
+  interactions: Interaction[]
   guilds: Guild[]
 }
 
@@ -32,7 +32,7 @@ const guildSchema = new Schema<Guild>({
 
 const botSchema = new Schema<Bot>({
   date: String,
-  interaction: [interactionSchema],
+  interactions: [interactionSchema],
   guilds: [guildSchema],
 })
 
