@@ -19,7 +19,7 @@ const imageClient = ky.create({
   },
 })
 
-export class MeAPI {
+export class MeService {
   async postMeNewPlayer(name: string) {
     try {
       const response = await meClient.post('/players/' + name)

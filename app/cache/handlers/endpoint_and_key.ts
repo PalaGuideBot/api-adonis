@@ -1,17 +1,15 @@
-import EndpointAndKey from '#models/endpoint_and_key'
-import cache from '#core/cache/cache'
+import { db } from '#core/services/db'
+import cache from '#cache/cache'
 
-async function updateCache() {
+export default async function updateCache() {
   try {
-    const results = await EndpointAndKey.find().lean()
+    const results = await db.endpointAndKey.find().lean()
     const sortedResults = results.sort(
-      (a: { date: string }, b: { date: string }) =>
-        new Date(a.date).getTime() - new Date(b.date).getTime()
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
     )
-    cache.set('endpoints', sortedResults)
-  } catch (e) {
-    console.error('[CACHE] [ENDPOINTS] Error updating cache', e)
+
+    await cache.set('endpoint_and_key', sortedResults)
+  } catch (error: unknown) {
+    console.error(error)
   }
 }
-
-export default updateCache

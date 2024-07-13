@@ -1,9 +1,9 @@
-import Bot from '#models/bot'
-import cache from '#core/cache/cache'
+import { db } from '#core/services/db'
+import cache from '#cache/cache'
 
-async function updateCache() {
+export default async function updateCache() {
   try {
-    const results = await Bot.find().lean()
+    const results = await db.bot.find().lean()
     const sortedResults = results.sort(
       (a: { date: string }, b: { date: string }) =>
         new Date(a.date).getTime() - new Date(b.date).getTime()
@@ -13,9 +13,7 @@ async function updateCache() {
       guildsCount: lastUpdated.guilds.length,
       usersCount: lastUpdated.guilds.reduce((acc, guild) => acc + guild.memberCount, 0),
     })
-  } catch (e) {
-    console.error('[CACHE] [BOTS] Error updating cache', e)
+  } catch (error: unknown) {
+    console.error('[CACHE] [BOTS] Error updating cache', error)
   }
 }
-
-export default updateCache
