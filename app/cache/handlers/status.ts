@@ -1,4 +1,4 @@
-import PaladiumStatus from '#models/paladium_status'
+import { db } from '#core/services/db'
 import cache from '#cache/cache'
 
 const mergeStatuses = (statuses: any[]) => {
@@ -129,14 +129,12 @@ async function deleteOldStatusFromDB() {
   
 */
 
-async function updateCachePaladiumStatus() {
+export default async function updateCachePaladiumStatus() {
   try {
-    const results = await PaladiumStatus.find().lean()
+    const results = await db.paladiumStatus.find().lean()
     cache.set('status:today', await statusFormaterToday(results))
     cache.set('status:last', await statusFormaterLast(results))
   } catch (error) {
     console.error('[Cache] [Paladium Status] Échec de la mise à jour du cache:', error)
   }
 }
-
-export default updateCachePaladiumStatus
