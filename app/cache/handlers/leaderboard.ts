@@ -1,7 +1,6 @@
 import { MeService } from '#paladium/services/me'
 import cache from '#cache/cache'
 import { DateTime } from 'luxon'
-import Factions from '#models/unique/factions'
 import { db } from '#core/services/db'
 
 const models: { name: string; model: any }[] = [
@@ -50,49 +49,44 @@ const models: { name: string; model: any }[] = [
 const API = new MeService()
 
 async function factionsUpdate(modelLean: any, name: string) {
-  if (name === 'factions') {
-    const lastEntry = modelLean[modelLean.length - 1]
-    let lastFactionsData = lastEntry.data.slice(0, 3)
-
-    await Promise.all(
-      lastFactionsData.map(async (faction: any) => {
-        const emblem = (await API.postImageEmbleme(faction.embleme)) as any
-        faction.emblemeUrl = emblem.url
-      })
-    )
-
-    return modelLean
-  } else if (name === 'trixium_faction') {
-    const allFactionsUUID = modelLean
-      .flatMap((group: any) => group.data)
+  if (name === 'triuxium_faction') {
+    const allUUIDS = modelLean
+      .flatMap((x: any) => x.data)
       .slice(0, 100)
-      .map((faction: any) => faction.uuid)
+      .map((x: any) => x.uuid)
+    const factionsData = await db.factions.find({ uuid: { $in: allUUIDS } }).lean()
 
-    const factionsData = await Factions.find({ uuid: { $in: allFactionsUUID } }).lean()
-
-    const factionReduced = factionsData.reduce((acc: any, faction: any) => {
+    const factionsDataMap = factionsData.reduce((acc: any, faction: any) => {
       acc[faction.uuid] = faction
       return acc
     }, {})
 
-    modelLean.map((faction: any) => {
-      faction.data.map((factionData: any) => {
-        const factionInfo = factionReduced[factionData.uuid]
-        factionData.name = factionInfo && factionInfo.bgName ? factionInfo.bgName : factionData.name
-      })
+    modelLean = modelLean.map((entry: any) => {
+      if (Array.isArray(entry.data)) {
+        const filteredData = entry.data.map((x: any) => {
+          const factionData = factionsDataMap[x.uuid]
+          if (factionData) {
+            return { ...x, name: factionData.name }
+          }
+          return x
+        })
+        return { date: entry.date, data: filteredData }
+      }
+      return { date: entry.date, data: [] }
     })
-
-    const lastFactions = modelLean[modelLean.length - 1].data.slice(0, 3)
-
-    await Promise.all(
-      lastFactions.map(async (faction: any) => {
-        const emblem = (await API.postImageEmbleme(faction.embleme)) as any
-        faction.emblemeUrl = emblem.url
-      })
-    )
-
-    return modelLean
   }
+
+  const lastEntry = modelLean[modelLean.length - 1].data.slice(0, 3)
+
+  await Promise.all(
+    lastEntry.map(async (entry: any) => {
+      const factionData = (await db.factions
+        .findOne({ name: entry.name.toString().toLowerCase() })
+        .lean()) as any
+      const embleme = (await API.postImageEmbleme(factionData.embleme)) as any
+      entry.emblemUrl = embleme.url
+    })
+  )
 }
 
 async function filteredReply(modelLean: any, usernameOrName: string) {
