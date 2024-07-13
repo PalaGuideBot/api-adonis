@@ -1,5 +1,11 @@
 import scheduler from 'adonisjs-scheduler/services/main'
 
 import SyncPlayers from '#commands/sync_players'
+import SyncLeaderboard from '#commands/sync_leaderboard'
+import SyncStatus from '#commands/sync_status'
+import SyncLink from '#commands/sync_link'
 
 scheduler.command(SyncPlayers).everyMinutes(5)
+scheduler.command(SyncLeaderboard).everyMinutes(5)
+scheduler.command(SyncLink).everyMinutes(5)
+scheduler.command(SyncStatus).everyMinutes(10)
