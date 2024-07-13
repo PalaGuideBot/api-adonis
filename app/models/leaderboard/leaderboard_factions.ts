@@ -15,9 +15,9 @@ interface Faction extends Document {
 
 // Sous-schéma pour FactionData
 const factionDataSchema = new Schema<FactionData>({
-  name: { type: String, required: true },
+  name: { type: String },
   value: { type: Number, required: true },
-  emblemUrl: { type: String, required: true },
+  emblemUrl: { type: String },
 })
 
 // Schéma principal pour la faction

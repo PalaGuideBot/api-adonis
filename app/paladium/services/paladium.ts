@@ -3,11 +3,8 @@ import { errors } from '@vinejs/vine'
 import { Infer } from '@vinejs/vine/types'
 import ky, { HTTPError } from 'ky'
 
-import type {
-  ApiResponseError,
-  LeaderboardCategory,
-  LeaderboardTrixiumCategory,
-} from '#paladium/types'
+import { LeaderboardCategory, LeaderboardTrixiumCategory } from '#leaderboard/types'
+import type { ApiResponseError } from '#paladium/types'
 import { factionMembersValidator, factionProfileValidator } from '#paladium/validators/faction'
 import {
   factionsLeaderboardValidator,
@@ -139,7 +136,7 @@ class PaladiumService {
     }
   }
 
-  async getLeaderboardRanking(category: LeaderboardCategory) {
+  async getLeaderboardRankingGlobal(category: LeaderboardCategory) {
     try {
       let result: Infer<typeof leaderboardCategoryValidator> = []
 
@@ -159,7 +156,7 @@ class PaladiumService {
 
   async getLeaderboardRankingTrixium<Category extends LeaderboardTrixiumCategory>(
     category: Category
-  ) {
+  ): Promise<Infer<(typeof trixiumValidators)[Category]>['data']> {
     try {
       const result = []
       for (let i = 0; i < 5; i++) {
@@ -176,6 +173,29 @@ class PaladiumService {
     } catch (error: unknown) {
       throw await buildError(error)
     }
+  }
+
+  async getLeaderboardRanking(
+    category: `trixium.${LeaderboardTrixiumCategory}`
+  ): Promise<Awaited<ReturnType<this['getLeaderboardRankingTrixium']>>>
+  async getLeaderboardRanking(
+    category: LeaderboardCategory
+  ): Promise<Awaited<ReturnType<this['getLeaderboardRankingGlobal']>>>
+  async getLeaderboardRanking(
+    category: LeaderboardCategory | `trixium.${LeaderboardTrixiumCategory}`
+  ): Promise<
+    | Infer<(typeof trixiumValidators)[LeaderboardTrixiumCategory]>['data']
+    | Infer<typeof leaderboardCategoryValidator>
+  >
+  async getLeaderboardRanking(
+    category: LeaderboardCategory | `trixium.${LeaderboardTrixiumCategory}`
+  ) {
+    if (category.startsWith('trixium')) {
+      return this.getLeaderboardRankingTrixium(
+        category.replace('trixium.', '') as LeaderboardTrixiumCategory
+      )
+    }
+    return this.getLeaderboardRankingGlobal(category as LeaderboardCategory)
   }
 
   // STATUS REQUESTS

@@ -5,6 +5,18 @@ import { DateTime } from 'luxon'
 
 import { db } from '#core/services/db'
 import { PaladiumService } from '#paladium/services/paladium'
+import { Model } from 'mongoose'
+import { LeaderboardCategory, LeaderboardTrixiumCategory } from '#leaderboard/types'
+
+type Category =
+  | Exclude<LeaderboardCategory, 'job.alchemist' | 'job.hunter' | 'job.miner' | 'job.farmer'>
+  | `trixium.${LeaderboardTrixiumCategory}`
+
+type CategoryItem = {
+  category: Category
+  label: string
+  model: Model<any>
+}
 
 export default class SyncLeaderboard extends BaseCommand {
   static commandName = 'sync:leaderboard'
@@ -18,66 +30,63 @@ export default class SyncLeaderboard extends BaseCommand {
 
   @inject()
   async run(paladiumService: PaladiumService) {
-    const categoriesLeaderboard: { name: string; model: any; request: Promise<any> }[] = [
+    const categories: CategoryItem[] = [
       {
-        name: 'Boss',
-        model: db.leaderboardBoss,
-        request: paladiumService.getLeaderboardRanking('boss'),
-      },
-      {
-        name: 'Chorus',
-        model: db.leaderboardChorus,
-        request: paladiumService.getLeaderboardRanking('chorus'),
-      },
-      {
-        name: 'Egg Hunt',
-        model: db.leaderboardEggHunt,
-        request: paladiumService.getLeaderboardRanking('egghunt'),
-      },
-      {
-        name: 'End',
-        model: db.leaderboardEnd,
-        request: paladiumService.getLeaderboardRanking('end'),
-      },
-      {
-        name: 'Factions',
-        model: db.leaderboardFactions,
-        request: paladiumService.getLeaderboardFactions(),
-      },
-      {
-        name: 'Koth',
-        model: db.leaderboardKoth,
-        request: paladiumService.getLeaderboardRanking('koth'),
-      },
-      {
-        name: 'Money',
+        category: 'money',
+        label: 'Money',
         model: db.leaderboardMoney,
-        request: paladiumService.getLeaderboardRanking('money'),
       },
       {
-        name: 'Trixium Faction',
-        model: db.leaderboardTrixiumFaction,
-        request: paladiumService.getLeaderboardRankingTrixium('faction'),
+        category: 'boss',
+        label: 'Boss',
+        model: db.leaderboardBoss,
       },
       {
-        name: 'Trixium User',
+        category: 'egghunt',
+        label: 'Egg Hunt',
+        model: db.leaderboardEggHunt,
+      },
+      {
+        category: 'end',
+        label: 'End',
+        model: db.leaderboardEnd,
+      },
+      {
+        category: 'chorus',
+        label: 'Chorus',
+        model: db.leaderboardChorus,
+      },
+      {
+        category: 'koth',
+        label: 'KOTH',
+        model: db.leaderboardKoth,
+      },
+      {
+        category: 'trixium.player',
+        label: 'Trixium Player',
         model: db.leaderboardTrixiumUser,
-        request: paladiumService.getLeaderboardRankingTrixium('player'),
+      },
+      {
+        category: 'trixium.faction',
+        label: 'Trixium Faction',
+        model: db.leaderboardTrixiumFaction,
       },
     ]
+
     const now = DateTime.now().toFormat('yyyy-MM-dd')
 
     this.logger.info('Syncing leaderboard...', { prefix: this.prefix })
 
-    for (const category of categoriesLeaderboard) {
+    for (const category of categories) {
       try {
         const existingLeaderboard = await category.model.find({ date: now }).lean().exec()
 
         if (existingLeaderboard.length === 0) {
-          this.logger.info(`No data for ${category.name} on ${now}. Fetching new data...`, {
+          this.logger.info(`No data for ${category.label} on ${now}. Fetching new data...`, {
             prefix: this.prefix,
           })
-          const responses = await category.request
+
+          let responses = await paladiumService.getLeaderboardRanking(category.category)
 
           const newLeaderboard = new category.model({
             date: now,
@@ -85,16 +94,16 @@ export default class SyncLeaderboard extends BaseCommand {
           })
 
           await newLeaderboard.save()
-          this.logger.info(`Saved new data for ${category.name} leaderboard.`, {
+          this.logger.info(`Saved new data for ${category.label} leaderboard.`, {
             prefix: this.prefix,
           })
         } else {
-          this.logger.info(`Data for ${category.name} already exists for ${now}. Skipping...`, {
+          this.logger.info(`Data for ${category.label} already exists for ${now}. Skipping...`, {
             prefix: this.prefix,
           })
         }
       } catch (error) {
-        this.logger.error(`Error processing ${category.name}: ${error.message}`, {
+        this.logger.error(`Error processing ${category.label}: ${error.message}`, {
           prefix: this.prefix,
         })
       }

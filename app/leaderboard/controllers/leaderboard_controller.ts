@@ -24,7 +24,7 @@ export default class LeaderboardController {
     try {
       const result = await cache.getOrSet({
         key: 'leaderboard:money',
-        factory: () => this.paladium.getLeaderboardRanking('money'),
+        factory: () => this.paladium.getLeaderboardRankingGlobal('money'),
       })
       response.json(result)
     } catch (error: unknown) {

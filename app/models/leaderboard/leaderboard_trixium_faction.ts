@@ -18,8 +18,8 @@ const leaderboardTrixiumFactionSchema = new Schema<TrixiumFaction>({
     {
       uuid: { type: String, required: true },
       value: { type: Number, required: true },
-      name: { type: String, required: true },
-      emblemUrl: { type: String, required: true },
+      name: { type: String },
+      emblemUrl: { type: String },
     },
   ],
 })
