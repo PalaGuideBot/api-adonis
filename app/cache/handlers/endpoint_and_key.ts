@@ -5,7 +5,8 @@ export default async function updateCache() {
   try {
     const results = await db.endpointAndKey.find().lean()
     const sortedResults = results.sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      (a: { date: string }, b: { date: string }) =>
+        new Date(a.date).getTime() - new Date(b.date).getTime()
     )
 
     await cache.set('endpoint_and_key', sortedResults)
