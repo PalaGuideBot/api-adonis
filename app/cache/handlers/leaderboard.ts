@@ -1,123 +1,185 @@
-import { MeService } from '#paladium/services/me'
-import cache from '#cache/cache'
 import { DateTime } from 'luxon'
-import { db } from '#core/services/db'
+import { HydratedDocument, InferSchemaType, Model } from 'mongoose'
 
-const models: { name: string; model: any }[] = [
+import cache from '#cache/cache'
+import { db } from '#core/services/db'
+import { LeaderboardCategory, LeaderboardTrixiumCategory } from '#leaderboard/types'
+import { MeService } from '#paladium/services/me'
+
+type Category =
+  | Exclude<LeaderboardCategory, 'job.alchemist' | 'job.hunter' | 'job.miner' | 'job.farmer'>
+  | `trixium.${LeaderboardTrixiumCategory}`
+
+type CategoryItem = {
+  name: Category
+  cacheKey: string
+  model: Model<any>
+}
+
+const categories = [
   {
     name: 'boss',
+    cacheKey: 'leaderboard:boss',
     model: db.leaderboardBoss,
   },
   {
     name: 'chorus',
+    cacheKey: 'leaderboard:chorus',
     model: db.leaderboardChorus,
   },
   {
     name: 'clicker',
+    cacheKey: 'leaderboard:clicker',
     model: db.leaderboardClicker,
   },
   {
-    name: 'eggHunt',
+    name: 'egghunt',
+    cacheKey: 'leaderboard:egghunt',
     model: db.leaderboardEggHunt,
   },
   {
     name: 'end',
+    cacheKey: 'leaderboard:end',
     model: db.leaderboardEnd,
   },
   {
     name: 'factions',
+    cacheKey: 'leaderboard:factions',
     model: db.leaderboardFactions,
   },
   {
     name: 'koth',
+    cacheKey: 'leaderboard:koth',
     model: db.leaderboardKoth,
   },
   {
     name: 'money',
+    cacheKey: 'leaderboard:money',
     model: db.leaderboardMoney,
   },
   {
-    name: 'trixium_faction',
+    name: 'trixium.faction',
+    cacheKey: 'leaderboard:trixium.faction',
     model: db.leaderboardTrixiumFaction,
   },
   {
-    name: 'trixium_user',
+    name: 'trixium.player',
+    cacheKey: 'leaderboard:trixium.player',
     model: db.leaderboardTrixiumUser,
   },
-]
+] satisfies CategoryItem[]
 
 const API = new MeService()
 
-async function factionsUpdate(modelLean: any, name: string) {
-  if (name === 'triuxium_faction') {
-    const allUUIDS = modelLean
-      .flatMap((x: any) => x.data)
-      .slice(0, 100)
-      .map((x: any) => x.uuid)
-    const factionsData = await db.factions.find({ uuid: { $in: allUUIDS } }).lean()
-
-    const factionsDataMap = factionsData.reduce((acc: any, faction: any) => {
-      acc[faction.uuid] = faction
-      return acc
-    }, {})
-
-    modelLean = modelLean.map((entry: any) => {
-      if (Array.isArray(entry.data)) {
-        const filteredData = entry.data.map((x: any) => {
-          const factionData = factionsDataMap[x.uuid]
-          if (factionData) {
-            return { ...x, name: factionData.name }
-          }
-          return x
-        })
-        return { date: entry.date, data: filteredData }
-      }
-      return { date: entry.date, data: [] }
-    })
-  }
-
-  const lastEntry = modelLean[modelLean.length - 1].data.slice(0, 3)
-
-  await Promise.all(
-    lastEntry.map(async (entry: any) => {
-      const factionData = (await db.factions
-        .findOne({ name: entry.name.toString().toLowerCase() })
-        .lean()) as any
-      const embleme = (await API.postImageEmbleme(factionData.embleme)) as any
-      entry.emblemUrl = embleme.url
-    })
+function filterResult(
+  data: HydratedDocument<InferSchemaType<(typeof categories)[number]['model']['schema']>>[]
+) {
+  const lastData = data[data.length - 1].data.slice(0, 100)
+  const existingValues = new Set(
+    lastData.map((item) => ('name' in item ? item.name : item.username))
   )
-}
 
-async function filteredReply(modelLean: any, usernameOrName: string) {
-  const lastEntry = modelLean[modelLean.length - 1].data.slice(0, 100)
-  const lastSet = new Set(lastEntry.map((x: any) => x[usernameOrName]))
-
-  return modelLean.map((entry: any) => {
+  return data.map((entry) => {
     if (Array.isArray(entry.data)) {
-      const filteredData = entry.data.filter((x: any) => lastSet.has(x[usernameOrName]))
+      const filteredData = entry.data.filter((item) =>
+        existingValues.has('name' in item ? item.name : item.username)
+      )
       return { date: entry.date, data: filteredData }
     }
     return { date: entry.date, data: [] }
   })
 }
 
-export default async function updateCache() {
-  const todayDate = DateTime.now().toFormat('yyyy-MM-dd')
-  for (const model of models) {
-    const cacheModel = (await cache.get('leaderboard:' + model.name)) as any[]
-    const hasDate = await cacheModel.find((c: any) => c.date === todayDate)
-    if (!cacheModel || !hasDate) {
-      if (model.name === 'factions' || model.name === 'trixium_faction') {
-        const factions = await model.model.find().lean()
-        const result = await factionsUpdate(factions, model.name)
-        const filteredResult = await filteredReply(result, 'name')
+async function serializeFactions(
+  data: HydratedDocument<InferSchemaType<typeof db.leaderboardFactions.schema>>[]
+) {
+  const lastData = data[data.length - 1]
 
-        await cache.set('leaderboard:' + model.name, filteredResult)
-      } else {
-        const result = await model.model.find().lean()
-        const filteredResult = await filteredReply(result, 'username')
-        await cache.set('leaderboard:' + model.name, filteredResult)
+  return [
+    ...data.filter((item) => item.date !== lastData.date),
+    {
+      ...lastData,
+      data: await Promise.all(
+        lastData.data.map(async (item, index) => {
+          if (index < 3) {
+            const faction = await db.factions.findOne({ name: item.name }).lean()
+
+            if (!faction) {
+              return item
+            }
+
+            const emblem = await API.postImageEmbleme(faction.emblem)
+
+            return {
+              ...item,
+              emblemUrl: emblem?.url,
+            }
+          }
+          return item
+        })
+      ),
+    },
+  ]
+}
+
+async function serializeTrixiumFactions(
+  data: HydratedDocument<InferSchemaType<typeof db.leaderboardTrixiumFaction.schema>>[]
+) {
+  const lastData = data[data.length - 1]
+
+  return [
+    ...data.filter((item) => item.date !== lastData.date),
+    {
+      ...lastData,
+      data: await Promise.all(
+        lastData.data.map(async (item, index) => {
+          if (index < 3) {
+            const faction = await db.factions.findOne({ uuid: item.uuid }).lean()
+
+            if (!faction) {
+              return item
+            }
+
+            const emblem = await API.postImageEmbleme(faction.emblem)
+            return {
+              ...item,
+              emblemUrl: emblem?.url,
+            }
+          }
+          return item
+        })
+      ),
+    },
+  ]
+}
+
+export default async function updateCache() {
+  const now = DateTime.now().toSQLDate()
+
+  for (const category of categories) {
+    const cachedData = (await cache.get(category.cacheKey)) as HydratedDocument<
+      InferSchemaType<typeof category.model.schema>
+    >[]
+    const isCacheValid = cachedData && cachedData.some((x) => x.date === now)
+
+    if (!isCacheValid) {
+      switch (category.name) {
+        case 'factions':
+          const factions = await category.model.find()
+          const serializedFactions = await serializeFactions(factions)
+          await cache.set(category.cacheKey, filterResult(serializedFactions as typeof factions))
+          break
+        case 'trixium.faction':
+          const trixiumFactions = await category.model.find()
+          const serializedTrixiumFactions = await serializeTrixiumFactions(trixiumFactions)
+          await cache.set(
+            category.cacheKey,
+            filterResult(serializedTrixiumFactions as typeof trixiumFactions)
+          )
+          break
+        default:
+          const data = await category.model.find()
+          await cache.set(category.cacheKey, filterResult(data))
       }
     }
   }

@@ -4,7 +4,7 @@ import mongoose, { Schema, Document, Model } from 'mongoose'
 interface FactionData {
   name: string
   value: number
-  emblemUrl: string
+  emblemUrl?: string
 }
 
 // Interface pour la faction avec la date
@@ -15,7 +15,7 @@ interface Faction extends Document {
 
 // Sous-schéma pour FactionData
 const factionDataSchema = new Schema<FactionData>({
-  name: { type: String },
+  name: { type: String, required: true },
   value: { type: Number, required: true },
   emblemUrl: { type: String },
 })

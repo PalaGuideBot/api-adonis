@@ -9,6 +9,8 @@ const categories = [
   'end',
   'chorus',
   'koth',
+  'clicker',
+  'factions',
 ] as const
 
 const trixiumCategories = ['player', 'faction'] as const

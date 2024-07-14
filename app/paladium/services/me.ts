@@ -46,14 +46,12 @@ export class MeService {
     }
   }
 
-  async postImageEmbleme(body: ArrayBuffer) {
+  async postImageEmbleme(body: number[]) {
     try {
-      const response = await imageClient.post('embleme', { body })
-      const data = (await response.json()) as Record<string, string>
+      const response = await imageClient.post('embleme', { body: JSON.stringify(body) })
+      const data = await response.json()
 
-      const dataType = await imageValidator.validate(data)
-
-      return dataType
+      return imageValidator.validate(data)
     } catch (e) {
       if (e instanceof HTTPError && e.response.status === 404) {
         throw new Error('Image not found')
