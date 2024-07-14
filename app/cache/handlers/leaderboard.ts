@@ -127,6 +127,10 @@ async function serializeTrixiumFactions(
 ) {
   const lastData = data[data.length - 1]
 
+  const UUIDs = data[0].data.map((item) => item.uuid)
+
+  const factions = await db.factions.find({ uuid: { $in: UUIDs } }).lean()
+
   return [
     ...data.filter((item) => item.date !== lastData.date),
     {
@@ -150,7 +154,16 @@ async function serializeTrixiumFactions(
         })
       ),
     },
-  ]
+  ].map((entry) => {
+    if (Array.isArray(entry.data)) {
+      const parsedData = entry.data.map((item) => {
+        const faction = factions.find((x) => x.uuid === item.uuid)
+        return faction ? { ...item, name: faction.name } : item
+      })
+      return { date: entry.date, data: parsedData }
+    }
+    return { date: entry.date, data: [] }
+  })
 }
 
 export default async function updateCache() {
