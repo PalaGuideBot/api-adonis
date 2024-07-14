@@ -21,6 +21,11 @@ interface UserAchievements {
   incomplete: number
 }
 
+interface Retry {
+  count: number
+  disabled: boolean
+}
+
 interface UserData {
   date: string
   data: {
@@ -56,6 +61,7 @@ interface User {
   leaderboard: UserLeaderboard
   achievements: UserAchievements
   firstJoin: number
+  retry: Retry
   data: UserData[]
 }
 
@@ -80,6 +86,10 @@ const userSchema: Schema = new Schema<User>({
   achievements: {
     completed: Number,
     incomplete: Number,
+  },
+  retry: {
+    count: Number,
+    disabled: Boolean,
   },
   firstJoin: Number,
   data: [
