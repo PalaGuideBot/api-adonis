@@ -196,7 +196,7 @@ async function deleteOldStatusFromDB() {
   
 */
 
-export default async function updateCachePaladiumStatus() {
+export default async function updateCache() {
   try {
     const results = (await db.paladiumStatus.find().lean()) as StatusEntry[]
     cache.set('status:today', await statusFormaterToday(results))
