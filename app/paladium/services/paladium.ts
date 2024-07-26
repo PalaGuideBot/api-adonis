@@ -123,6 +123,13 @@ class PaladiumService {
     }
   }
 
+  async getAllFactionData(name: string) {
+    const profile = await this.getFactionProfile(name)
+    const members = await this.getFactionMembers(profile.uuid)
+
+    return { ...profile, members }
+  }
+
   // LEADERBOARD REQUESTS
 
   async getLeaderboardFactions() {
