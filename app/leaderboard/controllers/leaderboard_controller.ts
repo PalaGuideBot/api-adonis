@@ -2,57 +2,53 @@ import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
 import cache from '#cache/cache'
-import { PaladiumService } from '#paladium/services/paladium'
+import { categories, config, trixiumCategories } from '#leaderboard/contents/categories'
+import { LeaderboardRepository } from '#leaderboard/repository/leaderboard_repository'
 
 @inject()
 export default class LeaderboardController {
-  constructor(private paladium: PaladiumService) {}
+  constructor(private leaderboardRepository: LeaderboardRepository) {}
 
-  async factions({ response }: HttpContext) {
+  async showGlobal({ response, params }: HttpContext) {
+    const category = params.category
+
+    if (!categories.includes(category)) {
+      return response.badRequest({ message: `Category "${category}" not exists`, categories })
+    }
+
+    const target = config.find((item) => item.name === category)!
+
     try {
       const result = await cache.getOrSet({
-        key: 'leaderboard:factions',
-        factory: () => this.paladium.getLeaderboardFactions(),
+        key: target.cacheKey,
+        factory: () => this.leaderboardRepository.get(target),
       })
-      response.json(result)
+      return response.json(result)
     } catch (error: unknown) {
-      response.status(500).send(error)
+      return response.status(500).send(error)
     }
   }
 
-  async money({ response }: HttpContext) {
-    try {
-      const result = await cache.getOrSet({
-        key: 'leaderboard:money',
-        factory: () => this.paladium.getLeaderboardRankingGlobal('money'),
-      })
-      response.json(result)
-    } catch (error: unknown) {
-      response.status(500).send(error)
-    }
-  }
+  async showTrixium({ response, params }: HttpContext) {
+    const category = params.category
 
-  async trixiumPlayers({ response }: HttpContext) {
-    try {
-      const result = await cache.getOrSet({
-        key: 'leaderboard:trixium:players',
-        factory: () => this.paladium.getLeaderboardRankingTrixium('player'),
+    if (!trixiumCategories.includes(category)) {
+      return response.badRequest({
+        message: `Trixium category "${category}" not exists`,
+        categories: trixiumCategories,
       })
-      response.json(result)
-    } catch (error: unknown) {
-      response.status(500).send(error)
     }
-  }
 
-  async trixiumFactions({ response }: HttpContext) {
+    const target = config.find((item) => item.name === `trixium.${category}`)!
+
     try {
       const result = await cache.getOrSet({
-        key: 'leaderboard:trixium:factions',
-        factory: async () => this.paladium.getLeaderboardRankingTrixium('faction'),
+        key: target.cacheKey,
+        factory: () => this.leaderboardRepository.get(target),
       })
-      response.json(result)
+      return response.json(result)
     } catch (error: unknown) {
-      response.status(500).send(error)
+      return response.status(500).send(error)
     }
   }
 }

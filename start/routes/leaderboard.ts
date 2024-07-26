@@ -3,9 +3,7 @@ import router from '@adonisjs/core/services/router'
 
 router
   .group(() => {
-    router.get('/factions', [LeaderboardController, 'factions'])
-    router.get('/money', [LeaderboardController, 'money'])
-    router.get('/trixium/players', [LeaderboardController, 'trixiumPlayers'])
-    router.get('/trixium/factions', [LeaderboardController, 'trixiumFactions'])
+    router.get('/:category', [LeaderboardController, 'showGlobal'])
+    router.get('/trixium/:category', [LeaderboardController, 'showTrixium'])
   })
   .prefix('leaderboard')
