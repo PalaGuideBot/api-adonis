@@ -27,9 +27,6 @@ const factionSchema = new Schema<Faction>({
 })
 
 // Modèle Mongoose pour LeaderboardFactions
-const LeaderboardFactions: Model<Faction> = mongoose.model<Faction>(
-  'LeaderboardFactions',
-  factionSchema
-)
+const LeaderboardFactions: Model<Faction> = mongoose.model<Faction>('LeadFactions', factionSchema)
 
 export default LeaderboardFactions

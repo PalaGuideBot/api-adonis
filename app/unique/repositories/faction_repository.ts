@@ -24,7 +24,7 @@ class FactionRepository {
       description: factionData.description,
       createdAt: factionData.createdAt,
       emblem: factionData.emblem,
-      players: [factionData.members],
+      players: factionData.members.data,
       data: [],
     })
 
