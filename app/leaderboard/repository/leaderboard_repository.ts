@@ -1,9 +1,10 @@
+import { inject } from '@adonisjs/core'
+import { HydratedDocument, InferSchemaType } from 'mongoose'
+
 import { db } from '#core/services/db'
 import { config } from '#leaderboard/contents/categories'
 import { CategoryItem } from '#leaderboard/types'
 import { MeService } from '#paladium/services/me'
-import { inject } from '@adonisjs/core'
-import { HydratedDocument, InferSchemaType } from 'mongoose'
 
 @inject()
 class LeaderboardRepository {
@@ -52,21 +53,23 @@ class LeaderboardRepository {
     return [
       ...data.filter((item) => item.date !== lastData.date),
       {
-        ...lastData,
+        date: lastData.date,
         data: await Promise.all(
           lastData.data.map(async (item, index) => {
             if (index < 3) {
-              const faction = await db.factions.findOne({ name: item.name }).lean()
+              const faction = await db.factions.findOne({ name: item.name.toLowerCase() }).lean()
 
               if (!faction) {
                 return item
               }
 
-              const emblem = await this.meService.postImageEmbleme(faction.emblem)
+              let emblem
+              try {
+                emblem = await this.meService.postImageEmbleme(faction.emblem)
+              } catch {}
 
-              return {
-                ...item,
-                emblemUrl: emblem?.url,
+              if (emblem) {
+                item.emblemUrl = emblem.url
               }
             }
             return item
@@ -88,7 +91,7 @@ class LeaderboardRepository {
     return [
       ...data.filter((item) => item.date !== lastData.date),
       {
-        ...lastData,
+        date: lastData.date,
         data: await Promise.all(
           lastData.data.map(async (item, index) => {
             if (index < 3) {
@@ -99,14 +102,12 @@ class LeaderboardRepository {
               }
 
               let emblem
-
               try {
                 emblem = await this.meService.postImageEmbleme(faction.emblem)
               } catch {}
 
-              return {
-                ...item,
-                emblemUrl: emblem?.url,
+              if (emblem) {
+                item.emblemUrl = emblem.url
               }
             }
             return item
