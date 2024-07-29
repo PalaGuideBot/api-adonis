@@ -8,10 +8,8 @@ class FactionRepository {
   constructor(private paladium: PaladiumService) {}
 
   async findByName(name: string) {
-    const nameLower = name.toLowerCase()
-    const get = await db.factions.findOne({ name: nameLower })
-    console.log(get)
-    return get
+    const faction = await db.factions.findOne({ name: name.toLowerCase() })
+    return faction
   }
 
   async create(name: string) {
