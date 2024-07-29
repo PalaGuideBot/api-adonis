@@ -2,10 +2,10 @@ import router from '@adonisjs/core/services/router'
 
 router
   .group(() => {
-    router.post('/generateToken', async ({ response }) => {
+    router.post('/generate-token', async ({ response }) => {
       response.json({ message: 'Generate Token' })
     })
-    router.post('/verifyToken', async ({ response }) => {
+    router.post('/verify-token', async ({ response }) => {
       response.json({ message: 'Verify Token' })
     })
     router
