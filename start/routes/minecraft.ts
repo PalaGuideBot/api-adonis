@@ -8,25 +8,17 @@ router
     router.post('/verify-token', async ({ response }) => {
       response.json({ message: 'Verify Token' })
     })
-    router
-      .group(() => {
-        router.post('/', async ({ response }) => {
-          response.json({ message: 'Create' })
-        })
-        router.get('/', async ({ response }) => {
-          response.json({ message: 'Read' })
-        })
-      })
-      .prefix('discord')
-    router
-      .group(() => {
-        router.post('/', async ({ response }) => {
-          response.json({ message: 'Create' })
-        })
-        router.get('/', async ({ response }) => {
-          response.json({ message: 'Read' })
-        })
-      })
-      .prefix('minecraft')
+    router.get('/discord', async ({ response }) => {
+      response.json({ message: 'Discord' })
+    })
+    router.delete('/discord', async ({ response }) => {
+      response.json({ message: 'Discord' })
+    })
+    router.get('/minecraft', async ({ response }) => {
+      response.json({ message: 'Minecraft' })
+    })
+    router.delete('/minecraft', async ({ response }) => {
+      response.json({ message: 'Minecraft' })
+    })
   })
-  .prefix('minecraft')
+  .prefix('link')
