@@ -1,5 +1,6 @@
 import '#start/routes/bot'
 import '#start/routes/leaderboard'
 import '#start/routes/minecraft'
+import '#start/routes/other'
 import '#start/routes/staff'
 import '#start/routes/unique'
