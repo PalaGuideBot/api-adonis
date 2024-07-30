@@ -26,5 +26,6 @@ export default class GuildsController {
     }
 
     return response.ok({ message: 'Guilds added' })
+    return response.ok({ message: 'Guilds added' })
   }
 }
