@@ -1,21 +1,19 @@
-import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
 import { DateTime } from 'luxon'
 import { db } from '#core/services/db'
+import { commandsValidator } from '#bot/validators/commands_validator'
 
-@inject()
 export default class CommandsController {
-  constructor() {}
-
   async push({ response, request }: HttpContext) {
-    const { name } = request.body() as { name: string }
+    const body = await request.validateUsing(commandsValidator)
+    const { name } = body
 
-    const dateExist = await db.bot.findOne({
+    const bot = await db.bot.findOne({
       date: DateTime.now().toFormat('yyyy-MM-dd'),
     })
 
-    if (!dateExist) {
+    if (!bot) {
       const newBot = new db.bot({
         date: DateTime.now().toFormat('yyyy-MM-dd'),
         interactions: [
@@ -28,18 +26,18 @@ export default class CommandsController {
 
       await newBot.save()
     } else {
-      const interaction = dateExist.interactions.find((item) => item.name === name)
+      const interaction = bot.interactions.find((item) => item.name === name)
 
       if (interaction) {
         interaction.count += 1
       } else {
-        dateExist.interactions.push({
+        bot.interactions.push({
           name,
           count: 1,
         })
       }
 
-      await dateExist.save()
+      await bot.save()
     }
 
     return response.ok({ message: 'Interaction added' })
