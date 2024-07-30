@@ -1,15 +1,13 @@
-import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
 import { DateTime } from 'luxon'
 import { db } from '#core/services/db'
+import { commandsValidator } from '#bot/validators/commands_validator'
 
-@inject()
 export default class CommandsController {
-  constructor() {}
-
   async push({ response, request }: HttpContext) {
-    const { name } = request.body() as { name: string }
+    const body = await request.validateUsing(commandsValidator)
+    const { name } = body
 
     const dateExist = await db.bot.findOne({
       date: DateTime.now().toFormat('yyyy-MM-dd'),
