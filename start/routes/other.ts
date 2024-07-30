@@ -1,12 +1,11 @@
 import router from '@adonisjs/core/services/router'
 
 const DatabaseController = () => import('#other/controllers/database')
+const HomeController = () => import('#other/controllers/home')
 
 router.get('/database', [DatabaseController, 'check'])
 
-router.get('/home', async ({ response }) => {
-  response.json({ message: 'Home' })
-})
+router.get('/home', [HomeController, 'show'])
 
 router.get('/status', async ({ response }) => {
   response.json({ message: 'Status' })
