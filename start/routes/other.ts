@@ -1,7 +1,7 @@
 import router from '@adonisjs/core/services/router'
 
-const DatabaseController = () => import('#other/controllers/database')
-const HomeController = () => import('#other/controllers/home')
+const DatabaseController = () => import('#other/controllers/database_controller')
+const HomeController = () => import('#other/controllers/home_controller')
 
 router.get('/database', [DatabaseController, 'check'])
 
