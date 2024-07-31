@@ -3,7 +3,7 @@ import { HttpContext } from '@adonisjs/core/http'
 
 import cache from '#cache/cache'
 import { categories, config, trixiumCategories } from '#leaderboard/contents/categories'
-import { LeaderboardRepository } from '#leaderboard/repository/leaderboard_repository'
+import { LeaderboardRepository } from '#leaderboard/repositories/leaderboard_repository'
 
 @inject()
 export default class LeaderboardController {

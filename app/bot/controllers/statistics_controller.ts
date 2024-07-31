@@ -1,8 +1,8 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
+import { BotRepository } from '#bot/repositories/bot_repository'
 import cache from '#cache/cache'
-import { BotRepository } from '#bot/repository/bot_repository'
 
 @inject()
 export default class StatisticsController {

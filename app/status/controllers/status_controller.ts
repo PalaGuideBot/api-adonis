@@ -4,7 +4,7 @@ import mongoose from 'mongoose'
 
 import cache from '#cache/cache'
 import { status as databaseStatus } from '#status/contents/database_status'
-import { StatusRepository } from '#status/repository/status_repository'
+import { StatusRepository } from '#status/repositories/status_repository'
 
 @inject()
 export default class StatusController {

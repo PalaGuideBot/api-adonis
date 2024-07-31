@@ -2,7 +2,7 @@ import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 import { DateTime } from 'luxon'
 
-import { BotRepository } from '#bot/repository/bot_repository'
+import { BotRepository } from '#bot/repositories/bot_repository'
 import { commandsValidator } from '#bot/validators/commands_validator'
 
 @inject()
