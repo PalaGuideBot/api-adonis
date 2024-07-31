@@ -2,7 +2,7 @@ import { DateTime } from 'luxon'
 import { InferSchemaType } from 'mongoose'
 
 import { db } from '#core/services/db'
-import type { Period, StatusData, StatusDataWithHour } from '#other/types'
+import type { Period, StatusData, StatusDataWithHour } from '#status/types'
 
 type InferedPaladiumStatusData = InferSchemaType<typeof db.paladiumStatus.schema>
 
