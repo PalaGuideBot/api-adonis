@@ -9,4 +9,4 @@ router
       response.json({ message: 'Websocket' })
     })
   })
-  .prefix('staff')
+  .prefix('usage')
