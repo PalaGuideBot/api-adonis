@@ -1,31 +1,29 @@
+import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
-
 import { DateTime } from 'luxon'
-import { db } from '#core/services/db'
+
+import { BotRepository } from '#bot/repository/bot_repository'
 import { guildsValidator } from '#bot/validators/guilds_validator'
 
+@inject()
 export default class GuildsController {
-  async create({ request, response }: HttpContext) {
+  constructor(private botRepository: BotRepository) {}
+
+  async update({ request, response }: HttpContext) {
     const body = await request.validateUsing(guildsValidator)
 
-    const bot = await db.bot.findOne({
-      date: DateTime.now().toFormat('yyyy-MM-dd'),
-    })
+    const bot = await this.botRepository.findByDate(DateTime.now().toFormat('yyyy-MM-dd'))
 
     if (!bot) {
-      const newBot = new db.bot({
+      await this.botRepository.create({
         date: DateTime.now().toFormat('yyyy-MM-dd'),
         guilds: body,
+        interactions: [],
       })
-
-      await newBot.save()
     } else {
-      bot.set({ guilds: body })
-
-      await bot.save()
+      this.botRepository.update(bot, { guilds: body })
     }
 
-    return response.ok({ message: 'Guilds added' })
     return response.ok({ message: 'Guilds added' })
   }
 }

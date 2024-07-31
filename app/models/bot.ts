@@ -7,7 +7,7 @@ interface Interaction {
 
 interface Guild {
   name: string
-  icon: string
+  icon?: string
   memberCount: number
   id: string
 }
