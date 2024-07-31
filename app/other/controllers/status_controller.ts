@@ -9,14 +9,11 @@ export default class StatusController {
   constructor(private statusRepository: StatusRepository) {}
 
   async show({ response }: HttpContext) {
-    try {
-      const result = await cache.getOrSet({
-        key: 'status',
-        factory: () => this.statusRepository.get(),
-      })
-      return response.json(result)
-    } catch (error: unknown) {
-      return response.status(500).send(error)
-    }
+    const result = await cache.getOrSet({
+      key: 'status',
+      factory: () => this.statusRepository.findAll(),
+    })
+
+    return response.ok(result)
   }
 }
