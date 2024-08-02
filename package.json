@@ -21,6 +21,7 @@
     "#core/*": "./app/core/*.js",
     "#paladium/*": "./app/paladium/*.js",
     "#leaderboard/*": "./app/leaderboard/*.js",
+    "#link/*": "./app/link/*.js",
     "#minecraft/*": "./app/minecraft/*.js",
     "#unique/*": "./app/unique/*.js",
     "#commands/*": "./commands/*.js",
@@ -69,6 +70,7 @@
     "ky": "^1.4.0",
     "luxon": "^3.4.4",
     "mongoose": "^8.4.5",
+    "nanoid": "^5.0.7",
     "reflect-metadata": "^0.2.2"
   },
   "hotHook": {

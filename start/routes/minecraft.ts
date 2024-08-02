@@ -1,24 +1,16 @@
 import router from '@adonisjs/core/services/router'
 
+const tokenController = () => import('#link/controllers/token_controller')
+const discordController = () => import('#link/controllers/discord_controller')
+const minecraftController = () => import('#link/controllers/minecraft_controller')
+
 router
   .group(() => {
-    router.post('/generate-token', async ({ response }) => {
-      response.json({ message: 'Generate Token' })
-    })
-    router.post('/verify-token', async ({ response }) => {
-      response.json({ message: 'Verify Token' })
-    })
-    router.get('/discord', async ({ response }) => {
-      response.json({ message: 'Discord' })
-    })
-    router.delete('/discord', async ({ response }) => {
-      response.json({ message: 'Discord' })
-    })
-    router.get('/minecraft', async ({ response }) => {
-      response.json({ message: 'Minecraft' })
-    })
-    router.delete('/minecraft', async ({ response }) => {
-      response.json({ message: 'Minecraft' })
-    })
+    router.post('/generate-token', [tokenController, 'generate'])
+    router.post('/verify-token', [tokenController, 'verify'])
+    router.get('/discord/:discordId', [discordController, 'show'])
+    router.delete('/discord/:discordId', [discordController, 'remove'])
+    router.get('/minecraft/:minecraftUUID', [minecraftController, 'show'])
+    router.delete('/minecraft/:minecraftUUID', [minecraftController, 'remove'])
   })
   .prefix('link')
