@@ -1,5 +1,5 @@
 import router from '@adonisjs/core/services/router'
 
-router.get('/update', async ({ response }) => {
-  response.json({ message: 'Update' })
-})
+const UpdateController = () => import('#other/controllers/update_controller')
+
+router.get('/update', [UpdateController, 'show'])
