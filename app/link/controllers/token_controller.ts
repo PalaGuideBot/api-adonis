@@ -2,28 +2,28 @@ import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 import { DateTime } from 'luxon'
 
-import { tokenValidator, verifyValidator } from '../validators/token_validator.js'
-import { TokenRepository } from '../repositories/token_repository.js'
+import { tokenValidator, verifyValidator } from '#link/validators/token_validator'
+import { LinkRepository } from '#link/repositories/link_repository'
 
 @inject()
 export default class TokenController {
-  constructor(private tokenRepository: TokenRepository) {}
+  constructor(private linkRepository: LinkRepository) {}
 
   async generate({ response, request }: HttpContext) {
     const body = await request.validateUsing(tokenValidator)
     const { discordId } = body
 
-    const hasLink = await this.tokenRepository.findByDiscordId(discordId)
-    if (hasLink && hasLink.minecraftUUID) {
+    const link = await this.linkRepository.findByDiscordId(discordId)
+    if (link && link.minecraftUUID) {
       return response.badRequest({ message: 'Discord account already linked' })
-    } else if (hasLink && !hasLink.minecraftUUID) {
-      return response.ok({ token: hasLink.token, expiredAt: hasLink.expiredAt })
+    } else if (link && !link.minecraftUUID) {
+      return response.ok({ token: link.token, expiredAt: link.expiredAt })
     }
 
-    const token = await this.tokenRepository.generateToken()
+    const token = await this.linkRepository.generateToken()
     const expiredAt = Date.now() + 1000 * 60 * 60
 
-    await this.tokenRepository.create({
+    await this.linkRepository.create({
       discordId,
       token,
       expiredAt,
@@ -37,19 +37,19 @@ export default class TokenController {
     const body = await request.validateUsing(verifyValidator)
     const { minecraftUUID, token } = body
 
-    const hasLink = await this.tokenRepository.findByToken(token)
-    if (!hasLink) {
+    const link = await this.linkRepository.findByToken(token)
+    if (!link) {
       return response.badRequest({ message: 'Invalid token' })
-    } else if (hasLink.minecraftUUID) {
+    } else if (link.minecraftUUID) {
       return response.badRequest({ message: 'Discord account already linked' })
     }
 
-    const hasMinecraftUUID = await this.tokenRepository.findByMinecraftUUID(minecraftUUID)
-    if (hasMinecraftUUID) {
+    const minecraft = await this.linkRepository.findByUUID(minecraftUUID)
+    if (minecraft) {
       return response.badRequest({ message: 'Minecraft account already linked' })
     }
 
-    await this.tokenRepository.update(hasLink, {
+    await this.linkRepository.update(link, {
       minecraftUUID,
     })
 

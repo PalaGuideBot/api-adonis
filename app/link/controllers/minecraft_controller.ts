@@ -1,16 +1,16 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
-import { MinecraftRepository } from '../repositories/minecraft_repository.js'
+import { LinkRepository } from '#link/repositories/link_repository'
 
 @inject()
 export default class MinecraftController {
-  constructor(private minecraftRepository: MinecraftRepository) {}
+  constructor(private linkRepository: LinkRepository) {}
 
-  async show({ response, request }: HttpContext) {
-    const { minecraftUUID } = request.params() as { minecraftUUID: string }
+  async show({ response, params }: HttpContext) {
+    const { minecraftUUID } = params as { minecraftUUID: string }
 
-    const player = await this.minecraftRepository.findByUUID(minecraftUUID)
+    const player = await this.linkRepository.findByUUID(minecraftUUID)
     if (!player) {
       return response.notFound({ message: 'Player not found' })
     }
@@ -21,15 +21,15 @@ export default class MinecraftController {
     })
   }
 
-  async remove({ response, request }: HttpContext) {
-    const { minecraftUUID } = request.params() as { minecraftUUID: string }
+  async remove({ response, params }: HttpContext) {
+    const { minecraftUUID } = params as { minecraftUUID: string }
 
-    const player = await this.minecraftRepository.findByUUID(minecraftUUID)
+    const player = await this.linkRepository.findByUUID(minecraftUUID)
     if (!player) {
       return response.notFound({ message: 'Player not found' })
     }
 
-    await this.minecraftRepository.removeByUUID(minecraftUUID)
+    await this.linkRepository.removeByUUID(minecraftUUID)
 
     return response.ok({ message: 'Player unlinked' })
   }

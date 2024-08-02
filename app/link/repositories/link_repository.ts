@@ -4,19 +4,16 @@ import { Document, InferSchemaType } from 'mongoose'
 import { customAlphabet } from 'nanoid'
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 8)
 
-class TokenRepository {
-  async generateToken(): Promise<string> {
-    const token = nanoid()
-    const exists = await this.findByToken(token)
-    if (exists) {
-      return this.generateToken()
-    }
-    return token
-  }
-
+class LinkRepository {
   async findByDiscordId(discordId: string) {
     return db.minecraftLink.findOne({
       discordId,
+    })
+  }
+
+  async findByUUID(uuid: string) {
+    return db.minecraftLink.findOne({
+      minecraftUUID: uuid,
     })
   }
 
@@ -26,10 +23,33 @@ class TokenRepository {
     })
   }
 
-  async findByMinecraftUUID(minecraftUUID: string) {
-    return db.minecraftLink.findOne({
-      minecraftUUID,
+  async findNameByUUID(uuid: string) {
+    const player = await db.users.findOne({
+      uuid,
     })
+
+    return player?.username ?? 'unknown'
+  }
+
+  async removeByDiscordId(discordId: string) {
+    return db.minecraftLink.deleteOne({
+      discordId,
+    })
+  }
+
+  async removeByUUID(uuid: string) {
+    return db.minecraftLink.deleteOne({
+      minecraftUUID: uuid,
+    })
+  }
+
+  async generateToken(): Promise<string> {
+    const token = nanoid()
+    const exists = await this.findByToken(token)
+    if (exists) {
+      return this.generateToken()
+    }
+    return token
   }
 
   async create(payload: InferSchemaType<typeof db.minecraftLink.schema>) {
@@ -48,4 +68,4 @@ class TokenRepository {
   }
 }
 
-export { TokenRepository }
+export { LinkRepository }

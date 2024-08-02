@@ -1,38 +1,38 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
-import { DiscordRepository } from '../repositories/discord_repository.js'
+import { LinkRepository } from '#link/repositories/link_repository'
 
 @inject()
 export default class DiscordController {
-  constructor(private discordRepository: DiscordRepository) {}
+  constructor(private linkRepository: LinkRepository) {}
 
-  async show({ response, request }: HttpContext) {
-    const { discordId } = request.params() as { discordId: string }
+  async show({ response, params }: HttpContext) {
+    const { discordId } = params as { discordId: string }
 
-    const player = await this.discordRepository.findByDiscordId(discordId)
+    const player = await this.linkRepository.findByDiscordId(discordId)
     if (!player || !player.minecraftUUID) {
       return response.notFound({ message: 'Player not found' })
     }
 
-    const username = await this.discordRepository.findNameByMinecraftUUID(player.minecraftUUID)
+    const username = await this.linkRepository.findNameByUUID(player.minecraftUUID)
 
     return response.ok({
       message: 'This Discord account is linked to the Minecraft account',
-      UUID: player.minecraftUUID,
+      uuid: player.minecraftUUID,
       username,
     })
   }
 
-  async remove({ response, request }: HttpContext) {
-    const { discordId } = request.params() as { discordId: string }
+  async remove({ response, params }: HttpContext) {
+    const { discordId } = params as { discordId: string }
 
-    const player = await this.discordRepository.findByDiscordId(discordId)
+    const player = await this.linkRepository.findByDiscordId(discordId)
     if (!player) {
       return response.notFound({ message: 'Player not found' })
     }
 
-    await this.discordRepository.removeByDiscordId(discordId)
+    await this.linkRepository.removeByDiscordId(discordId)
 
     return response.ok({ message: 'Player unlinked' })
   }
