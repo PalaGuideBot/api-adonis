@@ -37,6 +37,7 @@ export default defineConfig({
       environment: ['console'],
     },
     () => import('#core/providers/secret_provider'),
+    () => import('#core/providers/socket_provider'),
   ],
 
   /*

@@ -71,7 +71,8 @@
     "luxon": "^3.4.4",
     "mongoose": "^8.4.5",
     "nanoid": "^5.0.7",
-    "reflect-metadata": "^0.2.2"
+    "reflect-metadata": "^0.2.2",
+    "socket.io": "^4.7.5"
   },
   "hotHook": {
     "boundaries": [
