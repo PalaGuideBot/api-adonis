@@ -1,9 +1,9 @@
 import router from '@adonisjs/core/services/router'
 
+const UsageController = () => import('#usage/controllers/statistics_controller')
+
 router
   .group(() => {
-    router.get('/statistics', async ({ response }) => {
-      response.json({ message: 'Statistics' })
-    })
+    router.get('/statistics', [UsageController, 'show'])
   })
   .prefix('usage')
