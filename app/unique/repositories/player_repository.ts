@@ -61,6 +61,14 @@ class PlayerRepository {
 
     return player.save()
   }
+
+  async countByDate() {
+    return await db.users.aggregate<{ _id: string; count: number }>([
+      { $unwind: '$data' },
+      { $group: { _id: '$data.date', count: { $sum: 1 } } },
+      { $sort: { _id: 1 } },
+    ])
+  }
 }
 
 export { PlayerRepository }

@@ -1,5 +1,6 @@
-import { db } from '#core/services/db'
 import { Document, InferSchemaType } from 'mongoose'
+
+import { db } from '#core/services/db'
 
 class BotRepository {
   async findByDate(date: string) {
@@ -24,6 +25,23 @@ class BotRepository {
   }
 
   async findStatistics() {
+    const bots = await db.bot.find().lean()
+    return bots.map((bot) => ({
+      date: bot.date,
+      interactionsCount: bot.interactions.reduce((acc, interaction) => acc + interaction.count, 0),
+      guildsCount: bot.guilds.length,
+      usersCount: bot.guilds.reduce((acc, guild) => acc + guild.memberCount, 0),
+      interactions: bot.interactions,
+      guilds: bot.guilds.map((guild) => ({
+        id: guild.id,
+        name: guild.name,
+        memberCount: guild.memberCount,
+        icon: guild.icon || '',
+      })),
+    }))
+  }
+
+  async findLastStatistics() {
     const lastBot = await db.bot.findOne().sort({ _id: -1 }).limit(1)
 
     if (!lastBot) return { guildsCount: 0, usersCount: 0 }

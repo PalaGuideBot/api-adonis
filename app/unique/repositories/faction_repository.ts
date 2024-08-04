@@ -28,6 +28,14 @@ class FactionRepository {
 
     return faction.save()
   }
+
+  async countByDate() {
+    return await db.factions.aggregate<{ _id: string; count: number }>([
+      { $unwind: '$data' },
+      { $group: { _id: '$data.date', count: { $sum: 1 } } },
+      { $sort: { _id: 1 } },
+    ])
+  }
 }
 
 export { FactionRepository }

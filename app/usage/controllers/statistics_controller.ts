@@ -1,17 +1,17 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
-import { StatisticsRepository } from '#usage/repositories/statistics_repository'
 import cache from '#cache/cache'
+import { UsageService } from '#usage/services/usage_service'
 
 @inject()
 export default class StatisticsController {
-  constructor(private statisticsRepository: StatisticsRepository) {}
+  constructor(private usageService: UsageService) {}
 
   async show({ response }: HttpContext) {
     const result = await cache.getOrSet({
       key: 'usage:statistics',
-      factory: () => this.statisticsRepository.findStatistics(),
+      factory: () => this.usageService.getStatistics(),
     })
 
     return response.ok(result)

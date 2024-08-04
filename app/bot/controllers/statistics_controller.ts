@@ -11,7 +11,7 @@ export default class StatisticsController {
   async index({ response }: HttpContext) {
     const result = await cache.getOrSet({
       key: 'bot:statistics',
-      factory: () => this.botRepository.findStatistics(),
+      factory: () => this.botRepository.findLastStatistics(),
     })
 
     return response.ok(result)
