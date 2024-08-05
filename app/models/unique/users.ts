@@ -19,6 +19,7 @@ interface UserLeaderboard {
 interface UserAchievements {
   completed: number
   incomplete: number
+  total: number
 }
 
 interface Retry {
@@ -30,7 +31,6 @@ interface UserData {
   date: string
   data: {
     faction: string
-    username: string
     jobs: {
       alchemist: {
         level: number
@@ -86,6 +86,7 @@ const userSchema: Schema = new Schema<User>({
   achievements: {
     completed: Number,
     incomplete: Number,
+    total: Number,
   },
   retry: {
     count: Number,
@@ -97,7 +98,6 @@ const userSchema: Schema = new Schema<User>({
       date: String,
       data: {
         faction: String,
-        username: String,
         jobs: {
           alchemist: {
             level: Number,

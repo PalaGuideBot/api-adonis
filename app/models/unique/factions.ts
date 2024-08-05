@@ -16,7 +16,6 @@ const factionPlayerSchema = new Schema<FactionPlayer>({
 
 interface FactionData {
   date: string
-  timestamp: Date
   data: {
     level: {
       level: number
@@ -28,7 +27,6 @@ interface FactionData {
 
 const factionDataSchema = new Schema<FactionData>({
   date: String,
-  timestamp: Date,
   data: {
     level: {
       level: Number,
