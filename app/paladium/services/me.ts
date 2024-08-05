@@ -25,6 +25,7 @@ export class MeService {
       if (error instanceof HTTPError && error.response.status === 404) {
         throw new Error('Image not found')
       }
+      throw error
     }
   }
 }
