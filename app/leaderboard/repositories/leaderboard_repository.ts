@@ -123,7 +123,7 @@ class LeaderboardRepository {
                 uuid: item.uuid,
                 value: item.value,
                 emblemUrl: item.emblemUrl,
-                name: faction.name,
+                name: faction.bgName ?? faction.name,
               }
             : item
         })
