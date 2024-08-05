@@ -2,18 +2,22 @@ import { inject } from '@adonisjs/core'
 
 import { db } from '#core/services/db'
 import { PaladiumService } from '#paladium/services/paladium'
+import { faction as defaultFaction } from '#unique/contents/default'
 
 @inject()
 class FactionRepository {
-  constructor(private paladium: PaladiumService) {}
+  constructor(private paladiumService: PaladiumService) {}
 
   async findByName(name: string) {
-    const faction = await db.factions.findOne({ name: name.toLowerCase() })
+    if (name.toLowerCase() === 'guidebot') {
+      return defaultFaction
+    }
+    const faction = await db.factions.findOne({ name: name.toLowerCase() }).lean()
     return faction
   }
 
   async create(name: string) {
-    const factionData = await this.paladium.getAllFactionData(name)
+    const factionData = await this.paladiumService.getAllFactionData(name)
 
     const faction = new db.factions({
       uuid: factionData.uuid,

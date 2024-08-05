@@ -3,22 +3,27 @@ import { inject } from '@adonisjs/core'
 import { db } from '#core/services/db'
 import { MojangService } from '#minecraft/services/mojang'
 import { PaladiumService } from '#paladium/services/paladium'
+import { player as defaultPlayer } from '#unique/contents/default'
 
 @inject()
 class PlayerRepository {
   constructor(
-    private paladium: PaladiumService,
-    private mojang: MojangService
+    private paladiumService: PaladiumService,
+    private mojangService: MojangService
   ) {}
 
   async findByUUID(uuid: string) {
-    return db.users.findOne({ uuid })
+    if (uuid === 'e7c62d78-f0f6-4122-b194-53782dd0a06f') {
+      return defaultPlayer
+    }
+
+    return db.users.findOne({ uuid }).lean()
   }
 
   async create(username: string) {
-    const uuid = await this.mojang.getUUIDByUsername(username)
+    const uuid = await this.mojangService.getUUIDByUsername(username)
 
-    const playerData = await this.paladium.getAllPlayerData(uuid)
+    const playerData = await this.paladiumService.getAllPlayerData(uuid)
 
     const player = new db.users({
       uuid,
