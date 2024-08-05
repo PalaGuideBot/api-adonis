@@ -7,4 +7,8 @@ app.booted(async () => {
   secret = await app.container.make('secret')
 })
 
-export { secret as default }
+function findSecretKeyByValue(value: string) {
+  return Array.from(secret.entries()).find(([, v]) => v.release() === value)?.[0]
+}
+
+export { secret as default, findSecretKeyByValue }
