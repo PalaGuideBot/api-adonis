@@ -35,20 +35,7 @@ async function parseMetrics(process: ProcessDescription) {
     throw new Error('Invalid process descriptor')
   }
 
-  let stats
-
-  // en attendant une meilleure solution
-  switch (process.name) {
-    case 'minecraft':
-      stats = await pidusage(parsedProcess.pid + 2)
-      break
-    case 'scheduler':
-      stats = await pidusage(parsedProcess.pid + 2)
-      break
-    default:
-      stats = await pidusage(parsedProcess.pid)
-      break
-  }
+  let stats = await pidusage(parsedProcess.pid)
 
   return {
     name: parsedProcess.name,
