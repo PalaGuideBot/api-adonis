@@ -42,7 +42,7 @@ class UpdateRepository {
     return {
       update: responseObject,
       uniquePlayers: usersAggregation,
-      factions: factionsAggregation,
+      uniqueFactions: factionsAggregation,
     }
   }
 }
