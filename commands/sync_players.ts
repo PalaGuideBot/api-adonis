@@ -44,7 +44,10 @@ export default class SyncPlayers extends BaseCommand {
       const uuid = player.uuid
       const id = player._id
 
-      const playerData = await paladiumService.getAllPlayerData(uuid)
+      let playerData = null
+      try {
+        playerData = await paladiumService.getAllPlayerData(uuid)
+      } catch {}
 
       if (playerData) {
         bulkOperations.push({
@@ -113,8 +116,8 @@ export default class SyncPlayers extends BaseCommand {
             update: {
               $set: {
                 retry: {
-                  count: player.retry.count + 1,
-                  disabled: player.retry.count >= 5,
+                  count: player.retry ? player.retry.count + 1 : 1,
+                  disabled: player.retry ? player.retry.count >= 5 : false,
                 },
               },
             },
