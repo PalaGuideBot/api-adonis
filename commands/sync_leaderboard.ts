@@ -71,6 +71,16 @@ export default class SyncLeaderboard extends BaseCommand {
         label: 'Trixium Faction',
         model: db.leaderboardTrixiumFaction,
       },
+      {
+        category: 'factions',
+        label: 'Factions',
+        model: db.leaderboardFactions,
+      },
+      {
+        category: 'clicker',
+        label: 'Clicker',
+        model: db.leaderboardClicker,
+      },
     ]
 
     const now = DateTime.now().toFormat('yyyy-MM-dd')
