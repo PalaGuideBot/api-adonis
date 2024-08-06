@@ -137,7 +137,12 @@ class PaladiumService {
       const response = await this.client.get(`paladium/faction/leaderboard`)
       const data = await response.json()
 
-      return factionsLeaderboardValidator.validate(data)
+      const validate = await factionsLeaderboardValidator.validate(data)
+
+      return validate.map((faction) => ({
+        name: faction.name,
+        value: faction.elo,
+      }))
     } catch (error: unknown) {
       throw await buildError(error)
     }
