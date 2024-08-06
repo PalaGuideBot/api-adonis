@@ -24,10 +24,10 @@ export default class SyncPlayers extends BaseCommand {
 
     const players = await db.users
       .find({
-        retry: {
-          count: { $lt: 5 },
-          disabled: false,
-        },
+        //retry: {
+        //  count: { $lt: 5 },
+        //  disabled: false,
+        //},
         data: {
           $not: {
             $elemMatch: {
