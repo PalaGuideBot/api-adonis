@@ -5,7 +5,7 @@ module.exports = {
       script: 'bin/server.js',
       cwd: './build',
       exec_mode: 'cluster',
-      instances: 'max',
+      instances: 1,
       autorestart: true,
     },
     {
@@ -14,7 +14,7 @@ module.exports = {
       cwd: './build',
       args: ['scheduler:run'],
       exec_mode: 'cluster',
-      instances: 'max',
+      instances: 1,
     },
   ],
 }
