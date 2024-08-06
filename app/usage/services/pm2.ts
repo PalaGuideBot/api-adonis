@@ -77,6 +77,9 @@ class PM2Worker {
   private interval = 5000
 
   start() {
+    if (this.intervalId) {
+      return
+    }
     this.intervalId = setInterval(() => {
       sendMetrics()
     }, this.interval)
