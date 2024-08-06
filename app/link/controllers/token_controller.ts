@@ -30,7 +30,7 @@ export default class TokenController {
       date: DateTime.now().toFormat('yyyy-MM-dd'),
     })
 
-    return response.ok({ token, expiredAt })
+    return response.ok({ token, expiredAt, message: 'Token generated' })
   }
 
   async verify({ response, request }: HttpContext) {
