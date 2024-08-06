@@ -17,7 +17,8 @@ export default class TokenController {
     if (link && link.minecraftUUID) {
       return response.badRequest({ message: 'Discord account already linked' })
     } else if (link && !link.minecraftUUID) {
-      return response.ok({ token: link.token, expiredAt: link.expiredAt })
+      const { token, expiredAt } = link
+      return response.ok({ token, expiredAt, message: 'Token already generated' })
     }
 
     const token = await this.linkRepository.generateToken()
