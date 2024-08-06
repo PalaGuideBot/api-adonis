@@ -116,8 +116,8 @@ export default class SyncPlayers extends BaseCommand {
             update: {
               $set: {
                 retry: {
-                  count: player.retry ? player.retry.count + 1 : 1,
-                  disabled: player.retry ? player.retry.count >= 5 : false,
+                  count: player.retry?.count ? player.retry.count + 1 : 1,
+                  disabled: player.retry?.count ? player.retry.count >= 5 : false,
                 },
               },
             },

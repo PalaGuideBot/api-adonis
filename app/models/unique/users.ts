@@ -23,8 +23,8 @@ interface UserAchievements {
 }
 
 interface Retry {
-  count: number
-  disabled: boolean
+  count?: number
+  disabled?: boolean
 }
 
 interface UserData {
