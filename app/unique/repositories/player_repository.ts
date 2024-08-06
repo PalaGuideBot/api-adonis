@@ -62,6 +62,10 @@ class PlayerRepository {
           },
         },
       ],
+      retry: {
+        count: 0,
+        disabled: false,
+      },
     })
 
     return player.save()
