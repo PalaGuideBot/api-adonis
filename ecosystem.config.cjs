@@ -2,11 +2,11 @@ module.exports = {
   apps: [
     {
       name: 'api',
-      script: './bin/server.js',
+      script: './build/bin/server.js',
     },
     {
       name: 'scheduler',
-      script: './ace.js',
+      script: './build/ace.js',
       args: 'scheduler:run',
     },
   ],
