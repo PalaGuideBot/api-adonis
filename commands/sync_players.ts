@@ -127,13 +127,8 @@ export default class SyncPlayers extends BaseCommand {
     }
 
     if (bulkOperations.length > 0) {
+      await db.users.bulkWrite(bulkOperations)
       this.logger.info(`${players.length} players synced !`, { prefix: this.prefix })
-      await db.users
-        .bulkWrite(bulkOperations)
-        .then(() => {
-          this.logger.info('Players synced !', { prefix: this.prefix })
-        })
-        .catch((error) => this.logger.error(error, { prefix: this.prefix }))
     } else {
       this.logger.info('No player to sync.', { prefix: this.prefix })
     }

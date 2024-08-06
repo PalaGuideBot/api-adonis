@@ -59,7 +59,6 @@ export const playerAchievementsValidator = vine.compile(
         completed: vine.boolean(),
         id: vine.string(),
         progress: vine.number(),
-        total: vine.number(),
       })
     ),
     totalCount: vine.number(),
