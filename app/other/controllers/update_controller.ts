@@ -10,6 +10,6 @@ export default class UpdateController {
   async show({ response }: HttpContext) {
     const update = await this.updateRepository.updateObject()
 
-    return response.ok({ update })
+    return response.ok(update)
   }
 }
