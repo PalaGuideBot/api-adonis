@@ -20,3 +20,6 @@ cp -r secrets build/
 
 # Restart the api
 pm2 restart api
+
+# Restart the scheduler
+pm2 restart scheduler
