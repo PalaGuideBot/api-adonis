@@ -38,7 +38,7 @@ async function parseMetrics(process: ProcessDescription) {
   let stats
   switch (process.name) {
     case 'minecraft':
-      stats = await pidusage(parsedProcess.pid + 1)
+      stats = await pidusage(parsedProcess.pid + 2)
       break
     default:
       stats = await pidusage(parsedProcess.pid)
