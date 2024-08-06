@@ -1,4 +1,5 @@
 import router from '@adonisjs/core/services/router'
+import { middleware } from '#start/kernel'
 
 const PlayerController = () => import('#unique/controllers/player_controller')
 const FactionController = () => import('#unique/controllers/faction_controller')
@@ -9,6 +10,7 @@ router
     router.post(':username', [PlayerController, 'create'])
   })
   .prefix('players')
+  .middleware(middleware.auth())
 
 router
   .group(() => {
@@ -16,3 +18,4 @@ router
     router.post(':name', [FactionController, 'create'])
   })
   .prefix('factions')
+  .middleware(middleware.auth())

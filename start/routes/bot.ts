@@ -1,4 +1,5 @@
 import router from '@adonisjs/core/services/router'
+import { middleware } from '#start/kernel'
 
 const StatisticsController = () => import('#bot/controllers/statistics_controller')
 const CommandsController = () => import('#bot/controllers/commands_controller')
@@ -11,3 +12,4 @@ router
     router.get('/statistics', [StatisticsController, 'index'])
   })
   .prefix('bot')
+  .middleware(middleware.auth())

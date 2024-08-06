@@ -1,4 +1,5 @@
 import router from '@adonisjs/core/services/router'
+import { middleware } from '#start/kernel'
 
 const TokenController = () => import('#link/controllers/token_controller')
 const DiscordController = () => import('#link/controllers/discord_controller')
@@ -14,3 +15,4 @@ router
     router.delete('/minecraft/:minecraftUUID', [MinecraftController, 'remove'])
   })
   .prefix('link')
+  .middleware(middleware.auth())
