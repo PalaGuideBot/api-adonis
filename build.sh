@@ -18,6 +18,9 @@ cp .env build/
 # Copy secrets
 cp -r secrets build/
 
+# Copy ecosystem.config.cjs
+cp ecosystem.config.cjs build/
+
 # Restart the api
 pm2 restart api
 
