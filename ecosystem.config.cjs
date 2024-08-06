@@ -2,12 +2,19 @@ module.exports = {
   apps: [
     {
       name: 'api',
-      script: './build/bin/server.js',
+      script: 'bin/server.js',
+      cwd: './build',
+      exec_mode: 'cluster',
+      instances: 'max',
+      autorestart: true,
     },
     {
       name: 'scheduler',
-      script: './build/ace.js',
-      args: 'scheduler:run',
+      script: 'ace.js',
+      cwd: './build',
+      args: ['scheduler:run'],
+      exec_mode: 'cluster',
+      instances: 'max',
     },
   ],
 }
