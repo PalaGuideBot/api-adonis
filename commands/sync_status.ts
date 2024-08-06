@@ -18,6 +18,8 @@ export default class SyncStatus extends BaseCommand {
 
   @inject()
   async run(paladiumService: PaladiumService) {
+    this.logger.info('Syncing status...', { prefix: this.prefix })
+
     const now = DateTime.now().set({ second: 0, millisecond: 0 }).toFormat('yyyy-MM-dd HH:mm:ss')
 
     const responses = await paladiumService.getStatus()
@@ -28,5 +30,7 @@ export default class SyncStatus extends BaseCommand {
     })
 
     await newStatus.save()
+
+    this.logger.info('Synced status', { prefix: this.prefix })
   }
 }
