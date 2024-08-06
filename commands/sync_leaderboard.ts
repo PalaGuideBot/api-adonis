@@ -96,7 +96,15 @@ export default class SyncLeaderboard extends BaseCommand {
             prefix: this.prefix,
           })
 
-          let responses = await paladiumService.getLeaderboardRanking(category.category)
+          let responses
+          switch (category.category) {
+            case 'factions':
+              responses = await paladiumService.getLeaderboardFactions()
+              break
+            default:
+              responses = await paladiumService.getLeaderboardRanking(category.category)
+              break
+          }
 
           const newLeaderboard = new category.model({
             date: now,
