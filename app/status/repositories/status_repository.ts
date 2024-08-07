@@ -44,7 +44,7 @@ class StatusRepository {
     })
 
     return result.toSorted((a, b) =>
-      DateTime.fromSQL(a.date).diff(DateTime.fromSQL(b.date)).as('milliseconds')
+      DateTime.fromSQL(b.date).diff(DateTime.fromSQL(a.date)).as('milliseconds')
     )
   }
 
