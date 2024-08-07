@@ -10,20 +10,24 @@ export default class GuildsController {
   constructor(private botRepository: BotRepository) {}
 
   async update({ request, response }: HttpContext) {
-    const body = await request.validateUsing(guildsValidator)
+    try {
+      const body = await guildsValidator.validate(request.body())
 
-    const bot = await this.botRepository.findByDate(DateTime.now().toFormat('yyyy-MM-dd'))
+      const bot = await this.botRepository.findByDate(DateTime.now().toFormat('yyyy-MM-dd'))
 
-    if (!bot) {
-      await this.botRepository.create({
-        date: DateTime.now().toFormat('yyyy-MM-dd'),
-        guilds: body,
-        interactions: [],
-      })
-    } else {
-      this.botRepository.update(bot, { guilds: body })
+      if (!bot) {
+        await this.botRepository.create({
+          date: DateTime.now().toFormat('yyyy-MM-dd'),
+          guilds: body,
+          interactions: [],
+        })
+      } else {
+        this.botRepository.update(bot, { guilds: body })
+      }
+
+      return response.ok({ message: 'Guilds updated' })
+    } catch (error) {
+      return response.badRequest(error.messages)
     }
-
-    return response.ok({ message: 'Guilds added' })
   }
 }
