@@ -20,8 +20,6 @@ export default class SyncPlayers extends BaseCommand {
   async run(paladiumService: PaladiumService) {
     const now = DateTime.now().toSQLDate()
 
-    this.logger.info('Syncing players...', { prefix: this.prefix })
-
     const players = await db.users
       .find({
         //retry: {
@@ -129,8 +127,6 @@ export default class SyncPlayers extends BaseCommand {
     if (bulkOperations.length > 0) {
       await db.users.bulkWrite(bulkOperations)
       this.logger.info(`${players.length} players synced !`, { prefix: this.prefix })
-    } else {
-      this.logger.info('No player to sync.', { prefix: this.prefix })
     }
   }
 }

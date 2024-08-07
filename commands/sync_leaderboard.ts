@@ -85,8 +85,6 @@ export default class SyncLeaderboard extends BaseCommand {
 
     const now = DateTime.now().toFormat('yyyy-MM-dd')
 
-    this.logger.info('Syncing leaderboard...', { prefix: this.prefix })
-
     for (const category of categories) {
       try {
         const existingLeaderboard = await category.model.find({ date: now }).lean().exec()
@@ -115,10 +113,6 @@ export default class SyncLeaderboard extends BaseCommand {
           this.logger.info(`Saved new data for ${category.label} leaderboard.`, {
             prefix: this.prefix,
           })
-        } else {
-          this.logger.info(`Data for ${category.label} already exists for ${now}. Skipping...`, {
-            prefix: this.prefix,
-          })
         }
       } catch (error) {
         this.logger.error(`Error processing ${category.label}: ${error.message}`, {
@@ -126,7 +120,5 @@ export default class SyncLeaderboard extends BaseCommand {
         })
       }
     }
-
-    this.logger.info('Leaderboard synchronization complete.', { prefix: this.prefix })
   }
 }

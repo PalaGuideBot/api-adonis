@@ -16,8 +16,6 @@ export default class SyncRetry extends BaseCommand {
 
   @inject()
   async run() {
-    this.logger.info('Syncing retry...', { prefix: this.prefix })
-
     const players = await db.users.find({
       retry: {
         count: { $gt: 0 },
@@ -47,8 +45,6 @@ export default class SyncRetry extends BaseCommand {
     if (bulkOperations.length > 0) {
       await db.users.bulkWrite(bulkOperations)
       this.logger.info('Synced retry', { prefix: this.prefix })
-    } else {
-      this.logger.info('No retry to sync', { prefix: this.prefix })
     }
   }
 }

@@ -16,8 +16,6 @@ export default class SyncLink extends BaseCommand {
 
   @inject()
   async run() {
-    this.logger.info('Syncing link...', { prefix: this.prefix })
-
     const linkedAccount = await db.minecraftLink.find({
       minecraftUUID: { $exists: false },
       expiredAt: { $lt: Date.now() },
@@ -36,8 +34,6 @@ export default class SyncLink extends BaseCommand {
     if (bulkOperations.length > 0) {
       await db.minecraftLink.bulkWrite(bulkOperations)
       this.logger.info(`${bulkOperations.length} link(s) deleted !`, { prefix: this.prefix })
-    } else {
-      this.logger.info('No link to delete', { prefix: this.prefix })
     }
   }
 }
