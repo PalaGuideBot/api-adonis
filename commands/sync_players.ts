@@ -22,10 +22,10 @@ export default class SyncPlayers extends BaseCommand {
 
     const players = await db.users
       .find({
-        //retry: {
-        //  count: { $lt: 5 },
-        //  disabled: false,
-        //},
+        retry: {
+          count: { $lt: 10 },
+          disabled: false,
+        },
         data: {
           $not: {
             $elemMatch: {
@@ -34,9 +34,10 @@ export default class SyncPlayers extends BaseCommand {
           },
         },
       })
-      .limit(50)
+      .limit(45)
 
     const bulkOperations = []
+    let updated = 0
 
     for (const player of players) {
       const uuid = player.uuid
@@ -48,6 +49,7 @@ export default class SyncPlayers extends BaseCommand {
       } catch {}
 
       if (playerData) {
+        updated++
         bulkOperations.push({
           updateOne: {
             filter: { _id: id },
@@ -126,7 +128,7 @@ export default class SyncPlayers extends BaseCommand {
 
     if (bulkOperations.length > 0) {
       await db.users.bulkWrite(bulkOperations)
-      this.logger.info(`${players.length} players synced !`, { prefix: this.prefix })
+      this.logger.info(`${updated} players synced !`, { prefix: this.prefix })
     }
   }
 }
