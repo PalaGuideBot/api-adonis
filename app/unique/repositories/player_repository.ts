@@ -4,6 +4,7 @@ import { db } from '#core/services/db'
 import { MojangService } from '#minecraft/services/mojang'
 import { PaladiumService } from '#paladium/services/paladium'
 import { player as defaultPlayer } from '#unique/contents/default'
+import { DateTime } from 'luxon'
 
 @inject()
 class PlayerRepository {
@@ -47,7 +48,7 @@ class PlayerRepository {
       firstJoin: playerData.profile.firstJoin,
       data: [
         {
-          date: new Date().toISOString(),
+          date: DateTime.now().toFormat('yyyy-MM-dd'),
           data: {
             faction: playerData.profile.faction,
             jobs: {
