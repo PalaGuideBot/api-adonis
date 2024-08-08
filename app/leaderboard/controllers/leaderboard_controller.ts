@@ -22,6 +22,7 @@ export default class LeaderboardController {
       const result = await cache.getOrSet({
         key: target.cacheKey,
         factory: () => this.leaderboardRepository.get(target),
+        ttl: 1000 * 60 * 60,
       })
       return response.json(result)
     } catch (error: unknown) {
@@ -45,6 +46,7 @@ export default class LeaderboardController {
       const result = await cache.getOrSet({
         key: target.cacheKey,
         factory: () => this.leaderboardRepository.get(target),
+        ttl: 1000 * 60 * 60,
       })
       return response.json(result)
     } catch (error: unknown) {

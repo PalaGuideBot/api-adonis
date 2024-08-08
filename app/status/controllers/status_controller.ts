@@ -14,6 +14,7 @@ export default class StatusController {
     const result = await cache.getOrSet({
       key: 'status:paladium',
       factory: () => this.statusRepository.findAll(),
+      ttl: 1000 * 60 * 10,
     })
 
     return response.ok(result)

@@ -12,6 +12,7 @@ export default class StatisticsController {
     const result = await cache.getOrSet({
       key: 'usage:statistics',
       factory: () => this.usageService.getStatistics(),
+      ttl: 1000 * 60 * 5,
     })
 
     return response.ok(result)

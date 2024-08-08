@@ -12,6 +12,7 @@ export default class StatisticsController {
     const result = await cache.getOrSet({
       key: 'bot:statistics',
       factory: () => this.botRepository.findLastStatistics(),
+      ttl: 1000 * 60 * 5,
     })
 
     return response.ok(result)
