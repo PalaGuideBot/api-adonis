@@ -120,14 +120,17 @@ const player: Player = {
     {
       username: 'TonyKun7',
       uuid: 'b38dc660-1e1e-4272-9ed9-d7acfe27c913',
+      rank: 'developer (PalaGuideBot)',
     },
     {
       username: 'Riveur',
       uuid: '93db5a60-1a6d-407f-afc8-b41803efe5fa',
+      rank: 'developer (PalaGuideBot)',
     },
     {
       username: 'Zeluck_',
       uuid: 'ac25480d-7a05-4964-84f7-fb123375dc39',
+      rank: 'graphist (PalaGuideBot)',
     },
   ],
   retry: {

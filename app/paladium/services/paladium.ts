@@ -112,6 +112,7 @@ class PaladiumService {
       friends: friends.data.map((friend) => ({
         uuid: friend.uuid,
         username: friend.name,
+        rank: friend.rank,
       })),
     }
   }

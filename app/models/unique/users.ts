@@ -58,6 +58,7 @@ interface UserData {
 interface Friend {
   uuid: string
   username: string
+  rank: string
 }
 
 interface User {
@@ -102,6 +103,7 @@ const userSchema: Schema = new Schema<User>({
     {
       uuid: String,
       username: String,
+      rank: String,
     },
   ],
   firstJoin: Number,
