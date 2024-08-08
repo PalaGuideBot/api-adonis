@@ -35,28 +35,16 @@ async function parseMetrics(process: ProcessDescription) {
     throw new Error('Invalid process descriptor')
   }
 
-  if (parsedProcess.pm2_env.status !== 'online') {
-    return {
-      name: parsedProcess.name,
-      pid: parsedProcess.pid,
-      memory: 0,
-      cpu: 0,
-      status: parsedProcess.pm2_env.status,
-      created_at: parsedProcess.pm2_env.created_at,
-      uptime: parsedProcess.pm2_env.pm_uptime,
-    }
-  } else {
-    let stats = await pidusage(parsedProcess.pid)
+  let stats = await pidusage(parsedProcess.pid)
 
-    return {
-      name: parsedProcess.name,
-      pid: parsedProcess.pid,
-      memory: parsedProcess.pid !== 0 ? stats.memory / 1024 / 1024 : 0,
-      cpu: parsedProcess.pid !== 0 ? stats.cpu.toFixed(2) : Number(0).toFixed(2),
-      status: parsedProcess.pm2_env.status,
-      created_at: parsedProcess.pm2_env.created_at,
-      uptime: parsedProcess.pm2_env.pm_uptime,
-    }
+  return {
+    name: parsedProcess.name,
+    pid: parsedProcess.pid,
+    memory: parsedProcess.pid !== 0 ? stats.memory / 1024 / 1024 : 0,
+    cpu: parsedProcess.pid !== 0 ? stats.cpu.toFixed(2) : Number(0).toFixed(2),
+    status: parsedProcess.pm2_env.status,
+    created_at: parsedProcess.pm2_env.created_at,
+    uptime: parsedProcess.pm2_env.pm_uptime,
   }
 }
 
