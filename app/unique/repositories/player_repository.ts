@@ -67,6 +67,7 @@ class PlayerRepository {
         count: 0,
         disabled: false,
       },
+      friends: playerData.friends,
     })
 
     return player.save()

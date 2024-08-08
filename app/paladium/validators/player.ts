@@ -64,3 +64,16 @@ export const playerAchievementsValidator = vine.compile(
     totalCount: vine.number(),
   })
 )
+
+export const playerFriendsValidator = vine.compile(
+  vine.object({
+    data: vine.array(
+      vine.object({
+        uuid: vine.string(),
+        name: vine.string(),
+        rank: vine.string(),
+      })
+    ),
+    totalCount: vine.number(),
+  })
+)

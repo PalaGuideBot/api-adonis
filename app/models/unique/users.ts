@@ -55,6 +55,11 @@ interface UserData {
   }
 }
 
+interface Friend {
+  uuid: string
+  username: string
+}
+
 interface User {
   uuid: string
   username: string
@@ -62,6 +67,7 @@ interface User {
   achievements: UserAchievements
   firstJoin: number
   retry: Retry
+  friends: Friend[]
   data: UserData[]
 }
 
@@ -92,6 +98,12 @@ const userSchema: Schema = new Schema<User>({
     count: Number,
     disabled: Boolean,
   },
+  friends: [
+    {
+      uuid: String,
+      username: String,
+    },
+  ],
   firstJoin: Number,
   data: [
     {

@@ -16,6 +16,7 @@ import {
   playerProfileValidator,
   playerRankValidator,
   playerTrixiumRankingValidator,
+  playerFriendsValidator,
 } from '#paladium/validators/player'
 import { statusValidator } from '#paladium/validators/status'
 import env from '#start/env'
@@ -74,11 +75,23 @@ class PaladiumService {
     }
   }
 
+  async getPlayerFriends(uuid: string) {
+    try {
+      const response = await this.client.get(`paladium/player/profile/${uuid}/friends`)
+      const data = await response.json()
+
+      return playerFriendsValidator.validate(data)
+    } catch (error: unknown) {
+      throw await buildError(error)
+    }
+  }
+
   async getAllPlayerData(uuid: string) {
     const profile = await this.getPlayerProfile(uuid)
     const ranks = await this.getPlayerRank(uuid)
     const trixiumRank = await this.getPlayerTrixiumRank(uuid)
     const achievements = await this.getPlayerAchievements(uuid)
+    const friends = await this.getPlayerFriends(uuid)
 
     return {
       profile,
@@ -96,6 +109,10 @@ class PaladiumService {
           total: 0,
         }
       ),
+      friends: friends.data.map((friend) => ({
+        uuid: friend.uuid,
+        username: friend.name,
+      })),
     }
   }
 
