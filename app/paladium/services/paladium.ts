@@ -17,6 +17,8 @@ import {
   playerRankValidator,
   playerTrixiumRankingValidator,
   playerFriendsValidator,
+  playerPetValidator,
+  playerMountValidator,
 } from '#paladium/validators/player'
 import { statusValidator } from '#paladium/validators/status'
 import env from '#start/env'
@@ -81,6 +83,28 @@ class PaladiumService {
       const data = await response.json()
 
       return playerFriendsValidator.validate(data)
+    } catch (error: unknown) {
+      throw await buildError(error)
+    }
+  }
+
+  async getPlayerPet(uuid: string) {
+    try {
+      const response = await this.client.get(`paladium/player/profile/${uuid}/pet`)
+      const data = await response.json()
+
+      return playerPetValidator.validate(data)
+    } catch (error: unknown) {
+      throw await buildError(error)
+    }
+  }
+
+  async getPlayerMount(uuid: string) {
+    try {
+      const response = await this.client.get(`paladium/player/profile/${uuid}/mount`)
+      const data = await response.json()
+
+      return playerMountValidator.validate(data)
     } catch (error: unknown) {
       throw await buildError(error)
     }

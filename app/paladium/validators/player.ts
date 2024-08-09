@@ -77,3 +77,29 @@ export const playerFriendsValidator = vine.compile(
     totalCount: vine.number(),
   })
 )
+
+export const playerPetValidator = vine.compile(
+  vine.object({
+    currentSkin: vine.string(),
+    happiness: vine.number(),
+    experience: vine.number(),
+    skills: vine.array(
+      vine.object({
+        id: vine.string(),
+        lastChange: vine.number(),
+        nextUse: vine.number(),
+      })
+    ),
+  })
+)
+
+export const playerMountValidator = vine.compile(
+  vine.object({
+    mountType: vine.number(),
+    name: vine.string(),
+    damage: vine.number(),
+    food: vine.number(),
+    sharedXpPercent: vine.number(),
+    xp: vine.number(),
+  })
+)

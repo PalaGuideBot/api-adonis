@@ -61,6 +61,25 @@ interface Friend {
   rank: string
 }
 
+interface Mount {
+  mountType: number
+  name: string
+  damage: number
+  food: number
+  sharedXpPercent: number
+  xp: number
+}
+
+interface Pet {
+  currentSkin: string
+  happiness: number
+  skills: {
+    id: string
+    lastChange: number
+    nextUse: number
+  }[]
+}
+
 interface User {
   uuid: string
   username: string
@@ -68,6 +87,8 @@ interface User {
   achievements: UserAchievements
   firstJoin: number
   retry: Retry
+  mount: Mount
+  pet: Pet
   friends: Friend[]
   data: UserData[]
 }
@@ -95,9 +116,25 @@ const userSchema: Schema = new Schema<User>({
     incomplete: Number,
     total: Number,
   },
+  firstJoin: Number,
   retry: {
     count: Number,
     disabled: Boolean,
+  },
+  mount: {
+    mountType: Number,
+    name: String,
+  },
+  pet: {
+    currentSkin: String,
+    happiness: Number,
+    skills: [
+      {
+        id: String,
+        lastChange: Number,
+        nextUse: Number,
+      },
+    ],
   },
   friends: [
     {
@@ -106,7 +143,6 @@ const userSchema: Schema = new Schema<User>({
       rank: String,
     },
   ],
-  firstJoin: Number,
   data: [
     {
       date: String,
