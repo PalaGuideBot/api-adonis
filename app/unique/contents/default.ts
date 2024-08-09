@@ -115,6 +115,25 @@ const player: Player = {
     incomplete: 404,
     total: 808,
   },
+  pet: {
+    currentSkin: 'kapio_koi',
+    happiness: 100,
+    skills: [
+      {
+        id: 'vital_point',
+        lastChange: 1717818691037,
+        nextUse: 1717818691037,
+      },
+    ],
+  },
+  mount: {
+    mountType: 1,
+    name: 'internet',
+    damage: 100,
+    food: 100,
+    sharedXpPercent: 100,
+    xp: 100,
+  },
   firstJoin: 1708112953001,
   friends: [
     {
