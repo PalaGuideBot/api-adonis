@@ -1,5 +1,5 @@
 import { inject } from '@adonisjs/core'
-import { HydratedDocument, InferSchemaType } from 'mongoose'
+import { InferSchemaType } from 'mongoose'
 
 import { db } from '#core/services/db'
 import { config } from '#leaderboard/contents/categories'
@@ -26,10 +26,9 @@ class LeaderboardRepository {
     }
   }
 
-  private filterResult(
-    data: HydratedDocument<InferSchemaType<(typeof config)[number]['model']['schema']>>[]
-  ) {
-    const lastData = data[data.length - 1].data.slice(0, 100)
+  private filterResult(data: InferSchemaType<(typeof config)[number]['model']['schema']>[]) {
+    const lastData = (data.at(-1)?.data ?? []).slice(0, 100)
+
     const existingValues = new Set(
       lastData.map((item) => ('name' in item ? item.name : item.username))
     )
@@ -45,10 +44,12 @@ class LeaderboardRepository {
     })
   }
 
-  private async serializeFactions(
-    data: HydratedDocument<InferSchemaType<typeof db.leaderboardFactions.schema>>[]
-  ) {
-    const lastData = data[data.length - 1]
+  private async serializeFactions(data: InferSchemaType<typeof db.leaderboardFactions.schema>[]) {
+    const lastData = data.at(-1)
+
+    if (!lastData) {
+      return data
+    }
 
     return [
       ...data.filter((item) => item.date !== lastData.date),
@@ -80,41 +81,45 @@ class LeaderboardRepository {
   }
 
   private async serializeTrixiumFactions(
-    data: HydratedDocument<InferSchemaType<typeof db.leaderboardTrixiumFaction.schema>>[]
+    data: InferSchemaType<typeof db.leaderboardTrixiumFaction.schema>[]
   ) {
-    const lastData = data[data.length - 1]
+    const firstData = data.at(0)
+    const lastData = data.at(-1)
 
-    const UUIDs = data[0].data.map((item) => item.uuid)
-
+    const UUIDs = (firstData?.data ?? []).map((item) => item.uuid)
     const factions = await db.factions.find({ uuid: { $in: UUIDs } }).lean()
 
-    return [
-      ...data.filter((item) => item.date !== lastData.date),
-      {
-        date: lastData.date,
-        data: await Promise.all(
-          lastData.data.map(async (item, index) => {
-            if (index < 3) {
-              const faction = await db.factions.findOne({ uuid: item.uuid }).lean()
+    if (lastData) {
+      data = [
+        ...data.filter((item) => item.date !== lastData.date),
+        {
+          date: lastData.date,
+          data: await Promise.all(
+            lastData.data.map(async (item, index) => {
+              if (index < 3) {
+                const faction = await db.factions.findOne({ uuid: item.uuid }).lean()
 
-              if (!faction) {
-                return item
+                if (!faction) {
+                  return item
+                }
+
+                let emblem
+                try {
+                  emblem = await this.meService.postImageEmbleme(faction.emblem)
+                } catch {}
+
+                if (emblem) {
+                  item.emblemUrl = emblem.url
+                }
               }
+              return item
+            })
+          ),
+        },
+      ]
+    }
 
-              let emblem
-              try {
-                emblem = await this.meService.postImageEmbleme(faction.emblem)
-              } catch {}
-
-              if (emblem) {
-                item.emblemUrl = emblem.url
-              }
-            }
-            return item
-          })
-        ),
-      },
-    ].map((entry) => {
+    return data.map((entry) => {
       if (Array.isArray(entry.data)) {
         const parsedData = entry.data.map((item) => {
           const faction = factions.find((x) => x.uuid === item.uuid)
