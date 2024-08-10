@@ -5,7 +5,8 @@ const UsageController = () => import('#usage/controllers/statistics_controller')
 
 router
   .group(() => {
-    router.get('/statistics', [UsageController, 'show'])
+    router.get('/statistics', [UsageController, 'show']).as('statistics')
   })
   .prefix('usage')
+  .as('usage')
   .middleware(middleware.auth())

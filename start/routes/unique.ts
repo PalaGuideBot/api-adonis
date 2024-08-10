@@ -6,7 +6,7 @@ const FactionController = () => import('#unique/controllers/faction_controller')
 
 router
   .group(() => {
-    router.get(':username', [PlayerController, 'show'])
+    router.get(':username', [PlayerController, 'show']).as('players')
     router.post(':username', [PlayerController, 'create'])
   })
   .prefix('players')
@@ -14,7 +14,7 @@ router
 
 router
   .group(() => {
-    router.get(':name', [FactionController, 'show'])
+    router.get(':name', [FactionController, 'show']).as('factions')
     router.post(':name', [FactionController, 'create'])
   })
   .prefix('factions')

@@ -9,7 +9,7 @@ router
   .group(() => {
     router.post('/commands', [CommandsController, 'update'])
     router.post('/guilds', [GuildsController, 'update'])
-    router.get('/statistics', [StatisticsController, 'index'])
+    router.get('/statistics', [StatisticsController, 'index']).as('bot.statistics')
   })
   .prefix('bot')
   .middleware(middleware.auth())

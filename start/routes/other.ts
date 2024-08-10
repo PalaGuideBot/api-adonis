@@ -3,4 +3,4 @@ import { middleware } from '#start/kernel'
 
 const UpdateController = () => import('#other/controllers/update_controller')
 
-router.get('/update', [UpdateController, 'show']).middleware(middleware.auth())
+router.get('/update', [UpdateController, 'show']).as('update').middleware(middleware.auth())
