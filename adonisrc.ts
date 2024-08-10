@@ -41,6 +41,10 @@ export default defineConfig({
       file: () => import('#core/providers/socket_provider'),
       environment: ['web'],
     },
+    {
+      file: () => import('#usage/providers/endpoint_provider'),
+      environment: ['web'],
+    },
   ],
 
   /*
