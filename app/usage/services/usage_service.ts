@@ -3,7 +3,6 @@ import { InferSchemaType } from 'mongoose'
 
 import { BotRepository } from '#bot/repositories/bot_repository'
 import { db } from '#core/services/db'
-import { findSecretKeyByValue } from '#core/services/secret'
 import { FactionRepository } from '#unique/repositories/faction_repository'
 import { PlayerRepository } from '#unique/repositories/player_repository'
 import { EndpointAndKeyRepository } from '#usage/repositories/endpoint_and_key_repository'
@@ -63,10 +62,7 @@ class UsageService {
         interactions: bot?.interactions || [],
         guilds: index === 0 ? bot?.guilds || [] : [],
         endpoints: endpointAndKey?.endpoints || [],
-        keys: (endpointAndKey?.keys || []).map((key) => ({
-          ...key,
-          key: findSecretKeyByValue(key.key) || 'unknown',
-        })),
+        keys: endpointAndKey?.keys || [],
         playerCount: player?.count || 0,
         factionCount: faction?.count || 0,
       })
