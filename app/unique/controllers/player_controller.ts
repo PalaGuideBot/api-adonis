@@ -1,6 +1,5 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
-import emitter from '@adonisjs/core/services/emitter'
 
 import { MojangService } from '#minecraft/services/mojang'
 import { PlayerRepository } from '#unique/repositories/player_repository'
@@ -22,11 +21,13 @@ export default class PlayerController {
       })
     }
 
-    const player = await this.playerRepository.findByUUID(uuid)
-
+    let player = await this.playerRepository.findByUUID(uuid)
     if (!player) {
-      await emitter.emit('unique:user:not-found', params.username)
-      return response.notFound({ message: 'Player not found' })
+      try {
+        player = await this.playerRepository.create(params.username)
+      } catch {
+        return response.notFound({ message: 'Player not found' })
+      }
     }
 
     player.data = player.data.toSorted(
