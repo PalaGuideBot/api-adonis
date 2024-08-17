@@ -1,5 +1,10 @@
 import { model, Schema } from 'mongoose'
 
+interface Retry {
+  count?: number
+  disabled?: boolean
+}
+
 interface FactionPlayer {
   group: string
   joinedAt: number
@@ -45,6 +50,7 @@ interface Faction {
   emblem: number[]
   players: FactionPlayer[]
   data: FactionData[]
+  retry: Retry
 }
 
 const factionSchema = new Schema<Faction>({
@@ -56,6 +62,10 @@ const factionSchema = new Schema<Faction>({
   emblem: [Number],
   players: [factionPlayerSchema],
   data: [factionDataSchema],
+  retry: {
+    count: Number,
+    disabled: Boolean,
+  },
 })
 
 const Factions = model<Faction>('MapFaction', factionSchema)

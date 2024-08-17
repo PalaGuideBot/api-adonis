@@ -9,6 +9,10 @@ export const factionProfileValidator = vine.compile(
       .parse((value) => (value ? Object.values(value) : ([] as number[]))),
     name: vine.string(),
     uuid: vine.string(),
+    level: vine.object({
+      level: vine.number(),
+      xp: vine.number(),
+    }),
   })
 )
 
