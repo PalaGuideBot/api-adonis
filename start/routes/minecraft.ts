@@ -15,6 +15,7 @@ router
     router
       .delete('/minecraft/:minecraftUUID', [MinecraftController, 'remove'])
       .as('minecraft.remove')
+    router.get('/getLink', [DiscordController, 'getLink']).as('discord.getLink')
   })
   .prefix('link')
   .as('link')

@@ -43,6 +43,18 @@ class LinkRepository {
     })
   }
 
+  async players() {
+    const players = await db.minecraftLink.find()
+
+    const filteredPlayers = players.filter((player) => player.discordId && player.minecraftUUID)
+    const playerMap = filteredPlayers.map((player) => ({
+      discordId: player.discordId,
+      minecraftUUID: player.minecraftUUID,
+    }))
+
+    return playerMap
+  }
+
   async generateToken(): Promise<string> {
     const token = nanoid()
     const exists = await this.findByToken(token)

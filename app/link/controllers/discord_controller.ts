@@ -36,4 +36,10 @@ export default class DiscordController {
 
     return response.ok({ message: 'Player unlinked' })
   }
+
+  async getLink({ response }: HttpContext) {
+    const players = await this.linkRepository.players()
+
+    return response.ok(players)
+  }
 }
