@@ -96,7 +96,7 @@ export const playerPetValidator = vine.compile(
 export const playerMountValidator = vine.compile(
   vine.object({
     mountType: vine.number(),
-    name: vine.string(),
+    name: vine.string().optional(),
     damage: vine.number(),
     food: vine.number(),
     sharedXpPercent: vine.number(),

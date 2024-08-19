@@ -104,6 +104,8 @@ export default class SyncPlayers extends BaseCommand {
                   disabled: false,
                 },
                 friends: playerData.friends,
+                pet: playerData.pet,
+                mount: playerData.mount,
               },
             },
           },

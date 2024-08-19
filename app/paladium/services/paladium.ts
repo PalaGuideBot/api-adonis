@@ -95,7 +95,7 @@ class PaladiumService {
 
       return playerPetValidator.validate(data)
     } catch (error: unknown) {
-      throw await buildError(error)
+      return null // Pet is not required
     }
   }
 
@@ -106,7 +106,7 @@ class PaladiumService {
 
       return playerMountValidator.validate(data)
     } catch (error: unknown) {
-      throw await buildError(error)
+      return null // Mount is not required
     }
   }
 
@@ -116,6 +116,8 @@ class PaladiumService {
     const trixiumRank = await this.getPlayerTrixiumRank(uuid)
     const achievements = await this.getPlayerAchievements(uuid)
     const friends = await this.getPlayerFriends(uuid)
+    const pet = await this.getPlayerPet(uuid)
+    const mount = await this.getPlayerMount(uuid)
 
     return {
       profile,
@@ -138,6 +140,8 @@ class PaladiumService {
         username: friend.name,
         rank: friend.rank,
       })),
+      pet,
+      mount: mount?.mountType !== 0 ? mount : null,
     }
   }
 

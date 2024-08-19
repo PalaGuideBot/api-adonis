@@ -124,6 +124,10 @@ const userSchema: Schema = new Schema<User>({
   mount: {
     mountType: Number,
     name: String,
+    damage: Number,
+    food: Number,
+    sharedXpPercent: Number,
+    xp: Number,
   },
   pet: {
     currentSkin: String,

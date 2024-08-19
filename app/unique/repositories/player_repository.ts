@@ -68,6 +68,8 @@ class PlayerRepository {
         disabled: false,
       },
       friends: playerData.friends,
+      pet: playerData.pet,
+      mount: playerData.mount,
     })
 
     return player.save()
