@@ -33,4 +33,13 @@ export default class MinecraftController {
 
     return response.ok({ message: 'Player unlinked' })
   }
+
+  async index({ response }: HttpContext) {
+    const players = await this.linkRepository.findPlayers()
+    if (!players) {
+      return response.notFound({ message: 'No players found' })
+    }
+
+    return response.ok(players.map((player) => player.minecraftUUID))
+  }
 }

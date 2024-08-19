@@ -43,7 +43,7 @@ class LinkRepository {
     })
   }
 
-  async players() {
+  async findPlayers() {
     const players = await db.minecraftLink.find()
 
     const filteredPlayers = players.filter((player) => player.discordId && player.minecraftUUID)
