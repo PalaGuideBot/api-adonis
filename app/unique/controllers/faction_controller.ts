@@ -1,6 +1,6 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
-import emitter from '@adonisjs/core/services/emitter'
+//import emitter from '@adonisjs/core/services/emitter'
 
 import { MeService } from '#paladium/services/me'
 import { FactionRepository } from '#unique/repositories/faction_repository'
@@ -16,7 +16,7 @@ export default class FactionController {
     const faction = await this.factionRepository.findByName(params.name)
 
     if (!faction) {
-      await emitter.emit('unique:faction:not-found', params.name)
+      //await emitter.emit('unique:faction:not-found', params.name)
       return response.notFound({ message: 'Faction not found' })
     }
 
