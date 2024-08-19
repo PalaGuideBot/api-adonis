@@ -2,7 +2,7 @@ import { inject } from '@adonisjs/core'
 
 import { db } from '#core/services/db'
 import { PaladiumService } from '#paladium/services/paladium'
-//import { faction as defaultFaction } from '#unique/contents/default'
+import { faction as defaultFaction } from '#unique/contents/default'
 import { DateTime } from 'luxon'
 
 @inject()
@@ -10,10 +10,10 @@ class FactionRepository {
   constructor(private paladiumService: PaladiumService) {}
 
   async findByName(name: string) {
-    /*if (name.toLowerCase() === 'guidebot') {
+    if (name.toLowerCase() === 'guidebot') {
       return defaultFaction
     }
-    const faction = await db.factions.findOne({ name: name.toLowerCase() }).lean()
+    /*const faction = await db.factions.findOne({ name: name.toLowerCase() }).lean()
     return faction*/
 
     //tempory patch players
