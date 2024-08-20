@@ -46,7 +46,6 @@ export const playerRankValidator = vine.compile(
 export const playerTrixiumRankingValidator = vine.compile(
   vine.object({
     position: vine.number(),
-    username: vine.string(),
     uuid: vine.string(),
     value: vine.number(),
   })
