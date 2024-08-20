@@ -19,6 +19,7 @@ import {
   playerFriendsValidator,
   playerPetValidator,
   playerMountValidator,
+  playerClickerValidator,
 } from '#paladium/validators/player'
 import { statusValidator } from '#paladium/validators/status'
 import env from '#start/env'
@@ -88,6 +89,17 @@ class PaladiumService {
     }
   }
 
+  async getPlayerClicker(uuid: string) {
+    try {
+      const response = await this.client.get(`paladium/player/profile/${uuid}/clicker`)
+      const data = await response.json()
+
+      return playerClickerValidator.validate(data)
+    } catch (error: unknown) {
+      throw await buildError(error)
+    }
+  }
+
   async getPlayerPet(uuid: string) {
     try {
       const response = await this.client.get(`paladium/player/profile/${uuid}/pet`)
@@ -118,6 +130,13 @@ class PaladiumService {
     const friends = await this.getPlayerFriends(uuid)
     const pet = await this.getPlayerPet(uuid)
     const mount = await this.getPlayerMount(uuid)
+    const clicker = await this.getPlayerClicker(uuid)
+
+    const clickerProductionsSum = clicker.buildings.reduce(
+      (acc, building) => acc + building.production,
+      0
+    )
+    const rps = 0
 
     return {
       profile,
@@ -142,6 +161,10 @@ class PaladiumService {
       })),
       pet,
       mount: mount?.mountType !== 0 ? mount : null,
+      clicker: {
+        rps,
+        productions: clickerProductionsSum,
+      },
     }
   }
 

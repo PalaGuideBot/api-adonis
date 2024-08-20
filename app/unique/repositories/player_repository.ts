@@ -60,6 +60,10 @@ class PlayerRepository {
             money: playerData.profile.money,
             rank: playerData.profile.rank,
             timePlayed: playerData.profile.timePlayed,
+            clicker: {
+              rps: playerData.clicker.rps,
+              productions: playerData.clicker.productions,
+            },
           },
         },
       ],

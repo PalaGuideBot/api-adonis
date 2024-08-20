@@ -52,6 +52,10 @@ interface UserData {
     money: number
     rank: string
     timePlayed: number
+    clicker: {
+      rps: number
+      productions: number
+    }
   }
 }
 
@@ -173,6 +177,10 @@ const userSchema: Schema = new Schema<User>({
         money: Number,
         rank: String,
         timePlayed: Number,
+        clicker: {
+          rps: Number,
+          productions: Number,
+        },
       },
     },
   ],

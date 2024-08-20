@@ -186,6 +186,10 @@ const player: Player = {
         money: 5000000,
         rank: 'trixium+',
         timePlayed: 5000,
+        clicker: {
+          rps: 0,
+          productions: 0,
+        },
       },
     },
     {
@@ -213,6 +217,10 @@ const player: Player = {
         money: 4000000,
         rank: 'trixium',
         timePlayed: 4000,
+        clicker: {
+          rps: 500,
+          productions: 50000,
+        },
       },
     },
     {
@@ -240,6 +248,10 @@ const player: Player = {
         money: 3000000,
         rank: 'endium',
         timePlayed: 3000,
+        clicker: {
+          rps: 1000,
+          productions: 100000,
+        },
       },
     },
     {
@@ -267,6 +279,10 @@ const player: Player = {
         money: 2000000,
         rank: 'paladin',
         timePlayed: 2000,
+        clicker: {
+          rps: 1500,
+          productions: 150000,
+        },
       },
     },
     {
@@ -294,6 +310,10 @@ const player: Player = {
         money: 1000000,
         rank: 'default',
         timePlayed: 1000,
+        clicker: {
+          rps: 2000,
+          productions: 200000,
+        },
       },
     },
   ],
