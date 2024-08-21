@@ -52,10 +52,10 @@ class PlayerRepository {
           data: {
             faction: playerData.profile.faction,
             jobs: {
-              alchemist: playerData.profile.jobs.alchemist || { level: 0, xp: 0 },
-              farmer: playerData.profile.jobs.farmer || { level: 0, xp: 0 },
-              hunter: playerData.profile.jobs.hunter || { level: 0, xp: 0 },
-              miner: playerData.profile.jobs.miner || { level: 0, xp: 0 },
+              alchemist: playerData.jobs.alchemist || { level: 0, xp: 0 },
+              farmer: playerData.jobs.farmer || { level: 0, xp: 0 },
+              hunter: playerData.jobs.hunter || { level: 0, xp: 0 },
+              miner: playerData.jobs.miner || { level: 0, xp: 0 },
             },
             money: playerData.profile.money,
             rank: playerData.profile.rank,

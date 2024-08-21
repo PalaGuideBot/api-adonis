@@ -19,6 +19,7 @@ import {
   playerFriendsValidator,
   playerPetValidator,
   playerMountValidator,
+  playerJobsValidator,
 } from '#paladium/validators/player'
 import { statusValidator } from '#paladium/validators/status'
 import env from '#start/env'
@@ -27,6 +28,9 @@ class PaladiumService {
   protected client = ky.create({
     prefixUrl: env.get('PALADIUM_BASE_URL'),
     timeout: 10000,
+    headers: {
+      Authorization: `Bearer ${env.get('PALADIUM_API_KEY')}`,
+    },
   })
 
   // PLAYER REQUESTS
@@ -37,6 +41,17 @@ class PaladiumService {
       const data = await response.json()
 
       return playerProfileValidator.validate(data)
+    } catch (error: unknown) {
+      throw await buildError(error)
+    }
+  }
+
+  async getPlayerJobs(uuid: string) {
+    try {
+      const response = await this.client.get(`paladium/player/profile/${uuid}/jobs`)
+      const data = await response.json()
+
+      return playerJobsValidator.validate(data)
     } catch (error: unknown) {
       throw await buildError(error)
     }
@@ -112,6 +127,7 @@ class PaladiumService {
 
   async getAllPlayerData(uuid: string) {
     const profile = await this.getPlayerProfile(uuid)
+    const jobs = await this.getPlayerJobs(uuid)
     const ranks = await this.getPlayerRank(uuid)
     const trixiumRank = await this.getPlayerTrixiumRank(uuid)
     const achievements = await this.getPlayerAchievements(uuid)
@@ -121,6 +137,7 @@ class PaladiumService {
 
     return {
       profile,
+      jobs,
       ranks: { ...ranks, trixium: trixiumRank.position },
       achievements: achievements.data.reduce(
         (acc, achievement) => {

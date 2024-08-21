@@ -11,17 +11,20 @@ export const playerProfileValidator = vine.compile(
   vine.object({
     faction: vine.string(),
     firstJoin: vine.number(),
-    jobs: vine.object({
-      alchemist: jobs,
-      farmer: jobs,
-      hunter: jobs,
-      miner: jobs,
-    }),
     money: vine.number(),
     rank: vine.string(),
     timePlayed: vine.number(),
     username: vine.string(),
     uuid: vine.string(),
+  })
+)
+
+export const playerJobsValidator = vine.compile(
+  vine.object({
+    alchemist: jobs,
+    farmer: jobs,
+    hunter: jobs,
+    miner: jobs,
   })
 )
 
