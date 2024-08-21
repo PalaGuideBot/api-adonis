@@ -99,7 +99,10 @@ class PaladiumService {
 
       return playerFriendsValidator.validate(data)
     } catch (error: unknown) {
-      throw await buildError(error)
+      return {
+        data: [],
+        totalCount: 0,
+      }
     }
   }
 
