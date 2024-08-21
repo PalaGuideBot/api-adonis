@@ -32,7 +32,7 @@ export default class SyncPlayers extends BaseCommand {
         'retry.count': { $lt: 10 },
         'retry.disabled': false,
       })
-      .limit(50)
+      .limit(280)
 
     const bulkOperations = []
     let updated = 0
