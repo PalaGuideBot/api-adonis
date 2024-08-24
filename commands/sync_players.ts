@@ -57,6 +57,7 @@ export default class SyncPlayers extends BaseCommand {
                   date: now,
                   data: {
                     faction: playerData.profile.faction,
+                    factionRank: playerData.profile.factionRank,
                     jobs: {
                       alchemist: playerData.jobs.alchemist || {
                         level: 0,

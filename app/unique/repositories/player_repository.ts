@@ -51,6 +51,7 @@ class PlayerRepository {
           date: DateTime.now().toFormat('yyyy-MM-dd'),
           data: {
             faction: playerData.profile.faction,
+            factionRank: playerData.profile.factionRank,
             jobs: {
               alchemist: playerData.jobs.alchemist || { level: 0, xp: 0 },
               farmer: playerData.jobs.farmer || { level: 0, xp: 0 },

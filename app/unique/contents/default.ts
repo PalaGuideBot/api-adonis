@@ -165,6 +165,7 @@ const player: Player = {
       date: '2024-01-05',
       data: {
         faction: 'GuideBot',
+        factionRank: 'Leader',
         jobs: {
           alchemist: {
             level: 50,
@@ -192,6 +193,7 @@ const player: Player = {
       date: '2024-01-04',
       data: {
         faction: 'GuideBot',
+        factionRank: 'Leader',
         jobs: {
           alchemist: {
             level: 40,
@@ -219,6 +221,7 @@ const player: Player = {
       date: '2024-01-03',
       data: {
         faction: 'GuideBot',
+        factionRank: 'Leader',
         jobs: {
           alchemist: {
             level: 30,
@@ -246,6 +249,7 @@ const player: Player = {
       date: '2024-01-02',
       data: {
         faction: 'GuideBot',
+        factionRank: 'Leader',
         jobs: {
           alchemist: {
             level: 20,
@@ -273,6 +277,7 @@ const player: Player = {
       date: '2024-01-01',
       data: {
         faction: 'GuideBot',
+        factionRank: 'Leader',
         jobs: {
           alchemist: {
             level: 10,
