@@ -35,10 +35,7 @@ async function parseMetrics(process: ProcessDescription) {
     throw new Error('Invalid process descriptor')
   }
 
-  let stats = await pidusage(parsedProcess.pid).catch(() => ({
-    cpu: 0,
-    memory: 0,
-  }))
+  let stats = await pidusage(parsedProcess.pid)
 
   return {
     name: parsedProcess.name,
