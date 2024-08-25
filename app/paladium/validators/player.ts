@@ -10,7 +10,7 @@ const jobs = vine
 export const playerProfileValidator = vine.compile(
   vine.object({
     faction: vine.string(),
-    factionRank: vine.string(),
+    factionRank: vine.string().nullable(),
     firstJoin: vine.number(),
     money: vine.number(),
     rank: vine.string(),
