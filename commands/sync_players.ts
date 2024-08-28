@@ -32,7 +32,7 @@ export default class SyncPlayers extends BaseCommand {
         'retry.count': { $lt: 10 },
         'retry.disabled': false,
       })
-      .limit(50)
+      .limit(280)
 
     const bulkOperations = []
     let updated = 0
@@ -57,20 +57,21 @@ export default class SyncPlayers extends BaseCommand {
                   date: now,
                   data: {
                     faction: playerData.profile.faction,
+                    factionRank: playerData.profile.factionRank ?? null,
                     jobs: {
-                      alchemist: playerData.profile.jobs.alchemist || {
+                      alchemist: playerData.jobs.alchemist || {
                         level: 0,
                         xp: 0,
                       },
-                      farmer: playerData.profile.jobs.farmer || {
+                      farmer: playerData.jobs.farmer || {
                         level: 0,
                         xp: 0,
                       },
-                      hunter: playerData.profile.jobs.hunter || {
+                      hunter: playerData.jobs.hunter || {
                         level: 0,
                         xp: 0,
                       },
-                      miner: playerData.profile.jobs.miner || {
+                      miner: playerData.jobs.miner || {
                         level: 0,
                         xp: 0,
                       },
@@ -87,19 +88,20 @@ export default class SyncPlayers extends BaseCommand {
               },
               $set: {
                 leaderboard: {
-                  boss: playerData.ranks.boss || -1,
-                  money: playerData.ranks.money || -1,
-                  end: playerData.ranks.end || -1,
-                  koth: playerData.ranks.koth || -1,
-                  chorus: playerData.ranks.chorus || -1,
-                  egghunt: playerData.ranks.egghunt || -1,
-                  // corruption: playerData.ranks.corruption || -1,
-                  clicker: playerData.ranks.clicker || -1,
-                  job_alchemist: playerData.ranks['jobAlchemist'] || -1,
-                  job_farmer: playerData.ranks['jobFarmer'] || -1,
-                  job_hunter: playerData.ranks['jobHunter'] || -1,
-                  job_miner: playerData.ranks['jobMiner'] || -1,
-                  trixium: playerData.ranks.trixium || -1,
+                  boss: playerData.ranks.boss ?? player.leaderboard?.boss ?? -1,
+                  money: playerData.ranks.money ?? player.leaderboard?.money ?? -1,
+                  end: playerData.ranks.end ?? player.leaderboard?.end ?? -1,
+                  koth: playerData.ranks.koth ?? player.leaderboard?.koth ?? -1,
+                  chorus: playerData.ranks.chorus ?? player.leaderboard?.chorus ?? -1,
+                  egghunt: playerData.ranks.egghunt ?? player.leaderboard?.egghunt ?? -1,
+                  // corruption: playerData.ranks.corruption ?? player.leaderboard?.corruption ?? -1,
+                  clicker: playerData.ranks.clicker ?? player.leaderboard?.clicker ?? -1,
+                  job_alchemist:
+                    playerData.ranks['jobAlchemist'] ?? player.leaderboard?.job_alchemist ?? -1,
+                  job_farmer: playerData.ranks['jobFarmer'] ?? player.leaderboard?.job_farmer ?? -1,
+                  job_hunter: playerData.ranks['jobHunter'] ?? player.leaderboard?.job_hunter ?? -1,
+                  job_miner: playerData.ranks['jobMiner'] ?? player.leaderboard?.job_miner ?? -1,
+                  trixium: playerData.ranks.trixium ?? player.leaderboard?.trixium ?? -1,
                 },
                 achievements: playerData.achievements,
                 firstJoin: playerData.profile.firstJoin,
@@ -133,7 +135,7 @@ export default class SyncPlayers extends BaseCommand {
 
     if (bulkOperations.length > 0) {
       await db.users.bulkWrite(bulkOperations)
-      this.logger.info(`${updated} players synced !`, { prefix: this.prefix })
+      if (updated > 0) this.logger.info(`${updated} players synced !`, { prefix: this.prefix })
     }
   }
 }

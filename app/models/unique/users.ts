@@ -31,6 +31,7 @@ interface UserData {
   date: string
   data: {
     faction: string
+    factionRank: string
     jobs: {
       alchemist: {
         level: number
@@ -156,6 +157,7 @@ const userSchema: Schema = new Schema<User>({
       date: String,
       data: {
         faction: String,
+        factionRank: String,
         jobs: {
           alchemist: {
             level: Number,
