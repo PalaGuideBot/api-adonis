@@ -1,0 +1,217 @@
+import { getBuildingBaseProduction } from '#paladium/helpers/clicker'
+import { ClickerBuilding } from '#paladium/types'
+
+const buildings: Array<ClickerBuilding> = [
+  {
+    name: 'abandoned_mine',
+    label: 'Mine abandonnée',
+    base_price: 1250,
+    base_production: getBuildingBaseProduction(0),
+  },
+  {
+    name: 'big_rocks_cave',
+    label: 'Caverne aux gros cailloux',
+    base_price: 3500,
+    base_production: getBuildingBaseProduction(1),
+  },
+  {
+    name: 'dwarves_mine',
+    label: 'Mine des nains',
+    base_price: 6000,
+    base_production: getBuildingBaseProduction(2),
+  },
+  {
+    name: 'grandma_garden',
+    label: 'Jardin de mamie',
+    base_price: 12500,
+    base_production: getBuildingBaseProduction(3),
+  },
+  {
+    name: 'witch_cabin',
+    label: 'Cabane de sorcière',
+    base_price: 27500,
+    base_production: getBuildingBaseProduction(4),
+  },
+  {
+    name: 'buzzing_hive',
+    label: 'Ruche bourdonnante',
+    base_price: 67500,
+    base_production: getBuildingBaseProduction(5),
+  },
+  {
+    name: 'snowy_forest',
+    label: 'Forêt enneigée',
+    base_price: 125000,
+    base_production: getBuildingBaseProduction(6),
+  },
+  {
+    name: 'frozen_iceberg',
+    label: 'Banquise gelée',
+    base_price: 315000,
+    base_production: getBuildingBaseProduction(7),
+  },
+  {
+    name: 'pirate_port',
+    label: 'Port de pirate',
+    base_price: 650000,
+    base_production: getBuildingBaseProduction(8),
+  },
+  {
+    name: 'volcanic_island',
+    label: 'Île volcanique',
+    base_price: 1575000,
+    base_production: getBuildingBaseProduction(9),
+  },
+  {
+    name: 'scorching_dunes',
+    label: 'Dunes caniculaires',
+    base_price: 3150000,
+    base_production: getBuildingBaseProduction(10),
+  },
+  {
+    name: 'mystical_forest',
+    label: 'Forêt mystique',
+    base_price: 6000000,
+    base_production: getBuildingBaseProduction(11),
+  },
+  {
+    name: 'lush_jungle',
+    label: 'Jungle luxuriante',
+    base_price: 11500000,
+    base_production: getBuildingBaseProduction(12),
+  },
+  {
+    name: 'forgotten_temple',
+    label: 'Temple oublié',
+    base_price: 25750000,
+    base_production: getBuildingBaseProduction(13),
+  },
+  {
+    name: 'millennial_crypt',
+    label: 'Crypte millénaire',
+    base_price: 55000000,
+    base_production: getBuildingBaseProduction(14),
+  },
+  {
+    name: 'bottomless_pit',
+    label: 'Gouffre sans fond',
+    base_price: 95000000,
+    base_production: getBuildingBaseProduction(15),
+  },
+  {
+    name: 'autonomous_mine',
+    label: 'Mine autonome',
+    base_price: 185000000,
+    base_production: getBuildingBaseProduction(16),
+  },
+  {
+    name: 'golem_farm',
+    label: 'Ferme à golem',
+    base_price: 385000000,
+    base_production: getBuildingBaseProduction(17),
+  },
+  {
+    name: 'radioactive_cave',
+    label: 'Grotte radioactive',
+    base_price: 750000000,
+    base_production: getBuildingBaseProduction(18),
+  },
+  {
+    name: 'biological_lab',
+    label: 'Laboratoire biologique',
+    base_price: 1350000000,
+    base_production: getBuildingBaseProduction(19),
+  },
+  {
+    name: 'thermonuclear_submarine',
+    label: 'Sous-marin thermonucléaire',
+    base_price: 2550000000,
+    base_production: getBuildingBaseProduction(20),
+  },
+  {
+    name: 'kraken_pit',
+    label: 'Fosse du Kraken',
+    base_price: 5950000000,
+    base_production: getBuildingBaseProduction(21),
+  },
+  {
+    name: 'enigmatic_fissure',
+    label: 'Faille énigmatique',
+    base_price: 9500000000,
+    base_production: getBuildingBaseProduction(22),
+  },
+  {
+    name: 'corrupted_lands',
+    label: 'Terres corrompues',
+    base_price: 18500000000,
+    base_production: getBuildingBaseProduction(23),
+  },
+  {
+    name: 'matrix_glitch',
+    label: 'Bug dans la matrice',
+    base_price: 34500000000,
+    base_production: getBuildingBaseProduction(24),
+  },
+  {
+    name: 'quantum_computer',
+    label: 'Ordinateur quantique',
+    base_price: 75000000000,
+    base_production: getBuildingBaseProduction(25),
+  },
+  {
+    name: 'particle_accelerator',
+    label: 'Accélerateur à particules',
+    base_price: 125000000000,
+    base_production: getBuildingBaseProduction(26),
+  },
+  {
+    name: 'time_travel_machine',
+    label: 'Machine à voyager dans le temps',
+    base_price: 235000000000,
+    base_production: getBuildingBaseProduction(27),
+  },
+  {
+    name: 'prehistoric_cave',
+    label: 'Caverne préhistorique',
+    base_price: 455000000000,
+    base_production: getBuildingBaseProduction(28),
+  },
+  {
+    name: 'Extraterrestrial_pyramid',
+    label: 'Pyramide extraterrestre',
+    base_price: 885000000000,
+    base_production: getBuildingBaseProduction(29),
+  },
+  {
+    name: 'Atlantis',
+    label: 'Atlantis',
+    base_price: 1550000000000,
+    base_production: getBuildingBaseProduction(30),
+  },
+  {
+    name: 'Great_Ancients_Pantheon',
+    label: 'Panthéon des Grands Anciens',
+    base_price: 2950000000000,
+    base_production: getBuildingBaseProduction(31),
+  },
+  {
+    name: 'Earth_center',
+    label: 'Centre de la Terre',
+    base_price: 5500000000000,
+    base_production: getBuildingBaseProduction(32),
+  },
+  {
+    name: 'Devil_lair',
+    label: 'Repère du Diable',
+    base_price: 10500000000000,
+    base_production: getBuildingBaseProduction(33),
+  },
+  {
+    name: 'Eden_garden',
+    label: "Jardin d'Eden",
+    base_price: 19500000000000,
+    base_production: getBuildingBaseProduction(34),
+  },
+]
+
+export { buildings as default }
