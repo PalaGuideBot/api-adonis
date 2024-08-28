@@ -55,7 +55,7 @@ interface UserData {
     timePlayed: number
     clicker: {
       rps: number
-      productions: number
+      production: number
     }
   }
 }
@@ -181,7 +181,7 @@ const userSchema: Schema = new Schema<User>({
         timePlayed: Number,
         clicker: {
           rps: Number,
-          productions: Number,
+          production: Number,
         },
       },
     },

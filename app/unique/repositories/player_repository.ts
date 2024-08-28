@@ -63,7 +63,7 @@ class PlayerRepository {
             timePlayed: playerData.profile.timePlayed,
             clicker: {
               rps: playerData.clicker.rps,
-              productions: playerData.clicker.productions,
+              production: playerData.clicker.production,
             },
           },
         },

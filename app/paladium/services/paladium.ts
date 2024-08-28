@@ -4,6 +4,7 @@ import { Infer } from '@vinejs/vine/types'
 import ky, { HTTPError } from 'ky'
 
 import { LeaderboardCategory, LeaderboardTrixiumCategory } from '#leaderboard/types'
+import { calculateBuildingProduction } from '#paladium/helpers/clicker'
 import type { ApiResponseError } from '#paladium/types'
 import { factionMembersValidator, factionProfileValidator } from '#paladium/validators/faction'
 import {
@@ -151,11 +152,18 @@ class PaladiumService {
     const mount = await this.getPlayerMount(uuid)
     const clicker = await this.getPlayerClicker(uuid)
 
-    const clickerProductionsSum = clicker.buildings.reduce(
+    const clickerProduction = clicker.buildings.reduce(
       (acc, building) => acc + building.production,
       0
     )
-    const rps = 0
+
+    let rps = 0.5
+
+    clicker.buildings.forEach((building) => {
+      if (building.quantity > 0) {
+        rps += calculateBuildingProduction(building.name, clicker, jobs) * building.quantity
+      }
+    })
 
     return {
       profile,
@@ -183,7 +191,7 @@ class PaladiumService {
       mount: mount?.mountType !== 0 ? mount : null,
       clicker: {
         rps,
-        productions: clickerProductionsSum,
+        production: clickerProduction,
       },
     }
   }

@@ -189,7 +189,7 @@ const player: Player = {
         timePlayed: 5000,
         clicker: {
           rps: 0,
-          productions: 0,
+          production: 0,
         },
       },
     },
@@ -221,7 +221,7 @@ const player: Player = {
         timePlayed: 4000,
         clicker: {
           rps: 500,
-          productions: 50000,
+          production: 50000,
         },
       },
     },
@@ -253,7 +253,7 @@ const player: Player = {
         timePlayed: 3000,
         clicker: {
           rps: 1000,
-          productions: 100000,
+          production: 100000,
         },
       },
     },
@@ -285,7 +285,7 @@ const player: Player = {
         timePlayed: 2000,
         clicker: {
           rps: 1500,
-          productions: 150000,
+          production: 150000,
         },
       },
     },
@@ -317,7 +317,7 @@ const player: Player = {
         timePlayed: 1000,
         clicker: {
           rps: 2000,
-          productions: 200000,
+          production: 200000,
         },
       },
     },
