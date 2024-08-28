@@ -42,6 +42,8 @@ export default class SyncRetry extends BaseCommand {
       })
     }
 
+    this.logger.info(`Found ${bulkOperations.length} players to retry`, { prefix: this.prefix })
+
     if (bulkOperations.length > 0) {
       await db.users.bulkWrite(bulkOperations)
       this.logger.info('Synced retry', { prefix: this.prefix })
