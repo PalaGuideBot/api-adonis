@@ -165,6 +165,8 @@ class PaladiumService {
       }
     })
 
+    if (Number.isNaN(rps)) rps = 0
+
     return {
       profile,
       jobs,
