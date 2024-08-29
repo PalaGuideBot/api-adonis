@@ -29,3 +29,14 @@ export const factionMembersValidator = vine.compile(
     totalCount: vine.number(),
   })
 )
+
+export const factionQuestValidator = vine.compile(
+  vine.object({
+    item: vine.string(),
+    quantity: vine.number(),
+    earningMoney: vine.number(),
+    earningXp: vine.number(),
+    start: vine.number(),
+    end: vine.number(),
+  })
+)

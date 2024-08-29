@@ -1,4 +1,5 @@
 import '#start/routes/bot'
+import '#start/routes/event'
 import '#start/routes/leaderboard'
 import '#start/routes/minecraft'
 import '#start/routes/other'
