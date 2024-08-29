@@ -79,6 +79,10 @@ export default class SyncPlayers extends BaseCommand {
                     money: playerData.profile.money,
                     rank: playerData.profile.rank,
                     timePlayed: playerData.profile.timePlayed,
+                    clicker: {
+                      rps: playerData.clicker.rps,
+                      production: playerData.clicker.production,
+                    },
                   },
                 },
               },

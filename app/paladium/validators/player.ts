@@ -106,3 +106,19 @@ export const playerMountValidator = vine.compile(
     xp: vine.number(),
   })
 )
+
+export const playerClickerValidator = vine.compile(
+  vine.object({
+    buildings: vine.array(
+      vine.object({
+        name: vine.string(),
+        production: vine.number(),
+        quantity: vine.number(),
+      })
+    ),
+    lastBuildingBought: vine.string(),
+    rps: vine.number(),
+    upgrades: vine.array(vine.string()),
+    uuid: vine.string(),
+  })
+)
