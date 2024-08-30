@@ -165,7 +165,9 @@ class PaladiumService {
       }
     })
 
-    if (Number.isNaN(rps)) rps = 0
+    if (Number.isNaN(rps)) {
+      rps = 0
+    }
 
     return {
       profile,

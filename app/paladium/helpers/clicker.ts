@@ -25,9 +25,15 @@ export function getBuildingBaseProduction(power: number) {
   return 0.10000000149011612 * Math.pow(1.7999999523162842, power)
 }
 
-function getTerrainUpgradeBonusByBuilding(targetBuilding: string, playerJobs: PlayerJobsData) {
+function getTerrainUpgradeBonusByBuilding(
+  targetBuilding: string,
+  playerUpgrades: PlayerClikerData['upgrades'],
+  playerJobs: PlayerJobsData
+) {
   let percentage = 0
-  const terrain = upgrades.terrains.find((item) => item.item.includes(targetBuilding))
+  const terrain = upgrades.terrains.find(
+    (item) => item.item.includes(targetBuilding) && playerUpgrades.includes(item.name)
+  )
 
   //TODO: vérifier lorsque l'on a plus de 1 terrain
 
@@ -37,16 +43,16 @@ function getTerrainUpgradeBonusByBuilding(targetBuilding: string, playerJobs: Pl
 
   switch (true) {
     case terrain.name.includes('miner'):
-      percentage += Number(playerJobs?.miner?.level) * 0.01
+      percentage += playerJobs?.miner?.level ?? 0 * 0.01
       break
     case terrain.name.includes('farmer'):
-      percentage += Number(playerJobs?.farmer?.level) * 0.01
+      percentage += playerJobs?.farmer?.level ?? 0 * 0.01
       break
     case terrain.name.includes('hunter'):
-      percentage += Number(playerJobs?.hunter?.level) * 0.01
+      percentage += playerJobs?.hunter?.level ?? 0 * 0.01
       break
     case terrain.name.includes('alchemist'):
-      percentage += Number(playerJobs?.alchemist?.level) * 0.01
+      percentage += playerJobs?.alchemist?.level ?? 0 * 0.01
       break
   }
 
@@ -152,7 +158,11 @@ export function calculateBuildingProduction(
     return 0
   }
 
-  const terrainBonus = getTerrainUpgradeBonusByBuilding(targetBuilding, playerJobs)
+  const terrainBonus = getTerrainUpgradeBonusByBuilding(
+    targetBuilding,
+    playerClickerData.upgrades,
+    playerJobs
+  )
   const globalBonus = getGlobalUpgradeBonus(playerClickerData.upgrades)
   const categoryBonus = getCategoryUpgradeBonusByBuilding(
     targetBuilding,
