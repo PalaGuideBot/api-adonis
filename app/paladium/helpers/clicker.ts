@@ -71,9 +71,7 @@ function getCategoryUpgradeBonusByBuilding(
   playerUpgrades: PlayerClikerData['upgrades']
 ) {
   const ownedUpgrades = upgrades.categories.filter(
-    (upgrade) =>
-      playerUpgrades.some((playerUpgrade) => playerUpgrade === upgrade.name) &&
-      upgrade.item.includes(targetBuilding)
+    (upgrade) => playerUpgrades.includes(upgrade.name) && upgrade.item.includes(targetBuilding)
   )
   return ownedUpgrades.reduce((acc, upgrade) => acc + upgrade.pourcentage, 0)
 }
@@ -84,9 +82,7 @@ function getManyUpgradeBonusByBuilding(
   playerBuildings: PlayerClikerData['buildings']
 ) {
   const many = upgrades.many.find(
-    (upgrade) =>
-      playerUpgrades.some((playerUpgrade) => playerUpgrade === upgrade.name) &&
-      upgrade.item.includes(targetBuilding)
+    (upgrade) => playerUpgrades.includes(upgrade.name) && upgrade.item.includes(targetBuilding)
   )
 
   //TODO: vérifier lorsque l'on a plus de 1 upgrade
@@ -107,9 +103,7 @@ function getBuildingUpgradeBonus(
   playerUpgrades: PlayerClikerData['upgrades']
 ) {
   const ownedBuildings = upgrades.buildings.filter(
-    (upgrade) =>
-      playerUpgrades.some((playerUpgrade) => playerUpgrade === upgrade.name) &&
-      upgrade.item.includes(targetBuilding)
+    (upgrade) => playerUpgrades.includes(upgrade.name) && upgrade.item.includes(targetBuilding)
   )
 
   //TODO: vérifier lorsque l'on a plus de 2 upgrades
@@ -124,8 +118,7 @@ function getPosteriorUpgradeBonus(
 ) {
   const posterior = upgrades.posteriors.find(
     (upgrade) =>
-      playerUpgrades.some((playerUpgrade) => playerUpgrade === upgrade.name) &&
-      upgrade.activeItem.includes(targetBuilding)
+      playerUpgrades.includes(upgrade.name) && upgrade.activeItem.includes(targetBuilding)
   )
 
   // TODO: vérifier lorsque l'on a plus de 1 upgrade
