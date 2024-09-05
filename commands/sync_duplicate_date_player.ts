@@ -19,8 +19,9 @@ export default class SyncDuplicatePlayerDate extends BaseCommand {
     const duplicate = []
 
     for (const player of players) {
-      if (player.data && player.data.length > 1) {
+      if (Array.isArray(player.data) && player.data.length > 1) {
         const dates = player.data.map((d) => d.date)
+        // Si des doublons existent dans les dates
         if (dates.length !== new Set(dates).size) {
           duplicate.push({ uuid: player.uuid, id: player._id })
         }
@@ -29,8 +30,39 @@ export default class SyncDuplicatePlayerDate extends BaseCommand {
 
     this.logger.info(`Found ${duplicate.length} duplicate players`)
 
+    const bulkOperations = []
+
     for (const player of duplicate) {
-      this.logger.info(player.uuid)
+      const playerData = await db.users.findOne({ uuid: player.uuid }).lean()
+      if (!playerData || !Array.isArray(playerData.data)) continue
+
+      const seenDates = new Set()
+      const newPlayerData = []
+
+      for (const entry of playerData.data) {
+        if (!seenDates.has(entry.date)) {
+          newPlayerData.push(entry)
+          seenDates.add(entry.date)
+        }
+      }
+
+      bulkOperations.push({
+        updateOne: {
+          filter: { uuid: player.uuid },
+          update: { $set: { data: newPlayerData } },
+        },
+      })
+    }
+
+    if (bulkOperations.length > 0) {
+      try {
+        await db.users.bulkWrite(bulkOperations)
+        this.logger.info('Bulk update operations completed successfully')
+      } catch (error) {
+        this.logger.error('Error during bulk update operations', error)
+      }
+    } else {
+      this.logger.info('No players to update')
     }
   }
 }
