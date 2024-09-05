@@ -19,15 +19,18 @@ class LeaderboardRepository {
       case 'trixium.faction':
         const trixiumFactions = await category.model.find()
         const serializedTrixiumFactions = await this.serializeTrixiumFactions(trixiumFactions)
-        return this.filterResult(serializedTrixiumFactions as typeof trixiumFactions)
+        return this.filterResult(serializedTrixiumFactions as typeof trixiumFactions, 50)
       default:
         const data = await category.model.find()
-        return this.filterResult(data)
+        return this.filterResult(data, category.name === 'trixium.player' ? 50 : 100)
     }
   }
 
-  private filterResult(data: InferSchemaType<(typeof config)[number]['model']['schema']>[]) {
-    const lastData = (data.at(-1)?.data ?? []).slice(0, 100)
+  private filterResult(
+    data: InferSchemaType<(typeof config)[number]['model']['schema']>[],
+    limit: number = 100
+  ) {
+    const lastData = (data.at(-1)?.data ?? []).slice(0, limit)
 
     const existingValues = new Set(
       lastData.map((item) => ('name' in item ? item.name : item.username))
