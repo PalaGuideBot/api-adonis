@@ -40,3 +40,28 @@ export const factionQuestValidator = vine.compile(
     end: vine.number(),
   })
 )
+
+export const factionOnYourMarksValidator = vine.compile(
+  vine.object({
+    goalType: vine.enum([
+      'BREAK_BLOCKS',
+      'MOB_KILL',
+      'FISHING',
+      'WALK',
+      'ITEM_CRAFT',
+      'ITEM_SMELT',
+      'ITEM_CRAFT_PALAMACHINE',
+      'ITEM_ENCHANT',
+      'GRINDER_CRAFT',
+      'GRINDER_SMELT',
+      'USE_ITEM',
+    ]),
+    extra: vine.string().nullable(),
+    amount: vine.number(),
+    rewardElo: vine.number(),
+    serverType: vine.string(),
+    start: vine.number(),
+    end: vine.number(),
+    state: vine.string(),
+  })
+)

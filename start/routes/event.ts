@@ -5,6 +5,9 @@ const EventController = () => import('#event/controllers/event_controller')
 router
   .group(() => {
     router.get('/qdf', [EventController, 'factionQuest']).as('faction.quest')
+    router
+      .get('/on-your-marks', [EventController, 'factionOnYourMarks'])
+      .as('faction.on-your-marks')
   })
   .as('events')
   .prefix('/events')

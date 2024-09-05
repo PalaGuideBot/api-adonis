@@ -16,4 +16,13 @@ export default class EventController {
 
     return response.ok(quest)
   }
+
+  async factionOnYourMarks({ response }: HttpContext) {
+    const onYourMarks = await cache.getOrSet({
+      key: 'events:faction-on-your-marks',
+      factory: () => this.paladiumService.getFactionOnYourMarks(),
+    })
+
+    return response.ok(onYourMarks)
+  }
 }

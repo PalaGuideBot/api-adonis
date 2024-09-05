@@ -8,6 +8,7 @@ import { calculateBuildingProduction } from '#paladium/helpers/clicker'
 import type { ApiResponseError } from '#paladium/types'
 import {
   factionMembersValidator,
+  factionOnYourMarksValidator,
   factionProfileValidator,
   factionQuestValidator,
 } from '#paladium/validators/faction'
@@ -234,6 +235,17 @@ class PaladiumService {
       const data = await response.json()
 
       return factionQuestValidator.validate(data)
+    } catch (error: unknown) {
+      throw await buildError(error)
+    }
+  }
+
+  async getFactionOnYourMarks() {
+    try {
+      const response = await this.client.get('paladium/faction/onyourmarks')
+      const data = await response.json()
+
+      return factionOnYourMarksValidator.validate(data)
     } catch (error: unknown) {
       throw await buildError(error)
     }
