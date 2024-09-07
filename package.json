@@ -28,6 +28,7 @@
     "#status/*": "./app/status/*.js",
     "#unique/*": "./app/unique/*.js",
     "#usage/*": "./app/usage/*.js",
+    "#utils/*": "./app/utils/*.js",
     "#commands/*": "./commands/*.js",
     "#providers/*": "./providers/*.js",
     "#start/*": "./start/*.js",
