@@ -115,7 +115,13 @@ class PaladiumService {
 
       return playerClickerValidator.validate(data)
     } catch (error: unknown) {
-      throw await buildError(error)
+      return {
+        buildings: [],
+        upgrades: [],
+        lastBuildingBought: '',
+        rps: 0,
+        uuid,
+      }
     }
   }
 
