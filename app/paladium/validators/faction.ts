@@ -59,9 +59,9 @@ export const factionOnYourMarksValidator = vine.compile(
     extra: vine.string().nullable(),
     amount: vine.number(),
     rewardElo: vine.number(),
-    serverType: vine.string(),
+    serverType: vine.enum(['LOBBY', 'FACTION', 'MINAGE', 'FARMLAND', 'GAME', 'DIM_MINER']),
     start: vine.number(),
     end: vine.number(),
-    state: vine.string(),
+    state: vine.enum(['NOT_STARTED', 'RUNNING', 'FINISHED']),
   })
 )
