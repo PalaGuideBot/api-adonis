@@ -14,7 +14,7 @@ const imageClient = ky.create({
 export class MeService {
   async postImageEmbleme(body: number[]) {
     try {
-      const response = await imageClient.post('images/embleme', {
+      const response = await imageClient.post('emblem', {
         body: JSON.stringify(body),
         headers: { 'Content-Type': 'application/json' },
       })
