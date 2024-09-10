@@ -1,4 +1,6 @@
 import { jobXp, xpPerItem } from '#utils/contents/jobs'
+import { calculateJobValidator } from '#utils/validators/calculate_validator'
+import { Infer } from '@vinejs/vine/types'
 
 interface Item {
   currLevel: number
@@ -13,13 +15,16 @@ interface Item {
   }
 }
 
+type JobString = Infer<typeof calculateJobValidator>
+
 class JobRepository {
-  async xpTotal(
-    currentLevel: number,
-    targetLevel: number,
-    bonusXp: number,
+  async getXpTotal(body: {
+    currentLevel: number
+    targetLevel: number
+    bonusXp: number
     currentXp: number
-  ): Promise<number> {
+  }): Promise<number> {
+    const { currentLevel, targetLevel, bonusXp, currentXp } = body
     let totalXp: number = 0
 
     for (let i = currentLevel; i < targetLevel; i++) {
@@ -32,22 +37,27 @@ class JobRepository {
     return Math.ceil(xpWithBonus)
   }
 
-  async xpPerItemForJob(
-    job: string,
-    currentLevel: number,
-    targetLevel: number,
-    bonusXp: number,
+  async getXpPerItemForJob(body: {
+    currentLevel: number
+    targetLevel: number
+    bonusXp: number
     currentXp: number
-  ): Promise<{ xpTotal: number; items: Item[] }> {
-    const xpTotalResponses = await this.xpTotal(currentLevel, targetLevel, bonusXp, currentXp)
+    job: JobString['job']
+  }): Promise<{ xpTotal: number; items: Item[] }> {
+    const { currentLevel, targetLevel, job } = body
+    const xpTotalResponses = await this.getXpTotal(body)
 
     const items: Item[] = []
 
     for (const item of xpPerItem[job]) {
-      if (item.from > targetLevel) continue
+      if (item.from > body.targetLevel) continue
       if (Number.isNaN(item.xp)) continue
       const currLevel: number = item.from <= currentLevel ? currentLevel : item.from
-      const xpPerItemResponses = await this.xpTotal(currLevel, targetLevel, bonusXp, 0)
+      const xpPerItemResponses = await this.getXpTotal({
+        ...body,
+        currentLevel: currLevel,
+        currentXp: 0,
+      })
 
       items.push({
         currLevel,
@@ -64,7 +74,7 @@ class JobRepository {
     }
   }
 
-  async levelReachedWithXp(
+  async getLevelReachedWithXp(
     xp: number,
     currentXp: number,
     currentLevel: number
@@ -83,30 +93,40 @@ class JobRepository {
     }
   }
 
-  async xpTotalForItem(
-    job: string,
-    item: string,
-    currentLevel: number,
-    bonusXp: number,
-    currentXp: number,
+  async getXpTotalForItem(body: {
+    currentLevel: number
+    bonusXp: number
+    currentXp: number
+    job: JobString['job']
+    item: string
     amount: number
-  ): Promise<{ level: number; xpTotal: number }> {
+  }): Promise<{ level: number; xpTotal: number }> {
+    const { job, item, currentLevel, bonusXp, currentXp, amount } = body
     const itemFind = xpPerItem[job].find((i) => i.type.toLowerCase().replace(/ /g, '-') === item)
     if (!itemFind) return { level: 0, xpTotal: 0 }
 
     const xpTotalForItem = Math.ceil((itemFind.xp * amount + currentXp) * (1 + bonusXp / 100))
 
-    const levelReached = await this.levelReachedWithXp(xpTotalForItem, currentXp, currentLevel)
+    const levelReached = await this.getLevelReachedWithXp(xpTotalForItem, currentXp, currentLevel)
 
     return levelReached
   }
 
-  async itemListing(): Promise<{ type: string; id: string; job: string }[]> {
-    const items: { type: string; id: string; job: string }[] = []
+  async getItemListing(): Promise<
+    { type: string; id: string; job: 'miner' | 'farmer' | 'hunter' | 'alchemist' }[]
+  > {
+    const items: { type: string; id: string; job: 'miner' | 'farmer' | 'hunter' | 'alchemist' }[] =
+      []
 
     for (const [job, jobItems] of Object.entries(xpPerItem)) {
-      for (const item of jobItems) {
-        items.push({ type: item.type, id: item.type.toLowerCase().replace(/ /g, '-'), job })
+      if (['miner', 'farmer', 'hunter', 'alchemist'].includes(job)) {
+        for (const item of jobItems) {
+          items.push({
+            type: item.type,
+            id: item.type.toLowerCase().replace(/ /g, '-'),
+            job: job as 'miner' | 'farmer' | 'hunter' | 'alchemist',
+          })
+        }
       }
     }
 

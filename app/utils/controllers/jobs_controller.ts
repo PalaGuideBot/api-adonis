@@ -14,52 +14,39 @@ export default class JobsController {
 
   async calculate({ response, request }: HttpContext) {
     const body = await request.validateUsing(calculateJobValidator)
-    const { job, currentLevel, targetLevel, bonusXp, currentXp } = body
-
-    if (currentXp > jobXp[currentLevel]) {
+    if (body.currentXp > jobXp[body.currentLevel]) {
       return response.badRequest({ message: 'Invalid current xp' })
     }
 
-    const responses = await this.jobRepository.xpPerItemForJob(
-      job,
-      currentLevel,
-      targetLevel,
-      bonusXp,
-      currentXp
-    )
+    const responses = await this.jobRepository.getXpPerItemForJob(body)
 
     return response.ok(responses)
   }
 
   async reverseCalculate({ response, request }: HttpContext) {
     const body = await request.validateUsing(reverseCalculateJobValidator)
-    const { item, currentLevel, bonusXp, currentXp, amount } = body
 
-    const types = await this.jobRepository.itemListing()
-    const typesFind = types.find(({ id }) => id === item)
+    const types = await this.jobRepository.getItemListing()
+    const typesFind = types.find(({ id }) => id === body.item)
 
     if (!typesFind) {
       return response.badRequest({ message: 'Invalid item' })
     }
 
-    if (currentXp > jobXp[currentLevel]) {
+    if (body.currentXp > jobXp[body.currentLevel]) {
       return response.badRequest({ message: 'Invalid current xp' })
     }
 
-    const responses = await this.jobRepository.xpTotalForItem(
-      typesFind.job,
-      item,
-      currentLevel,
-      bonusXp,
-      currentXp,
-      amount
-    )
+    const responses = await this.jobRepository.getXpTotalForItem({
+      ...body,
+      job: typesFind.job,
+    })
 
     return response.ok(responses)
   }
 
   async itemListing({ response }: HttpContext) {
-    const responses = await this.jobRepository.itemListing()
+    const responses = await this.jobRepository.getItemListing()
     if (!responses || responses.length === 0) {
       return response.badRequest({ message: 'No items found' })
     }
