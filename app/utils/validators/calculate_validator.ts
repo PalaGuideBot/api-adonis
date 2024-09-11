@@ -20,3 +20,11 @@ export const reverseCalculateJobValidator = vine.compile(
     amount: vine.number().min(1),
   })
 )
+
+export const calculatePogValidator = vine.compile(
+  vine.object({
+    currentLevel: vine.number().min(0).max(99),
+    targetLevel: vine.number().min(0).max(99),
+    currentXp: vine.number().min(0),
+  })
+)
