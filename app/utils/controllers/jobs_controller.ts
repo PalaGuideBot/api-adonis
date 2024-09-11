@@ -13,7 +13,8 @@ export default class JobsController {
   constructor(private jobRepository: JobRepository) {}
 
   async calculate({ response, request }: HttpContext) {
-    const body = await request.validateUsing(calculateJobValidator)
+    const bodyJSON = request.all()
+    const body = await calculateJobValidator.validate(bodyJSON.body)
     if (body.currentXp > jobXp[body.currentLevel]) {
       return response.badRequest({ message: 'Invalid current xp' })
     }
@@ -24,7 +25,8 @@ export default class JobsController {
   }
 
   async reverseCalculate({ response, request }: HttpContext) {
-    const body = await request.validateUsing(reverseCalculateJobValidator)
+    const bodyJSON = request.all()
+    const body = await reverseCalculateJobValidator.validate(bodyJSON.body)
 
     const types = await this.jobRepository.getItemListing()
     const typesFind = types.find(({ id }) => id === body.item)
