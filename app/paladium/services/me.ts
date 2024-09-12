@@ -7,7 +7,7 @@ const imageClient = ky.create({
   prefixUrl: env.get('PALAGUIDEBOT_IMAGE_URL'),
   timeout: 10000,
   headers: {
-    authorization: env.get('PALAGUIDEBOT_IMAGE_KEY'),
+    authorization: 'Bearer ' + env.get('PALAGUIDEBOT_IMAGE_KEY'),
   },
 })
 
