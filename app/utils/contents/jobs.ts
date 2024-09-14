@@ -46,7 +46,7 @@ const xpPerItem: Record<(typeof jobCategories)[number], Item[]> = {
     { type: 'Coal Ore', action: ACTION.BREAK, xp: 4, from: -1 },
     { type: 'Nether Quartz Ore', action: ACTION.BREAK, xp: 6, from: -1 },
     { type: 'Obsidian', action: ACTION.BREAK, xp: 6, from: -1 },
-    { type: 'Lapis Lazulli Ore', action: ACTION.BREAK, xp: 15, from: -1 },
+    { type: 'Lapis Lazuli Ore', action: ACTION.BREAK, xp: 15, from: -1 },
     { type: 'Redstone Ore', action: ACTION.BREAK, xp: 15, from: -1 },
     { type: 'Emerald Ore', action: ACTION.BREAK, xp: 75, from: -1 },
     { type: 'Iron Ingot', action: ACTION.SMELT, xp: 8, from: 10 },
