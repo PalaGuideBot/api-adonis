@@ -1,4 +1,9 @@
+import { Infer } from '@vinejs/vine/types'
+
 import type { DailyEvent } from '#event/types'
+import { factionOnYourMarksValidator } from '#paladium/validators/faction'
+
+type FactionEventOnYourMarks = Infer<typeof factionOnYourMarksValidator>
 
 const dailyEvents: DailyEvent[] = [
   {
@@ -80,4 +85,25 @@ const dailyEvents: DailyEvent[] = [
   },
 ]
 
-export { dailyEvents }
+const getOnYourMarksGoalItem = (event: FactionEventOnYourMarks) => {
+  switch (event.goalType) {
+    case 'BREAK_BLOCKS':
+    case 'MOB_KILL':
+    case 'ITEM_CRAFT':
+    case 'ITEM_SMELT':
+    case 'ITEM_CRAFT_PALAMACHINE':
+    case 'ITEM_ENCHANT':
+    case 'GRINDER_CRAFT':
+    case 'GRINDER_SMELT':
+    case 'USE_ITEM':
+      return event.extra ?? ''
+    case 'FISHING':
+      return 'fishing_rod'
+    case 'WALK':
+      return 'leather_boots'
+    default:
+      return ''
+  }
+}
+
+export { dailyEvents, getOnYourMarksGoalItem }

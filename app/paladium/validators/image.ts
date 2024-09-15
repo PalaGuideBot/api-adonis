@@ -6,3 +6,10 @@ export const imageValidator = vine.compile(
     url: vine.string(),
   })
 )
+
+export const minecraftItemValidator = vine.compile(
+  vine.object({
+    name: vine.string(),
+    url: vine.string(),
+  })
+)

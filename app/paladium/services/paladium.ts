@@ -1,10 +1,13 @@
+import { inject } from '@adonisjs/core'
 import { Exception } from '@adonisjs/core/exceptions'
 import { errors } from '@vinejs/vine'
 import { Infer } from '@vinejs/vine/types'
 import ky, { HTTPError } from 'ky'
 
+import { getOnYourMarksGoalItem } from '#event/contents/events'
 import { LeaderboardCategory, LeaderboardTrixiumCategory } from '#leaderboard/types'
 import { calculateBuildingProduction } from '#paladium/helpers/clicker'
+import { ImageService } from '#paladium/services/image'
 import type { ApiResponseError } from '#paladium/types'
 import {
   factionMembersValidator,
@@ -31,7 +34,10 @@ import {
 import { statusValidator } from '#paladium/validators/status'
 import env from '#start/env'
 
+@inject()
 class PaladiumService {
+  constructor(private imageService: ImageService) {}
+
   protected client = ky.create({
     prefixUrl: env.get('PALADIUM_BASE_URL'),
     timeout: 10000,
@@ -240,7 +246,15 @@ class PaladiumService {
       const response = await this.client.get('paladium/faction/quest')
       const data = await response.json()
 
-      return factionQuestValidator.validate(data)
+      const result = await factionQuestValidator.validate(data)
+
+      let image = null
+
+      try {
+        image = await this.imageService.getMinecraftItem(result.item)
+      } catch {}
+
+      return { ...result, image }
     } catch (error: unknown) {
       throw await buildError(error)
     }
@@ -251,7 +265,17 @@ class PaladiumService {
       const response = await this.client.get('paladium/faction/onyourmarks')
       const data = await response.json()
 
-      return factionOnYourMarksValidator.validate(data)
+      const result = await factionOnYourMarksValidator.validate(data)
+
+      let image = null
+
+      try {
+        image = result.extra
+          ? await this.imageService.getMinecraftItem(getOnYourMarksGoalItem(result))
+          : null
+      } catch {}
+
+      return { ...result, image }
     } catch (error: unknown) {
       throw await buildError(error)
     }
