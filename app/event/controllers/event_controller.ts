@@ -2,6 +2,7 @@ import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
 import cache from '#cache/cache'
+import { dailyEvents } from '#event/contents/events'
 import { PaladiumService } from '#paladium/services/paladium'
 
 @inject()
@@ -24,5 +25,9 @@ export default class EventController {
     })
 
     return response.ok(onYourMarks)
+  }
+
+  async dailyEvents({ response }: HttpContext) {
+    return response.ok(dailyEvents)
   }
 }

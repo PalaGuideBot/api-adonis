@@ -8,6 +8,7 @@ router
     router
       .get('/on-your-marks', [EventController, 'factionOnYourMarks'])
       .as('faction.on-your-marks')
+    router.get('/daily', [EventController, 'dailyEvents']).as('daily')
   })
   .as('events')
   .prefix('/events')
