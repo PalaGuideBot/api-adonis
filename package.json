@@ -17,6 +17,7 @@
     "#bot/*": "./app/bot/*.js",
     "#cache/*": "./app/cache/*.js",
     "#core/*": "./app/core/*.js",
+    "#event/*": "./app/event/*.js",
     "#exceptions/*": "./app/exceptions/*.js",
     "#leaderboard/*": "./app/leaderboard/*.js",
     "#link/*": "./app/link/*.js",

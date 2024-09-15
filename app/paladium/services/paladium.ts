@@ -6,7 +6,12 @@ import ky, { HTTPError } from 'ky'
 import { LeaderboardCategory, LeaderboardTrixiumCategory } from '#leaderboard/types'
 import { calculateBuildingProduction } from '#paladium/helpers/clicker'
 import type { ApiResponseError } from '#paladium/types'
-import { factionMembersValidator, factionProfileValidator } from '#paladium/validators/faction'
+import {
+  factionMembersValidator,
+  factionOnYourMarksValidator,
+  factionProfileValidator,
+  factionQuestValidator,
+} from '#paladium/validators/faction'
 import {
   factionsLeaderboardValidator,
   leaderboardCategoryValidator,
@@ -225,6 +230,28 @@ class PaladiumService {
       const data = await response.json()
 
       return factionMembersValidator.validate(data)
+    } catch (error: unknown) {
+      throw await buildError(error)
+    }
+  }
+
+  async getFactionQuest() {
+    try {
+      const response = await this.client.get('paladium/faction/quest')
+      const data = await response.json()
+
+      return factionQuestValidator.validate(data)
+    } catch (error: unknown) {
+      throw await buildError(error)
+    }
+  }
+
+  async getFactionOnYourMarks() {
+    try {
+      const response = await this.client.get('paladium/faction/onyourmarks')
+      const data = await response.json()
+
+      return factionOnYourMarksValidator.validate(data)
     } catch (error: unknown) {
       throw await buildError(error)
     }
