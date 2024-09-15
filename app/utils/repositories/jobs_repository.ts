@@ -53,8 +53,10 @@ class JobRepository {
       if (item.from > body.targetLevel) continue
       if (Number.isNaN(item.xp)) continue
       const currLevel: number = item.from <= currentLevel ? currentLevel : item.from
+      const tarLevel: number = item.to >= targetLevel ? targetLevel : item.to
       const xpPerItemResponses = await this.getXpTotal({
         ...body,
+        targetLevel: tarLevel,
         currentLevel: currLevel,
         currentXp: 0,
       })
@@ -68,9 +70,11 @@ class JobRepository {
       })
     }
 
+    const itemsFiltered = items.filter((item) => item.amount > 0)
+
     return {
       xpTotal: xpTotalResponses,
-      items,
+      items: itemsFiltered,
     }
   }
 
