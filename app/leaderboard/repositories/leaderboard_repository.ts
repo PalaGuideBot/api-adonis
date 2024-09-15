@@ -4,11 +4,11 @@ import { InferSchemaType } from 'mongoose'
 import { db } from '#core/services/db'
 import { config } from '#leaderboard/contents/categories'
 import { CategoryItem } from '#leaderboard/types'
-import { MeService } from '#paladium/services/me'
+import { ImageService } from '#paladium/services/image'
 
 @inject()
 class LeaderboardRepository {
-  constructor(private meService: MeService) {}
+  constructor(private imageService: ImageService) {}
 
   async get(category: CategoryItem) {
     switch (category.name) {
@@ -69,7 +69,7 @@ class LeaderboardRepository {
 
               let emblem
               try {
-                emblem = await this.meService.postImageEmbleme(faction.emblem)
+                emblem = await this.imageService.getOrCreateEmblem(faction.emblem)
               } catch {}
 
               if (emblem) {
@@ -108,7 +108,7 @@ class LeaderboardRepository {
 
                 let emblem
                 try {
-                  emblem = await this.meService.postImageEmbleme(faction.emblem)
+                  emblem = await this.imageService.getOrCreateEmblem(faction.emblem)
                 } catch {}
 
                 if (emblem) {

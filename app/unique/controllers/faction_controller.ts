@@ -2,14 +2,14 @@ import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 //import emitter from '@adonisjs/core/services/emitter'
 
-import { MeService } from '#paladium/services/me'
+import { ImageService } from '#paladium/services/image'
 import { FactionRepository } from '#unique/repositories/faction_repository'
 
 @inject()
 export default class FactionController {
   constructor(
     private factionRepository: FactionRepository,
-    private meService: MeService
+    private imageService: ImageService
   ) {}
 
   async show({ response, params }: HttpContext) {
@@ -20,7 +20,7 @@ export default class FactionController {
       return response.notFound({ message: 'Faction not found' })
     }
 
-    const emblem = await this.meService.postImageEmbleme(faction.emblem)
+    const emblem = await this.imageService.getOrCreateEmblem(faction.emblem)
 
     return response.ok({ ...faction, emblemUrl: emblem.url })
   }
