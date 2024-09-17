@@ -1,10 +1,8 @@
-import { pogXp, xpPerItem } from '#utils/contents/pogs'
+import { Infer } from '@vinejs/vine/types'
 
-interface PogItem {
-  name: string
-  xp: number
-  from: number
-}
+import { pogCategories, pogXp, xpPerItem } from '#utils/contents/pogs'
+import type { PogItem } from '#utils/types'
+import { calculatePogValidator } from '#utils/validators/calculate_validator'
 
 interface Item {
   currLevel: number
@@ -14,13 +12,14 @@ interface Item {
   item: PogItem
 }
 
+type PogCategory = (typeof pogCategories)[number]
+
+type CalculatePogResult = Infer<typeof calculatePogValidator>['body']
+
 class PogRepository {
-  async getXpTotal(body: {
-    currentLevel: number
-    targetLevel: number
-    currentXp: number
-  }): Promise<number> {
+  getXpTotal(body: CalculatePogResult) {
     const { currentLevel, targetLevel } = body
+
     let xpTotal = 0
 
     for (let i = currentLevel; i < targetLevel; i++) {
@@ -32,20 +31,24 @@ class PogRepository {
     return xpTotal
   }
 
-  private async calculateItems(
-    body: { currentLevel: number; targetLevel: number; currentXp: number },
-    itemsSource: { with_os: PogItem[]; without_os: PogItem[] },
-    type: 'with_os' | 'without_os'
-  ): Promise<Item[]> {
+  private calculateItems(
+    body: CalculatePogResult,
+    itemsSource: Record<PogCategory, PogItem[]>,
+    category: PogCategory
+  ) {
     const { currentLevel, targetLevel } = body
-    const xpTotalResponses = await this.getXpTotal(body)
+
+    const xpTotalItems = this.getXpTotal(body)
+
     const items: Item[] = []
 
-    for (const item of itemsSource[type]) {
-      if (item.from > targetLevel || Number.isNaN(item.xp)) continue
+    for (const item of itemsSource[category]) {
+      if (item.from > targetLevel || Number.isNaN(item.xp)) {
+        continue
+      }
 
       const currLevel = Math.max(item.from, currentLevel)
-      const xpPerItemResponses = await this.getXpTotal({
+      const xpTotal = this.getXpTotal({
         ...body,
         currentLevel: currLevel,
         currentXp: 0,
@@ -54,8 +57,8 @@ class PogRepository {
       items.push({
         currLevel,
         tarLevel: targetLevel,
-        xp: xpPerItemResponses,
-        amount: Math.ceil(xpTotalResponses / item.xp),
+        xp: xpTotal,
+        amount: Math.ceil(xpTotalItems / item.xp),
         item,
       })
     }
@@ -63,21 +66,14 @@ class PogRepository {
     return items
   }
 
-  async getXpPerItemForPog(body: {
-    currentLevel: number
-    targetLevel: number
-    currentXp: number
-  }): Promise<{
+  getXpPerItemForPog(body: CalculatePogResult): {
     xpTotal: number
-    items: {
-      with_os: Item[]
-      without_os: Item[]
-    }
-  }> {
-    const xpTotal = await this.getXpTotal(body)
+    items: Record<PogCategory, Item[]>
+  } {
+    const xpTotal = this.getXpTotal(body)
 
-    const itemsWithOs = await this.calculateItems(body, xpPerItem, 'with_os')
-    const itemsWithoutOs = await this.calculateItems(body, xpPerItem, 'without_os')
+    const itemsWithOs = this.calculateItems(body, xpPerItem, 'with_os')
+    const itemsWithoutOs = this.calculateItems(body, xpPerItem, 'without_os')
 
     return {
       xpTotal,

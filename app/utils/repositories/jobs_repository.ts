@@ -1,6 +1,7 @@
+import { Infer } from '@vinejs/vine/types'
+
 import { jobXp, xpPerItem } from '#utils/contents/jobs'
 import { calculateJobValidator } from '#utils/validators/calculate_validator'
-import { Infer } from '@vinejs/vine/types'
 
 interface Item {
   currLevel: number
@@ -15,16 +16,12 @@ interface Item {
   }
 }
 
-type JobString = Infer<typeof calculateJobValidator>
+type CalculateJobResult = Infer<typeof calculateJobValidator>['body']
 
 class JobRepository {
-  async getXpTotal(body: {
-    currentLevel: number
-    targetLevel: number
-    bonusXp: number
-    currentXp: number
-  }): Promise<number> {
+  getXpTotal(body: Omit<CalculateJobResult, 'job'>) {
     const { currentLevel, targetLevel, bonusXp, currentXp } = body
+
     let totalXp: number = 0
 
     for (let i = currentLevel; i < targetLevel; i++) {
@@ -37,24 +34,22 @@ class JobRepository {
     return Math.ceil(xpWithBonus)
   }
 
-  async getXpPerItemForJob(body: {
-    currentLevel: number
-    targetLevel: number
-    bonusXp: number
-    currentXp: number
-    job: JobString['job']
-  }): Promise<{ xpTotal: number; items: Item[] }> {
+  getXpPerItemForJob(body: CalculateJobResult) {
     const { currentLevel, targetLevel, job } = body
-    const xpTotalResponses = await this.getXpTotal(body)
+
+    const xpTotal = this.getXpTotal(body)
 
     const items: Item[] = []
 
     for (const item of xpPerItem[job]) {
-      if (item.from > body.targetLevel) continue
-      if (Number.isNaN(item.xp)) continue
-      const currLevel: number = item.from <= currentLevel ? currentLevel : item.from
-      const tarLevel: number = item.to >= targetLevel ? targetLevel : item.to
-      const xpPerItemResponses = await this.getXpTotal({
+      if (item.from > body.targetLevel || Number.isNaN(item.xp)) {
+        continue
+      }
+
+      const currLevel = item.from <= currentLevel ? currentLevel : item.from
+      const tarLevel = item.to >= targetLevel ? targetLevel : item.to
+
+      const xp = this.getXpTotal({
         ...body,
         targetLevel: tarLevel,
         currentLevel: currLevel,
@@ -64,8 +59,8 @@ class JobRepository {
       items.push({
         currLevel,
         tarLevel: targetLevel,
-        xp: xpPerItemResponses,
-        amount: Math.ceil(xpTotalResponses / item.xp),
+        xp: xp,
+        amount: Math.ceil(xpTotal / item.xp),
         item,
       })
     }
@@ -73,16 +68,12 @@ class JobRepository {
     const itemsFiltered = items.filter((item) => item.amount > 0)
 
     return {
-      xpTotal: xpTotalResponses,
+      xpTotal: xpTotal,
       items: itemsFiltered,
     }
   }
 
-  async getLevelReachedWithXp(
-    xp: number,
-    currentXp: number,
-    currentLevel: number
-  ): Promise<{ level: number; xpTotal: number }> {
+  getLevelReachedWithXp(xp: number, currentXp: number, currentLevel: number) {
     let xpTotal = currentXp
     let level = currentLevel
 
@@ -97,30 +88,26 @@ class JobRepository {
     }
   }
 
-  async getXpTotalForItem(body: {
-    currentLevel: number
-    bonusXp: number
-    currentXp: number
-    job: JobString['job']
-    item: string
-    amount: number
-  }): Promise<{ level: number; xpTotal: number }> {
+  getXpTotalForItem(
+    body: Omit<CalculateJobResult, 'targetLevel'> & { item: string; amount: number }
+  ) {
     const { job, item, currentLevel, bonusXp, currentXp, amount } = body
-    const itemFind = xpPerItem[job].find((i) => i.type.toLowerCase().replace(/ /g, '-') === item)
-    if (!itemFind) return { level: 0, xpTotal: 0 }
 
-    const xpTotalForItem = Math.ceil((itemFind.xp * amount + currentXp) * (1 + bonusXp / 100))
+    const target = xpPerItem[job].find((i) => i.type.toLowerCase().replace(/ /g, '-') === item)
 
-    const levelReached = await this.getLevelReachedWithXp(xpTotalForItem, currentXp, currentLevel)
+    if (!target) {
+      return { level: 0, xpTotal: 0 }
+    }
+
+    const xpTotalForItem = Math.ceil((target.xp * amount + currentXp) * (1 + bonusXp / 100))
+
+    const levelReached = this.getLevelReachedWithXp(xpTotalForItem, currentXp, currentLevel)
 
     return levelReached
   }
 
-  async getItemListing(): Promise<
-    { type: string; id: string; job: 'miner' | 'farmer' | 'hunter' | 'alchemist' }[]
-  > {
-    const items: { type: string; id: string; job: 'miner' | 'farmer' | 'hunter' | 'alchemist' }[] =
-      []
+  getItems() {
+    const items: Array<{ type: string; id: string; job: CalculateJobResult['job'] }> = []
 
     for (const [job, jobItems] of Object.entries(xpPerItem)) {
       if (['miner', 'farmer', 'hunter', 'alchemist'].includes(job)) {
@@ -128,7 +115,7 @@ class JobRepository {
           items.push({
             type: item.type,
             id: item.type.toLowerCase().replace(/ /g, '-'),
-            job: job as 'miner' | 'farmer' | 'hunter' | 'alchemist',
+            job: job as CalculateJobResult['job'],
           })
         }
       }

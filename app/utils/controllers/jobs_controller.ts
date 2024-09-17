@@ -14,11 +14,12 @@ export default class JobsController {
 
   async calculate({ response, request }: HttpContext) {
     const { body } = await request.validateUsing(calculateJobValidator)
+
     if (body.currentXp > jobXp[body.currentLevel]) {
       return response.badRequest({ message: 'Invalid current xp' })
     }
 
-    const result = await this.jobRepository.getXpPerItemForJob(body)
+    const result = this.jobRepository.getXpPerItemForJob(body)
 
     return response.ok(result)
   }
@@ -26,7 +27,7 @@ export default class JobsController {
   async reverseCalculate({ response, request }: HttpContext) {
     const { body } = await request.validateUsing(reverseCalculateJobValidator)
 
-    const types = await this.jobRepository.getItemListing()
+    const types = this.jobRepository.getItems()
     const type = types.find(({ id }) => id === body.item)
 
     if (!type) {
@@ -37,7 +38,7 @@ export default class JobsController {
       return response.badRequest({ message: 'Invalid current xp' })
     }
 
-    const result = await this.jobRepository.getXpTotalForItem({
+    const result = this.jobRepository.getXpTotalForItem({
       ...body,
       job: type.job,
     })
@@ -46,7 +47,7 @@ export default class JobsController {
   }
 
   async items({ response }: HttpContext) {
-    const items = await this.jobRepository.getItemListing()
+    const items = this.jobRepository.getItems()
 
     if (!items || items.length === 0) {
       return response.badRequest({ message: 'No items found' })

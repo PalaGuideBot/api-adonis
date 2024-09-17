@@ -1,4 +1,6 @@
-const pogCategories = ['with_os', 'without_os']
+import type { PogItem } from '#utils/types'
+
+const pogCategories = ['with_os', 'without_os'] as const
 
 const pogXp: number[] = [
   0, 52, 208, 404, 625, 866, 1125, 1398, 1683, 1981, 2289, 2607, 2935, 3270, 3615, 3967, 4326, 4692,
@@ -10,13 +12,7 @@ const pogXp: number[] = [
   42275, 42891, 43507, 44127, 44748, 45371, 45996, 46624, 47252, 47883,
 ]
 
-type PogItem = {
-  name: string
-  xp: number
-  from: number
-}
-
-const xpPerItem: { with_os: PogItem[]; without_os: PogItem[] } = {
+const xpPerItem: Record<(typeof pogCategories)[number], PogItem[]> = {
   without_os: [
     { name: 'Nothing', xp: 1, from: 0 },
     { name: 'Tree leaves', xp: 1, from: 11 },

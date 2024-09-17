@@ -16,7 +16,7 @@ export default class PogsController {
       return response.badRequest({ message: 'Invalid current xp' })
     }
 
-    const result = await this.pogRepository.getXpPerItemForPog(body)
+    const result = this.pogRepository.getXpPerItemForPog(body)
 
     return response.ok(result)
   }
