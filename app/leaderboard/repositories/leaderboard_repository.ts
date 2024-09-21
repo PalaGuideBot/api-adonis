@@ -41,9 +41,9 @@ class LeaderboardRepository {
         const filteredData = entry.data.filter((item) =>
           existingValues.has('name' in item ? item.name : item.username)
         )
-        return { date: entry.date, newDate: entry.newDate, data: filteredData }
+        return { date: entry.date, data: filteredData }
       }
-      return { date: entry.date, newDate: entry.newDate, data: [] }
+      return { date: entry.date, data: [] }
     })
   }
 
@@ -58,7 +58,6 @@ class LeaderboardRepository {
       ...data.filter((item) => item.date !== lastData.date),
       {
         date: lastData.date,
-        newDate: lastData.newDate,
         data: await Promise.all(
           lastData.data.map(async (item, index) => {
             if (index < 3) {
@@ -98,7 +97,6 @@ class LeaderboardRepository {
         ...data.filter((item) => item.date !== lastData.date),
         {
           date: lastData.date,
-          newDate: lastData.newDate,
           data: await Promise.all(
             lastData.data.map(async (item, index) => {
               if (index < 3) {
@@ -137,9 +135,9 @@ class LeaderboardRepository {
               }
             : item
         })
-        return { date: entry.date, newDate: entry.newDate, data: parsedData }
+        return { date: entry.date, data: parsedData }
       }
-      return { date: entry.date, newDate: entry.newDate, data: [] }
+      return { date: entry.date, data: [] }
     })
   }
 }

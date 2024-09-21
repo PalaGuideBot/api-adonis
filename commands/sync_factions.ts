@@ -54,7 +54,6 @@ export default class SyncFactions extends BaseCommand {
               $push: {
                 data: {
                   date: now,
-                  newDate: new Date(),
                   data: {
                     level: {
                       level: factionData.level.level,

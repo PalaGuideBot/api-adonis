@@ -14,7 +14,6 @@ interface Guild {
 
 interface Bot {
   date: string
-  newDate: Date
   interactions: Interaction[]
   guilds: Guild[]
 }
@@ -33,12 +32,11 @@ const guildSchema = new Schema<Guild>({
 
 const botSchema = new Schema<Bot>({
   date: String,
-  newDate: Date,
   interactions: [interactionSchema],
   guilds: [guildSchema],
 })
 
-const dbConnection: Connection = mongoose.connection.useDb('api')
+const dbConnection: Connection = mongoose.connection.useDb('bot')
 const Bot = dbConnection.model<Bot>('bot', botSchema)
 
 export default Bot

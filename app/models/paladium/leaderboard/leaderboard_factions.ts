@@ -8,13 +8,11 @@ interface FactionData {
 
 interface Faction {
   date: string
-  newDate: Date
   data: FactionData[]
 }
 
 const factionSchema = new Schema<Faction>({
   date: { type: String, required: true },
-  newDate: { type: Date, required: true },
   data: [
     {
       name: { type: String, required: true },

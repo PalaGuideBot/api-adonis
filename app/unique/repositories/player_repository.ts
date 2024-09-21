@@ -49,7 +49,6 @@ class PlayerRepository {
       data: [
         {
           date: DateTime.now().toFormat('yyyy-MM-dd'),
-          newDate: new Date(),
           data: {
             faction: playerData.profile.faction,
             factionRank: playerData.profile.factionRank ?? null,

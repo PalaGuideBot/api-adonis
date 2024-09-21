@@ -18,7 +18,6 @@ export default class GuildsController {
       if (!bot) {
         await this.botRepository.create({
           date: DateTime.now().toFormat('yyyy-MM-dd'),
-          newDate: new Date(),
           guilds: body,
           interactions: [],
         })

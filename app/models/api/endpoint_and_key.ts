@@ -14,7 +14,6 @@ interface Key {
 
 interface EndpointAndKey {
   date: string
-  newDate: Date
   endpoints: Endpoint[]
   keys: Key[]
 }
@@ -33,7 +32,6 @@ const keySchema = new Schema<Key>({
 
 const endpointAndKeySchema = new Schema<EndpointAndKey>({
   date: String,
-  newDate: Date,
   endpoints: [endpointSchema],
   keys: [keySchema],
 })

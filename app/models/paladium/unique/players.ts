@@ -29,7 +29,6 @@ interface Retry {
 
 interface PlayerData {
   date: string
-  newDate: Date
   data: {
     faction: string
     factionRank: string
@@ -156,7 +155,6 @@ const playerSchema: Schema = new Schema<Player>({
   data: [
     {
       date: String,
-      newDate: Date,
       data: {
         faction: String,
         factionRank: String,

@@ -7,13 +7,11 @@ interface ClickerData {
 
 interface Clicker {
   date: string
-  newDate: Date
   data: ClickerData[]
 }
 
 const leaderboardClickerSchema = new Schema<Clicker>({
   date: { type: String, required: true },
-  newDate: Date,
   data: [
     {
       username: { type: String, required: true },

@@ -29,7 +29,6 @@ export default class TokenController {
       token,
       expiredAt,
       date: DateTime.now().toFormat('yyyy-MM-dd'),
-      newDate: new Date(),
     })
 
     return response.ok({ token, expiredAt, message: 'Token generated' })

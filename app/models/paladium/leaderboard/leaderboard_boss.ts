@@ -7,13 +7,11 @@ interface BossData {
 
 interface Boss {
   date: string
-  newDate: Date
   data: BossData[]
 }
 
 const leaderboardBossSchema: Schema = new Schema<Boss>({
   date: { type: String, required: true },
-  newDate: { type: Date, required: true },
   data: [
     {
       username: { type: String, required: true },

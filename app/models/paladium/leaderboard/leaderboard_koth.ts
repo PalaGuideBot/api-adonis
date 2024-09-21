@@ -7,13 +7,11 @@ interface KothData {
 
 interface Koth {
   date: string
-  newDate: Date
   data: KothData[]
 }
 
 const leaderboardKothSchema = new Schema<Koth>({
   date: { type: String, required: true },
-  newDate: { type: Date, required: true },
   data: [
     {
       username: { type: String, required: true },

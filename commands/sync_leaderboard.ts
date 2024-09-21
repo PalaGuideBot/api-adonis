@@ -106,7 +106,6 @@ export default class SyncLeaderboard extends BaseCommand {
 
           const newLeaderboard = new category.model({
             date: now,
-            newDate: new Date(),
             data: responses,
           })
 

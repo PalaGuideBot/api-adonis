@@ -24,7 +24,6 @@ export default class SyncStatus extends BaseCommand {
 
     const newStatus = new db.paladiumStatus({
       date: now,
-      newDate: new Date(),
       data: responses,
     })
 
