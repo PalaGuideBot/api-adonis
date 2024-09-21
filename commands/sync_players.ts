@@ -60,22 +60,10 @@ export default class SyncPlayers extends BaseCommand {
                     faction: playerData.profile.faction,
                     factionRank: playerData.profile.factionRank ?? null,
                     jobs: {
-                      alchemist: playerData.jobs.alchemist || {
-                        level: 0,
-                        xp: 0,
-                      },
-                      farmer: playerData.jobs.farmer || {
-                        level: 0,
-                        xp: 0,
-                      },
-                      hunter: playerData.jobs.hunter || {
-                        level: 0,
-                        xp: 0,
-                      },
-                      miner: playerData.jobs.miner || {
-                        level: 0,
-                        xp: 0,
-                      },
+                      alchemist: playerData.jobs.alchemist,
+                      farmer: playerData.jobs.farmer,
+                      hunter: playerData.jobs.hunter,
+                      miner: playerData.jobs.miner,
                     },
                     money: playerData.profile.money,
                     rank: playerData.profile.rank,

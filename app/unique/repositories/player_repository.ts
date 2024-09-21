@@ -30,7 +30,7 @@ class PlayerRepository {
       uuid,
       username,
       leaderboard: {
-        boss: playerData.ranks.boss || -1,
+        boss: playerData.ranks?.boss || -1,
         money: playerData.ranks.money || -1,
         end: playerData.ranks.end || -1,
         koth: playerData.ranks.koth || -1,
@@ -54,10 +54,10 @@ class PlayerRepository {
             faction: playerData.profile.faction,
             factionRank: playerData.profile.factionRank ?? null,
             jobs: {
-              alchemist: playerData.jobs.alchemist || { level: 0, xp: 0 },
-              farmer: playerData.jobs.farmer || { level: 0, xp: 0 },
-              hunter: playerData.jobs.hunter || { level: 0, xp: 0 },
-              miner: playerData.jobs.miner || { level: 0, xp: 0 },
+              alchemist: playerData.jobs.alchemist,
+              farmer: playerData.jobs.farmer,
+              hunter: playerData.jobs.hunter,
+              miner: playerData.jobs.miner,
             },
             money: playerData.profile.money,
             rank: playerData.profile.rank,
