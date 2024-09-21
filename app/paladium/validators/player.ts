@@ -5,7 +5,7 @@ const jobs = vine
     level: vine.number(),
     xp: vine.number(),
   })
-  .optional()
+  .parse((value) => value ?? { level: 0, xp: 0 })
 
 export const playerProfileValidator = vine.compile(
   vine.object({

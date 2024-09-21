@@ -166,14 +166,6 @@ class PaladiumService {
     const mount = await this.getPlayerMount(uuid)
     const clicker = await this.getPlayerClicker(uuid)
 
-    let clickerProductionParsed = 0
-    if (clicker) {
-      clickerProductionParsed = clicker.buildings.reduce(
-        (acc, building) => acc + building.production,
-        0
-      )
-    }
-
     let rps = 0
     if (clicker && jobs) {
       rps = 0.5
@@ -188,12 +180,22 @@ class PaladiumService {
       }
     }
 
-    let achievementsParsed = { completed: 0, incomplete: 0, total: 0 }
-    if (achievements) {
-      achievementsParsed = achievements.data.reduce(
+    return {
+      profile,
+      jobs: jobs ?? {
+        alchemist: { level: 0, xp: 0 },
+        farmer: { level: 0, xp: 0 },
+        hunter: { level: 0, xp: 0 },
+        miner: { level: 0, xp: 0 },
+      },
+      ranks: { ...ranks, trixium: trixiumRank.position },
+      achievements: achievements?.data.reduce(
         (acc, achievement) => {
-          if (achievement.completed) acc.completed++
-          else acc.incomplete++
+          if (achievement.completed) {
+            acc.completed++
+          } else {
+            acc.incomplete++
+          }
           acc.total++
           return acc
         },
@@ -202,44 +204,18 @@ class PaladiumService {
           incomplete: 0,
           total: 0,
         }
-      )
-    }
-
-    let friendsParsed: { uuid: string; username: string; rank: string }[] = []
-    if (friends) {
-      friendsParsed = friends.data.map((friend) => ({
-        uuid: friend.uuid,
-        username: friend.name,
-        rank: friend.rank,
-      }))
-    }
-
-    let jobsParsed = {
-      alchemist: { level: 0, xp: 0 },
-      farmer: { level: 0, xp: 0 },
-      hunter: { level: 0, xp: 0 },
-      miner: { level: 0, xp: 0 },
-    }
-    if (jobs) {
-      jobsParsed = {
-        alchemist: jobs.alchemist || { level: 0, xp: 0 },
-        farmer: jobs.farmer || { level: 0, xp: 0 },
-        hunter: jobs.hunter || { level: 0, xp: 0 },
-        miner: jobs.miner || { level: 0, xp: 0 },
-      }
-    }
-
-    return {
-      profile,
-      jobs: jobsParsed,
-      ranks: { ...ranks, trixium: trixiumRank.position },
-      achievements: achievementsParsed,
-      friends: friendsParsed,
+      ) ?? { completed: 0, incomplete: 0, total: 0 },
+      friends:
+        friends?.data.map((friend) => ({
+          uuid: friend.uuid,
+          username: friend.name,
+          rank: friend.rank,
+        })) ?? [],
       pet,
       mount: mount?.mountType !== 0 ? mount : null,
       clicker: {
         rps,
-        production: clickerProductionParsed,
+        production: clicker?.buildings.reduce((acc, building) => acc + building.production, 0) ?? 0,
       },
     }
   }
