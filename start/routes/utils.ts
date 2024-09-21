@@ -10,7 +10,7 @@ router
     router
       .post('/jobs/reverse-calculate', [JobsController, 'reverseCalculate'])
       .as('jobs.reverse-calculate')
-    router.get('/jobs/items', [JobsController, 'itemListing']).as('jobs.items')
+    router.get('/jobs/items', [JobsController, 'items']).as('jobs.items')
     router.post('/pogs/calculate', [PogController, 'calculate']).as('pog.calculate')
   })
   .prefix('utils')
