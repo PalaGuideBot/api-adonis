@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose'
+import mongoose, { Connection, Schema } from 'mongoose'
 
 interface EggHuntData {
   username: string
@@ -20,6 +20,10 @@ const leaderboardEggHuntSchema = new Schema<EggHunt>({
   ],
 })
 
-const LeaderboardEggHunt = model<EggHunt>('LeadEggHunt', leaderboardEggHuntSchema)
+const dbConnection: Connection = mongoose.connection.useDb('paladium')
+const LeaderboardEggHunt = dbConnection.model<EggHunt>(
+  'leaderboard.egghunt',
+  leaderboardEggHuntSchema
+)
 
 export default LeaderboardEggHunt

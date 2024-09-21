@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose'
+import mongoose, { Connection, Schema } from 'mongoose'
 
 interface Retry {
   count?: number
@@ -68,6 +68,7 @@ const factionSchema = new Schema<Faction>({
   },
 })
 
-const Factions = model<Faction>('MapFaction', factionSchema)
+const dbConnection: Connection = mongoose.connection.useDb('paladium')
+const Factions = dbConnection.model<Faction>('unique.faction', factionSchema)
 
 export default Factions

@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose'
+import mongoose, { Connection, Schema } from 'mongoose'
 
 interface KothData {
   username: string
@@ -20,6 +20,7 @@ const leaderboardKothSchema = new Schema<Koth>({
   ],
 })
 
-const LeaderboardKoth = model<Koth>('LeadKoth', leaderboardKothSchema)
+const dbConnection: Connection = mongoose.connection.useDb('paladium')
+const LeaderboardKoth = dbConnection.model<Koth>('leaderboard.koth', leaderboardKothSchema)
 
 export default LeaderboardKoth

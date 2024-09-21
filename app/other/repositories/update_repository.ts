@@ -30,7 +30,7 @@ class UpdateRepository {
   }
 
   async updateObject() {
-    const usersAggregation = await this.aggregateData(db.users)
+    const usersAggregation = await this.aggregateData(db.players)
     const factionsAggregation = await this.aggregateData(db.factions)
 
     const responseObject: Record<string, boolean> = {}

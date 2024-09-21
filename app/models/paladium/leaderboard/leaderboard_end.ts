@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose'
+import mongoose, { Connection, Schema } from 'mongoose'
 
 interface EndData {
   username: string
@@ -20,6 +20,7 @@ const leaderboardEndSchema = new Schema<End>({
   ],
 })
 
-const LeadearboardEnd = model<End>('LeadEnd', leaderboardEndSchema)
+const dbConnection: Connection = mongoose.connection.useDb('paladium')
+const LeadearboardEnd = dbConnection.model<End>('leaderboard.end', leaderboardEndSchema)
 
 export default LeadearboardEnd

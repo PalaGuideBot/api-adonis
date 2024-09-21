@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose'
+import mongoose, { Connection, Schema } from 'mongoose'
 
 interface ClickerData {
   username: string
@@ -20,6 +20,10 @@ const leaderboardClickerSchema = new Schema<Clicker>({
   ],
 })
 
-const LeaderboardClicker = model<Clicker>('LeadClicker', leaderboardClickerSchema)
+const dbConnection: Connection = mongoose.connection.useDb('paladium')
+const LeaderboardClicker = dbConnection.model<Clicker>(
+  'leaderboard.clicker',
+  leaderboardClickerSchema
+)
 
 export default LeaderboardClicker

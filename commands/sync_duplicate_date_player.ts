@@ -14,7 +14,7 @@ export default class SyncDuplicatePlayerDate extends BaseCommand {
   }
 
   async run() {
-    const players = await db.users.find().lean()
+    const players = await db.players.find().lean()
 
     const duplicate = []
 
@@ -33,7 +33,7 @@ export default class SyncDuplicatePlayerDate extends BaseCommand {
     const bulkOperations = []
 
     for (const player of duplicate) {
-      const playerData = await db.users.findOne({ uuid: player.uuid }).lean()
+      const playerData = await db.players.findOne({ uuid: player.uuid }).lean()
       if (!playerData || !Array.isArray(playerData.data)) continue
 
       const seenDates = new Set()
@@ -56,7 +56,7 @@ export default class SyncDuplicatePlayerDate extends BaseCommand {
 
     if (bulkOperations.length > 0) {
       try {
-        await db.users.bulkWrite(bulkOperations)
+        await db.players.bulkWrite(bulkOperations)
         this.logger.info('Bulk update operations completed successfully')
       } catch (error) {
         this.logger.error('Error during bulk update operations', error)

@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose'
+import mongoose, { Connection, Schema } from 'mongoose'
 
 interface MoneyData {
   username: string
@@ -20,6 +20,7 @@ const moneySchema = new Schema<Money>({
   ],
 })
 
-const LeaderboardMoney = model<Money>('LeadMoney', moneySchema)
+const dbConnection: Connection = mongoose.connection.useDb('paladium')
+const LeaderboardMoney = dbConnection.model<Money>('leaderboard.money', moneySchema)
 
 export default LeaderboardMoney

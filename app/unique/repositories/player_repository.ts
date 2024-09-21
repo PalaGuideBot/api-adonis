@@ -18,7 +18,7 @@ class PlayerRepository {
       return defaultPlayer
     }
 
-    return db.users.findOne({ uuid }).lean()
+    return db.players.findOne({ uuid }).lean()
   }
 
   async create(username: string) {
@@ -26,7 +26,7 @@ class PlayerRepository {
 
     const playerData = await this.paladiumService.getAllPlayerData(uuid)
 
-    const player = new db.users({
+    const player = new db.players({
       uuid,
       username,
       leaderboard: {
@@ -81,7 +81,7 @@ class PlayerRepository {
   }
 
   async countByDate() {
-    return await db.users.aggregate<{ _id: string; count: number }>([
+    return await db.players.aggregate<{ _id: string; count: number }>([
       { $unwind: '$data' },
       { $group: { _id: '$data.date', count: { $sum: 1 } } },
       { $sort: { _id: 1 } },

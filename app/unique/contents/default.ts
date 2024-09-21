@@ -3,7 +3,7 @@ import { InferSchemaType } from 'mongoose'
 import { db } from '#core/services/db'
 
 type Faction = InferSchemaType<typeof db.factions.schema>
-type Player = InferSchemaType<typeof db.users.schema>
+type Player = InferSchemaType<typeof db.players.schema>
 
 const faction: Faction = {
   uuid: '048bc6a2-84a6-4809-96f5-a06f2320a318',

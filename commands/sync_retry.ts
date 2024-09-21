@@ -16,7 +16,7 @@ export default class SyncRetry extends BaseCommand {
 
   @inject()
   async run() {
-    const players = await db.users.find({
+    const players = await db.players.find({
       retry: {
         count: { $gt: 0 },
       },
@@ -45,7 +45,7 @@ export default class SyncRetry extends BaseCommand {
     this.logger.info(`Found ${bulkOperations.length} players to retry`, { prefix: this.prefix })
 
     if (bulkOperations.length > 0) {
-      await db.users.bulkWrite(bulkOperations)
+      await db.players.bulkWrite(bulkOperations)
       this.logger.info('Synced retry', { prefix: this.prefix })
     }
   }

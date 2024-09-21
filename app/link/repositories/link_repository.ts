@@ -24,7 +24,7 @@ class LinkRepository {
   }
 
   async findNameByUUID(uuid: string) {
-    const player = await db.users.findOne({
+    const player = await db.players.findOne({
       uuid,
     })
 

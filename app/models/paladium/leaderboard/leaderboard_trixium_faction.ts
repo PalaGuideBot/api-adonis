@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose'
+import mongoose, { Connection, Schema } from 'mongoose'
 
 interface TrixiumFactionData {
   uuid: string
@@ -24,8 +24,9 @@ const leaderboardTrixiumFactionSchema = new Schema<TrixiumFaction>({
   ],
 })
 
-const LeaderboardTrixiumFaction = model<TrixiumFaction>(
-  'LeadTrixFactions',
+const dbConnection: Connection = mongoose.connection.useDb('paladium')
+const LeaderboardTrixiumFaction = dbConnection.model<TrixiumFaction>(
+  'leaderboard.trixium.faction',
   leaderboardTrixiumFactionSchema
 )
 

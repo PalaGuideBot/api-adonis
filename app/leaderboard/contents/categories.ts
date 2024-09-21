@@ -67,7 +67,7 @@ const config = [
   {
     name: 'trixium.player',
     cacheKey: 'leaderboard:trixium.player',
-    model: db.leaderboardTrixiumUser,
+    model: db.leaderboardTrixiumPlayer,
   },
 ] satisfies CategoryItem[]
 

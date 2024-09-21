@@ -14,7 +14,7 @@ export default class SyncDuplicatePlayer extends BaseCommand {
   }
 
   async run() {
-    const players = await db.users.find().lean()
+    const players = await db.players.find().lean()
 
     const uuidMap = new Map()
 
@@ -39,7 +39,7 @@ export default class SyncDuplicatePlayer extends BaseCommand {
     const bulkOperations = []
 
     for (const { uuid } of duplicate) {
-      const playerData = await db.users.find({ uuid }).lean()
+      const playerData = await db.players.find({ uuid }).lean()
       if (!playerData || playerData.length <= 1) continue
 
       const sortedPlayers = playerData.sort((a, b) => (a.data?.length || 0) - (b.data?.length || 0))
@@ -53,7 +53,7 @@ export default class SyncDuplicatePlayer extends BaseCommand {
 
     if (bulkOperations.length > 0) {
       try {
-        await db.users.bulkWrite(bulkOperations)
+        await db.players.bulkWrite(bulkOperations)
         this.logger.info('Bulk delete operations completed successfully')
       } catch (error) {
         this.logger.error('Error during bulk delete operations', error)

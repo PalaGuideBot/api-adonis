@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose'
+import mongoose, { Connection, Schema } from 'mongoose'
 
 interface Endpoint {
   endpoint: string
@@ -36,6 +36,7 @@ const endpointAndKeySchema = new Schema<EndpointAndKey>({
   keys: [keySchema],
 })
 
-const EndpointAndKey = model<EndpointAndKey>('EndpointAndKey', endpointAndKeySchema)
+const dbConnection: Connection = mongoose.connection.useDb('api')
+const EndpointAndKey = dbConnection.model<EndpointAndKey>('stats', endpointAndKeySchema)
 
 export default EndpointAndKey

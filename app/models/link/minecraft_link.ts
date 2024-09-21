@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose'
+import mongoose, { Connection, Schema } from 'mongoose'
 
 interface MinecraftLinkData {
   discordId: string
@@ -16,6 +16,7 @@ const minecraftLink = new Schema<MinecraftLinkData>({
   expiredAt: { type: Number, required: false },
 })
 
-const MinecraftLink = model<MinecraftLinkData>('MinecraftLink', minecraftLink)
+const dbConnection: Connection = mongoose.connection.useDb('link')
+const MinecraftLink = dbConnection.model<MinecraftLinkData>('link', minecraftLink)
 
 export default MinecraftLink

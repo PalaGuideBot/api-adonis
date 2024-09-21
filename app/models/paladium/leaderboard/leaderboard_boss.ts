@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose'
+import mongoose, { Connection, Schema } from 'mongoose'
 
 interface BossData {
   username: string
@@ -20,6 +20,7 @@ const leaderboardBossSchema: Schema = new Schema<Boss>({
   ],
 })
 
-const LeaderboardBoss = model<Boss>('LeadBoss', leaderboardBossSchema)
+const dbConnection: Connection = mongoose.connection.useDb('paladium')
+const LeaderboardBoss = dbConnection.model<Boss>('leaderboard.boss', leaderboardBossSchema)
 
 export default LeaderboardBoss

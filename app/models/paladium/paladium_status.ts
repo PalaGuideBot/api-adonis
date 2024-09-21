@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose'
+import mongoose, { Connection, Schema } from 'mongoose'
 
 interface PaladiumStatusData {
   date: string
@@ -91,6 +91,7 @@ const paladiumStatusSchema = new Schema<PaladiumStatusData>({
   },
 })
 
-const PaladiumStatus = model<PaladiumStatusData>('MapStatus', paladiumStatusSchema)
+const dbConnection: Connection = mongoose.connection.useDb('paladium')
+const PaladiumStatus = dbConnection.model<PaladiumStatusData>('status', paladiumStatusSchema)
 
 export default PaladiumStatus

@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose'
+import mongoose, { Connection, Schema } from 'mongoose'
 
 interface ChorusData {
   username: string
@@ -20,6 +20,7 @@ const leaderboardChorusSchema = new Schema<Chorus>({
   ],
 })
 
-const LeaderboardChorus = model<Chorus>('LeadChorus', leaderboardChorusSchema)
+const dbConnection: Connection = mongoose.connection.useDb('paladium')
+const LeaderboardChorus = dbConnection.model<Chorus>('leaderboard.chorus', leaderboardChorusSchema)
 
 export default LeaderboardChorus

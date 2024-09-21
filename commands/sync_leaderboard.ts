@@ -64,7 +64,7 @@ export default class SyncLeaderboard extends BaseCommand {
       {
         category: 'trixium.player',
         label: 'Trixium Player',
-        model: db.leaderboardTrixiumUser,
+        model: db.leaderboardTrixiumPlayer,
       },
       {
         category: 'trixium.faction',

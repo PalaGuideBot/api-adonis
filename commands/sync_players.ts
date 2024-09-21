@@ -20,7 +20,7 @@ export default class SyncPlayers extends BaseCommand {
   async run(paladiumService: PaladiumService) {
     const now = DateTime.now().toSQLDate()
 
-    const players = await db.users
+    const players = await db.players
       .find({
         'data': {
           $not: {
@@ -134,7 +134,7 @@ export default class SyncPlayers extends BaseCommand {
     }
 
     if (bulkOperations.length > 0) {
-      await db.users.bulkWrite(bulkOperations)
+      await db.players.bulkWrite(bulkOperations)
       if (updated > 0) this.logger.info(`${updated} players synced !`, { prefix: this.prefix })
     }
   }

@@ -1,6 +1,6 @@
-import { model, Schema } from 'mongoose'
+import mongoose, { Connection, Schema } from 'mongoose'
 
-interface UserLeaderboard {
+interface PlayerLeaderboard {
   boss: number
   money: number
   end: number
@@ -16,7 +16,7 @@ interface UserLeaderboard {
   job_miner: number
 }
 
-interface UserAchievements {
+interface PlayerAchievements {
   completed: number
   incomplete: number
   total: number
@@ -27,7 +27,7 @@ interface Retry {
   disabled?: boolean
 }
 
-interface UserData {
+interface PlayerData {
   date: string
   data: {
     faction: string
@@ -85,20 +85,20 @@ interface Pet {
   }[]
 }
 
-interface User {
+interface Player {
   uuid: string
   username: string
-  leaderboard: UserLeaderboard
-  achievements: UserAchievements
+  leaderboard: PlayerLeaderboard
+  achievements: PlayerAchievements
   firstJoin: number
   retry: Retry
   mount: Mount
   pet: Pet
   friends: Friend[]
-  data: UserData[]
+  data: PlayerData[]
 }
 
-const userSchema: Schema = new Schema<User>({
+const playerSchema: Schema = new Schema<Player>({
   uuid: { type: String, required: true },
   username: { type: String, required: true },
   leaderboard: {
@@ -188,6 +188,7 @@ const userSchema: Schema = new Schema<User>({
   ],
 })
 
-const Users = model<User>('MapUsers', userSchema)
+const dbConnection: Connection = mongoose.connection.useDb('paladium')
+const Users = dbConnection.model<Player>('unique.player', playerSchema)
 
 export default Users

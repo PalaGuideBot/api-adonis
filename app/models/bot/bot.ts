@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose'
+import mongoose, { Connection, Schema } from 'mongoose'
 
 interface Interaction {
   name: string
@@ -36,6 +36,7 @@ const botSchema = new Schema<Bot>({
   guilds: [guildSchema],
 })
 
-const Bot = model<Bot>('Bot', botSchema)
+const dbConnection: Connection = mongoose.connection.useDb('bot')
+const Bot = dbConnection.model<Bot>('bot', botSchema)
 
 export default Bot
