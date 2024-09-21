@@ -6,6 +6,7 @@ export type Period = {
 
 export type StatusData = {
   date: string
+  newDate: Date
   data: {
     java: {
       global: {

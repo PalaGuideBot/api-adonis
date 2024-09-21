@@ -18,6 +18,7 @@ export default class CommandsController {
     if (!bot) {
       await this.botRepository.create({
         date: DateTime.now().toFormat('yyyy-MM-dd'),
+        newDate: new Date(),
         guilds: [],
         interactions: [{ name, count: 1 }],
       })

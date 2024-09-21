@@ -7,11 +7,13 @@ interface TrixiumPlayerData {
 
 interface TrixiumPlayer {
   date: string
+  newDate: Date
   data: TrixiumPlayerData[]
 }
 
 const leaderboardTrixiumPlayerSchema = new Schema<TrixiumPlayer>({
   date: { type: String, required: true },
+  newDate: { type: Date, required: true },
   data: [
     {
       username: { type: String, required: true },

@@ -7,11 +7,13 @@ interface ChorusData {
 
 interface Chorus {
   date: string
+  newDate: Date
   data: ChorusData[]
 }
 
 const leaderboardChorusSchema = new Schema<Chorus>({
   date: { type: String, required: true },
+  newDate: { type: Date, required: true },
   data: [
     {
       username: { type: String, required: true },

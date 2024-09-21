@@ -27,6 +27,7 @@ class StatusRepository {
 
       return {
         date,
+        newDate: new Date(date),
         data: {
           java: {
             global: {
@@ -59,6 +60,7 @@ class StatusRepository {
 
       return {
         date: entries[0].date.split(' ')[0],
+        newDate: entries[0].newDate,
         hour,
         data: {
           java: {

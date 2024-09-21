@@ -12,8 +12,8 @@ import LeaderboardTrixiumPlayer from '#models/paladium/leaderboard/leaderboard_t
 import Players from '#models/paladium/unique/players'
 import PaladiumStatus from '#models/paladium/paladium_status'
 import EndpointAndKey from '#models/api/endpoint_and_key'
-import MinecraftLink from '#models/link/minecraft_link'
-import Bot from '#models/bot/bot'
+import MinecraftLink from '#models/api/minecraft_link'
+import Bot from '#models/api/bot'
 
 export const db = {
   factions: Factions,

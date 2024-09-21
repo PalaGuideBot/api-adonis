@@ -28,6 +28,7 @@ class BotRepository {
     const bots = await db.bot.find().lean()
     return bots.map((bot) => ({
       date: bot.date,
+      newDate: bot.newDate,
       interactionsCount: bot.interactions.reduce((acc, interaction) => acc + interaction.count, 0),
       guildsCount: bot.guilds.length,
       usersCount: bot.guilds.reduce((acc, guild) => acc + guild.memberCount, 0),

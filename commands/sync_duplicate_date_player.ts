@@ -21,7 +21,6 @@ export default class SyncDuplicatePlayerDate extends BaseCommand {
     for (const player of players) {
       if (Array.isArray(player.data) && player.data.length > 1) {
         const dates = player.data.map((d) => d.date)
-        // Si des doublons existent dans les dates
         if (dates.length !== new Set(dates).size) {
           duplicate.push({ uuid: player.uuid, id: player._id })
         }

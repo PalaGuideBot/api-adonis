@@ -7,11 +7,13 @@ interface EndData {
 
 interface End {
   date: string
+  newDate: Date
   data: EndData[]
 }
 
 const leaderboardEndSchema = new Schema<End>({
   date: { type: String, required: true },
+  newDate: { type: Date, required: true },
   data: [
     {
       username: { type: String, required: true },

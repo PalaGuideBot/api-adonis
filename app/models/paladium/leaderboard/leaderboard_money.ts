@@ -7,11 +7,13 @@ interface MoneyData {
 
 interface Money {
   date: string
+  newDate: Date
   data: MoneyData[]
 }
 
 const moneySchema = new Schema<Money>({
   date: { type: String, required: true },
+  newDate: { type: Date, required: true },
   data: [
     {
       username: { type: String, required: true },
