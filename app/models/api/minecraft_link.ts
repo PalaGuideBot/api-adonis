@@ -18,7 +18,7 @@ const minecraftLink = new Schema<MinecraftLinkData>({
   expiredAt: { type: Number, required: false },
 })
 
-const dbConnection: Connection = mongoose.connection.useDb('link')
+const dbConnection: Connection = mongoose.connection.useDb('api')
 const MinecraftLink = dbConnection.model<MinecraftLinkData>('link', minecraftLink)
 
 export default MinecraftLink

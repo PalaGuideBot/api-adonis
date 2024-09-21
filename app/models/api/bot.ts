@@ -38,7 +38,7 @@ const botSchema = new Schema<Bot>({
   guilds: [guildSchema],
 })
 
-const dbConnection: Connection = mongoose.connection.useDb('bot')
+const dbConnection: Connection = mongoose.connection.useDb('api')
 const Bot = dbConnection.model<Bot>('bot', botSchema)
 
 export default Bot
