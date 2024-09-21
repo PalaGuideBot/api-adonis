@@ -6,6 +6,7 @@ class EndpointAndKeyRepository {
 
     return endpointsAndKeys.map((y) => ({
       date: y.date,
+      newDate: y.newDate,
       endpoints: y.endpoints.map((e) => ({
         name: e.endpoint,
         count: e.count,

@@ -55,6 +55,7 @@ export default class SyncPlayers extends BaseCommand {
               $push: {
                 data: {
                   date: now,
+                  newDate: new Date(),
                   data: {
                     faction: playerData.profile.faction,
                     factionRank: playerData.profile.factionRank ?? null,

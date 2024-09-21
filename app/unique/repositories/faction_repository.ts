@@ -50,6 +50,7 @@ class FactionRepository {
       data: [
         {
           date: DateTime.now().toFormat('yyyy-MM-dd'),
+          newDate: new Date(),
           data: {
             level: {
               level: factionData.level.level,

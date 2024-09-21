@@ -11,6 +11,7 @@ type Bot = InferSchemaType<typeof db.bot.schema>
 
 type Statistic = {
   date: string
+  newDate: Date
   interactionsCount: number
   guildsCount: number
   usersCount: number
@@ -56,6 +57,7 @@ class UsageService {
 
       result.push({
         date,
+        newDate: new Date(date),
         interactionsCount: bot?.interactionsCount || 0,
         guildsCount: bot?.guildsCount || 0,
         usersCount: bot?.usersCount || 0,

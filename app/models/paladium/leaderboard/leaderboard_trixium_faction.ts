@@ -9,11 +9,13 @@ interface TrixiumFactionData {
 
 interface TrixiumFaction {
   date: string
+  newDate: Date
   data: TrixiumFactionData[]
 }
 
 const leaderboardTrixiumFactionSchema = new Schema<TrixiumFaction>({
   date: { type: String, required: true },
+  newDate: { type: Date, required: true },
   data: [
     {
       uuid: { type: String, required: true },

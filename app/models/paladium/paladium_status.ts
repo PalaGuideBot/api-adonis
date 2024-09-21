@@ -2,6 +2,7 @@ import mongoose, { Connection, Schema } from 'mongoose'
 
 interface PaladiumStatusData {
   date: string
+  newDate: Date
   data: {
     java: {
       global: {
@@ -29,6 +30,10 @@ interface PaladiumStatusData {
 const paladiumStatusSchema = new Schema<PaladiumStatusData>({
   date: {
     type: String,
+    required: true,
+  },
+  newDate: {
+    type: Date,
     required: true,
   },
   data: {

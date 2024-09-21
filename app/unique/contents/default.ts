@@ -40,6 +40,7 @@ const faction: Faction = {
   data: [
     {
       date: '2024-01-05',
+      newDate: new Date('2024-01-05'),
       data: {
         level: {
           level: 50,
@@ -50,6 +51,7 @@ const faction: Faction = {
     },
     {
       date: '2024-01-04',
+      newDate: new Date('2024-01-04'),
       data: {
         level: {
           level: 40,
@@ -60,6 +62,7 @@ const faction: Faction = {
     },
     {
       date: '2024-01-03',
+      newDate: new Date('2024-01-03'),
       data: {
         level: {
           level: 30,
@@ -70,6 +73,7 @@ const faction: Faction = {
     },
     {
       date: '2024-01-02',
+      newDate: new Date('2024-01-02'),
       data: {
         level: {
           level: 20,
@@ -80,6 +84,7 @@ const faction: Faction = {
     },
     {
       date: '2024-01-01',
+      newDate: new Date('2024-01-01'),
       data: {
         level: {
           level: 10,
@@ -163,6 +168,7 @@ const player: Player = {
   data: [
     {
       date: '2024-01-05',
+      newDate: new Date('2024-01-05'),
       data: {
         faction: 'GuideBot',
         factionRank: 'Leader',
@@ -195,6 +201,7 @@ const player: Player = {
     },
     {
       date: '2024-01-04',
+      newDate: new Date('2024-01-04'),
       data: {
         faction: 'GuideBot',
         factionRank: 'Leader',
@@ -227,6 +234,7 @@ const player: Player = {
     },
     {
       date: '2024-01-03',
+      newDate: new Date('2024-01-03'),
       data: {
         faction: 'GuideBot',
         factionRank: 'Leader',
@@ -259,6 +267,7 @@ const player: Player = {
     },
     {
       date: '2024-01-02',
+      newDate: new Date('2024-01-02'),
       data: {
         faction: 'GuideBot',
         factionRank: 'Leader',
@@ -291,6 +300,7 @@ const player: Player = {
     },
     {
       date: '2024-01-01',
+      newDate: new Date('2024-01-01'),
       data: {
         faction: 'GuideBot',
         factionRank: 'Leader',
