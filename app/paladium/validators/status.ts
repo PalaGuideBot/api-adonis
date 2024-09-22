@@ -8,11 +8,12 @@ export const statusValidator = vine.compile(
         players: vine.number(),
       }),
       factions: vine.object({
-        Runegard: vine.string(),
-        Xanoth: vine.string(),
-        Egopolis: vine.string(),
-        Kilmordra: vine.string(),
         Aeloria: vine.string(),
+        Egopolis: vine.string(),
+        Runegard: vine.string(),
+        Event: vine.string(),
+        Kilmordra: vine.string(),
+        Xanoth: vine.string(),
       }),
     }),
     launcher: vine.object({
