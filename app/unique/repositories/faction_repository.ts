@@ -13,27 +13,8 @@ class FactionRepository {
     if (name.toLowerCase() === 'guidebot') {
       return defaultFaction
     }
-    /*const faction = await db.factions.findOne({ name: name.toLowerCase() }).lean()
-    return faction*/
 
-    //tempory patch players
-
-    const factionData = await this.paladiumService.getAllFactionData(name)
-
-    return {
-      uuid: factionData.uuid,
-      name: factionData.name.toLowerCase(),
-      bgName: factionData.name,
-      description: factionData.description,
-      createdAt: factionData.createdAt,
-      emblem: factionData.emblem,
-      players: factionData.members.data,
-      data: [],
-      retry: {
-        count: 0,
-        disabled: false,
-      },
-    }
+    return await db.factions.findOne({ name: name.toLowerCase() }).lean()
   }
 
   async create(name: string) {

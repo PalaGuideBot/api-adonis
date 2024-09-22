@@ -5,14 +5,10 @@ import { db } from '#core/services/db'
 import { config } from '#leaderboard/contents/categories'
 import { CategoryItem } from '#leaderboard/types'
 import { ImageService } from '#paladium/services/image'
-import { PaladiumService } from '#paladium/services/paladium'
 
 @inject()
 class LeaderboardRepository {
-  constructor(
-    private imageService: ImageService,
-    private paladiumService: PaladiumService
-  ) {}
+  constructor(private imageService: ImageService) {}
 
   async get(category: CategoryItem) {
     switch (category.name) {
@@ -66,7 +62,7 @@ class LeaderboardRepository {
         data: await Promise.all(
           lastData.data.map(async (item, index) => {
             if (index < 3) {
-              const faction = await this.paladiumService.getFactionProfile(item.name)
+              const faction = await db.factions.findOne({ name: item.name.toLowerCase() }).lean()
 
               if (!faction) {
                 return item
@@ -106,7 +102,7 @@ class LeaderboardRepository {
           data: await Promise.all(
             lastData.data.map(async (item, index) => {
               if (index < 3) {
-                const faction = await this.paladiumService.getFactionProfile(item.name)
+                const faction = await db.factions.findOne({ uuid: item.uuid }).lean()
 
                 if (!faction) {
                   return item
