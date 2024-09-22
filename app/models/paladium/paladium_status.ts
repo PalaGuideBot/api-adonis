@@ -10,15 +10,12 @@ interface PaladiumStatusData {
         players: number
       }
       factions: {
-        Soleratl: string
-        Muzdan: string
-        Manashino: string
+        Aeloria: string
+        Egopolis: string
+        Runegard: string
         Event: string
-        Luccento: string
-        Imbali: string
-        Keltis: string
-        Neolith: string
-        Untaa: string
+        Kilmordra: string
+        Xanoth: string
       }
     }
     launcher: {
@@ -49,15 +46,15 @@ const paladiumStatusSchema = new Schema<PaladiumStatusData>({
         },
       },
       factions: {
-        Soleratl: {
+        Aeloria: {
           type: String,
           required: true,
         },
-        Muzdan: {
+        Egopolis: {
           type: String,
           required: true,
         },
-        Manashino: {
+        Runegard: {
           type: String,
           required: true,
         },
@@ -65,23 +62,11 @@ const paladiumStatusSchema = new Schema<PaladiumStatusData>({
           type: String,
           required: true,
         },
-        Luccento: {
+        Kilmordra: {
           type: String,
           required: true,
         },
-        Imbali: {
-          type: String,
-          required: true,
-        },
-        Keltis: {
-          type: String,
-          required: true,
-        },
-        Neolith: {
-          type: String,
-          required: true,
-        },
-        Untaa: {
+        Xanoth: {
           type: String,
           required: true,
         },
