@@ -6,8 +6,8 @@ export const calculateJobValidator = vine.compile(
   vine.object({
     body: vine.object({
       job: vine.enum(jobCategories),
-      currentLevel: vine.number().min(0).max(99),
-      targetLevel: vine.number().min(0).max(99),
+      currentLevel: vine.number().min(0).max(100),
+      targetLevel: vine.number().min(0).max(100),
       bonusXp: vine.number().min(0).max(20),
       currentXp: vine.number().min(0),
     }),
@@ -18,7 +18,7 @@ export const reverseCalculateJobValidator = vine.compile(
   vine.object({
     body: vine.object({
       item: vine.string(),
-      currentLevel: vine.number().min(0).max(99),
+      currentLevel: vine.number().min(0).max(100),
       bonusXp: vine.number().min(0).max(20),
       currentXp: vine.number().min(0),
       amount: vine.number().min(1),
@@ -29,8 +29,8 @@ export const reverseCalculateJobValidator = vine.compile(
 export const calculatePogValidator = vine.compile(
   vine.object({
     body: vine.object({
-      currentLevel: vine.number().min(0).max(99),
-      targetLevel: vine.number().min(0).max(99),
+      currentLevel: vine.number().min(0).max(100),
+      targetLevel: vine.number().min(0).max(100),
       currentXp: vine.number().min(0),
     }),
   })

@@ -144,7 +144,6 @@ const xpPerItem: Record<(typeof jobCategories)[number], Item[]> = {
     { type: 'Whale', action: ACTION.FISH, xp: 10000, from: 20, to: 100 },
     { type: 'Kraken', action: ACTION.FISH, xp: 15000, from: 20, to: 100 },
     { type: 'Dolphin', action: ACTION.KILL, xp: 35, from: 28, to: 100 },
-    { type: 'Mega Creeper', action: ACTION.KILL, xp: Number.NaN, from: 35, to: 100 },
     { type: 'Zombie', action: ACTION.KILL, xp: 15, from: 35, to: 100 },
     { type: 'Turtle', action: ACTION.KILL, xp: 40, from: 41, to: 100 },
     { type: 'Panda', action: ACTION.KILL, xp: 60, from: 48, to: 100 },
