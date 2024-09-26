@@ -86,9 +86,9 @@ const xpPerItem: Record<(typeof jobCategories)[number], Item[]> = {
     },
     { type: 'Titane Ingot', action: ACTION.SMELT, xp: 50, from: 30, to: 100 },
     { type: 'Cavernous Zombie', action: ACTION.KILL, xp: Number.NaN, from: 35, to: 100 },
-    { type: 'Paladium Ingot', action: ACTION.SMELT, xp: 150, from: 40, to: 100 },
+    { type: 'Paladium ore', action: ACTION.SMELT, xp: 150, from: 40, to: 100 },
     { type: 'Findium Ore', action: ACTION.BREAK, xp: 110, from: 50, to: 100 },
-    { type: 'Paladium Green Ingot', action: ACTION.SMELT, xp: 200, from: 60, to: 100 },
+    { type: 'Paladium Green Ore', action: ACTION.SMELT, xp: 200, from: 60, to: 100 },
   ],
   farmer: [
     { type: 'Bottle [+1000]', action: ACTION.CONSUMES, xp: 1000, from: 0, to: 100 },

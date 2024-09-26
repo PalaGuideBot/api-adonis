@@ -114,7 +114,7 @@ class JobRepository {
         for (const item of jobItems) {
           items.push({
             type: item.type,
-            id: item.type.toLowerCase().replace(/ /g, '-'),
+            id: item.type.toLowerCase().replaceAll(/ /g, '-'),
             job: job as CalculateJobResult['job'],
           })
         }
