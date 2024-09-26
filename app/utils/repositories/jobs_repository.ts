@@ -77,15 +77,24 @@ class JobRepository {
     let xpTotal = currentXp
     let level = currentLevel
 
-    while (xpTotal < xp) {
+    while (xpTotal < xp && level < jobXp.length) {
       xpTotal += jobXp[level]
       level++
     }
 
-    return {
-      level,
-      xpTotal,
-    }
+    return { level, xpTotal }
+  }
+
+  calculateXpScenario(
+    baseXp: number,
+    multiplier: number,
+    currentXp: number,
+    bonusXp: number,
+    currentLevel: number
+  ) {
+    const xp = Math.ceil((baseXp * multiplier + currentXp) * (1 + bonusXp / 100))
+    const level = this.getLevelReachedWithXp(xp, currentXp, currentLevel)
+    return { xp, level }
   }
 
   getXpTotalForItem(
@@ -96,14 +105,18 @@ class JobRepository {
     const target = xpPerItem[job].find((i) => i.type.toLowerCase().replace(/ /g, '-') === item)
 
     if (!target) {
-      return { level: 0, xpTotal: 0 }
+      throw new Error(`Item "${item}" not found for job "${job}"`)
     }
 
-    const xpTotalForItem = Math.ceil((target.xp * amount + currentXp) * (1 + bonusXp / 100))
+    const baseXp = target.xp * amount
 
-    const levelReached = this.getLevelReachedWithXp(xpTotalForItem, currentXp, currentLevel)
+    const xpScenario = {
+      without: this.calculateXpScenario(baseXp, 1, currentXp, bonusXp, currentLevel),
+      x2: this.calculateXpScenario(baseXp, 2, currentXp, bonusXp, currentLevel),
+      x10: this.calculateXpScenario(baseXp, 10, currentXp, bonusXp, currentLevel),
+    }
 
-    return levelReached
+    return xpScenario
   }
 
   getItems() {
