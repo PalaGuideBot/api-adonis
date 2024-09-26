@@ -26,8 +26,6 @@ class PogRepository {
       xpTotal += pogXp[i]
     }
 
-    xpTotal -= body.currentXp
-
     return xpTotal
   }
 
@@ -51,7 +49,6 @@ class PogRepository {
       const xpTotal = this.getXpTotal({
         ...body,
         currentLevel: currLevel,
-        currentXp: 0,
       })
 
       items.push({
