@@ -22,25 +22,14 @@ class FactionRepository {
 
     const faction = new db.factions({
       uuid: factionData.uuid,
+      date: DateTime.now().toFormat('yyyy-MM-dd'),
+      newDate: new Date(),
       name: factionData.name.toLowerCase(),
       bgName: factionData.name,
       description: factionData.description,
       createdAt: factionData.createdAt,
       emblem: factionData.emblem,
       players: factionData.members.data,
-      data: [
-        {
-          date: DateTime.now().toFormat('yyyy-MM-dd'),
-          newDate: new Date(),
-          data: {
-            level: {
-              level: factionData.level.level,
-              xp: factionData.level.xp,
-            },
-            elo: 0,
-          },
-        },
-      ],
       retry: {
         count: 0,
         disabled: false,

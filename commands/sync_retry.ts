@@ -22,12 +22,12 @@ export default class SyncRetry extends BaseCommand {
       },
     })
 
-    const bulkOperations = []
+    const bulkOperationsPlayers = []
 
     for (const player of players) {
       const id = player._id
 
-      bulkOperations.push({
+      bulkOperationsPlayers.push({
         updateOne: {
           filter: { _id: id },
           update: {
@@ -42,11 +42,42 @@ export default class SyncRetry extends BaseCommand {
       })
     }
 
-    this.logger.info(`Found ${bulkOperations.length} players to retry`, { prefix: this.prefix })
+    const factions = await db.factions.find({
+      'retry.count': { $gt: 0 },
+    })
 
-    if (bulkOperations.length > 0) {
-      await db.players.bulkWrite(bulkOperations)
-      this.logger.info('Synced retry', { prefix: this.prefix })
+    const bulkOperationsFactions = []
+
+    for (const faction of factions) {
+      const id = faction._id
+
+      bulkOperationsFactions.push({
+        updateOne: {
+          filter: { _id: id },
+          update: {
+            $set: {
+              retry: {
+                count: 0,
+                disabled: false,
+              },
+            },
+          },
+        },
+      })
+    }
+
+    this.logger.info(`Found ${bulkOperationsPlayers.length} players to retry`, {
+      prefix: this.prefix,
+    })
+    this.logger.info(`Found ${bulkOperationsFactions.length} factions to retry`, {
+      prefix: this.prefix,
+    })
+
+    if (bulkOperationsPlayers.length > 0) {
+      await db.players.bulkWrite(bulkOperationsPlayers)
+    }
+    if (bulkOperationsFactions.length > 0) {
+      await db.factions.bulkWrite(bulkOperationsFactions)
     }
   }
 }

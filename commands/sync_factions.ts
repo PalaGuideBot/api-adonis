@@ -21,13 +21,7 @@ export default class SyncFactions extends BaseCommand {
     const now = DateTime.now().toSQLDate()
 
     const factions = await db.factions.find({
-      'data': {
-        $not: {
-          $elemMatch: {
-            date: now,
-          },
-        },
-      },
+      'date': { $ne: now },
       'retry.count': { $lt: 10 },
       'retry.disabled': false,
     })
@@ -51,20 +45,9 @@ export default class SyncFactions extends BaseCommand {
           updateOne: {
             filter: { _id: id },
             update: {
-              $push: {
-                data: {
-                  date: now,
-                  newDate: new Date(),
-                  data: {
-                    level: {
-                      level: factionData.level.level,
-                      xp: factionData.level.xp,
-                    },
-                    elo: 0,
-                  },
-                },
-              },
               $set: {
+                date: now,
+                newDate: new Date(),
                 players: factionData.members.data.map((member) => ({
                   group: member.group,
                   joinedAt: member.joinedAt,

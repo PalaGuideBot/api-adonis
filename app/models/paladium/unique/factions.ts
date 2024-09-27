@@ -19,51 +19,29 @@ const factionPlayerSchema = new Schema<FactionPlayer>({
   uuid: String,
 })
 
-interface FactionData {
-  date: string
-  newDate: Date
-  data: {
-    level: {
-      level: number
-      xp: number
-    }
-    elo: number
-  }
-}
-
-const factionDataSchema = new Schema<FactionData>({
-  date: String,
-  newDate: Date,
-  data: {
-    level: {
-      level: Number,
-      xp: Number,
-    },
-    elo: Number,
-  },
-})
-
 interface Faction {
   uuid: string
+  date: string
+  newDate: Date
   name: string
   bgName: string
   description: string
   createdAt: number
   emblem: number[]
   players: FactionPlayer[]
-  data: FactionData[]
   retry: Retry
 }
 
 const factionSchema = new Schema<Faction>({
   uuid: String,
+  date: String,
+  newDate: Date,
   name: String,
   bgName: String,
   description: String,
   createdAt: Number,
   emblem: [Number],
   players: [factionPlayerSchema],
-  data: [factionDataSchema],
   retry: {
     count: Number,
     disabled: Boolean,
