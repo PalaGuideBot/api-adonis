@@ -36,8 +36,6 @@ class PogRepository {
   ) {
     const { currentLevel, targetLevel } = body
 
-    const xpTotal = this.getXpTotal(body)
-
     const items: Item[] = []
 
     for (const item of itemsSource[category]) {
@@ -58,7 +56,7 @@ class PogRepository {
         currLevel: currrLevel,
         tarLevel,
         xp,
-        amount: Math.ceil(xpTotal / item.xp),
+        amount: Math.ceil(xp / item.xp),
         item,
       })
     }
