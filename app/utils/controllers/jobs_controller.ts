@@ -1,7 +1,6 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
-import { jobXp } from '#utils/contents/jobs'
 import { JobRepository } from '#utils/repositories/jobs_repository'
 import {
   calculateJobValidator,
@@ -14,10 +13,6 @@ export default class JobsController {
 
   async calculate({ response, request }: HttpContext) {
     const { body } = await request.validateUsing(calculateJobValidator)
-
-    if (body.currentXp > jobXp[body.currentLevel]) {
-      return response.badRequest({ message: 'Invalid current xp' })
-    }
 
     const result = this.jobRepository.getXpPerItemForJob(body)
 
@@ -32,10 +27,6 @@ export default class JobsController {
 
     if (!type) {
       return response.badRequest({ message: 'Invalid item' })
-    }
-
-    if (body.currentXp > jobXp[body.currentLevel]) {
-      return response.badRequest({ message: 'Invalid current xp' })
     }
 
     const result = this.jobRepository.getXpTotalForItem({
