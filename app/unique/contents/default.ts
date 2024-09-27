@@ -7,6 +7,8 @@ type Player = InferSchemaType<typeof db.players.schema>
 
 const faction: Faction = {
   uuid: '048bc6a2-84a6-4809-96f5-a06f2320a318',
+  date: '2024-01-05',
+  newDate: new Date('2024-01-05'),
   name: 'guidebot',
   bgName: 'GuideBot',
   description: 'La faction du bot PalaGuideBot',
@@ -35,63 +37,6 @@ const faction: Faction = {
       joinedAt: 1717818694037,
       username: 'Zeluck_',
       uuid: 'ac25480d-7a05-4964-84f7-fb123375dc39',
-    },
-  ],
-  data: [
-    {
-      date: '2024-01-05',
-      newDate: new Date('2024-01-05'),
-      data: {
-        level: {
-          level: 50,
-          xp: 25000,
-        },
-        elo: 25000,
-      },
-    },
-    {
-      date: '2024-01-04',
-      newDate: new Date('2024-01-04'),
-      data: {
-        level: {
-          level: 40,
-          xp: 20000,
-        },
-        elo: 20000,
-      },
-    },
-    {
-      date: '2024-01-03',
-      newDate: new Date('2024-01-03'),
-      data: {
-        level: {
-          level: 30,
-          xp: 15000,
-        },
-        elo: 15000,
-      },
-    },
-    {
-      date: '2024-01-02',
-      newDate: new Date('2024-01-02'),
-      data: {
-        level: {
-          level: 20,
-          xp: 10000,
-        },
-        elo: 10000,
-      },
-    },
-    {
-      date: '2024-01-01',
-      newDate: new Date('2024-01-01'),
-      data: {
-        level: {
-          level: 10,
-          xp: 5000,
-        },
-        elo: 5000,
-      },
     },
   ],
   emblem: [-16777216, 5, -13312, -16777216, 3, -1, -27392, 17],
