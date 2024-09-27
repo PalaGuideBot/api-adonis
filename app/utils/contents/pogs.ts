@@ -14,16 +14,16 @@ const pogXp: number[] = [
 
 const xpPerItem: Record<(typeof pogCategories)[number], PogItem[]> = {
   without_os: [
-    { name: 'Nothing', xp: 1, from: 0 },
-    { name: 'Tree leaves', xp: 1, from: 11 },
-    { name: 'Netherrack', xp: 1, from: 21 },
-    { name: 'Stone', xp: 1, from: 56 },
+    { name: 'Nothing', xp: 1, from: 0, to: 11 },
+    { name: 'Tree leaves', xp: 1, from: 11, to: 21 },
+    { name: 'Netherrack', xp: 1, from: 21, to: 56 },
+    { name: 'Stone', xp: 1, from: 56, to: 100 },
   ],
   with_os: [
-    { name: 'Nothing', xp: 1, from: 0 },
-    { name: 'Tree leaves', xp: 1, from: 6 },
-    { name: 'Netherrack', xp: 1, from: 16 },
-    { name: 'Stone', xp: 1, from: 36 },
+    { name: 'Nothing', xp: 1, from: 0, to: 6 },
+    { name: 'Tree leaves', xp: 1, from: 6, to: 16 },
+    { name: 'Netherrack', xp: 1, from: 16, to: 36 },
+    { name: 'Stone', xp: 1, from: 36, to: 100 },
   ],
 }
 

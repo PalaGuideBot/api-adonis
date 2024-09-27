@@ -20,7 +20,7 @@ class PogRepository {
   getXpTotal(body: CalculatePogResult) {
     const { currentLevel, targetLevel } = body
 
-    let xpTotal = 0
+    let xpTotal: number = 0
 
     for (let i = currentLevel; i < targetLevel; i++) {
       xpTotal += pogXp[i]
@@ -36,7 +36,7 @@ class PogRepository {
   ) {
     const { currentLevel, targetLevel } = body
 
-    const xpTotalItems = this.getXpTotal(body)
+    const xpTotal = this.getXpTotal(body)
 
     const items: Item[] = []
 
@@ -45,17 +45,20 @@ class PogRepository {
         continue
       }
 
-      const currLevel = Math.max(item.from, currentLevel)
-      const xpTotal = this.getXpTotal({
+      const currrLevel = item.from <= currentLevel ? currentLevel : item.from
+      const tarLevel = item.to >= targetLevel ? targetLevel : item.to
+
+      const xp = this.getXpTotal({
         ...body,
-        currentLevel: currLevel,
+        targetLevel: tarLevel,
+        currentLevel: currrLevel,
       })
 
       items.push({
-        currLevel,
-        tarLevel: targetLevel,
-        xp: xpTotal,
-        amount: Math.ceil(xpTotalItems / item.xp),
+        currLevel: currrLevel,
+        tarLevel,
+        xp,
+        amount: Math.ceil(xpTotal / item.xp),
         item,
       })
     }
