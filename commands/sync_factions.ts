@@ -21,19 +21,10 @@ export default class SyncFactions extends BaseCommand {
     const now = DateTime.now().toSQLDate()
 
     const factions = await db.factions.find({
-      '$or': [{ date: { $ne: now } }, { date: { $exists: false } }],
-      'retry.count': { $lt: 10 },
-      'retry.disabled': false,
-    })
-
-    /*
-    tempory fix
-    
-    const factions = await db.factions.find({
       'date': { $ne: now },
       'retry.count': { $lt: 10 },
       'retry.disabled': false,
-    })*/
+    })
 
     const bulkOperations = []
     let updated = 0
