@@ -7,14 +7,12 @@ import { playerClickerValidator, playerJobsValidator } from '#paladium/validator
 type PlayerClikerData = Infer<typeof playerClickerValidator>
 type PlayerJobsData = Infer<typeof playerJobsValidator>
 
-export function mergeBuildings(
-  playerBuildings: PlayerClikerData['buildings']
-): PlayerClikerData['buildings'] {
+export function mergeBuildings(playerBuildings: PlayerClikerData['buildings']) {
   return buildings.map((building) => {
     const target = playerBuildings.find((playerBuilding) => playerBuilding.name === building.name)
 
     return {
-      name: building.name,
+      ...building,
       production: target?.production ?? Number(building.base_production),
       quantity: target?.quantity ?? 0,
     }

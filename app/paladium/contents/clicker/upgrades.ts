@@ -1,40 +1,350 @@
 const clicks = [
-  { name: 'click_1', item: ['nothing'] },
-  { name: 'click_2', item: ['nothing'] },
-  { name: 'click_3', item: ['nothing'] },
-  { name: 'click_4', item: ['nothing'] },
-  { name: 'click_5', item: ['nothing'] },
-  { name: 'click_6', item: ['nothing'] },
-  { name: 'click_7', item: ['nothing'] },
-  { name: 'click_8', item: ['nothing'] },
-  { name: 'click_9', item: ['nothing'] },
-  { name: 'click_10', item: ['nothing'] },
-  { name: 'click_11', item: ['nothing'] },
-  { name: 'click_12', item: ['nothing'] },
-  { name: 'click_13', item: ['nothing'] },
-  { name: 'click_14', item: ['nothing'] },
-  { name: 'click_15', item: ['nothing'] },
-  { name: 'click_16', item: ['nothing'] },
-  { name: 'click_17', item: ['nothing'] },
-  { name: 'click_18', item: ['nothing'] },
+  {
+    name: 'click_1',
+    label: 'Pastèque Clic',
+    price: 10000,
+    conditions: [{ type: 'quantity', value: 100000 }],
+  },
+  {
+    name: 'click_2',
+    label: 'Carotte Clic',
+    price: 25000,
+    conditions: [
+      { type: 'quantity', value: 250000 },
+      { type: 'time', value: 3 },
+      { type: 'upgrade', value: 'click_1' },
+    ],
+  },
+  {
+    name: 'click_3',
+    label: 'Patate Clic',
+    price: 62500,
+    conditions: [
+      { type: 'quantity', value: 625000 },
+      { type: 'time', value: 6 },
+      { type: 'upgrade', value: 'click_2' },
+    ],
+  },
+  {
+    name: 'click_4',
+    label: 'Pain Clic',
+    price: 156250,
+    conditions: [
+      { type: 'quantity', value: 1562500 },
+      { type: 'time', value: 8 },
+      { type: 'upgrade', value: 'click_3' },
+    ],
+  },
+  {
+    name: 'click_5',
+    label: 'Lait Clic',
+    price: 390625,
+    conditions: [
+      { type: 'quantity', value: 3906250 },
+      { type: 'time', value: 10 },
+      { type: 'upgrade', value: 'click_4' },
+    ],
+  },
+  {
+    name: 'click_6',
+    label: 'Choco Clic',
+    price: 975000,
+    conditions: [
+      { type: 'quantity', value: 9750000 },
+      { type: 'time', value: 13 },
+      { type: 'upgrade', value: 'click_5' },
+    ],
+  },
+  {
+    name: 'click_7',
+    label: 'Bonbon Clic',
+    price: 2450000,
+    conditions: [
+      { type: 'quantity', value: 24500000 },
+      { type: 'time', value: 17 },
+      { type: 'upgrade', value: 'click_6' },
+    ],
+  },
+  {
+    name: 'click_8',
+    label: 'Cookie Clic',
+    price: 6000000,
+    conditions: [
+      { type: 'quantity', value: 60000000 },
+      { type: 'time', value: 20 },
+      { type: 'upgrade', value: 'click_7' },
+    ],
+  },
+  {
+    name: 'click_9',
+    label: 'Glace Clic',
+    price: 15250000,
+    conditions: [
+      { type: 'quantity', value: 152500000 },
+      { type: 'time', value: 23 },
+      { type: 'upgrade', value: 'click_8' },
+    ],
+  },
+  {
+    name: 'click_10',
+    label: 'Souple Clic',
+    price: 38500000,
+    conditions: [
+      { type: 'quantity', value: 385000000 },
+      { type: 'time', value: 29 },
+      { type: 'upgrade', value: 'click_9' },
+    ],
+  },
+  {
+    name: 'click_11',
+    label: 'Poisson Clic',
+    price: 95000000,
+    conditions: [
+      { type: 'quantity', value: 950000000 },
+      { type: 'time', value: 34 },
+      { type: 'upgrade', value: 'click_10' },
+    ],
+  },
+  {
+    name: 'click_12',
+    label: 'Poulet Clic',
+    price: 235000000,
+    conditions: [
+      { type: 'quantity', value: 2350000000 },
+      { type: 'time', value: 40 },
+      { type: 'upgrade', value: 'click_11' },
+    ],
+  },
+  {
+    name: 'click_13',
+    label: 'Jambon Clic',
+    price: 595000000,
+    conditions: [
+      { type: 'quantity', value: 5950000000 },
+      { type: 'time', value: 45 },
+      { type: 'upgrade', value: 'click_12' },
+    ],
+  },
+  {
+    name: 'click_14',
+    label: 'Tarte Clic',
+    price: 1450000000,
+    conditions: [
+      { type: 'quantity', value: 14500000000 },
+      { type: 'time', value: 53 },
+      { type: 'upgrade', value: 'click_13' },
+    ],
+  },
+  {
+    name: 'click_15',
+    label: 'Gâteau Clic',
+    price: 3750000000,
+    conditions: [
+      { type: 'quantity', value: 37500000000 },
+      { type: 'time', value: 61 },
+      { type: 'upgrade', value: 'click_14' },
+    ],
+  },
+  {
+    name: 'click_16',
+    label: 'Côtelette Clic',
+    price: 9350000000,
+    conditions: [
+      { type: 'quantity', value: 93500000000 },
+      { type: 'time', value: 68 },
+      { type: 'upgrade', value: 'click_15' },
+    ],
+  },
+  {
+    name: 'click_17',
+    label: 'Steak Clic',
+    price: 23500000000,
+    conditions: [
+      { type: 'quantity', value: 235000000000 },
+      { type: 'time', value: 76 },
+      { type: 'upgrade', value: 'click_16' },
+    ],
+  },
+  {
+    name: 'click_18',
+    label: 'Saumon Clic',
+    price: 58500000000,
+    conditions: [
+      { type: 'quantity', value: 585000000000 },
+      { type: 'time', value: 87 },
+      { type: 'upgrade', value: 'click_17' },
+    ],
+  },
+  {
+    name: 'click_19',
+    label: 'SpeedPomme Clic',
+    price: 145000000000,
+    conditions: [
+      { type: 'quantity', value: 1450000000000 },
+      { type: 'time', value: 96 },
+      { type: 'upgrade', value: 'click_18' },
+    ],
+  },
+  {
+    name: 'click_20',
+    label: 'Carpe Clic',
+    price: 365000000000,
+    conditions: [
+      { type: 'quantity', value: 3650000000000 },
+      { type: 'time', value: 106 },
+      { type: 'upgrade', value: 'click_19' },
+    ],
+  },
+  {
+    name: 'click_21',
+    label: 'Bar Clic',
+    price: 905000000000,
+    conditions: [
+      { type: 'quantity', value: 9050000000000 },
+      { type: 'time', value: 117 },
+      { type: 'upgrade', value: 'click_20' },
+    ],
+  },
+  {
+    name: 'click_22',
+    label: 'Burger Clic',
+    price: 2250000000000,
+    conditions: [
+      { type: 'quantity', value: 22500000000000 },
+      { type: 'time', value: 129 },
+      { type: 'upgrade', value: 'click_21' },
+    ],
+  },
+  {
+    name: 'click_23',
+    label: 'Click de la Carotte Divine',
+    price: 5650000000000,
+    conditions: [
+      { type: 'quantity', value: 56500000000000 },
+      { type: 'time', value: 140 },
+      { type: 'upgrade', value: 'click_22' },
+    ],
+  },
+  {
+    name: 'click_24',
+    label: 'Thon rouge Clic',
+    price: 14500000000000,
+    conditions: [
+      { type: 'quantity', value: 145000000000000 },
+      { type: 'time', value: 152 },
+      { type: 'upgrade', value: 'click_23' },
+    ],
+  },
+  {
+    name: 'click_25',
+    label: 'Clic de la Pomme Divine',
+    price: 35500000000000,
+    conditions: [
+      { type: 'quantity', value: 355000000000000 },
+      { type: 'time', value: 164 },
+      { type: 'upgrade', value: 'click_24' },
+    ],
+  },
 ]
 
 const globals = [
-  { name: 'global_1', item: ['all'] },
-  { name: 'global_2', item: ['all'] },
-  { name: 'global_3', item: ['all'] },
-  { name: 'global_4', item: ['all'] },
-  { name: 'global_5', item: ['all'] },
-  { name: 'global_6', item: ['all'] },
-  { name: 'global_7', item: ['all'] },
-  { name: 'global_8', item: ['all'] },
-  { name: 'global_9', item: ['all'] },
-  { name: 'global_10', item: ['all'] },
+  {
+    name: 'global_1',
+    label: 'Namuu Ecolier',
+    price: 1760000,
+    conditions: [
+      { type: 'quantity', value: 17600000 },
+      { type: 'time', value: 10 },
+    ],
+  },
+  {
+    name: 'global_2',
+    label: 'Namuu Contructeur',
+    price: 14000000,
+    conditions: [
+      { type: 'quantity', value: 140000000 },
+      { type: 'time', value: 24 },
+    ],
+  },
+  {
+    name: 'global_3',
+    label: 'Namuu Mécanicien',
+    price: 102000000,
+    conditions: [
+      { type: 'quantity', value: 1020000000 },
+      { type: 'time', value: 40 },
+    ],
+  },
+  {
+    name: 'global_4',
+    label: 'Namuu Scientifique',
+    price: 800000000,
+    conditions: [
+      { type: 'quantity', value: 8000000000 },
+      { type: 'time', value: 55 },
+    ],
+  },
+  {
+    name: 'global_5',
+    label: 'Namuu Investisseur',
+    price: 6200000000,
+    conditions: [
+      { type: 'quantity', value: 62000000000 },
+      { type: 'time', value: 70 },
+    ],
+  },
+  {
+    name: 'global_6',
+    label: 'Namuu Magicien',
+    price: 48000000000,
+    conditions: [
+      { type: 'quantity', value: 480000000000 },
+      { type: 'time', value: 86 },
+    ],
+  },
+  {
+    name: 'global_7',
+    label: 'Namuu Robotique',
+    price: 366000000000,
+    conditions: [
+      { type: 'quantity', value: 3660000000000 },
+      { type: 'time', value: 101 },
+    ],
+  },
+  {
+    name: 'global_8',
+    label: 'Namuu Extraterrestre',
+    price: 2820000000000,
+    conditions: [
+      { type: 'quantity', value: 28200000000000 },
+      { type: 'time', value: 117 },
+    ],
+  },
+  {
+    name: 'global_9',
+    label: 'Namuu en Endium',
+    price: 22000000000000,
+    conditions: [
+      { type: 'quantity', value: 220000000000000 },
+      { type: 'time', value: 132 },
+    ],
+  },
+  {
+    name: 'global_10',
+    label: 'Namuu Divin',
+    price: 166000000000000,
+    conditions: [
+      { type: 'quantity', value: 1660000000000000 },
+      { type: 'time', value: 147 },
+    ],
+  },
 ]
 
 const terrains = [
   {
     name: 'terrain_miner',
+    label: 'Connaissance de terrain - Mineur',
+    price: 1890000,
     item: [
       'abandoned_mine',
       'big_rocks_cave',
@@ -44,13 +354,19 @@ const terrains = [
       'radioactive_cave',
       'Earth_center',
     ],
+    conditions: [{ type: 'time', value: 10 }],
   },
   {
     name: 'terrain_farmer',
+    label: 'Connaissance de terrain - Farmer',
+    price: 9000000,
     item: ['grandma_garden', 'volcanic_island', 'lush_jungle', 'corrupted_lands', 'Eden_garden'],
+    conditions: [{ type: 'time', value: 10 }],
   },
   {
     name: 'terrain_hunter',
+    label: 'Connaissance de terrain - Hunter',
+    price: 10800000,
     item: [
       'scorching_dunes',
       'mystical_forest',
@@ -59,9 +375,12 @@ const terrains = [
       'kraken_pit',
       'Great_Ancients_Pantheon',
     ],
+    conditions: [{ type: 'time', value: 10 }],
   },
   {
     name: 'terrain_alchemist',
+    label: 'Connaissance de terrain - Alchemist',
+    price: 10800000,
     item: [
       'witch_cabin',
       'buzzing_hive',
@@ -70,159 +389,668 @@ const terrains = [
       'time_travel_machine',
       'Devil_lair',
     ],
+    conditions: [{ type: 'time', value: 10 }],
   },
 ]
 
 const buildings = [
-  { name: 'abandoned_mine_1', item: ['abandoned_mine'] },
-  { name: 'abandoned_mine_2', item: ['abandoned_mine'] },
-  { name: 'big_rocks_cave_1', item: ['big_rocks_cave'] },
-  { name: 'big_rocks_cave_2', item: ['big_rocks_cave'] },
-  { name: 'dwarves_mine_1', item: ['dwarves_mine'] },
-  { name: 'dwarves_mine_2', item: ['dwarves_mine'] },
-  { name: 'grandma_garden_1', item: ['grandma_garden'] },
-  { name: 'grandma_garden_2', item: ['grandma_garden'] },
-  { name: 'witch_cabin_1', item: ['witch_cabin'] },
-  { name: 'witch_cabin_2', item: ['witch_cabin'] },
-  { name: 'buzzing_hive_1', item: ['buzzing_hive'] },
-  { name: 'buzzing_hive_2', item: ['buzzing_hive'] },
-  { name: 'snowy_forest_1', item: ['snowy_forest'] },
-  { name: 'snowy_forest_2', item: ['snowy_forest'] },
-  { name: 'frozen_iceberg_1', item: ['frozen_iceberg'] },
-  { name: 'frozen_iceberg_2', item: ['frozen_iceberg'] },
-  { name: 'pirate_port_1', item: ['pirate_port'] },
-  { name: 'pirate_port_2', item: ['pirate_port'] },
-  { name: 'volcanic_island_1', item: ['volcanic_island'] },
-  { name: 'volcanic_island_2', item: ['volcanic_island'] },
-  { name: 'scorching_dunes_1', item: ['scorching_dunes'] },
-  { name: 'scorching_dunes_2', item: ['scorching_dunes'] },
-  { name: 'mystical_forest_1', item: ['mystical_forest'] },
-  { name: 'mystical_forest_2', item: ['mystical_forest'] },
-  { name: 'lush_jungle_1', item: ['lush_jungle'] },
-  { name: 'lush_jungle_2', item: ['lush_jungle'] },
-  { name: 'forgotten_temple_1', item: ['forgotten_temple'] },
-  { name: 'forgotten_temple_2', item: ['forgotten_temple'] },
-  { name: 'millennial_crypt_1', item: ['millennial_crypt'] },
-  { name: 'millennial_crypt_2', item: ['millennial_crypt'] },
-  { name: 'bottomless_pit_1', item: ['bottomless_pit'] },
-  { name: 'bottomless_pit_2', item: ['bottomless_pit'] },
+  {
+    name: 'abandoned_mine_1',
+    label: 'Lampe frontale',
+    price: 5625,
+    item: ['abandoned_mine'],
+    conditions: [{ type: 'building', value: 3 }],
+  },
+  {
+    name: 'big_rocks_cave_1',
+    label: 'Dynamite',
+    price: 18900,
+    item: ['big_rocks_cave'],
+    conditions: [{ type: 'building', value: 3 }],
+  },
+  {
+    name: 'dwarves_mine_1',
+    label: 'Musique de nain',
+    price: 47250,
+    item: ['dwarves_mine'],
+    conditions: [
+      { type: 'time', value: 3 },
+      { type: 'building', value: 3 },
+    ],
+  },
+  {
+    name: 'grandma_garden_1',
+    label: 'Livre de jardinage poussièreux',
+    price: 112500,
+    item: ['grandma_garden'],
+    conditions: [
+      { type: 'time', value: 5 },
+      { type: 'building', value: 3 },
+    ],
+  },
+  {
+    name: 'witch_cabin_1',
+    label: 'Chaudron bouillonant',
+    price: 247500,
+    item: ['witch_cabin'],
+    conditions: [
+      { type: 'time', value: 8 },
+      { type: 'building', value: 3 },
+    ],
+  },
+  {
+    name: 'buzzing_hive_1',
+    label: "Combinaison d'apiculteur",
+    price: 607500,
+    item: ['buzzing_hive'],
+    conditions: [
+      { type: 'time', value: 11 },
+      { type: 'building', value: 3 },
+    ],
+  },
+  {
+    name: 'snowy_forest_1',
+    label: 'Semelles anti-glassade',
+    price: 1125000,
+    item: ['snowy_forest'],
+    conditions: [
+      { type: 'time', value: 14 },
+      { type: 'building', value: 3 },
+    ],
+  },
+  {
+    name: 'frozen_iceberg_1',
+    label: 'Raquettes à neige',
+    price: 2835000,
+    item: ['frozen_iceberg'],
+    conditions: [
+      { type: 'time', value: 16 },
+      { type: 'building', value: 3 },
+    ],
+  },
+  {
+    name: 'pirate_port_1',
+    label: 'Canons chargés',
+    price: 5850000,
+    item: ['pirate_port'],
+    conditions: [
+      { type: 'time', value: 19 },
+      { type: 'building', value: 3 },
+    ],
+  },
+  {
+    name: 'volcanic_island_1',
+    label: 'Potion de résistance au feu',
+    price: 14175000,
+    item: ['volcanic_island'],
+    conditions: [
+      { type: 'time', value: 22 },
+      { type: 'building', value: 3 },
+    ],
+  },
+  {
+    name: 'scorching_dunes_1',
+    label: 'Bottes en cuir épais',
+    price: 28350000,
+    item: ['scorching_dunes'],
+    conditions: [
+      { type: 'time', value: 24 },
+      { type: 'building', value: 3 },
+    ],
+  },
+  {
+    name: 'mystical_forest_1',
+    label: 'Parchemin anti-malédictions',
+    price: 54000000,
+    item: ['mystical_forest'],
+    conditions: [
+      { type: 'time', value: 27 },
+      { type: 'building', value: 3 },
+    ],
+  },
+  {
+    name: 'lush_jungle_1',
+    label: 'Machette en paladium',
+    price: 103500000,
+    item: ['lush_jungle'],
+    conditions: [
+      { type: 'time', value: 30 },
+      { type: 'building', value: 3 },
+    ],
+  },
+  {
+    name: 'forgotten_temple_1',
+    label: 'Radar à pièges antiques',
+    price: 231750000,
+    item: ['forgotten_temple'],
+    conditions: [
+      { type: 'time', value: 34 },
+      { type: 'building', value: 3 },
+    ],
+  },
+  {
+    name: 'millennial_crypt_1',
+    label: 'Confuseur de cultiste',
+    price: 495000000,
+    item: ['millennial_crypt'],
+    conditions: [
+      { type: 'time', value: 39 },
+      { type: 'building', value: 3 },
+    ],
+  },
+  {
+    name: 'bottomless_pit_1',
+    label: 'Cordre en fibre de carbone',
+    price: 855000000,
+    item: ['bottomless_pit'],
+    conditions: [
+      { type: 'time', value: 43 },
+      { type: 'building', value: 3 },
+    ],
+  },
+  {
+    name: 'abandoned_mine_2',
+    label: 'Potion de vision nocturne',
+    price: 11875,
+    item: ['abandoned_mine'],
+    conditions: [
+      { type: 'time', value: 1 },
+      { type: 'building', value: 7 },
+    ],
+  },
+  {
+    name: 'big_rocks_cave_2',
+    label: 'Big dynamite',
+    price: 46550,
+    item: ['big_rocks_cave'],
+    conditions: [
+      { type: 'time', value: 1 },
+      { type: 'building', value: 7 },
+    ],
+  },
+  {
+    name: 'dwarves_mine_2',
+    label: 'Suppression des taxes douanières',
+    price: 99750,
+    item: ['dwarves_mine'],
+    conditions: [
+      { type: 'time', value: 4 },
+      { type: 'building', value: 7 },
+    ],
+  },
+  {
+    name: 'grandma_garden_2',
+    label: 'Cookies faits avec amour',
+    price: 237500,
+    item: ['grandma_garden'],
+    conditions: [
+      { type: 'time', value: 6 },
+      { type: 'building', value: 7 },
+    ],
+  },
+  {
+    name: 'witch_cabin_2',
+    label: 'Extracteur de bave de crapauds',
+    price: 522500,
+    item: ['witch_cabin'],
+    conditions: [
+      { type: 'time', value: 9 },
+      { type: 'building', value: 7 },
+    ],
+  },
+  {
+    name: 'buzzing_hive_2',
+    label: 'Vaccin anti-piqure',
+    price: 1282500,
+    item: ['buzzing_hive'],
+    conditions: [
+      { type: 'time', value: 12 },
+      { type: 'building', value: 7 },
+    ],
+  },
+  {
+    name: 'snowy_forest_2',
+    label: 'Diplôme de ski',
+    price: 2375000,
+    item: ['snowy_forest'],
+    conditions: [
+      { type: 'time', value: 15 },
+      { type: 'building', value: 7 },
+    ],
+  },
+  {
+    name: 'frozen_iceberg_2',
+    label: 'Moto-neige high tech',
+    price: 5985000,
+    item: ['frozen_iceberg'],
+    conditions: [
+      { type: 'time', value: 17 },
+      { type: 'building', value: 7 },
+    ],
+  },
+  {
+    name: 'pirate_port_2',
+    label: 'Cuirassé pirate',
+    price: 12350000,
+    item: ['pirate_port'],
+    conditions: [
+      { type: 'time', value: 20 },
+      { type: 'building', value: 7 },
+    ],
+  },
+  {
+    name: 'volcanic_island_2',
+    label: 'Usine à lave',
+    price: 29925000,
+    item: ['volcanic_island'],
+    conditions: [
+      { type: 'time', value: 23 },
+      { type: 'building', value: 7 },
+    ],
+  },
+  {
+    name: 'scorching_dunes_2',
+    label: "Bottes d'astronaute",
+    price: 59850000,
+    item: ['scorching_dunes'],
+    conditions: [
+      { type: 'time', value: 25 },
+      { type: 'building', value: 7 },
+    ],
+  },
+  {
+    name: 'mystical_forest_2',
+    label: 'Condensateur de malédictions',
+    price: 114000000,
+    item: ['mystical_forest'],
+    conditions: [
+      { type: 'time', value: 28 },
+      { type: 'building', value: 7 },
+    ],
+  },
+
+  {
+    name: 'lush_jungle_2',
+    label: 'Découpeur de lianes laser',
+    price: 218500000,
+    item: ['lush_jungle'],
+    conditions: [
+      { type: 'time', value: 31 },
+      { type: 'building', value: 7 },
+    ],
+  },
+
+  {
+    name: 'forgotten_temple_2',
+    label: 'Sort de détection omniscient',
+    price: 489250000,
+    item: ['forgotten_temple'],
+    conditions: [
+      { type: 'time', value: 35 },
+      { type: 'building', value: 7 },
+    ],
+  },
+
+  {
+    name: 'millennial_crypt_2',
+    label: 'Confuseur du Namuu divin',
+    price: 1045000000,
+    item: ['millennial_crypt'],
+    conditions: [
+      { type: 'time', value: 40 },
+      { type: 'building', value: 7 },
+    ],
+  },
+
+  {
+    name: 'bottomless_pit_2',
+    label: 'Ascenseur supersonique',
+    price: 1805000000,
+    item: ['bottomless_pit'],
+    conditions: [
+      { type: 'time', value: 44 },
+      { type: 'building', value: 7 },
+    ],
+  },
 ]
 
 const many = [
-  { name: 'abandoned_mine_many', item: ['abandoned_mine'] },
-  { name: 'big_rocks_cave_many', item: ['big_rocks_cave'] },
-  { name: 'dwarves_mine_many', item: ['dwarves_mine'] },
-  { name: 'grandma_garden_many', item: ['grandma_garden'] },
-  { name: 'witch_cabin_many', item: ['witch_cabin'] },
-  { name: 'buzzing_hive_many', item: ['buzzing_hive'] },
-  { name: 'snowy_forest_many', item: ['snowy_forest'] },
-  { name: 'frozen_iceberg_many', item: ['frozen_iceberg'] },
-  { name: 'pirate_port_many', item: ['pirate_port'] },
-  { name: 'volcanic_island_many', item: ['volcanic_island'] },
-  { name: 'scorching_dunes_many', item: ['scorching_dunes'] },
-  { name: 'mystical_forest_many', item: ['mystical_forest'] },
-  { name: 'lush_jungle_many', item: ['lush_jungle'] },
-  { name: 'forgotten_temple_many', item: ['forgotten_temple'] },
-  { name: 'millennial_crypt_many', item: ['millennial_crypt'] },
-  { name: 'bottomless_pit_many', item: ['bottomless_pit'] },
+  {
+    name: 'abandoned_mine_many',
+    price: 1250,
+    item: ['abandoned_mine'],
+    conditions: [{ type: 'building', value: 2 }],
+  },
+  {
+    name: 'big_rocks_cave_many',
+    price: 12000,
+    item: ['big_rocks_cave'],
+    conditions: [{ type: 'building', value: 2 }],
+  },
+  {
+    name: 'dwarves_mine_many',
+    price: 24000,
+    item: ['dwarves_mine'],
+    conditions: [
+      { type: 'time', value: 2 },
+      { type: 'building', value: 2 },
+    ],
+  },
+  {
+    name: 'grandma_garden_many',
+    price: 50000,
+    item: ['grandma_garden'],
+    conditions: [
+      { type: 'time', value: 4 },
+      { type: 'building', value: 2 },
+    ],
+  },
+  {
+    name: 'witch_cabin_many',
+    price: 110000,
+    item: ['witch_cabin'],
+    conditions: [
+      { type: 'time', value: 7 },
+      { type: 'building', value: 2 },
+    ],
+  },
+  {
+    name: 'buzzing_hive_many',
+    price: 270000,
+    item: ['buzzing_hive'],
+    conditions: [
+      { type: 'time', value: 10 },
+      { type: 'building', value: 2 },
+    ],
+  },
+  {
+    name: 'snowy_forest_many',
+    price: 500000,
+    item: ['snowy_forest'],
+    conditions: [
+      { type: 'time', value: 13 },
+      { type: 'building', value: 2 },
+    ],
+  },
+  {
+    name: 'frozen_iceberg_many',
+    price: 1260000,
+    item: ['frozen_iceberg'],
+    conditions: [
+      { type: 'time', value: 15 },
+      { type: 'building', value: 2 },
+    ],
+  },
+  {
+    name: 'pirate_port_many',
+    price: 2600000,
+    item: ['pirate_port'],
+    conditions: [
+      { type: 'time', value: 18 },
+      { type: 'building', value: 2 },
+    ],
+  },
+  {
+    name: 'volcanic_island_many',
+    price: 6300000,
+    item: ['volcanic_island'],
+    conditions: [
+      { type: 'time', value: 21 },
+      { type: 'building', value: 2 },
+    ],
+  },
+  {
+    name: 'scorching_dunes_many',
+    price: 12600000,
+    item: ['scorching_dunes'],
+    conditions: [
+      { type: 'time', value: 23 },
+      { type: 'building', value: 2 },
+    ],
+  },
+  {
+    name: 'mystical_forest_many',
+    price: 24000000,
+    item: ['mystical_forest'],
+    conditions: [
+      { type: 'time', value: 26 },
+      { type: 'building', value: 2 },
+    ],
+  },
+  {
+    name: 'lush_jungle_many',
+    price: 46000000,
+    item: ['lush_jungle'],
+    conditions: [
+      { type: 'time', value: 29 },
+      { type: 'building', value: 2 },
+    ],
+  },
+  {
+    name: 'forgotten_temple_many',
+    price: 103000000,
+    item: ['forgotten_temple'],
+    conditions: [
+      { type: 'time', value: 33 },
+      { type: 'building', value: 2 },
+    ],
+  },
+  {
+    name: 'millennial_crypt_many',
+    price: 220000000,
+    item: ['millennial_crypt'],
+    conditions: [
+      { type: 'time', value: 38 },
+      { type: 'building', value: 2 },
+    ],
+  },
+  {
+    name: 'bottomless_pit_many',
+    price: 380000000,
+    item: ['bottomless_pit'],
+    conditions: [
+      { type: 'time', value: 42 },
+      { type: 'building', value: 2 },
+    ],
+  },
 ]
 
 const posteriors = [
   {
     name: 'big_rocks_cave_posterior',
+    price: 7875,
     activeItem: ['big_rocks_cave'],
     previousItem: ['abandoned_mine'],
+    conditions: [{ type: 'building', value: 4 }],
   },
   {
     name: 'dwarves_mine_posterior',
+    price: 13500,
     activeItem: ['dwarves_mine'],
     previousItem: ['big_rocks_cave'],
+    conditions: [
+      { type: 'time', value: 3 },
+      { type: 'building', value: 4 },
+    ],
   },
-  { name: 'witch_cabin_posterior', activeItem: ['witch_cabin'], previousItem: ['grandma_garden'] },
-  { name: 'buzzing_hive_posterior', activeItem: ['buzzing_hive'], previousItem: ['witch_cabin'] },
+  {
+    name: 'witch_cabin_posterior',
+    price: 61875,
+    activeItem: ['witch_cabin'],
+    previousItem: ['grandma_garden'],
+    conditions: [
+      { type: 'time', value: 8 },
+      { type: 'building', value: 4 },
+    ],
+  },
+  {
+    name: 'buzzing_hive_posterior',
+    price: 151875,
+    activeItem: ['buzzing_hive'],
+    previousItem: ['witch_cabin'],
+    conditions: [
+      { type: 'time', value: 11 },
+      { type: 'building', value: 4 },
+    ],
+  },
   {
     name: 'frozen_iceberg_posterior',
+    price: 708750,
     activeItem: ['frozen_iceberg'],
     previousItem: ['snowy_forest'],
+    conditions: [
+      { type: 'time', value: 16 },
+      { type: 'building', value: 4 },
+    ],
   },
   {
     name: 'volcanic_island_posterior',
+    price: 3543750,
     activeItem: ['volcanic_island'],
     previousItem: ['pirate_port'],
+    conditions: [
+      { type: 'time', value: 22 },
+      { type: 'building', value: 4 },
+    ],
   },
   {
     name: 'scorching_dunes_posterior',
+    price: 7087500,
     activeItem: ['scorching_dunes'],
     previousItem: ['volcanic_island'],
+    conditions: [
+      { type: 'time', value: 24 },
+      { type: 'building', value: 4 },
+    ],
   },
-  { name: 'lush_jungle_posterior', activeItem: ['lush_jungle'], previousItem: ['mystical_forest'] },
+  {
+    name: 'lush_jungle_posterior',
+    price: 25875000,
+    activeItem: ['lush_jungle'],
+    previousItem: ['mystical_forest'],
+    conditions: [
+      { type: 'time', value: 30 },
+      { type: 'building', value: 4 },
+    ],
+  },
   {
     name: 'forgotten_temple_posterior',
+    price: 57937500,
     activeItem: ['forgotten_temple'],
     previousItem: ['lush_jungle'],
+    conditions: [
+      { type: 'time', value: 35 },
+      { type: 'building', value: 4 },
+    ],
   },
   {
     name: 'millennial_crypt_posterior',
+    price: 123750000,
     activeItem: ['millennial_crypt'],
     previousItem: ['forgotten_temple'],
+    conditions: [
+      { type: 'time', value: 39 },
+      { type: 'building', value: 4 },
+    ],
   },
   {
     name: 'bottomless_pit_posterior',
+    price: 213750000,
     activeItem: ['bottomless_pit'],
     previousItem: ['millennial_crypt'],
+    conditions: [
+      { type: 'time', value: 43 },
+      { type: 'building', value: 4 },
+    ],
   },
 ]
 
 const categories = [
   {
     name: 'category_miner_1',
+    label: 'Pioche en Paladium',
+    price: 7175,
     item: [
+      'dwarves_mine',
       'abandoned_mine',
       'big_rocks_cave',
-      'dwarves_mine',
       'bottomless_pit',
       'autonomous_mine',
       'radioactive_cave',
       'Earth_center',
     ],
     pourcentage: 0.1,
+    conditions: [{ type: 'building', value: 1 }],
   },
   {
     name: 'category_farmer_1',
-    item: ['grandma_garden', 'volcanic_island', 'lush_jungle', 'corrupted_lands', 'Eden_garden'],
+    label: 'Seedplanter en Paladium',
+    price: 1428750,
+    item: ['volcanic_island', 'grandma_garden', 'lush_jungle', 'corrupted_lands', 'Eden_garden'],
     pourcentage: 0.1,
+    conditions: [{ type: 'building', value: 1 }],
   },
   {
     name: 'category_hunter_1',
+    label: 'Epée en Paladium',
+    price: 31400000,
     item: [
+      'forgotten_temple',
       'scorching_dunes',
       'mystical_forest',
-      'forgotten_temple',
       'millennial_crypt',
       'kraken_pit',
       'Great_Ancients_Pantheon',
     ],
     pourcentage: 0.1,
+    conditions: [{ type: 'building', value: 1 }],
   },
   {
     name: 'category_alchemist_1',
+    label: 'Portail en Paladium',
+    price: 198000,
     item: [
+      'snowy_forest',
       'witch_cabin',
       'buzzing_hive',
-      'snowy_forest',
       'enigmatic_fissure',
       'time_travel_machine',
       'Devil_lair',
     ],
     pourcentage: 0.1,
+    conditions: [{ type: 'building', value: 1 }],
   },
-  { name: 'category_humanoid', item: ['dwarves_mine', 'pirate_port'], pourcentage: 0.5 },
-  { name: 'category_frozen', item: ['snowy_forest', 'frozen_iceberg'], pourcentage: 0.5 },
-  { name: 'category_on_water', item: ['frozen_iceberg', 'pirate_port'], pourcentage: 0.5 },
+  {
+    name: 'category_humanoid',
+    label: 'Technique de persuasion',
+    price: 2948625,
+    item: ['pirate_port', 'dwarves_mine'],
+    pourcentage: 0.5,
+    conditions: [{ type: 'building', value: 3 }],
+  },
+  {
+    name: 'category_frozen',
+    label: 'Manteau épais',
+    price: 880000,
+    item: ['frozen_iceberg', 'snowy_forest'],
+    pourcentage: 0.5,
+    conditions: [{ type: 'building', value: 3 }],
+  },
+  {
+    name: 'category_on_water',
+    label: 'Potion contre le mal de mer',
+    price: 4342500,
+    item: ['pirate_port', 'frozen_iceberg'],
+    pourcentage: 0.5,
+    conditions: [{ type: 'building', value: 3 }],
+  },
   {
     name: 'category_forest',
-    item: ['snowy_forest', 'mystical_forest', 'lush_jungle'],
+    label: 'Lame de hache en Endium',
+    price: 27562500,
+    item: ['mystical_forest', 'snowy_forest', 'lush_jungle'],
     pourcentage: 0.5,
+    conditions: [{ type: 'building', value: 3 }],
   },
 ]
 

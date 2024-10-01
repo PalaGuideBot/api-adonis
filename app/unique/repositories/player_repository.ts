@@ -1,10 +1,11 @@
 import { inject } from '@adonisjs/core'
+import { DateTime } from 'luxon'
 
 import { db } from '#core/services/db'
 import { MojangService } from '#minecraft/services/mojang'
+import { mergeBuildings } from '#paladium/helpers/clicker'
 import { PaladiumService } from '#paladium/services/paladium'
 import { player as defaultPlayer } from '#unique/contents/default'
-import { DateTime } from 'luxon'
 
 @inject()
 class PlayerRepository {
@@ -87,6 +88,12 @@ class PlayerRepository {
       { $group: { _id: '$data.date', count: { $sum: 1 } } },
       { $sort: { _id: 1 } },
     ])
+  }
+
+  async getClickerData(uuid: string) {
+    const clicker = await this.paladiumService.getPlayerClicker(uuid)
+
+    return { ...clicker, buildings: mergeBuildings(clicker.buildings) }
   }
 }
 

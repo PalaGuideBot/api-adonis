@@ -8,6 +8,7 @@ router
   .group(() => {
     router.get(':username', [PlayerController, 'show']).as('players')
     router.post(':username', [PlayerController, 'create'])
+    router.get(':username/clicker', [PlayerController, 'clicker']).as('players.clicker')
   })
   .prefix('players')
   .middleware(middleware.auth())
