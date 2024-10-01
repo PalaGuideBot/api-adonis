@@ -24,6 +24,26 @@ class UpdateRepository {
     return aggregation[0] || { updated: 0, notUpdated: 0 }
   }
 
+  async aggregateDate(model: any) {
+    const aggregation = await model.aggregate([
+      {
+        $group: {
+          _id: null,
+          total: { $sum: 1 },
+          updated: { $sum: { $cond: [{ $eq: ['$date', this.todayDate] }, 1, 0] } },
+        },
+      },
+      {
+        $project: {
+          updated: 1,
+          notUpdated: { $subtract: ['$total', '$updated'] },
+        },
+      },
+    ])
+
+    return aggregation[0] || { updated: 0, notUpdated: 0 }
+  }
+
   async checkUpdate(model: any) {
     const haveDate = await model.findOne({ date: this.todayDate })
     return Boolean(haveDate)
@@ -31,10 +51,7 @@ class UpdateRepository {
 
   async updateObject() {
     const usersAggregation = await this.aggregateData(db.players)
-    const factionsAggregation = {
-      updated: 0,
-      notUpdated: 0,
-    } // await this.aggregateData(db.factions) temporary disabled
+    const factionsAggregation = await this.aggregateDate(db.factions)
 
     const responseObject: Record<string, boolean> = {}
 
