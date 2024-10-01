@@ -6,7 +6,6 @@ import ky, { HTTPError } from 'ky'
 
 import { getOnYourMarksGoalItem } from '#event/contents/events'
 import { LeaderboardCategory, LeaderboardTrixiumCategory } from '#leaderboard/types'
-import { calculateBuildingProduction } from '#paladium/helpers/clicker'
 import { ImageService } from '#paladium/services/image'
 import type { ApiResponseError } from '#paladium/types'
 import {
@@ -166,20 +165,6 @@ class PaladiumService {
     const mount = await this.getPlayerMount(uuid)
     const clicker = await this.getPlayerClicker(uuid)
 
-    let rps = 0
-    if (clicker && jobs) {
-      rps = 0.5
-      clicker.buildings.forEach((building) => {
-        if (building.quantity > 0) {
-          rps += calculateBuildingProduction(building.name, clicker, jobs) * building.quantity
-        }
-      })
-
-      if (Number.isNaN(rps)) {
-        rps = 0
-      }
-    }
-
     return {
       profile,
       jobs: jobs ?? {
@@ -214,7 +199,7 @@ class PaladiumService {
       pet,
       mount: mount?.mountType !== 0 ? mount : null,
       clicker: {
-        rps,
+        rps: clicker?.rps ?? 0,
         production: clicker?.buildings.reduce((acc, building) => acc + building.production, 0) ?? 0,
       },
     }
