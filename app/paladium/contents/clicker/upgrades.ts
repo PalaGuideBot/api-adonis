@@ -717,18 +717,21 @@ const buildings = [
 const many = [
   {
     name: 'abandoned_mine_many',
+    label: 'Production nombreuse - Mine abandonnée',
     price: 1250,
     item: ['abandoned_mine'],
     conditions: [{ type: 'building', value: 2 }],
   },
   {
     name: 'big_rocks_cave_many',
+    label: 'Production nombreuse - Caverne aux gros cailloux',
     price: 12000,
     item: ['big_rocks_cave'],
     conditions: [{ type: 'building', value: 2 }],
   },
   {
     name: 'dwarves_mine_many',
+    label: 'Production nombreuse - Mine des nains',
     price: 24000,
     item: ['dwarves_mine'],
     conditions: [
@@ -738,6 +741,7 @@ const many = [
   },
   {
     name: 'grandma_garden_many',
+    label: 'Production nombreuse - Jardin de mamie',
     price: 50000,
     item: ['grandma_garden'],
     conditions: [
@@ -747,6 +751,7 @@ const many = [
   },
   {
     name: 'witch_cabin_many',
+    label: 'Production nombreuse - Cabane de sorcière',
     price: 110000,
     item: ['witch_cabin'],
     conditions: [
@@ -756,6 +761,7 @@ const many = [
   },
   {
     name: 'buzzing_hive_many',
+    label: 'Production nombreuse - Ruche bourdonnante',
     price: 270000,
     item: ['buzzing_hive'],
     conditions: [
@@ -765,6 +771,7 @@ const many = [
   },
   {
     name: 'snowy_forest_many',
+    label: 'Production nombreuse - Forêt enneigée',
     price: 500000,
     item: ['snowy_forest'],
     conditions: [
@@ -774,6 +781,7 @@ const many = [
   },
   {
     name: 'frozen_iceberg_many',
+    label: 'Production nombreuse - Banquise gelée',
     price: 1260000,
     item: ['frozen_iceberg'],
     conditions: [
@@ -783,6 +791,7 @@ const many = [
   },
   {
     name: 'pirate_port_many',
+    label: 'Production nombreuse - Port de pirate',
     price: 2600000,
     item: ['pirate_port'],
     conditions: [
@@ -792,6 +801,7 @@ const many = [
   },
   {
     name: 'volcanic_island_many',
+    label: 'Production nombreuse - Île volcanique',
     price: 6300000,
     item: ['volcanic_island'],
     conditions: [
@@ -801,6 +811,7 @@ const many = [
   },
   {
     name: 'scorching_dunes_many',
+    label: 'Production nombreuse - Dunes caniculaires',
     price: 12600000,
     item: ['scorching_dunes'],
     conditions: [
@@ -810,6 +821,7 @@ const many = [
   },
   {
     name: 'mystical_forest_many',
+    label: 'Production nombreuse - Forêt mystique',
     price: 24000000,
     item: ['mystical_forest'],
     conditions: [
@@ -819,6 +831,7 @@ const many = [
   },
   {
     name: 'lush_jungle_many',
+    label: 'Production nombreuse - Jungle luxuriante',
     price: 46000000,
     item: ['lush_jungle'],
     conditions: [
@@ -828,6 +841,7 @@ const many = [
   },
   {
     name: 'forgotten_temple_many',
+    label: 'Production nombreuse - Temple oublié',
     price: 103000000,
     item: ['forgotten_temple'],
     conditions: [
@@ -837,6 +851,7 @@ const many = [
   },
   {
     name: 'millennial_crypt_many',
+    label: 'Production nombreuse - Crypte millénaire',
     price: 220000000,
     item: ['millennial_crypt'],
     conditions: [
@@ -846,6 +861,7 @@ const many = [
   },
   {
     name: 'bottomless_pit_many',
+    label: 'Production nombreuse - Gouffre sans fond',
     price: 380000000,
     item: ['bottomless_pit'],
     conditions: [
@@ -858,6 +874,7 @@ const many = [
 const posteriors = [
   {
     name: 'big_rocks_cave_posterior',
+    label: 'Production postérieure - Caverne aux gros cailloux',
     price: 7875,
     activeItem: ['big_rocks_cave'],
     previousItem: ['abandoned_mine'],
@@ -865,6 +882,7 @@ const posteriors = [
   },
   {
     name: 'dwarves_mine_posterior',
+    label: 'Production postérieure - Mine des nains',
     price: 13500,
     activeItem: ['dwarves_mine'],
     previousItem: ['big_rocks_cave'],
@@ -875,6 +893,7 @@ const posteriors = [
   },
   {
     name: 'witch_cabin_posterior',
+    label: 'Production postérieure - Cabane de sorcière',
     price: 61875,
     activeItem: ['witch_cabin'],
     previousItem: ['grandma_garden'],
@@ -885,6 +904,7 @@ const posteriors = [
   },
   {
     name: 'buzzing_hive_posterior',
+    label: 'Production postérieure - Ruche bourdonnante',
     price: 151875,
     activeItem: ['buzzing_hive'],
     previousItem: ['witch_cabin'],
@@ -895,6 +915,7 @@ const posteriors = [
   },
   {
     name: 'frozen_iceberg_posterior',
+    label: 'Production postérieure - Banquise gelée',
     price: 708750,
     activeItem: ['frozen_iceberg'],
     previousItem: ['snowy_forest'],
@@ -905,6 +926,7 @@ const posteriors = [
   },
   {
     name: 'volcanic_island_posterior',
+    label: 'Production postérieure - Île volcanique',
     price: 3543750,
     activeItem: ['volcanic_island'],
     previousItem: ['pirate_port'],
@@ -915,6 +937,7 @@ const posteriors = [
   },
   {
     name: 'scorching_dunes_posterior',
+    label: 'Production postérieure - Dunes caniculaires',
     price: 7087500,
     activeItem: ['scorching_dunes'],
     previousItem: ['volcanic_island'],
@@ -925,6 +948,7 @@ const posteriors = [
   },
   {
     name: 'lush_jungle_posterior',
+    label: 'Production postérieure - Jungle luxuriante',
     price: 25875000,
     activeItem: ['lush_jungle'],
     previousItem: ['mystical_forest'],
@@ -935,6 +959,7 @@ const posteriors = [
   },
   {
     name: 'forgotten_temple_posterior',
+    label: 'Production postérieure - Temple oublié',
     price: 57937500,
     activeItem: ['forgotten_temple'],
     previousItem: ['lush_jungle'],
@@ -945,6 +970,7 @@ const posteriors = [
   },
   {
     name: 'millennial_crypt_posterior',
+    label: 'Production postérieure - Temple oublié',
     price: 123750000,
     activeItem: ['millennial_crypt'],
     previousItem: ['forgotten_temple'],
@@ -955,6 +981,7 @@ const posteriors = [
   },
   {
     name: 'bottomless_pit_posterior',
+    label: 'Production postérieure - Temple oublié',
     price: 213750000,
     activeItem: ['bottomless_pit'],
     previousItem: ['millennial_crypt'],
