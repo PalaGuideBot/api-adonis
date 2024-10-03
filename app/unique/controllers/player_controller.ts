@@ -81,11 +81,16 @@ export default class PlayerController {
       return response.notFound({ message: 'Player not found' })
     }
 
+    const jobs =
+      player.data.toSorted(
+        (a, b) => new Date(a.date).getMilliseconds() - new Date(b.date).getMilliseconds()
+      )[0]?.data.jobs || null
+
     let clicker = await this.playerRepository.getClickerData(uuid)
 
     const result = {
       username: player.username,
-      jobs: player.data[0]?.data.jobs ?? null,
+      jobs: jobs,
       ...clicker,
     }
 
