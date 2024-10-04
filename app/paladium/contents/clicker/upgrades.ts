@@ -608,7 +608,7 @@ const buildings = [
     price: 237500,
     item: ['grandma_garden'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 148500 },
       { type: 'time', value: 6 },
       { type: 'building', value: 7 },
     ],
