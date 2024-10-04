@@ -111,11 +111,16 @@ class JobRepository {
 
     const baseXp = target.xp * amount
 
-    const xpScenario = {
-      without: this.calculateXpScenario(baseXp, 1, currentXp, bonusXp, currentLevel),
-      x2: this.calculateXpScenario(baseXp, 2, currentXp, bonusXp, currentLevel),
-      x10: this.calculateXpScenario(baseXp, 10, currentXp, bonusXp, currentLevel),
-    }
+    const multipliers = item.includes('bottle') ? [1, 1, 1] : [1, 2, 10]
+
+    const xpScenario = multipliers.reduce(
+      (acc, multiplier, index) => {
+        const key = index === 0 ? 'without' : `x${multiplier}`
+        acc[key] = this.calculateXpScenario(baseXp, multiplier, currentXp, bonusXp, currentLevel)
+        return acc
+      },
+      {} as Record<string, ReturnType<typeof this.calculateXpScenario>>
+    )
 
     return xpScenario
   }
