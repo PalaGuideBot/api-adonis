@@ -1,46 +1,95 @@
 import { getBuildingBaseProduction } from '#paladium/helpers/clicker'
-import { ClickerBuilding } from '#paladium/types'
+import type { ClickerBuilding } from '#paladium/types'
+
+const categories = {
+  miner: 'miner',
+  hunter: 'hunter',
+  farmer: 'farmer',
+  alchemist: 'alchemist',
+} as const
+
+const buildingCategories: Record<keyof typeof categories, string[]> = {
+  [categories.miner]: [
+    'abandoned_mine',
+    'big_rocks_cave',
+    'dwarves_mine',
+    'bottomless_pit',
+    'autonomous_mine',
+    'radioactive_cave',
+    'Earth_center',
+  ],
+  [categories.hunter]: [
+    'scorching_dunes',
+    'mystical_forest',
+    'forgotten_temple',
+    'millennial_crypt',
+    'kraken_pit',
+    'Great_Ancients_Pantheon',
+  ],
+  [categories.farmer]: [
+    'grandma_garden',
+    'volcanic_island',
+    'lush_jungle',
+    'corrupted_lands',
+    'Eden_garden',
+  ],
+  [categories.alchemist]: [
+    'witch_cabin',
+    'buzzing_hive',
+    'snowy_forest',
+    'enigmatic_fissure',
+    'time_travel_machine',
+    'Devil_lair',
+  ],
+}
 
 const buildings: Array<ClickerBuilding> = [
   {
     name: 'abandoned_mine',
     label: 'Mine abandonnée',
+    category: categories.miner,
     base_price: 1250,
     base_production: getBuildingBaseProduction(0),
   },
   {
     name: 'big_rocks_cave',
     label: 'Caverne aux gros cailloux',
+    category: categories.miner,
     base_price: 3500,
     base_production: getBuildingBaseProduction(1),
   },
   {
     name: 'dwarves_mine',
     label: 'Mine des nains',
+    category: categories.miner,
     base_price: 6000,
     base_production: getBuildingBaseProduction(2),
   },
   {
     name: 'grandma_garden',
     label: 'Jardin de mamie',
+    category: categories.farmer,
     base_price: 12500,
     base_production: getBuildingBaseProduction(3),
   },
   {
     name: 'witch_cabin',
     label: 'Cabane de sorcière',
+    category: categories.alchemist,
     base_price: 27500,
     base_production: getBuildingBaseProduction(4),
   },
   {
     name: 'buzzing_hive',
     label: 'Ruche bourdonnante',
+    category: categories.alchemist,
     base_price: 67500,
     base_production: getBuildingBaseProduction(5),
   },
   {
     name: 'snowy_forest',
     label: 'Forêt enneigée',
+    category: categories.alchemist,
     base_price: 125000,
     base_production: getBuildingBaseProduction(6),
   },
@@ -59,48 +108,56 @@ const buildings: Array<ClickerBuilding> = [
   {
     name: 'volcanic_island',
     label: 'Île volcanique',
+    category: categories.farmer,
     base_price: 1575000,
     base_production: getBuildingBaseProduction(9),
   },
   {
     name: 'scorching_dunes',
     label: 'Dunes caniculaires',
+    category: categories.hunter,
     base_price: 3150000,
     base_production: getBuildingBaseProduction(10),
   },
   {
     name: 'mystical_forest',
     label: 'Forêt mystique',
+    category: categories.hunter,
     base_price: 6000000,
     base_production: getBuildingBaseProduction(11),
   },
   {
     name: 'lush_jungle',
     label: 'Jungle luxuriante',
+    category: categories.farmer,
     base_price: 11500000,
     base_production: getBuildingBaseProduction(12),
   },
   {
     name: 'forgotten_temple',
     label: 'Temple oublié',
+    category: categories.hunter,
     base_price: 25750000,
     base_production: getBuildingBaseProduction(13),
   },
   {
     name: 'millennial_crypt',
     label: 'Crypte millénaire',
+    category: categories.hunter,
     base_price: 55000000,
     base_production: getBuildingBaseProduction(14),
   },
   {
     name: 'bottomless_pit',
     label: 'Gouffre sans fond',
+    category: categories.miner,
     base_price: 95000000,
     base_production: getBuildingBaseProduction(15),
   },
   {
     name: 'autonomous_mine',
     label: 'Mine autonome',
+    category: categories.miner,
     base_price: 185000000,
     base_production: getBuildingBaseProduction(16),
   },
@@ -113,6 +170,7 @@ const buildings: Array<ClickerBuilding> = [
   {
     name: 'radioactive_cave',
     label: 'Grotte radioactive',
+    category: categories.miner,
     base_price: 750000000,
     base_production: getBuildingBaseProduction(18),
   },
@@ -131,18 +189,21 @@ const buildings: Array<ClickerBuilding> = [
   {
     name: 'kraken_pit',
     label: 'Fosse du Kraken',
+    category: categories.hunter,
     base_price: 5950000000,
     base_production: getBuildingBaseProduction(21),
   },
   {
     name: 'enigmatic_fissure',
     label: 'Faille énigmatique',
+    category: categories.alchemist,
     base_price: 9500000000,
     base_production: getBuildingBaseProduction(22),
   },
   {
     name: 'corrupted_lands',
     label: 'Terres corrompues',
+    category: categories.farmer,
     base_price: 18500000000,
     base_production: getBuildingBaseProduction(23),
   },
@@ -167,6 +228,7 @@ const buildings: Array<ClickerBuilding> = [
   {
     name: 'time_travel_machine',
     label: 'Machine à voyager dans le temps',
+    category: categories.alchemist,
     base_price: 235000000000,
     base_production: getBuildingBaseProduction(27),
   },
@@ -191,27 +253,31 @@ const buildings: Array<ClickerBuilding> = [
   {
     name: 'Great_Ancients_Pantheon',
     label: 'Panthéon des Grands Anciens',
+    category: categories.hunter,
     base_price: 2950000000000,
     base_production: getBuildingBaseProduction(31),
   },
   {
     name: 'Earth_center',
     label: 'Centre de la Terre',
+    category: categories.miner,
     base_price: 5500000000000,
     base_production: getBuildingBaseProduction(32),
   },
   {
     name: 'Devil_lair',
     label: 'Repère du Diable',
+    category: categories.alchemist,
     base_price: 10500000000000,
     base_production: getBuildingBaseProduction(33),
   },
   {
     name: 'Eden_garden',
     label: "Jardin d'Eden",
+    category: categories.farmer,
     base_price: 19500000000000,
     base_production: getBuildingBaseProduction(34),
   },
 ]
 
-export { buildings as default }
+export { buildingCategories, buildings as default }

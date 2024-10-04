@@ -1,14 +1,18 @@
+import { buildingCategories } from '#paladium/contents/clicker/buildings'
+
 const clicks = [
   {
     name: 'click_1',
     label: 'Pastèque Clic',
     price: 10000,
+    rate: 2,
     conditions: [{ type: 'quantity', value: 100000 }],
   },
   {
     name: 'click_2',
     label: 'Carotte Clic',
     price: 25000,
+    rate: 4,
     conditions: [
       { type: 'quantity', value: 250000 },
       { type: 'time', value: 3 },
@@ -19,6 +23,7 @@ const clicks = [
     name: 'click_3',
     label: 'Patate Clic',
     price: 62500,
+    rate: 8,
     conditions: [
       { type: 'quantity', value: 625000 },
       { type: 'time', value: 6 },
@@ -29,6 +34,7 @@ const clicks = [
     name: 'click_4',
     label: 'Pain Clic',
     price: 156250,
+    rate: 16,
     conditions: [
       { type: 'quantity', value: 1562500 },
       { type: 'time', value: 8 },
@@ -39,6 +45,7 @@ const clicks = [
     name: 'click_5',
     label: 'Lait Clic',
     price: 390625,
+    rate: 32,
     conditions: [
       { type: 'quantity', value: 3906250 },
       { type: 'time', value: 10 },
@@ -49,6 +56,7 @@ const clicks = [
     name: 'click_6',
     label: 'Choco Clic',
     price: 975000,
+    rate: 64,
     conditions: [
       { type: 'quantity', value: 9750000 },
       { type: 'time', value: 13 },
@@ -59,6 +67,7 @@ const clicks = [
     name: 'click_7',
     label: 'Bonbon Clic',
     price: 2450000,
+    rate: 128,
     conditions: [
       { type: 'quantity', value: 24500000 },
       { type: 'time', value: 17 },
@@ -69,6 +78,7 @@ const clicks = [
     name: 'click_8',
     label: 'Cookie Clic',
     price: 6000000,
+    rate: 256,
     conditions: [
       { type: 'quantity', value: 60000000 },
       { type: 'time', value: 20 },
@@ -79,6 +89,7 @@ const clicks = [
     name: 'click_9',
     label: 'Glace Clic',
     price: 15250000,
+    rate: 512,
     conditions: [
       { type: 'quantity', value: 152500000 },
       { type: 'time', value: 23 },
@@ -89,6 +100,7 @@ const clicks = [
     name: 'click_10',
     label: 'Souple Clic',
     price: 38500000,
+    rate: 1024,
     conditions: [
       { type: 'quantity', value: 385000000 },
       { type: 'time', value: 29 },
@@ -99,6 +111,7 @@ const clicks = [
     name: 'click_11',
     label: 'Poisson Clic',
     price: 95000000,
+    rate: 2048,
     conditions: [
       { type: 'quantity', value: 950000000 },
       { type: 'time', value: 34 },
@@ -109,6 +122,7 @@ const clicks = [
     name: 'click_12',
     label: 'Poulet Clic',
     price: 235000000,
+    rate: 4096,
     conditions: [
       { type: 'quantity', value: 2350000000 },
       { type: 'time', value: 40 },
@@ -119,6 +133,7 @@ const clicks = [
     name: 'click_13',
     label: 'Jambon Clic',
     price: 595000000,
+    rate: 8192,
     conditions: [
       { type: 'quantity', value: 5950000000 },
       { type: 'time', value: 45 },
@@ -129,6 +144,7 @@ const clicks = [
     name: 'click_14',
     label: 'Tarte Clic',
     price: 1450000000,
+    rate: 16384,
     conditions: [
       { type: 'quantity', value: 14500000000 },
       { type: 'time', value: 53 },
@@ -139,6 +155,7 @@ const clicks = [
     name: 'click_15',
     label: 'Gâteau Clic',
     price: 3750000000,
+    rate: 32768,
     conditions: [
       { type: 'quantity', value: 37500000000 },
       { type: 'time', value: 61 },
@@ -149,6 +166,7 @@ const clicks = [
     name: 'click_16',
     label: 'Côtelette Clic',
     price: 9350000000,
+    rate: 65536,
     conditions: [
       { type: 'quantity', value: 93500000000 },
       { type: 'time', value: 68 },
@@ -159,6 +177,7 @@ const clicks = [
     name: 'click_17',
     label: 'Steak Clic',
     price: 23500000000,
+    rate: 131072,
     conditions: [
       { type: 'quantity', value: 235000000000 },
       { type: 'time', value: 76 },
@@ -169,6 +188,7 @@ const clicks = [
     name: 'click_18',
     label: 'Saumon Clic',
     price: 58500000000,
+    rate: 262144,
     conditions: [
       { type: 'quantity', value: 585000000000 },
       { type: 'time', value: 87 },
@@ -179,6 +199,7 @@ const clicks = [
     name: 'click_19',
     label: 'SpeedPomme Clic',
     price: 145000000000,
+    rate: 524288,
     conditions: [
       { type: 'quantity', value: 1450000000000 },
       { type: 'time', value: 96 },
@@ -189,6 +210,7 @@ const clicks = [
     name: 'click_20',
     label: 'Carpe Clic',
     price: 365000000000,
+    rate: 1048576,
     conditions: [
       { type: 'quantity', value: 3650000000000 },
       { type: 'time', value: 106 },
@@ -199,6 +221,7 @@ const clicks = [
     name: 'click_21',
     label: 'Bar Clic',
     price: 905000000000,
+    rate: 2097152,
     conditions: [
       { type: 'quantity', value: 9050000000000 },
       { type: 'time', value: 117 },
@@ -209,6 +232,7 @@ const clicks = [
     name: 'click_22',
     label: 'Burger Clic',
     price: 2250000000000,
+    rate: 4194304,
     conditions: [
       { type: 'quantity', value: 22500000000000 },
       { type: 'time', value: 129 },
@@ -219,6 +243,7 @@ const clicks = [
     name: 'click_23',
     label: 'Click de la Carotte Divine',
     price: 5650000000000,
+    rate: 8388608,
     conditions: [
       { type: 'quantity', value: 56500000000000 },
       { type: 'time', value: 140 },
@@ -229,6 +254,7 @@ const clicks = [
     name: 'click_24',
     label: 'Thon rouge Clic',
     price: 14500000000000,
+    rate: 16777216,
     conditions: [
       { type: 'quantity', value: 145000000000000 },
       { type: 'time', value: 152 },
@@ -239,6 +265,7 @@ const clicks = [
     name: 'click_25',
     label: 'Clic de la Pomme Divine',
     price: 35500000000000,
+    rate: 33554432,
     conditions: [
       { type: 'quantity', value: 355000000000000 },
       { type: 'time', value: 164 },
@@ -344,51 +371,33 @@ const terrains = [
   {
     name: 'terrain_miner',
     label: 'Connaissance de terrain - Mineur',
+    job: 'miner',
     price: 1890000,
-    item: [
-      'abandoned_mine',
-      'big_rocks_cave',
-      'dwarves_mine',
-      'bottomless_pit',
-      'autonomous_mine',
-      'radioactive_cave',
-      'Earth_center',
-    ],
+    item: buildingCategories.miner,
     conditions: [{ type: 'time', value: 10 }],
   },
   {
     name: 'terrain_farmer',
     label: 'Connaissance de terrain - Farmer',
+    job: 'farmer',
     price: 9000000,
-    item: ['grandma_garden', 'volcanic_island', 'lush_jungle', 'corrupted_lands', 'Eden_garden'],
+    item: buildingCategories.farmer,
     conditions: [{ type: 'time', value: 10 }],
   },
   {
     name: 'terrain_hunter',
     label: 'Connaissance de terrain - Hunter',
+    job: 'hunter',
     price: 10800000,
-    item: [
-      'scorching_dunes',
-      'mystical_forest',
-      'forgotten_temple',
-      'millennial_crypt',
-      'kraken_pit',
-      'Great_Ancients_Pantheon',
-    ],
+    item: buildingCategories.hunter,
     conditions: [{ type: 'time', value: 10 }],
   },
   {
     name: 'terrain_alchemist',
     label: 'Connaissance de terrain - Alchemist',
+    job: 'alchemist',
     price: 10800000,
-    item: [
-      'witch_cabin',
-      'buzzing_hive',
-      'snowy_forest',
-      'enigmatic_fissure',
-      'time_travel_machine',
-      'Devil_lair',
-    ],
+    item: buildingCategories.alchemist,
     conditions: [{ type: 'time', value: 10 }],
   },
 ]
@@ -414,6 +423,7 @@ const buildings = [
     price: 47250,
     item: ['dwarves_mine'],
     conditions: [
+      { type: 'quantity', value: 135000 },
       { type: 'time', value: 3 },
       { type: 'building', value: 3 },
     ],
@@ -424,6 +434,7 @@ const buildings = [
     price: 112500,
     item: ['grandma_garden'],
     conditions: [
+      { type: 'quantity', value: 393750 },
       { type: 'time', value: 5 },
       { type: 'building', value: 3 },
     ],
@@ -434,6 +445,7 @@ const buildings = [
     price: 247500,
     item: ['witch_cabin'],
     conditions: [
+      { type: 'quantity', value: 866250 },
       { type: 'time', value: 8 },
       { type: 'building', value: 3 },
     ],
@@ -444,6 +456,7 @@ const buildings = [
     price: 607500,
     item: ['buzzing_hive'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 11 },
       { type: 'building', value: 3 },
     ],
@@ -454,6 +467,7 @@ const buildings = [
     price: 1125000,
     item: ['snowy_forest'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 14 },
       { type: 'building', value: 3 },
     ],
@@ -464,6 +478,7 @@ const buildings = [
     price: 2835000,
     item: ['frozen_iceberg'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 16 },
       { type: 'building', value: 3 },
     ],
@@ -474,6 +489,7 @@ const buildings = [
     price: 5850000,
     item: ['pirate_port'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 19 },
       { type: 'building', value: 3 },
     ],
@@ -484,6 +500,7 @@ const buildings = [
     price: 14175000,
     item: ['volcanic_island'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 22 },
       { type: 'building', value: 3 },
     ],
@@ -494,6 +511,7 @@ const buildings = [
     price: 28350000,
     item: ['scorching_dunes'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 24 },
       { type: 'building', value: 3 },
     ],
@@ -504,6 +522,7 @@ const buildings = [
     price: 54000000,
     item: ['mystical_forest'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 27 },
       { type: 'building', value: 3 },
     ],
@@ -514,6 +533,7 @@ const buildings = [
     price: 103500000,
     item: ['lush_jungle'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 30 },
       { type: 'building', value: 3 },
     ],
@@ -524,6 +544,7 @@ const buildings = [
     price: 231750000,
     item: ['forgotten_temple'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 34 },
       { type: 'building', value: 3 },
     ],
@@ -534,6 +555,7 @@ const buildings = [
     price: 495000000,
     item: ['millennial_crypt'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 39 },
       { type: 'building', value: 3 },
     ],
@@ -544,6 +566,7 @@ const buildings = [
     price: 855000000,
     item: ['bottomless_pit'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 43 },
       { type: 'building', value: 3 },
     ],
@@ -574,6 +597,7 @@ const buildings = [
     price: 99750,
     item: ['dwarves_mine'],
     conditions: [
+      { type: 'quantity', value: 148500 },
       { type: 'time', value: 4 },
       { type: 'building', value: 7 },
     ],
@@ -584,6 +608,7 @@ const buildings = [
     price: 237500,
     item: ['grandma_garden'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 6 },
       { type: 'building', value: 7 },
     ],
@@ -594,6 +619,7 @@ const buildings = [
     price: 522500,
     item: ['witch_cabin'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 9 },
       { type: 'building', value: 7 },
     ],
@@ -604,6 +630,7 @@ const buildings = [
     price: 1282500,
     item: ['buzzing_hive'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 12 },
       { type: 'building', value: 7 },
     ],
@@ -614,6 +641,7 @@ const buildings = [
     price: 2375000,
     item: ['snowy_forest'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 15 },
       { type: 'building', value: 7 },
     ],
@@ -624,6 +652,7 @@ const buildings = [
     price: 5985000,
     item: ['frozen_iceberg'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 17 },
       { type: 'building', value: 7 },
     ],
@@ -634,6 +663,7 @@ const buildings = [
     price: 12350000,
     item: ['pirate_port'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 20 },
       { type: 'building', value: 7 },
     ],
@@ -644,6 +674,7 @@ const buildings = [
     price: 29925000,
     item: ['volcanic_island'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 23 },
       { type: 'building', value: 7 },
     ],
@@ -654,6 +685,7 @@ const buildings = [
     price: 59850000,
     item: ['scorching_dunes'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 25 },
       { type: 'building', value: 7 },
     ],
@@ -664,6 +696,7 @@ const buildings = [
     price: 114000000,
     item: ['mystical_forest'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 28 },
       { type: 'building', value: 7 },
     ],
@@ -675,6 +708,7 @@ const buildings = [
     price: 218500000,
     item: ['lush_jungle'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 31 },
       { type: 'building', value: 7 },
     ],
@@ -686,6 +720,7 @@ const buildings = [
     price: 489250000,
     item: ['forgotten_temple'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 35 },
       { type: 'building', value: 7 },
     ],
@@ -697,6 +732,7 @@ const buildings = [
     price: 1045000000,
     item: ['millennial_crypt'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 40 },
       { type: 'building', value: 7 },
     ],
@@ -708,6 +744,7 @@ const buildings = [
     price: 1805000000,
     item: ['bottomless_pit'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 44 },
       { type: 'building', value: 7 },
     ],
@@ -735,6 +772,7 @@ const many = [
     price: 24000,
     item: ['dwarves_mine'],
     conditions: [
+      { type: 'quantity', value: 94500 },
       { type: 'time', value: 2 },
       { type: 'building', value: 2 },
     ],
@@ -745,6 +783,7 @@ const many = [
     price: 50000,
     item: ['grandma_garden'],
     conditions: [
+      { type: 'quantity', value: 275625 },
       { type: 'time', value: 4 },
       { type: 'building', value: 2 },
     ],
@@ -755,6 +794,7 @@ const many = [
     price: 110000,
     item: ['witch_cabin'],
     conditions: [
+      { type: 'quantity', value: 606375 },
       { type: 'time', value: 7 },
       { type: 'building', value: 2 },
     ],
@@ -765,6 +805,7 @@ const many = [
     price: 270000,
     item: ['buzzing_hive'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 10 },
       { type: 'building', value: 2 },
     ],
@@ -775,6 +816,7 @@ const many = [
     price: 500000,
     item: ['snowy_forest'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 13 },
       { type: 'building', value: 2 },
     ],
@@ -785,6 +827,7 @@ const many = [
     price: 1260000,
     item: ['frozen_iceberg'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 15 },
       { type: 'building', value: 2 },
     ],
@@ -795,6 +838,7 @@ const many = [
     price: 2600000,
     item: ['pirate_port'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 18 },
       { type: 'building', value: 2 },
     ],
@@ -805,6 +849,7 @@ const many = [
     price: 6300000,
     item: ['volcanic_island'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 21 },
       { type: 'building', value: 2 },
     ],
@@ -815,6 +860,7 @@ const many = [
     price: 12600000,
     item: ['scorching_dunes'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 23 },
       { type: 'building', value: 2 },
     ],
@@ -825,6 +871,7 @@ const many = [
     price: 24000000,
     item: ['mystical_forest'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 26 },
       { type: 'building', value: 2 },
     ],
@@ -835,6 +882,7 @@ const many = [
     price: 46000000,
     item: ['lush_jungle'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 29 },
       { type: 'building', value: 2 },
     ],
@@ -845,6 +893,7 @@ const many = [
     price: 103000000,
     item: ['forgotten_temple'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 33 },
       { type: 'building', value: 2 },
     ],
@@ -855,6 +904,7 @@ const many = [
     price: 220000000,
     item: ['millennial_crypt'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 38 },
       { type: 'building', value: 2 },
     ],
@@ -865,6 +915,7 @@ const many = [
     price: 380000000,
     item: ['bottomless_pit'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 42 },
       { type: 'building', value: 2 },
     ],
@@ -887,6 +938,7 @@ const posteriors = [
     activeItem: ['dwarves_mine'],
     previousItem: ['big_rocks_cave'],
     conditions: [
+      { type: 'quantity', value: 135000 },
       { type: 'time', value: 3 },
       { type: 'building', value: 4 },
     ],
@@ -898,6 +950,7 @@ const posteriors = [
     activeItem: ['witch_cabin'],
     previousItem: ['grandma_garden'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 8 },
       { type: 'building', value: 4 },
     ],
@@ -909,6 +962,7 @@ const posteriors = [
     activeItem: ['buzzing_hive'],
     previousItem: ['witch_cabin'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 11 },
       { type: 'building', value: 4 },
     ],
@@ -920,6 +974,7 @@ const posteriors = [
     activeItem: ['frozen_iceberg'],
     previousItem: ['snowy_forest'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 16 },
       { type: 'building', value: 4 },
     ],
@@ -931,6 +986,7 @@ const posteriors = [
     activeItem: ['volcanic_island'],
     previousItem: ['pirate_port'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 22 },
       { type: 'building', value: 4 },
     ],
@@ -942,6 +998,7 @@ const posteriors = [
     activeItem: ['scorching_dunes'],
     previousItem: ['volcanic_island'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 24 },
       { type: 'building', value: 4 },
     ],
@@ -953,6 +1010,7 @@ const posteriors = [
     activeItem: ['lush_jungle'],
     previousItem: ['mystical_forest'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 30 },
       { type: 'building', value: 4 },
     ],
@@ -964,6 +1022,7 @@ const posteriors = [
     activeItem: ['forgotten_temple'],
     previousItem: ['lush_jungle'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 35 },
       { type: 'building', value: 4 },
     ],
@@ -975,6 +1034,7 @@ const posteriors = [
     activeItem: ['millennial_crypt'],
     previousItem: ['forgotten_temple'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 39 },
       { type: 'building', value: 4 },
     ],
@@ -986,6 +1046,7 @@ const posteriors = [
     activeItem: ['bottomless_pit'],
     previousItem: ['millennial_crypt'],
     conditions: [
+      { type: 'quantity', value: -1 },
       { type: 'time', value: 43 },
       { type: 'building', value: 4 },
     ],
@@ -996,54 +1057,36 @@ const categories = [
   {
     name: 'category_miner_1',
     label: 'Pioche en Paladium',
+    category: 'miner',
     price: 7175,
-    item: [
-      'dwarves_mine',
-      'abandoned_mine',
-      'big_rocks_cave',
-      'bottomless_pit',
-      'autonomous_mine',
-      'radioactive_cave',
-      'Earth_center',
-    ],
+    item: buildingCategories.miner,
     pourcentage: 0.1,
     conditions: [{ type: 'building', value: 1 }],
   },
   {
     name: 'category_farmer_1',
     label: 'Seedplanter en Paladium',
+    category: 'farmer',
     price: 1428750,
-    item: ['volcanic_island', 'grandma_garden', 'lush_jungle', 'corrupted_lands', 'Eden_garden'],
+    item: buildingCategories.farmer,
     pourcentage: 0.1,
     conditions: [{ type: 'building', value: 1 }],
   },
   {
     name: 'category_hunter_1',
     label: 'Epée en Paladium',
+    category: 'hunter',
     price: 31400000,
-    item: [
-      'forgotten_temple',
-      'scorching_dunes',
-      'mystical_forest',
-      'millennial_crypt',
-      'kraken_pit',
-      'Great_Ancients_Pantheon',
-    ],
+    item: buildingCategories.hunter,
     pourcentage: 0.1,
     conditions: [{ type: 'building', value: 1 }],
   },
   {
     name: 'category_alchemist_1',
     label: 'Portail en Paladium',
+    category: 'alchemist',
     price: 198000,
-    item: [
-      'snowy_forest',
-      'witch_cabin',
-      'buzzing_hive',
-      'enigmatic_fissure',
-      'time_travel_machine',
-      'Devil_lair',
-    ],
+    item: buildingCategories.alchemist,
     pourcentage: 0.1,
     conditions: [{ type: 'building', value: 1 }],
   },

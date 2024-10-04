@@ -6,6 +6,7 @@ export type ApiResponseError = {
 export type ClickerBuilding = {
   name: string
   label: string
+  category?: string
   base_production: number
   base_price: number
 }
