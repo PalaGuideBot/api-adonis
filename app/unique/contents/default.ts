@@ -38,6 +38,12 @@ const faction: Faction = {
       username: 'Zeluck_',
       uuid: 'ac25480d-7a05-4964-84f7-fb123375dc39',
     },
+    {
+      group: 'contributor',
+      joinedAt: 17280824450,
+      username: 'volcanofr',
+      uuid: '0b1c3f16-b735-457a-b588-b51c4391d630',
+    },
   ],
   emblem: [-16777216, 5, -13312, -16777216, 3, -1, -27392, 17],
   retry: {
