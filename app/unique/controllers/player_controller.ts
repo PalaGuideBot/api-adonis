@@ -82,9 +82,9 @@ export default class PlayerController {
     }
 
     const jobs =
-      player.data.toSorted(
-        (a, b) => new Date(a.date).getMilliseconds() - new Date(b.date).getMilliseconds()
-      )[0]?.data.jobs || null
+      player.data
+        .toSorted((a, b) => new Date(a.date).getMilliseconds() - new Date(b.date).getMilliseconds())
+        .at(-1)?.data.jobs || null
 
     let clicker = await this.playerRepository.getClickerData(uuid)
 
