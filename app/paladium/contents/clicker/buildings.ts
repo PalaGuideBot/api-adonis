@@ -10,33 +10,33 @@ const categories = {
 
 const buildingCategories: Record<keyof typeof categories, string[]> = {
   [categories.miner]: [
+    'dwarves_mine',
     'abandoned_mine',
     'big_rocks_cave',
-    'dwarves_mine',
     'bottomless_pit',
     'autonomous_mine',
     'radioactive_cave',
     'Earth_center',
   ],
   [categories.hunter]: [
+    'forgotten_temple',
     'scorching_dunes',
     'mystical_forest',
-    'forgotten_temple',
     'millennial_crypt',
     'kraken_pit',
     'Great_Ancients_Pantheon',
   ],
   [categories.farmer]: [
-    'grandma_garden',
     'volcanic_island',
+    'grandma_garden',
     'lush_jungle',
     'corrupted_lands',
     'Eden_garden',
   ],
   [categories.alchemist]: [
+    'snowy_forest',
     'witch_cabin',
     'buzzing_hive',
-    'snowy_forest',
     'enigmatic_fissure',
     'time_travel_machine',
     'Devil_lair',
