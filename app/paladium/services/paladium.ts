@@ -115,20 +115,39 @@ class PaladiumService {
     }
   }
 
-  async getPlayerClicker(uuid: string) {
+  async getPlayerClicker(
+    uuid: string
+  ): Promise<Infer<typeof playerClickerValidator> & { state?: string }> {
     try {
       const response = await this.client.get(`paladium/player/profile/${uuid}/clicker`)
       const data = await response.json()
 
       return playerClickerValidator.validate(data)
     } catch (error: unknown) {
-      return {
+      const emptyData = {
         buildings: [],
         upgrades: [],
         lastBuildingBought: '',
         rps: 0,
         uuid,
+        state: 'UNKNOWN_ERROR',
       }
+
+      if (error instanceof HTTPError && error.response.status === 401) {
+        return {
+          ...emptyData,
+          state: 'UNAUTHORIZED',
+        }
+      }
+
+      if (error instanceof HTTPError && error.response.status === 404) {
+        return {
+          ...emptyData,
+          state: 'NOT_FOUND',
+        }
+      }
+
+      return emptyData
     }
   }
 
