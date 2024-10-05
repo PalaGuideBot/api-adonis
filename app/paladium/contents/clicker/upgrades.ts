@@ -619,7 +619,7 @@ const buildings = [
     price: 522500,
     item: ['witch_cabin'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 952875 },
       { type: 'time', value: 9 },
       { type: 'building', value: 7 },
     ],
@@ -805,7 +805,7 @@ const many = [
     price: 270000,
     item: ['buzzing_hive'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1488375 },
       { type: 'time', value: 10 },
       { type: 'building', value: 2 },
     ],
@@ -816,7 +816,7 @@ const many = [
     price: 500000,
     item: ['snowy_forest'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 2756250 },
       { type: 'time', value: 13 },
       { type: 'building', value: 2 },
     ],
