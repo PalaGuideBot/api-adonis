@@ -13,6 +13,7 @@ export default class EventController {
     const quest = await cache.getOrSet({
       key: 'events:faction-quest',
       factory: () => this.paladiumService.getFactionQuest(),
+      ttl: '5m',
     })
 
     return response.ok(quest)
@@ -22,6 +23,7 @@ export default class EventController {
     const onYourMarks = await cache.getOrSet({
       key: 'events:faction-on-your-marks',
       factory: () => this.paladiumService.getFactionOnYourMarks(),
+      ttl: '5m',
     })
 
     return response.ok(onYourMarks)
