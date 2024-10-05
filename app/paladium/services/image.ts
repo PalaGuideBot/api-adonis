@@ -46,4 +46,28 @@ export class ImageService {
       throw error
     }
   }
+
+  async getCraftImage(
+    table: string,
+    craft: (string | null)[],
+    item: string,
+    amount: number
+  ): Promise<string | undefined> {
+    try {
+      const queryString = craft.map((craftItem) => `items[]=${craftItem}`).join('&')
+      const response = await imageClient.get(
+        `craft/${table}/${item}?${queryString}&amount=${amount}`
+      )
+
+      if (response.ok) {
+        return response.url
+      }
+    } catch (error: unknown) {
+      if (error instanceof HTTPError && error.response.status === 404) {
+        console.log('URL not found: ', error.request.url)
+        throw new Error('Craft image not found')
+      }
+      throw error
+    }
+  }
 }
