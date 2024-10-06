@@ -1,27 +1,41 @@
 import { inject } from '@adonisjs/core'
-import { InferSchemaType } from 'mongoose'
+import { DateTime } from 'luxon'
+import type { InferSchemaType } from 'mongoose'
 
 import { db } from '#core/services/db'
 import { config } from '#leaderboard/contents/categories'
 import { CategoryItem } from '#leaderboard/types'
 import { ImageService } from '#paladium/services/image'
 
+const DEFAULT_DAY_INTERVAL = 7
+
 @inject()
 class LeaderboardRepository {
   constructor(private imageService: ImageService) {}
 
-  async get(category: CategoryItem) {
+  async get(category: CategoryItem, options: { from?: DateTime; to?: DateTime } = {}) {
+    const {
+      from = DateTime.now().minus({ day: DEFAULT_DAY_INTERVAL }).startOf('day'),
+      to = DateTime.now().endOf('day'),
+    } = options
+
     switch (category.name) {
       case 'factions':
-        const factions = await category.model.find()
+        const factions = await category.model.find({
+          newDate: { $gte: from.startOf('day').toISO(), $lte: to.endOf('day').toISO() },
+        })
         const serializedFactions = await this.serializeFactions(factions)
         return this.filterResult(serializedFactions as typeof factions)
       case 'trixium.faction':
-        const trixiumFactions = await category.model.find()
+        const trixiumFactions = await category.model.find({
+          newDate: { $gte: from.startOf('day').toISO(), $lte: to.endOf('day').toISO() },
+        })
         const serializedTrixiumFactions = await this.serializeTrixiumFactions(trixiumFactions)
         return this.filterResult(serializedTrixiumFactions as typeof trixiumFactions, 50)
       default:
-        const data = await category.model.find()
+        const data = await category.model.find({
+          newDate: { $gte: from.startOf('day').toISO(), $lte: to.endOf('day').toISO() },
+        })
         return this.filterResult(data, category.name === 'trixium.player' ? 50 : 100)
     }
   }
