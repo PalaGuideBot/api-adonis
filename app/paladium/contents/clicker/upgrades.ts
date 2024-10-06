@@ -456,7 +456,7 @@ const buildings = [
     price: 607500,
     item: ['buzzing_hive'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 2126250 },
       { type: 'time', value: 11 },
       { type: 'building', value: 3 },
     ],
@@ -467,7 +467,7 @@ const buildings = [
     price: 1125000,
     item: ['snowy_forest'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 3937500 },
       { type: 'time', value: 14 },
       { type: 'building', value: 3 },
     ],
@@ -630,7 +630,7 @@ const buildings = [
     price: 1282500,
     item: ['buzzing_hive'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 2338875 },
       { type: 'time', value: 12 },
       { type: 'building', value: 7 },
     ],
@@ -641,7 +641,7 @@ const buildings = [
     price: 2375000,
     item: ['snowy_forest'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 4331250 },
       { type: 'time', value: 15 },
       { type: 'building', value: 7 },
     ],
@@ -827,7 +827,7 @@ const many = [
     price: 1260000,
     item: ['frozen_iceberg'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 6945750 },
       { type: 'time', value: 15 },
       { type: 'building', value: 2 },
     ],
