@@ -489,7 +489,7 @@ const buildings = [
     price: 5850000,
     item: ['pirate_port'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 19 },
       { type: 'building', value: 3 },
     ],
@@ -500,7 +500,7 @@ const buildings = [
     price: 14175000,
     item: ['volcanic_island'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 22 },
       { type: 'building', value: 3 },
     ],
@@ -511,7 +511,7 @@ const buildings = [
     price: 28350000,
     item: ['scorching_dunes'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 24 },
       { type: 'building', value: 3 },
     ],
@@ -522,7 +522,7 @@ const buildings = [
     price: 54000000,
     item: ['mystical_forest'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 27 },
       { type: 'building', value: 3 },
     ],
@@ -533,7 +533,7 @@ const buildings = [
     price: 103500000,
     item: ['lush_jungle'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 30 },
       { type: 'building', value: 3 },
     ],
@@ -544,7 +544,7 @@ const buildings = [
     price: 231750000,
     item: ['forgotten_temple'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 34 },
       { type: 'building', value: 3 },
     ],
@@ -555,7 +555,7 @@ const buildings = [
     price: 495000000,
     item: ['millennial_crypt'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 39 },
       { type: 'building', value: 3 },
     ],
@@ -566,7 +566,7 @@ const buildings = [
     price: 855000000,
     item: ['bottomless_pit'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 43 },
       { type: 'building', value: 3 },
     ],
@@ -652,7 +652,7 @@ const buildings = [
     price: 5985000,
     item: ['frozen_iceberg'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 17 },
       { type: 'building', value: 7 },
     ],
@@ -663,7 +663,7 @@ const buildings = [
     price: 12350000,
     item: ['pirate_port'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 20 },
       { type: 'building', value: 7 },
     ],
@@ -674,7 +674,7 @@ const buildings = [
     price: 29925000,
     item: ['volcanic_island'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 23 },
       { type: 'building', value: 7 },
     ],
@@ -685,7 +685,7 @@ const buildings = [
     price: 59850000,
     item: ['scorching_dunes'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 25 },
       { type: 'building', value: 7 },
     ],
@@ -696,7 +696,7 @@ const buildings = [
     price: 114000000,
     item: ['mystical_forest'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 28 },
       { type: 'building', value: 7 },
     ],
@@ -708,7 +708,7 @@ const buildings = [
     price: 218500000,
     item: ['lush_jungle'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 31 },
       { type: 'building', value: 7 },
     ],
@@ -720,7 +720,7 @@ const buildings = [
     price: 489250000,
     item: ['forgotten_temple'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 35 },
       { type: 'building', value: 7 },
     ],
@@ -732,7 +732,7 @@ const buildings = [
     price: 1045000000,
     item: ['millennial_crypt'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 40 },
       { type: 'building', value: 7 },
     ],
@@ -744,7 +744,7 @@ const buildings = [
     price: 1805000000,
     item: ['bottomless_pit'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 44 },
       { type: 'building', value: 7 },
     ],
@@ -838,7 +838,7 @@ const many = [
     price: 2600000,
     item: ['pirate_port'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 18 },
       { type: 'building', value: 2 },
     ],
@@ -849,7 +849,7 @@ const many = [
     price: 6300000,
     item: ['volcanic_island'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 21 },
       { type: 'building', value: 2 },
     ],
@@ -860,7 +860,7 @@ const many = [
     price: 12600000,
     item: ['scorching_dunes'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 23 },
       { type: 'building', value: 2 },
     ],
@@ -871,7 +871,7 @@ const many = [
     price: 24000000,
     item: ['mystical_forest'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 26 },
       { type: 'building', value: 2 },
     ],
@@ -882,7 +882,7 @@ const many = [
     price: 46000000,
     item: ['lush_jungle'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 29 },
       { type: 'building', value: 2 },
     ],
@@ -893,7 +893,7 @@ const many = [
     price: 103000000,
     item: ['forgotten_temple'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 33 },
       { type: 'building', value: 2 },
     ],
@@ -904,7 +904,7 @@ const many = [
     price: 220000000,
     item: ['millennial_crypt'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 38 },
       { type: 'building', value: 2 },
     ],
@@ -915,7 +915,7 @@ const many = [
     price: 380000000,
     item: ['bottomless_pit'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 42 },
       { type: 'building', value: 2 },
     ],
@@ -950,7 +950,7 @@ const posteriors = [
     activeItem: ['witch_cabin'],
     previousItem: ['grandma_garden'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 8 },
       { type: 'building', value: 4 },
     ],
@@ -962,7 +962,7 @@ const posteriors = [
     activeItem: ['buzzing_hive'],
     previousItem: ['witch_cabin'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 11 },
       { type: 'building', value: 4 },
     ],
@@ -974,7 +974,7 @@ const posteriors = [
     activeItem: ['frozen_iceberg'],
     previousItem: ['snowy_forest'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 16 },
       { type: 'building', value: 4 },
     ],
@@ -986,7 +986,7 @@ const posteriors = [
     activeItem: ['volcanic_island'],
     previousItem: ['pirate_port'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 22 },
       { type: 'building', value: 4 },
     ],
@@ -998,7 +998,7 @@ const posteriors = [
     activeItem: ['scorching_dunes'],
     previousItem: ['volcanic_island'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 24 },
       { type: 'building', value: 4 },
     ],
@@ -1010,7 +1010,7 @@ const posteriors = [
     activeItem: ['lush_jungle'],
     previousItem: ['mystical_forest'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 30 },
       { type: 'building', value: 4 },
     ],
@@ -1022,7 +1022,7 @@ const posteriors = [
     activeItem: ['forgotten_temple'],
     previousItem: ['lush_jungle'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 35 },
       { type: 'building', value: 4 },
     ],
@@ -1034,7 +1034,7 @@ const posteriors = [
     activeItem: ['millennial_crypt'],
     previousItem: ['forgotten_temple'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 39 },
       { type: 'building', value: 4 },
     ],
@@ -1046,7 +1046,7 @@ const posteriors = [
     activeItem: ['bottomless_pit'],
     previousItem: ['millennial_crypt'],
     conditions: [
-      { type: 'quantity', value: -1 },
+      { type: 'quantity', value: 1 },
       { type: 'time', value: 43 },
       { type: 'building', value: 4 },
     ],
