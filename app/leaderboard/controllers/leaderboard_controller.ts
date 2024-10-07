@@ -23,7 +23,7 @@ export default class LeaderboardController {
 
     try {
       const result = await cache.getOrSet({
-        key: `${target.cacheKey}-${JSON.stringify(options)}`,
+        key: `${target.cacheKey}-${distanceValidatorToString(options)}`,
         factory: () => this.leaderboardRepository.get(target, options),
         ttl: 1000 * 60 * 60,
       })
