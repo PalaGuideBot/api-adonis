@@ -652,7 +652,7 @@ const buildings = [
     price: 5985000,
     item: ['frozen_iceberg'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 10914750 },
       { type: 'time', value: 17 },
       { type: 'building', value: 7 },
     ],
