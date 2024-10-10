@@ -111,7 +111,7 @@ class JobRepository {
 
     const baseXp = target.xp * amount
 
-    const multipliers = item.includes('bottle') ? [1, 1, 1] : [1, 2, 10]
+    const multipliers = item.includes('bottle') ? [1] : [1, 2, 10]
 
     const xpScenario = multipliers.reduce(
       (acc, multiplier, index) => {
