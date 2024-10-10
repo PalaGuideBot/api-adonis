@@ -489,7 +489,7 @@ const buildings = [
     price: 5850000,
     item: ['pirate_port'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 20475000 },
       { type: 'time', value: 19 },
       { type: 'building', value: 3 },
     ],
@@ -838,7 +838,7 @@ const many = [
     price: 2600000,
     item: ['pirate_port'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 14332500 },
       { type: 'time', value: 18 },
       { type: 'building', value: 2 },
     ],
