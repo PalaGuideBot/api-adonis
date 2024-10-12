@@ -663,7 +663,7 @@ const buildings = [
     price: 12350000,
     item: ['pirate_port'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 22522500 },
       { type: 'time', value: 20 },
       { type: 'building', value: 7 },
     ],
