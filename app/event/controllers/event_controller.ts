@@ -13,7 +13,7 @@ export default class EventController {
     const quest = await cache.getOrSet({
       key: 'events:faction-quest',
       factory: () => this.paladiumService.getFactionQuest(),
-      ttl: '5m',
+      ttl: '30s',
     })
 
     return response.ok(quest)
