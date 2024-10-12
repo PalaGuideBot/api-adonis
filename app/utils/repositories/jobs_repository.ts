@@ -93,7 +93,7 @@ class JobRepository {
     currentLevel: number
   ) {
     const multiplierBonus = multiplier + bonusXp / 100
-    const xp = Math.ceil(baseXp / multiplierBonus)
+    const xp = Math.ceil(baseXp * multiplierBonus)
     const level = this.getLevelReachedWithXp(xp, currentXp, currentLevel)
     return { xp, level }
   }
