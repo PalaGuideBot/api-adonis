@@ -500,7 +500,7 @@ const buildings = [
     price: 14175000,
     item: ['volcanic_island'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 49612500 },
       { type: 'time', value: 22 },
       { type: 'building', value: 3 },
     ],
@@ -849,7 +849,7 @@ const many = [
     price: 6300000,
     item: ['volcanic_island'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 34728750 },
       { type: 'time', value: 21 },
       { type: 'building', value: 2 },
     ],
