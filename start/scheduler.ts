@@ -10,6 +10,6 @@ import SyncFactions from '#commands/sync_factions'
 scheduler.command(SyncPlayers).everyMinutes(5)
 scheduler.command(SyncLeaderboard).cron('*/5 2-23 * * *')
 scheduler.command(SyncLink).everyMinutes(5)
-scheduler.command(SyncStatus).everyMinutes(10)
+scheduler.command(SyncStatus).everyMinutes(5)
 scheduler.command(SyncRetry).daily()
 scheduler.command(SyncFactions).everyMinutes(5)
