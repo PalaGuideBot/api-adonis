@@ -29,47 +29,58 @@ class JobRepository {
     }
 
     totalXp -= currentXp
-    const xpWithBonus = totalXp - (totalXp * bonusXp) / 100
 
-    return Math.ceil(xpWithBonus)
+    return Math.ceil(totalXp / bonusXp)
   }
 
   getXpPerItemForJob(body: CalculateJobResult) {
-    const { currentLevel, targetLevel, job } = body
+    const { currentLevel, targetLevel, job, bonusXp } = body
 
-    const xpTotal = this.getXpTotal(body)
+    const xpTotal = this.getXpTotal({
+      ...body,
+      bonusXp: 1,
+    })
 
-    const items: Item[] = []
+    const itemsMap: { [key: string]: Item[] } = {}
 
     for (const item of xpPerItem[job]) {
-      if (item.from > body.targetLevel || Number.isNaN(item.xp)) {
+      if (item.from > targetLevel || Number.isNaN(item.xp)) {
         continue
       }
 
-      const currLevel = item.from <= currentLevel ? currentLevel : item.from
-      const tarLevel = item.to >= targetLevel ? targetLevel : item.to
+      for (const m of item.type.includes('Bottle') ? [1] : [1, 2, 10]) {
+        const xpMult = this.getXpTotal({
+          ...body,
+          bonusXp: m + bonusXp / 100,
+        })
 
-      const xp = this.getXpTotal({
-        ...body,
-        targetLevel: tarLevel,
-        currentLevel: currLevel,
-        currentXp: 0,
-      })
+        const multString = m === 1 ? 'without' : `x${m}`
+        if (!itemsMap[multString]) {
+          itemsMap[multString] = []
+        }
 
-      items.push({
-        currLevel,
-        tarLevel: targetLevel,
-        xp: xp,
-        amount: Math.ceil(xpTotal / item.xp),
-        item,
-      })
+        itemsMap[multString].push({
+          currLevel: currentLevel,
+          tarLevel: targetLevel,
+          xp: xpMult,
+          amount: Math.ceil(xpMult / item.xp),
+          item,
+        })
+      }
     }
 
-    const itemsFiltered = items.filter((item) => item.amount > 0)
+    const itemsMapFiltered = Object.entries(itemsMap).reduce(
+      (acc, [key, value]) => {
+        const itemsFiltered = value.filter((item) => item.amount > 0)
+        acc[key] = itemsFiltered
+        return acc
+      },
+      {} as Record<string, Item[]>
+    )
 
     return {
       xpTotal: xpTotal,
-      items: itemsFiltered,
+      items: itemsMapFiltered,
     }
   }
 
