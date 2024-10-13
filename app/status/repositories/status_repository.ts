@@ -187,10 +187,13 @@ function processEntries(entries: InferedPaladiumStatusData[], scale: 'day' | 'ho
     }
     factionsStatus[faction].push({
       from: startTimeFactions[faction],
-      to: DateTime.fromSQL(startTimeFactions[faction])
-        .plus({ hours: 1 })
-        .startOf('hour')
-        .toFormat('HH:mm:ss')!,
+      to:
+        scale === 'day'
+          ? '23:59:59'
+          : DateTime.fromSQL(startTimeFactions[faction])
+              .plus({ hours: 1 })
+              .startOf('hour')
+              .toFormat('HH:mm:ss')!,
       status: previousFactionStatus[faction],
     })
   }
