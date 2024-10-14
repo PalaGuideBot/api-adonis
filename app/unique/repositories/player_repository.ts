@@ -2,10 +2,13 @@ import { inject } from '@adonisjs/core'
 import { DateTime } from 'luxon'
 
 import { db } from '#core/services/db'
+import type { DistanceFilter } from '#core/validators/filter_validator'
 import { MojangService } from '#minecraft/services/mojang'
 import { mergeBuildings } from '#paladium/helpers/clicker'
 import { PaladiumService } from '#paladium/services/paladium'
 import { player as defaultPlayer } from '#unique/contents/default'
+
+const DEFAULT_DAY_INTERVAL = 7
 
 @inject()
 class PlayerRepository {
@@ -14,12 +17,20 @@ class PlayerRepository {
     private mojangService: MojangService
   ) {}
 
-  async findByUUID(uuid: string) {
+  async findByUUID(uuid: string, options: Partial<DistanceFilter> = {}) {
+    const {
+      from = DateTime.now().minus({ day: DEFAULT_DAY_INTERVAL }).startOf('day'),
+      to = DateTime.now().endOf('day'),
+    } = options
+
     if (uuid === 'e7c62d78-f0f6-4122-b194-53782dd0a06f') {
       return defaultPlayer
     }
 
-    return db.players.findOne({ uuid }).lean()
+    return db.players.findOne({
+      uuid,
+      'data.newDate': { $gte: from.startOf('day').toISO(), $lte: to.endOf('day').toISO() },
+    })
   }
 
   async create(username: string) {

@@ -3,6 +3,7 @@ import { DateTime } from 'luxon'
 import type { InferSchemaType } from 'mongoose'
 
 import { db } from '#core/services/db'
+import type { DistanceFilter } from '#core/validators/filter_validator'
 import { config } from '#leaderboard/contents/categories'
 import { CategoryItem } from '#leaderboard/types'
 import { ImageService } from '#paladium/services/image'
@@ -13,7 +14,7 @@ const DEFAULT_DAY_INTERVAL = 7
 class LeaderboardRepository {
   constructor(private imageService: ImageService) {}
 
-  async get(category: CategoryItem, options: { from?: DateTime; to?: DateTime } = {}) {
+  async get(category: CategoryItem, options: Partial<DistanceFilter> = {}) {
     const {
       from = DateTime.now().minus({ day: DEFAULT_DAY_INTERVAL }).startOf('day'),
       to = DateTime.now().endOf('day'),

@@ -15,6 +15,8 @@ export const distanceValidator = vine.compile(
   })
 )
 
-export const distanceValidatorToString = (value: Infer<typeof distanceValidator>) => {
+export type DistanceFilter = Infer<typeof distanceValidator>
+
+export const distanceValidatorToString = (value: DistanceFilter) => {
   return `from:${value.from?.toSQLDate()}|to:${value.to?.toSQLDate()}`
 }

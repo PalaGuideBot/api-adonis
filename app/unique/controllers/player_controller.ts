@@ -2,6 +2,7 @@ import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
 import cache from '#cache/cache'
+import { distanceValidator } from '#core/validators/filter_validator'
 import { MojangService } from '#minecraft/services/mojang'
 import { PlayerRepository } from '#unique/repositories/player_repository'
 
@@ -12,7 +13,7 @@ export default class PlayerController {
     private mojangService: MojangService
   ) {}
 
-  async show({ response, params }: HttpContext) {
+  async show({ response, request, params }: HttpContext) {
     let uuid: string
     try {
       uuid = await this.mojangService.getUUIDByUsername(params.username)
@@ -22,7 +23,9 @@ export default class PlayerController {
       })
     }
 
-    let player = await this.playerRepository.findByUUID(uuid)
+    const options = await distanceValidator.validate(request.qs())
+
+    let player = await this.playerRepository.findByUUID(uuid, options)
     if (!player) {
       try {
         player = await this.playerRepository.create(params.username)
