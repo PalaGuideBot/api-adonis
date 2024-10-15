@@ -8,7 +8,7 @@ import { mergeBuildings } from '#paladium/helpers/clicker'
 import { PaladiumService } from '#paladium/services/paladium'
 import { player as defaultPlayer } from '#unique/contents/default'
 
-const DEFAULT_DAY_INTERVAL = 7
+const DEFAULT_DAY_INTERVAL = 30
 
 @inject()
 class PlayerRepository {
@@ -27,10 +27,35 @@ class PlayerRepository {
       return defaultPlayer
     }
 
-    return db.players.findOne({
-      uuid,
-      'data.newDate': { $gte: from.startOf('day').toISO(), $lte: to.endOf('day').toISO() },
-    })
+    const player = await db.players.findOne({ uuid }, { data: 0 }).lean()
+
+    if (!player) {
+      return null
+    }
+
+    const data = await db.players.aggregate([
+      { $match: { uuid } },
+      { $unwind: '$data' },
+      {
+        $match: {
+          'data.newDate': {
+            $gte: from.startOf('day').toJSDate(),
+            $lte: to.endOf('day').toJSDate(),
+          },
+        },
+      },
+      { $sort: { 'data.newDate': 1 } },
+      {
+        $group: {
+          _id: '$_id',
+          data: { $push: '$data' },
+        },
+      },
+    ])
+
+    player.data = data[0]?.data || []
+
+    return player
   }
 
   async create(username: string) {

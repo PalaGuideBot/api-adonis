@@ -34,10 +34,6 @@ export default class PlayerController {
       }
     }
 
-    player.data = player.data.toSorted(
-      (a, b) => new Date(a.date).getMilliseconds() - new Date(b.date).getMilliseconds()
-    )
-
     return response.ok(player)
   }
 
