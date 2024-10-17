@@ -79,6 +79,8 @@ interface Mount {
 interface Pet {
   currentSkin: string
   happiness: number
+  experience: number
+  level: number
   skills: {
     id: string
     lastChange: number
@@ -138,6 +140,8 @@ const playerSchema: Schema = new Schema<Player>({
   pet: {
     currentSkin: String,
     happiness: Number,
+    experience: Number,
+    level: Number,
     skills: [
       {
         id: String,

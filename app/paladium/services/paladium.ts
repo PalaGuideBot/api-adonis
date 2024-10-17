@@ -6,6 +6,7 @@ import ky, { HTTPError } from 'ky'
 
 import { getOnYourMarksGoalItem } from '#event/contents/events'
 import { LeaderboardCategory, LeaderboardTrixiumCategory } from '#leaderboard/types'
+import { getPetLevel } from '#paladium/helpers/pet'
 import { ImageService } from '#paladium/services/image'
 import type { ApiResponseError } from '#paladium/types'
 import {
@@ -156,7 +157,9 @@ class PaladiumService {
       const response = await this.client.get(`paladium/player/profile/${uuid}/pet`)
       const data = await response.json()
 
-      return playerPetValidator.validate(data)
+      const pet = await playerPetValidator.validate(data)
+
+      return { ...pet, level: getPetLevel(pet.experience) }
     } catch (error: unknown) {
       return null // Pet is not required
     }
