@@ -78,6 +78,8 @@ const player: Player = {
   pet: {
     currentSkin: 'kapio_koi',
     happiness: 100,
+    level: 2,
+    experience: 100,
     skills: [
       {
         id: 'vital_point',
