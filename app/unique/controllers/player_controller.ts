@@ -5,12 +5,14 @@ import cache from '#cache/cache'
 import { distanceValidator } from '#core/validators/filter_validator'
 import { MojangService } from '#minecraft/services/mojang'
 import { PlayerRepository } from '#unique/repositories/player_repository'
+import { LinkRepository } from '#link/repositories/link_repository'
 
 @inject()
 export default class PlayerController {
   constructor(
     private playerRepository: PlayerRepository,
-    private mojangService: MojangService
+    private mojangService: MojangService,
+    private linkRepository: LinkRepository
   ) {}
 
   async show({ response, request, params }: HttpContext) {
@@ -34,7 +36,11 @@ export default class PlayerController {
       }
     }
 
-    return response.ok(player)
+    let playerLinked: boolean = false
+    const getPlayerLink = await this.linkRepository.findByUUID(uuid)
+    if (getPlayerLink) playerLinked = true
+
+    return response.ok({ ...player, playerLinked })
   }
 
   async create({ response, params }: HttpContext) {
