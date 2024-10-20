@@ -511,7 +511,7 @@ const buildings = [
     price: 28350000,
     item: ['scorching_dunes'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 99225000 },
       { type: 'time', value: 24 },
       { type: 'building', value: 3 },
     ],
@@ -522,7 +522,7 @@ const buildings = [
     price: 54000000,
     item: ['mystical_forest'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 189000000 },
       { type: 'time', value: 27 },
       { type: 'building', value: 3 },
     ],
@@ -674,7 +674,7 @@ const buildings = [
     price: 29925000,
     item: ['volcanic_island'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 54573750 },
       { type: 'time', value: 23 },
       { type: 'building', value: 7 },
     ],
@@ -685,7 +685,7 @@ const buildings = [
     price: 59850000,
     item: ['scorching_dunes'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 109147500 },
       { type: 'time', value: 25 },
       { type: 'building', value: 7 },
     ],
@@ -696,7 +696,7 @@ const buildings = [
     price: 114000000,
     item: ['mystical_forest'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 207900000 },
       { type: 'time', value: 28 },
       { type: 'building', value: 7 },
     ],
@@ -860,7 +860,7 @@ const many = [
     price: 12600000,
     item: ['scorching_dunes'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 69457500 },
       { type: 'time', value: 23 },
       { type: 'building', value: 2 },
     ],
@@ -871,7 +871,7 @@ const many = [
     price: 24000000,
     item: ['mystical_forest'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 132300000 },
       { type: 'time', value: 26 },
       { type: 'building', value: 2 },
     ],
@@ -882,7 +882,7 @@ const many = [
     price: 46000000,
     item: ['lush_jungle'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 253575000 },
       { type: 'time', value: 29 },
       { type: 'building', value: 2 },
     ],
@@ -986,7 +986,7 @@ const posteriors = [
     activeItem: ['volcanic_island'],
     previousItem: ['pirate_port'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 49612500 },
       { type: 'time', value: 22 },
       { type: 'building', value: 4 },
     ],
@@ -998,7 +998,7 @@ const posteriors = [
     activeItem: ['scorching_dunes'],
     previousItem: ['volcanic_island'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 99250000 },
       { type: 'time', value: 24 },
       { type: 'building', value: 4 },
     ],
