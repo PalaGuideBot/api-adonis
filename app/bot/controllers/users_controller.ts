@@ -19,12 +19,12 @@ export default class UsersController {
         await this.botRepository.create({
           date: DateTime.now().toFormat('yyyy-MM-dd'),
           newDate: new Date(),
-          users: body,
+          users: body.users,
           interactions: [],
           guilds: [],
         })
       } else {
-        this.botRepository.update(bot, { users: body })
+        this.botRepository.update(bot, { users: body.users })
       }
 
       return response.ok({ message: 'Users updated' })
