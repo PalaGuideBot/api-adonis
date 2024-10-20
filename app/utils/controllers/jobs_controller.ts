@@ -37,6 +37,16 @@ export default class JobsController {
     return response.ok(result)
   }
 
+  async levels({ response }: HttpContext) {
+    const levels = this.jobRepository.getLevels()
+
+    if (!levels || levels.length === 0) {
+      return response.badRequest({ message: 'No levels found' })
+    }
+
+    return response.ok(levels)
+  }
+
   async items({ response }: HttpContext) {
     const items = this.jobRepository.getItems()
 

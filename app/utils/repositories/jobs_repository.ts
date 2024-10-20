@@ -153,6 +153,10 @@ class JobRepository {
 
     return items
   }
+
+  getLevels() {
+    return jobXp
+  }
 }
 
 export { JobRepository }

@@ -13,6 +13,7 @@ router
       .post('/jobs/reverse-calculate', [JobsController, 'reverseCalculate'])
       .as('jobs.reverse-calculate')
     router.get('/jobs/items', [JobsController, 'items']).as('jobs.items')
+    router.get('/jobs/levels', [JobsController, 'levels']).as('jobs.levels')
     router.post('/pogs/calculate', [PogController, 'calculate']).as('pog.calculate')
     router.get('/clicker/buildings', [ClickerController, 'buildings']).as('clicker.buildings')
     router.get('/clicker/upgrades', [ClickerController, 'upgrades']).as('clicker.upgrades')
