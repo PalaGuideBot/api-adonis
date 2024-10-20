@@ -40,7 +40,7 @@ const faction: Faction = {
     },
     {
       group: 'contributor',
-      joinedAt: 17280824450,
+      joinedAt: 1717818691037,
       username: 'volcanofr',
       uuid: '0b1c3f16-b735-457a-b588-b51c4391d630',
     },
