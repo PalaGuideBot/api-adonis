@@ -21,6 +21,7 @@ export default class CommandsController {
         newDate: new Date(),
         guilds: [],
         interactions: [{ name, count: 1 }],
+        users: 0,
       })
     } else {
       const interaction = bot.interactions.find((item) => item.name === name)

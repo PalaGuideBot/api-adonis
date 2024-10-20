@@ -21,6 +21,7 @@ export default class GuildsController {
           newDate: new Date(),
           guilds: body,
           interactions: [],
+          users: 0,
         })
       } else {
         this.botRepository.update(bot, { guilds: body })

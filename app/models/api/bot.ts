@@ -17,6 +17,7 @@ interface Bot {
   newDate: Date
   interactions: Interaction[]
   guilds: Guild[]
+  users: number
 }
 
 const interactionSchema = new Schema<Interaction>({
@@ -36,6 +37,7 @@ const botSchema = new Schema<Bot>({
   newDate: Date,
   interactions: [interactionSchema],
   guilds: [guildSchema],
+  users: Number,
 })
 
 const dbConnection: Connection = mongoose.connection.useDb('api')

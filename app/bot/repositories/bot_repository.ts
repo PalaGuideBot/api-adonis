@@ -39,6 +39,7 @@ class BotRepository {
         memberCount: guild.memberCount,
         icon: guild.icon || '',
       })),
+      users: bot.users,
     }))
   }
 
