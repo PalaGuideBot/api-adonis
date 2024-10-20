@@ -6,13 +6,17 @@ import { distanceValidator } from '#core/validators/filter_validator'
 import { MojangService } from '#minecraft/services/mojang'
 import { PlayerRepository } from '#unique/repositories/player_repository'
 import { LinkRepository } from '#link/repositories/link_repository'
+import { StaffRepository } from '#role/repositories/staff_repository'
+import { ContributorRepository } from '#role/repositories/contributor_repository'
 
 @inject()
 export default class PlayerController {
   constructor(
     private playerRepository: PlayerRepository,
     private mojangService: MojangService,
-    private linkRepository: LinkRepository
+    private linkRepository: LinkRepository,
+    private staffRepository: StaffRepository,
+    private contributorRepository: ContributorRepository,
   ) {}
 
   async show({ response, request, params }: HttpContext) {
@@ -36,11 +40,17 @@ export default class PlayerController {
       }
     }
 
-    let playerLinked: boolean = false
-    const getPlayerLink = await this.linkRepository.findByUUID(uuid)
-    if (getPlayerLink) playerLinked = true
+    let playerFlags: number[] = []
 
-    return response.ok({ ...player, playerLinked })
+    const listStaff = await this.staffRepository.list() // Staff
+    const getPlayerLink = await this.linkRepository.findByUUID(uuid) // Link
+    const listContributor = await this.contributorRepository.list() // Contributor
+
+    if (listStaff.includes(getPlayerLink?.discordId)) playerFlags.push(0) // Staff
+    if (getPlayerLink) playerFlags.push(1) // Link
+    if (listContributor.includes(getPlayerLink?.discordId)) playerFlags.push(2) // Contributor
+
+    return response.ok({ ...player, playerFlags })
   }
 
   async create({ response, params }: HttpContext) {
