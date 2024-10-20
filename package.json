@@ -26,6 +26,7 @@
     "#models/*": "./app/models/*.js",
     "#other/*": "./app/other/*.js",
     "#paladium/*": "./app/paladium/*.js",
+    "#role/*": "./app/role/*.js",
     "#status/*": "./app/status/*.js",
     "#unique/*": "./app/unique/*.js",
     "#usage/*": "./app/usage/*.js",

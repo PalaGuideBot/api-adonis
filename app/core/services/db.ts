@@ -14,6 +14,7 @@ import PaladiumStatus from '#models/paladium/paladium_status'
 import EndpointAndKey from '#models/api/endpoint_and_key'
 import MinecraftLink from '#models/api/minecraft_link'
 import Bot from '#models/api/bot'
+import Role from '#models/api/role'
 
 export const db = {
   factions: Factions,
@@ -32,4 +33,5 @@ export const db = {
   endpointAndKey: EndpointAndKey,
   minecraftLink: MinecraftLink,
   bot: Bot,
+  role: Role,
 }
