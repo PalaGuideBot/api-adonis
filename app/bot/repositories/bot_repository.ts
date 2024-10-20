@@ -31,7 +31,7 @@ class BotRepository {
       newDate: bot.newDate,
       interactionsCount: bot.interactions.reduce((acc, interaction) => acc + interaction.count, 0),
       guildsCount: bot.guilds.length,
-      usersCount: bot.guilds.reduce((acc, guild) => acc + guild.memberCount, 0),
+      usersCount: bot.users ?? 0,
       interactions: bot.interactions,
       guilds: bot.guilds.map((guild) => ({
         id: guild.id,
@@ -39,7 +39,6 @@ class BotRepository {
         memberCount: guild.memberCount,
         icon: guild.icon || '',
       })),
-      users: bot.users,
     }))
   }
 
@@ -49,7 +48,7 @@ class BotRepository {
     if (!lastBot) return { guildsCount: 0, usersCount: 0 }
     else {
       const guildsCount = lastBot.guilds.length
-      const usersCount = lastBot.guilds.reduce((acc, guild) => acc + guild.memberCount, 0)
+      const usersCount = lastBot.users ?? 0
 
       return {
         guildsCount,
