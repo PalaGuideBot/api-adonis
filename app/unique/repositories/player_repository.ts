@@ -79,7 +79,7 @@ class PlayerRepository {
       ])
       .lean()
 
-    return players
+    return players.map(({ _id, data, ...player }) => ({ ...player, date: data[0].newDate }))
   }
 
   async create(username: string) {
