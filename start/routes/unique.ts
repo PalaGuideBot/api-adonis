@@ -6,6 +6,7 @@ const FactionController = () => import('#unique/controllers/faction_controller')
 
 router
   .group(() => {
+    router.get('/', [PlayerController, 'index']).as('players.index')
     router.get(':username', [PlayerController, 'show']).as('players')
     router.post(':username', [PlayerController, 'create'])
     router.get(':username/clicker', [PlayerController, 'clicker']).as('players.clicker')

@@ -1,11 +1,12 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
+import { DateTime } from 'luxon'
 
 import cache from '#cache/cache'
 import { distanceValidator } from '#core/validators/filter_validator'
+import { LinkRepository } from '#link/repositories/link_repository'
 import { MojangService } from '#minecraft/services/mojang'
 import { PlayerRepository } from '#unique/repositories/player_repository'
-import { LinkRepository } from '#link/repositories/link_repository'
 
 @inject()
 export default class PlayerController {
@@ -14,6 +15,17 @@ export default class PlayerController {
     private mojangService: MojangService,
     private linkRepository: LinkRepository
   ) {}
+
+  async index({ response, request }: HttpContext) {
+    let players: Awaited<ReturnType<typeof this.playerRepository.findByDate>> = []
+
+    if (request.qs().latest) {
+      const now = DateTime.now()
+      players = await this.playerRepository.findByDate(now)
+    }
+
+    return response.ok(players)
+  }
 
   async show({ response, request, params }: HttpContext) {
     let uuid: string
