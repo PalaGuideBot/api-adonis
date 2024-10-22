@@ -1,18 +1,29 @@
-import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
+import router from '@adonisjs/core/services/router'
 
-const StaffController = () => import('#role/controllers/staff_controller')
-const ContributorController = () => import('#role/controllers/contributor_controller')
+const RoleController = () => import('#role/controllers/role_controller')
+const UserController = () => import('#role/controllers/user_controller')
 
 router
   .group(() => {
-    router.post('/staff/:discordId', [StaffController, 'add'])
-    router.delete('/staff/:discordId', [StaffController, 'delete'])
-    router.get('/staff/', [StaffController, 'show'])
-
-    router.post('/contributor/:discordId', [ContributorController, 'add'])
-    router.delete('/contributor/:discordId', [ContributorController, 'delete'])
-    router.get('/contributor/', [ContributorController, 'show'])
+    router.get('/', [RoleController, 'index'])
+    router.get('/:name', [RoleController, 'show'])
+    router.post('/', [RoleController, 'create'])
+    router.put('/:name', [RoleController, 'update'])
+    router.delete('/:name', [RoleController, 'delete'])
   })
-  .prefix('role')
+  .prefix('roles')
+  .middleware(middleware.auth())
+
+router
+  .group(() => {
+    router.get('/', [UserController, 'index'])
+    router.get('/:id', [UserController, 'show'])
+    router.post('/', [UserController, 'create'])
+    router.put('/:id', [UserController, 'update'])
+    router.put('/:id/roles', [UserController, 'addRoles'])
+    router.delete('/:id', [UserController, 'delete'])
+    router.delete('/:id/roles', [UserController, 'removeRoles'])
+  })
+  .prefix('users')
   .middleware(middleware.auth())
