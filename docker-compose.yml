@@ -38,3 +38,4 @@ services:
 networks:
   shared_network:
     driver: bridge
+    name: shared_network
