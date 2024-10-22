@@ -2,25 +2,38 @@ version: '3.3'
 
 services:
   api:
-    image: node:20
+    image: node:20.17.0
     container_name: api
-    working_dir: ./build
+    working_dir: /build
+    volumes:
+      - ./build:/build
+      - ./node_modules:/build/node_modules
+      - ./secrets:/build/secrets
     command: node bin/server.js
     ports:
       - "8080:8080"
     env_file:
       - .env
     restart: always
+    networks:
+      - shared_network
+
   scheduler:
-    image: node:20
+    image: node:20.17.0
     container_name: scheduler
-    working_dir: ./build
+    working_dir: /build
+    volumes:
+      - ./build:/build
+      - ./node_modules:/build/node_modules
+      - ./secrets:/build/secrets
     command: node ace.js scheduler:run
     ports:
       - "8081:8081"
     env_file:
       - .env
     restart: always
+    networks:
+      - shared_network
 
 networks:
   shared_network:
