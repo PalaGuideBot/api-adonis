@@ -4,6 +4,7 @@ services:
   api:
     image: node:20
     container_name: api
+    working_dir: /build
     command: node bin/server.js
     ports:
       - "8080:8080"
@@ -13,6 +14,7 @@ services:
   sheduler:
     image: node:20
     container_name: sheduler
+    working_dir: /build
     command: node ace.js scheduler:run
     ports:
       - "8081:8081"
