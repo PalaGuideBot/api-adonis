@@ -3,8 +3,8 @@ import { Exception } from '@adonisjs/core/exceptions'
 import { Infer } from '@vinejs/vine/types'
 
 import { db } from '#core/services/db'
-import { RoleRepository } from '#role/repositories/role_repository'
-import type { createUserValidator, updateUserValidator } from '#role/validators/user_validator'
+import { RoleRepository } from '#user/repositories/role_repository'
+import type { createUserValidator, updateUserValidator } from '#user/validators/user_validator'
 
 @inject()
 class UserRepository {

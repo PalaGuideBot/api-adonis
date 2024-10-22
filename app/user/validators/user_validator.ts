@@ -1,6 +1,6 @@
 import vine from '@vinejs/vine'
 
-import { existsInRule } from '#role/validators/rules/exists_in'
+import { existsInRule } from '#core/validators/rules/exists_in'
 
 const rolesValidator = vine.array(
   vine.string().use(existsInRule({ model: 'role', column: 'name' }))

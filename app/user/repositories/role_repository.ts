@@ -2,7 +2,7 @@ import { Exception } from '@adonisjs/core/exceptions'
 import { Infer } from '@vinejs/vine/types'
 
 import { db } from '#core/services/db'
-import type { createRoleValidator, updateRoleValidator } from '#role/validators/role_validator'
+import type { createRoleValidator, updateRoleValidator } from '#user/validators/role_validator'
 
 class RoleRepository {
   async findAll() {

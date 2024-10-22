@@ -1,12 +1,12 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
-import { UserRepository } from '#role/repositories/user_repository'
+import { UserRepository } from '#user/repositories/user_repository'
 import {
   createUserValidator,
   updateUserRolesValidator,
   updateUserValidator,
-} from '#role/validators/user_validator'
+} from '#user/validators/user_validator'
 
 @inject()
 export default class UserController {

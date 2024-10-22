@@ -1,8 +1,8 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
-import { RoleRepository } from '#role/repositories/role_repository'
-import { createRoleValidator, updateRoleValidator } from '#role/validators/role_validator'
+import { RoleRepository } from '#user/repositories/role_repository'
+import { createRoleValidator, updateRoleValidator } from '#user/validators/role_validator'
 
 @inject()
 export default class RoleController {
