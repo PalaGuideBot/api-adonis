@@ -34,3 +34,7 @@ services:
     restart: always
     networks:
       - shared_network
+
+networks:
+  shared_network:
+    driver: bridge
