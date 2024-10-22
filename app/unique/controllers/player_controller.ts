@@ -3,14 +3,18 @@ import { HttpContext } from '@adonisjs/core/http'
 
 import cache from '#cache/cache'
 import { distanceValidator } from '#core/validators/filter_validator'
+import { LinkRepository } from '#link/repositories/link_repository'
 import { MojangService } from '#minecraft/services/mojang'
 import { PlayerRepository } from '#unique/repositories/player_repository'
+import { UserRepository } from '#user/repositories/user_repository'
 
 @inject()
 export default class PlayerController {
   constructor(
     private playerRepository: PlayerRepository,
-    private mojangService: MojangService
+    private mojangService: MojangService,
+    private linkRepository: LinkRepository,
+    private userRepository: UserRepository
   ) {}
 
   async show({ response, request, params }: HttpContext) {
@@ -34,9 +38,16 @@ export default class PlayerController {
       }
     }
 
-    //TODO: Add user roles associated to player
+    let flags: NonNullable<Awaited<ReturnType<typeof this.userRepository.findById>>>['roles'] = []
 
-    return response.ok(player)
+    const link = await this.linkRepository.findByUUID(player.uuid)
+
+    if (link) {
+      const user = await this.userRepository.findById(link.discordId)
+      flags = user?.roles || []
+    }
+
+    return response.ok({ ...player, flags })
   }
 
   async create({ response, params }: HttpContext) {

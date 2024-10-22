@@ -39,7 +39,7 @@ class UserRepository {
       throw new Exception('User already exists', { status: 400 })
     }
     const user = await db.user.create(data)
-    return { ...user, roles: await this.transformRoles(user.roles) }
+    return { ...user.toObject(), roles: await this.transformRoles(user.roles) }
   }
 
   async update(id: string, data: Infer<typeof updateUserValidator>) {

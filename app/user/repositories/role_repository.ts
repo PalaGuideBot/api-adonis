@@ -29,7 +29,8 @@ class RoleRepository {
     if (await db.role.exists({ name: data.name })) {
       throw new Exception('Role already exists', { status: 400 })
     }
-    return await db.role.create(data)
+    const role = await db.role.create(data)
+    return role.toObject()
   }
 
   async update(name: string, data: Infer<typeof updateRoleValidator>) {
