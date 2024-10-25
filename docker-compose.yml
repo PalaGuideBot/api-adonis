@@ -9,5 +9,5 @@ services:
     environment:
       - NODE_ENV=production
     volumes:
-      - /docker-volumes/secrets:/secrets
+      - /docker-volumes/secrets:/app/secrets
     restart: always 
