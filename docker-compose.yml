@@ -1,3 +1,7 @@
+networks:
+  mongo_default:
+    external: true
+
 services:
   api:
     build: .
@@ -11,3 +15,5 @@ services:
     volumes:
       - /docker-volumes/secrets:/app/secrets
     restart: always 
+    networks:
+      - mongo_default
