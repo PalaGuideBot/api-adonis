@@ -4,7 +4,6 @@ import { DateTime } from 'luxon'
 
 import cache from '#cache/cache'
 import { distanceValidator } from '#core/validators/filter_validator'
-import { LinkRepository } from '#link/repositories/link_repository'
 import { MojangService } from '#minecraft/services/mojang'
 import { PlayerRepository } from '#unique/repositories/player_repository'
 
@@ -12,8 +11,7 @@ import { PlayerRepository } from '#unique/repositories/player_repository'
 export default class PlayerController {
   constructor(
     private playerRepository: PlayerRepository,
-    private mojangService: MojangService,
-    private linkRepository: LinkRepository
+    private mojangService: MojangService
   ) {}
 
   async index({ response, request }: HttpContext) {
@@ -48,11 +46,9 @@ export default class PlayerController {
       }
     }
 
-    let playerLinked: boolean = false
-    const getPlayerLink = await this.linkRepository.findByUUID(uuid)
-    if (getPlayerLink) playerLinked = true
+    console.log(player)
 
-    return response.ok({ ...player, playerLinked })
+    return response.ok(player)
   }
 
   async create({ response, params }: HttpContext) {

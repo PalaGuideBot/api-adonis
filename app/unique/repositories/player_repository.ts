@@ -139,7 +139,9 @@ class PlayerRepository {
       mount: playerData.mount,
     })
 
-    return player.save()
+    await player.save()
+
+    return player.toObject()
   }
 
   async countByDate() {
