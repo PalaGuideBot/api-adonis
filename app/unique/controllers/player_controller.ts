@@ -46,8 +46,6 @@ export default class PlayerController {
       }
     }
 
-    console.log(player)
-
     return response.ok(player)
   }
 
