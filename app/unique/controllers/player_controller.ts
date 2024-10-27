@@ -1,5 +1,6 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
+import { DateTime } from 'luxon'
 
 import cache from '#cache/cache'
 import { distanceValidator } from '#core/validators/filter_validator'
@@ -16,6 +17,17 @@ export default class PlayerController {
     private linkRepository: LinkRepository,
     private userRepository: UserRepository
   ) {}
+
+  async index({ response, request }: HttpContext) {
+    let players: Awaited<ReturnType<typeof this.playerRepository.findByDate>> = []
+
+    if (request.qs().latest) {
+      const now = DateTime.now()
+      players = await this.playerRepository.findByDate(now)
+    }
+
+    return response.ok(players)
+  }
 
   async show({ response, request, params }: HttpContext) {
     let uuid: string
