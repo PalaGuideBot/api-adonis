@@ -5,6 +5,7 @@ networks:
 services:
   api:
     build: .
+    image: api-image
     container_name: api
     ports:
       - '3030:3030'
@@ -17,3 +18,18 @@ services:
     restart: always 
     networks:
       - mongo_default
+
+  scheduler:
+    build: .
+    image: api-image
+    container_name: scheduler
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - /docker-volumes/secrets:/app/secrets
+    restart: always
+    networks:
+      - mongo_default
+    command: ["node", "ace", "scheduler:run"]
