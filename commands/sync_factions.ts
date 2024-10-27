@@ -20,11 +20,13 @@ export default class SyncFactions extends BaseCommand {
   async run(paladiumService: PaladiumService) {
     const now = DateTime.now().toSQLDate()
 
-    const factions = await db.factions.find({
-      'date': { $ne: now },
-      'retry.count': { $lt: 10 },
-      'retry.disabled': false,
-    })
+    const factions = await db.factions
+      .find({
+        'date': { $ne: now },
+        'retry.count': { $lt: 10 },
+        'retry.disabled': false,
+      })
+      .limit(100)
 
     const bulkOperations = []
     let updated = 0
