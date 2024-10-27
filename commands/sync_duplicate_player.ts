@@ -28,9 +28,7 @@ export default class SyncDuplicatePlayer extends BaseCommand {
     const duplicate = []
     for (const [, playersWithSameUuid] of uuidMap.entries()) {
       if (playersWithSameUuid.length > 1) {
-        for (const player of playersWithSameUuid) {
-          duplicate.push({ uuid: player.uuid, id: player._id })
-        }
+        duplicate.push(playersWithSameUuid)
       }
     }
 
@@ -38,18 +36,23 @@ export default class SyncDuplicatePlayer extends BaseCommand {
 
     const bulkOperations = []
 
-    for (const { uuid } of duplicate) {
-      const playerData = await db.players.find({ uuid }).lean()
-      if (!playerData || playerData.length <= 1) continue
+    for (const playersWithSameUuid of duplicate) {
+      this.logger.info(`Processing ${playersWithSameUuid.length} players with the same uuid`)
+      const [, ...playersToDelete] = playersWithSameUuid.sort(
+        (a: any, b: any) => (b.data?.length || 0) - (a.data?.length || 0)
+      )
 
-      const sortedPlayers = playerData.sort((a, b) => (a.data?.length || 0) - (b.data?.length || 0))
-
-      bulkOperations.push({
-        deleteOne: {
-          filter: { _id: sortedPlayers[0]._id },
-        },
-      })
+      for (const player of playersToDelete) {
+        this.logger.info(`Deleting player ${player._id}`)
+        bulkOperations.push({
+          deleteOne: {
+            filter: { _id: player._id },
+          },
+        })
+      }
     }
+
+    this.logger.info(`Total ${bulkOperations.length} players to delete`)
 
     if (bulkOperations.length > 0) {
       try {
