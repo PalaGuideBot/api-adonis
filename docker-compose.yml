@@ -1,5 +1,5 @@
 networks:
-  mongo_default:
+  mongo_db:
     external: true
 
 services:
@@ -16,7 +16,7 @@ services:
       - /docker-volumes/secrets:/app/secrets
     restart: always 
     networks:
-      - mongo_default
+      - mongo_db
 
   scheduler:
     image: ghcr.io/palaguidebot/api:latest
@@ -29,5 +29,5 @@ services:
       - /docker-volumes/secrets:/app/secrets
     restart: always
     networks:
-      - mongo_default
+      - mongo_db
     command: ["node", "ace", "scheduler:run"]
