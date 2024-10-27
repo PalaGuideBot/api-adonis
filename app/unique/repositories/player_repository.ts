@@ -1,5 +1,6 @@
 import { inject } from '@adonisjs/core'
 import { DateTime } from 'luxon'
+import type { InferSchemaType } from 'mongoose'
 
 import { db } from '#core/services/db'
 import type { DistanceFilter } from '#core/validators/filter_validator'
@@ -56,6 +57,29 @@ class PlayerRepository {
     player.data = data[0]?.data || []
 
     return player
+  }
+
+  async findByDate(date: DateTime, size: number = 1) {
+    const players = await db.players
+      .find({
+        data: {
+          $size: size <= 0 ? undefined : size,
+          $elemMatch: {
+            newDate: {
+              $gte: date.startOf('day').toJSDate(),
+              $lte: date.endOf('day').toJSDate(),
+            },
+          },
+        },
+      })
+      .select<Pick<InferSchemaType<typeof db.players.schema>, 'uuid' | 'username' | 'data'>>([
+        'uuid',
+        'username',
+        'data.newDate',
+      ])
+      .lean()
+
+    return players.map(({ _id, data, ...player }) => ({ ...player, date: data[0].newDate }))
   }
 
   async create(username: string) {

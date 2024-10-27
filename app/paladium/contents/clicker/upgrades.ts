@@ -98,7 +98,7 @@ const clicks = [
   },
   {
     name: 'click_10',
-    label: 'Souple Clic',
+    label: 'Soupe Clic',
     price: 38500000,
     rate: 1024,
     conditions: [
@@ -533,7 +533,7 @@ const buildings = [
     price: 103500000,
     item: ['lush_jungle'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 362250000 },
       { type: 'time', value: 30 },
       { type: 'building', value: 3 },
     ],
@@ -544,7 +544,7 @@ const buildings = [
     price: 231750000,
     item: ['forgotten_temple'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 811125000 },
       { type: 'time', value: 34 },
       { type: 'building', value: 3 },
     ],
@@ -708,7 +708,7 @@ const buildings = [
     price: 218500000,
     item: ['lush_jungle'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 398475000 },
       { type: 'time', value: 31 },
       { type: 'building', value: 7 },
     ],
@@ -893,7 +893,7 @@ const many = [
     price: 103000000,
     item: ['forgotten_temple'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 567787500 },
       { type: 'time', value: 33 },
       { type: 'building', value: 2 },
     ],
@@ -950,7 +950,7 @@ const posteriors = [
     activeItem: ['witch_cabin'],
     previousItem: ['grandma_garden'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 866250 },
       { type: 'time', value: 8 },
       { type: 'building', value: 4 },
     ],
@@ -962,7 +962,7 @@ const posteriors = [
     activeItem: ['buzzing_hive'],
     previousItem: ['witch_cabin'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 2126250 },
       { type: 'time', value: 11 },
       { type: 'building', value: 4 },
     ],
@@ -974,7 +974,7 @@ const posteriors = [
     activeItem: ['frozen_iceberg'],
     previousItem: ['snowy_forest'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 9925000 },
       { type: 'time', value: 16 },
       { type: 'building', value: 4 },
     ],
@@ -1010,7 +1010,7 @@ const posteriors = [
     activeItem: ['lush_jungle'],
     previousItem: ['mystical_forest'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 362250000 },
       { type: 'time', value: 30 },
       { type: 'building', value: 4 },
     ],
@@ -1022,14 +1022,14 @@ const posteriors = [
     activeItem: ['forgotten_temple'],
     previousItem: ['lush_jungle'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 811125000 },
       { type: 'time', value: 35 },
       { type: 'building', value: 4 },
     ],
   },
   {
     name: 'millennial_crypt_posterior',
-    label: 'Production postérieure - Temple oublié',
+    label: 'Production postérieure - Crypte millénaire',
     price: 123750000,
     activeItem: ['millennial_crypt'],
     previousItem: ['forgotten_temple'],
@@ -1041,7 +1041,7 @@ const posteriors = [
   },
   {
     name: 'bottomless_pit_posterior',
-    label: 'Production postérieure - Temple oublié',
+    label: 'Production postérieure - Gouffre sans fond',
     price: 213750000,
     activeItem: ['bottomless_pit'],
     previousItem: ['millennial_crypt'],
@@ -1093,6 +1093,7 @@ const categories = [
   {
     name: 'category_humanoid',
     label: 'Technique de persuasion',
+    category: 'humanoid',
     price: 2948625,
     item: ['pirate_port', 'dwarves_mine'],
     pourcentage: 0.5,
@@ -1101,6 +1102,7 @@ const categories = [
   {
     name: 'category_frozen',
     label: 'Manteau épais',
+    category: 'gelé',
     price: 880000,
     item: ['frozen_iceberg', 'snowy_forest'],
     pourcentage: 0.5,
@@ -1109,6 +1111,7 @@ const categories = [
   {
     name: 'category_on_water',
     label: 'Potion contre le mal de mer',
+    category: "sur l'eau",
     price: 4342500,
     item: ['pirate_port', 'frozen_iceberg'],
     pourcentage: 0.5,
@@ -1117,6 +1120,7 @@ const categories = [
   {
     name: 'category_forest',
     label: 'Lame de hache en Endium',
+    category: 'forêt',
     price: 27562500,
     item: ['mystical_forest', 'snowy_forest', 'lush_jungle'],
     pourcentage: 0.5,
