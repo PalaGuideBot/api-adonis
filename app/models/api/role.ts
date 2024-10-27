@@ -1,20 +1,20 @@
 import mongoose, { Connection, Schema } from 'mongoose'
 
-interface User {
-  discordId: string
+interface Role {
+  name: string
+  label: string
+  priority: number
+  description: string
 }
 
-interface RoleModel {
-  staff: User[]
-  contributor: User[]
-}
-
-const roleShema = new Schema<RoleModel>({
-  staff: [{ discordId: String }],
-  contributor: [{ discordId: String }],
+const roleSchema = new Schema<Role>({
+  name: String,
+  label: String,
+  priority: Number,
+  description: String,
 })
 
 const dbConnection: Connection = mongoose.connection.useDb('api')
-const Role = dbConnection.model<RoleModel>('role', roleShema)
+const Role = dbConnection.model<Role>('role', roleSchema)
 
 export default Role

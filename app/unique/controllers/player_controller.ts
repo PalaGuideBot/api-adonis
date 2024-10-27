@@ -1,29 +1,21 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
-import { DateTime } from 'luxon'
 
 import cache from '#cache/cache'
 import { distanceValidator } from '#core/validators/filter_validator'
+import { LinkRepository } from '#link/repositories/link_repository'
 import { MojangService } from '#minecraft/services/mojang'
 import { PlayerRepository } from '#unique/repositories/player_repository'
+import { UserRepository } from '#user/repositories/user_repository'
 
 @inject()
 export default class PlayerController {
   constructor(
     private playerRepository: PlayerRepository,
-    private mojangService: MojangService
+    private mojangService: MojangService,
+    private linkRepository: LinkRepository,
+    private userRepository: UserRepository
   ) {}
-
-  async index({ response, request }: HttpContext) {
-    let players: Awaited<ReturnType<typeof this.playerRepository.findByDate>> = []
-
-    if (request.qs().latest) {
-      const now = DateTime.now()
-      players = await this.playerRepository.findByDate(now)
-    }
-
-    return response.ok(players)
-  }
 
   async show({ response, request, params }: HttpContext) {
     let uuid: string
@@ -46,7 +38,16 @@ export default class PlayerController {
       }
     }
 
-    return response.ok(player)
+    let flags: NonNullable<Awaited<ReturnType<typeof this.userRepository.findById>>>['roles'] = []
+
+    const link = await this.linkRepository.findByUUID(player.uuid)
+
+    if (link) {
+      const user = await this.userRepository.findById(link.discordId)
+      flags = user?.roles || []
+    }
+
+    return response.ok({ ...player, flags })
   }
 
   async create({ response, params }: HttpContext) {

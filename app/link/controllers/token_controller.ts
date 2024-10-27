@@ -2,12 +2,17 @@ import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 import { DateTime } from 'luxon'
 
-import { tokenValidator, verifyValidator } from '#link/validators/token_validator'
 import { LinkRepository } from '#link/repositories/link_repository'
+import { tokenValidator, verifyValidator } from '#link/validators/token_validator'
+import { knownRoles } from '#user/contents/roles'
+import { UserRepository } from '#user/repositories/user_repository'
 
 @inject()
 export default class TokenController {
-  constructor(private linkRepository: LinkRepository) {}
+  constructor(
+    private linkRepository: LinkRepository,
+    private userRepository: UserRepository
+  ) {}
 
   async generate({ response, request }: HttpContext) {
     const body = await request.validateUsing(tokenValidator)
@@ -32,6 +37,10 @@ export default class TokenController {
       newDate: new Date(),
     })
 
+    try {
+      await this.userRepository.create({ discordId, roles: [] })
+    } catch {}
+
     return response.ok({ token, expiredAt, message: 'Token generated' })
   }
 
@@ -54,6 +63,10 @@ export default class TokenController {
     await this.linkRepository.update(link, {
       minecraftUUID,
     })
+
+    try {
+      await this.userRepository.addRoles(link.discordId, [knownRoles.link])
+    } catch {}
 
     return response.ok({ message: 'Minecraft account linked' })
   }
