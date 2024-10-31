@@ -38,10 +38,6 @@ export default defineConfig({
     },
     () => import('#core/providers/secret_provider'),
     {
-      file: () => import('#core/providers/socket_provider'),
-      environment: ['web'],
-    },
-    {
       file: () => import('#usage/providers/endpoint_provider'),
       environment: ['web'],
     },
@@ -62,10 +58,6 @@ export default defineConfig({
     {
       file: () => import('#start/scheduler'),
       environment: ['console'],
-    },
-    {
-      file: () => import('#start/socket'),
-      environment: ['web'],
     },
   ],
 
