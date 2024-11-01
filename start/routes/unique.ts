@@ -10,6 +10,7 @@ router
     router.get(':username', [PlayerController, 'show']).as('players')
     router.post(':username', [PlayerController, 'create'])
     router.get(':username/clicker', [PlayerController, 'clicker']).as('players.clicker')
+    router.get(':username/flags', [PlayerController, 'flags']).as('players.flags')
   })
   .prefix('players')
   .middleware(middleware.auth())
