@@ -62,6 +62,31 @@ export default class PlayerController {
     return response.ok({ ...player, flags })
   }
 
+  async flags({ response, params }: HttpContext) {
+    let uuid: string
+    try {
+      uuid = await this.mojangService.getUUIDByUsername(params.username)
+    } catch (error) {
+      return response.badRequest({
+        message: "Player don't exists or is invalid",
+      })
+    }
+
+    const link = await this.linkRepository.findByUUID(uuid)
+
+    if (!link) {
+      return response.notFound({ message: 'Player not linked' })
+    }
+
+    const user = await this.userRepository.findById(link.discordId)
+
+    if (!user) {
+      return response.notFound({ message: 'User not found' })
+    }
+
+    return response.ok({ flags: user.roles })
+  }
+
   async create({ response, params }: HttpContext) {
     let uuid: string
     try {
