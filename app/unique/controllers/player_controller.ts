@@ -151,4 +151,28 @@ export default class PlayerController {
 
     return response.ok(result)
   }
+
+  async jobs({ response, params }: HttpContext) {
+    let uuid: string
+    try {
+      uuid = await this.mojangService.getUUIDByUsername(params.username)
+    } catch (error) {
+      return response.badRequest({
+        message: "Player don't exists or is invalid",
+      })
+    }
+
+    let player = await this.playerRepository.findByUUID(uuid)
+
+    if (!player) {
+      return response.notFound({ message: 'Player not found' })
+    }
+
+    const jobs =
+      player.data
+        .toSorted((a, b) => new Date(a.date).getMilliseconds() - new Date(b.date).getMilliseconds())
+        .at(-1)?.data.jobs || null
+
+    return response.ok(jobs)
+  }
 }
