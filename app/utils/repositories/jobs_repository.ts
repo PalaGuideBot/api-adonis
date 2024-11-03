@@ -10,6 +10,7 @@ interface Item {
   amount: number
   item: {
     type: string
+    id: string
     action: string
     xp: number
     from: number
