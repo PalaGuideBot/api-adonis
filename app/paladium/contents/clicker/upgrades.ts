@@ -720,7 +720,7 @@ const buildings = [
     price: 489250000,
     item: ['forgotten_temple'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 892237500 },
       { type: 'time', value: 35 },
       { type: 'building', value: 7 },
     ],
@@ -732,7 +732,7 @@ const buildings = [
     price: 1045000000,
     item: ['millennial_crypt'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 1905750000 },
       { type: 'time', value: 40 },
       { type: 'building', value: 7 },
     ],
@@ -744,7 +744,7 @@ const buildings = [
     price: 1805000000,
     item: ['bottomless_pit'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 3291750000 },
       { type: 'time', value: 44 },
       { type: 'building', value: 7 },
     ],
@@ -904,7 +904,7 @@ const many = [
     price: 220000000,
     item: ['millennial_crypt'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 1212750000 },
       { type: 'time', value: 38 },
       { type: 'building', value: 2 },
     ],
@@ -915,7 +915,7 @@ const many = [
     price: 380000000,
     item: ['bottomless_pit'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 2094750000 },
       { type: 'time', value: 42 },
       { type: 'building', value: 2 },
     ],
@@ -1034,7 +1034,7 @@ const posteriors = [
     activeItem: ['millennial_crypt'],
     previousItem: ['forgotten_temple'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 1732500000 },
       { type: 'time', value: 39 },
       { type: 'building', value: 4 },
     ],
@@ -1046,7 +1046,7 @@ const posteriors = [
     activeItem: ['bottomless_pit'],
     previousItem: ['millennial_crypt'],
     conditions: [
-      { type: 'quantity', value: 1 },
+      { type: 'quantity', value: 2992500000 },
       { type: 'time', value: 43 },
       { type: 'building', value: 4 },
     ],
