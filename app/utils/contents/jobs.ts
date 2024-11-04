@@ -11,6 +11,785 @@ const jobXp: number[] = [
   859438, 880690, 902234, 924071, 946202, 968628, 991349, 1004368, 1037683, 1061297, 1085210,
 ]
 
+type Reward = {
+  label: string
+  id: string
+} & ({ type: 'item' | 'currency'; quantity: number } | { type: 'craft' | 'usage' | 'command' })
+
+const rewards = {
+  paladium: {
+    id: 'paladium_ingot',
+    label: 'Paladium Ingot',
+    type: 'item',
+  },
+  trixium: {
+    id: 'trixium_ingot',
+    label: 'Trixium Ingot',
+    type: 'item',
+  },
+  money: {
+    id: 'money',
+    label: 'Money',
+    type: 'currency',
+  },
+  jeton: {
+    id: 'jeton',
+    label: 'Jeton',
+    type: 'currency',
+  },
+  endium_nugget: {
+    id: 'endium_nugget',
+    label: 'Endium Nugget',
+    type: 'item',
+  },
+  double_xp_30: {
+    id: 'double_xp_30',
+    label: 'Double XP 30 minutes',
+    type: 'item',
+  },
+  double_xp_1: {
+    id: 'double_xp_1',
+    label: 'Double XP 1 hour',
+    type: 'item',
+  },
+  unwrap_candy: {
+    id: 'unwrap_candy',
+    label: 'Unwrap Candy',
+    type: 'item',
+  },
+
+  /* Miner */
+
+  voidstone_craft: {
+    id: 'voidstone',
+    label: 'Voidstone',
+    type: 'craft',
+  },
+  voidstone_usage: {
+    id: 'voidstone',
+    label: 'Voidstone',
+    type: 'usage',
+  },
+  amethyst_excavator_craft: {
+    id: 'amethyst_excavator',
+    label: 'Amethyst Excavator',
+    type: 'craft',
+  },
+  amethyst_excavator_usage: {
+    id: 'amethyst_excavator',
+    label: 'Amethyst Excavator',
+    type: 'usage',
+  },
+  cave_block_craft: {
+    id: 'cave_block',
+    label: 'Cave Block',
+    type: 'craft',
+  },
+  command_nether_craft: {
+    id: 'command_nether',
+    label: 'Command /nether',
+    type: 'command',
+  },
+  boom_obsidian_craft: {
+    id: 'boom_obsidian',
+    label: 'Boom Obsidian',
+    type: 'craft',
+  },
+  big_tnt_craft: {
+    id: 'big_tnt',
+    label: 'Big TNT',
+    type: 'craft',
+  },
+  amethyst_builder_wand_craft: {
+    id: 'amethyst_builder_wand',
+    label: 'Amethyst Builder Wand',
+    type: 'craft',
+  },
+  big_obsidian_craft: {
+    id: 'big_obsidian',
+    label: 'Big Obsidian',
+    type: 'craft',
+  },
+  mega_boom_obsidian_craft: {
+    id: 'mega_boom_obsidian',
+    label: 'Mega Boom Obsidian',
+    type: 'craft',
+  },
+  effect_tnt_craft: {
+    id: 'effect_tnt',
+    label: 'Effect TNT',
+    type: 'craft',
+  },
+  paladium_pickaxe: {
+    id: 'paladium_pickaxe',
+    label: 'Paladium Pickaxe (Efficiency 5, Unbreaking 3, Fortune 3)',
+    type: 'item',
+  },
+  cobblebreaker_craft: {
+    id: 'cobblebreaker',
+    label: 'CobbleBreaker',
+    type: 'craft',
+  },
+  cobblebreaker_usage: {
+    id: 'cobblebreaker',
+    label: 'CobbleBreaker',
+    type: 'usage',
+  },
+  spike_obsidian_wood_craft: {
+    id: 'spike_obsidian_wood',
+    label: 'Spike Obsidian',
+    type: 'craft',
+  },
+  spike_obsidian_iron_craft: {
+    id: 'spike_obsidian_iron',
+    label: 'Spike Obsidian',
+    type: 'craft',
+  },
+  spike_obsidian_gold_craft: {
+    id: 'spike_obsidian_gold',
+    label: 'Spike Obsidian',
+    type: 'craft',
+  },
+  voidstone_minage_craft: {
+    id: 'voidstone_minage',
+    label: 'Voidstone Minage',
+    type: 'craft',
+  },
+  voidstone_minage_usage: {
+    id: 'voidstone_minage',
+    label: 'Voidstone Minage',
+    type: 'usage',
+  },
+  spike_obsidian_diamond_craft: {
+    id: 'spike_obsidian_diamond',
+    label: 'Spike Obsidian',
+    type: 'craft',
+  },
+  spike_obsidian_amethyst_craft: {
+    id: 'spike_obsidian_amethyst',
+    label: 'Spike Obsidian',
+    type: 'craft',
+  },
+  spike_obsidian_titane_craft: {
+    id: 'spike_obsidian_titane',
+    label: 'Spike Obsidian',
+    type: 'craft',
+  },
+  spike_obsidian_paladium_craft: {
+    id: 'spike_obsidian_paladium',
+    label: 'Spike Obsidian',
+    type: 'craft',
+  },
+  magnet_craft: {
+    id: 'magnet',
+    label: 'Magnet',
+    type: 'craft',
+  },
+  magnet_usage: {
+    id: 'magnet',
+    label: 'Magnet',
+    type: 'usage',
+  },
+  knockback_obsidian_craft: {
+    id: 'knockback_obsidian',
+    label: 'Knockback Obsidian',
+    type: 'craft',
+  },
+  dollars_stone_craft: {
+    id: 'dollars_stone',
+    label: 'Dollars Stone',
+    type: 'craft',
+  },
+  dollars_stone_usage: {
+    id: 'dollars_stone',
+    label: 'Dollars Stone',
+    type: 'usage',
+  },
+  lava_obsidian_craft: {
+    id: 'lava_obsidian',
+    label: 'Lava Obsidian',
+    type: 'craft',
+  },
+  paladium_hopper_craft: {
+    id: 'paladium_hopper',
+    label: 'Paladium Hopper',
+    type: 'craft',
+  },
+  paladium_hopper_usage: {
+    id: 'paladium_hopper',
+    label: 'Paladium Hopper',
+    type: 'usage',
+  },
+  amethyst_cobblebreaker_upgrade_craft: {
+    id: 'amethyst_cobblebreaker_upgrade',
+    label: 'Amethyst CobbleBreaker Upgrade',
+    type: 'craft',
+  },
+  amethyst_cobblebreaker_upgrade_usage: {
+    id: 'amethyst_cobblebreaker_upgrade',
+    label: 'Amethyst CobbleBreaker Upgrade',
+    type: 'usage',
+  },
+  frozen_obsidian_craft: {
+    id: 'frozen_obsidian',
+    label: 'Frozen Obsidian',
+    type: 'craft',
+  },
+  sulfuric_obsidian_craft: {
+    id: 'sulfuric_obsidian',
+    label: 'Sulfuric Obsidian',
+    type: 'craft',
+  },
+  slime_obsidian_craft: {
+    id: 'slime_obsidian',
+    label: 'Slime Obsidian',
+    type: 'craft',
+  },
+  titane_excavator_craft: {
+    id: 'titane_excavator',
+    label: 'Titane Excavator',
+    type: 'craft',
+  },
+  titane_excavator_usage: {
+    id: 'titane_excavator',
+    label: 'Titane Excavator',
+    type: 'usage',
+  },
+  wither_tnt_craft: {
+    id: 'wither_tnt',
+    label: 'Wither TNT',
+    type: 'craft',
+  },
+  sealed_xp_bottle_craft: {
+    id: 'sealed_xp_bottle',
+    label: 'Sealed XP Bottle',
+    type: 'craft',
+  },
+  enchanted_experience_bottle_craft: {
+    id: 'enchanted_experience_bottle',
+    label: 'Enchanted Experience Bottle',
+    type: 'craft',
+  },
+  titane_builder_wand_craft: {
+    id: 'titane_builder_wand',
+    label: 'Titane Builder Wand',
+    type: 'craft',
+  },
+  titane_cobblebreaker_upgrade_craft: {
+    id: 'titane_cobblebreaker_upgrade',
+    label: 'Titane CobbleBreaker Upgrade',
+    type: 'craft',
+  },
+  titane_cobblebreaker_upgrade_usage: {
+    id: 'titane_cobblebreaker_upgrade',
+    label: 'Titane CobbleBreaker Upgrade',
+    type: 'usage',
+  },
+  palaforge_craft: {
+    id: 'palaforge',
+    label: 'Palaforge',
+    type: 'craft',
+  },
+  palaforge_usage: {
+    id: 'palaforge',
+    label: 'Palaforge',
+    type: 'usage',
+  },
+  poison_obsidian_craft: {
+    id: 'poison_obsidian',
+    label: 'Poison Obsidian',
+    type: 'craft',
+  },
+  autocrafter_craft: {
+    id: 'autocrafter',
+    label: 'Autocrafter',
+    type: 'craft',
+  },
+  paladium_excavator_craft: {
+    id: 'paladium_excavator',
+    label: 'Paladium Excavator',
+    type: 'craft',
+  },
+  paladium_excavator_usage: {
+    id: 'paladium_excavator',
+    label: 'Paladium Excavator',
+    type: 'usage',
+  },
+  paladium_cobblebreaker_upgrade_craft: {
+    id: 'paladium_cobblebreaker_upgrade',
+    label: 'Paladium CobbleBreaker Upgrade',
+    type: 'craft',
+  },
+  paladium_cobblebreaker_upgrade_usage: {
+    id: 'paladium_cobblebreaker_upgrade',
+    label: 'Paladium CobbleBreaker Upgrade',
+    type: 'usage',
+  },
+  wither_obsidian_craft: {
+    id: 'wither_obsidian',
+    label: 'Wither Obsidian',
+    type: 'craft',
+  },
+  hardness_potion_usage: {
+    id: 'hardness_potion',
+    label: 'Hardness Potion',
+    type: 'usage',
+  },
+  sponge_tnt_craft: {
+    id: 'sponge_tnt',
+    label: 'Sponge TNT',
+    type: 'craft',
+  },
+  paladium_builder_wand_craft: {
+    id: 'paladium_builder_wand',
+    label: 'Paladium Builder Wand',
+    type: 'craft',
+  },
+  anti_aggro_obsidian_craft: {
+    id: 'anti_aggro_obsidian',
+    label: 'Anti Aggro Obsidian',
+    type: 'craft',
+  },
+  speed_upgrade_craft: {
+    id: 'speed_upgrade',
+    label: 'Speed Upgrade',
+    type: 'craft',
+  },
+  speed_upgrade_usage: {
+    id: 'speed_upgrade',
+    label: 'Speed Upgrade',
+    type: 'usage',
+  },
+  withered_reinforced_piston_craft: {
+    id: 'withered_reinforced_piston',
+    label: 'Withered Reinforced Piston',
+    type: 'craft',
+  },
+  miner_throne_craft: {
+    id: 'miner_throne',
+    label: 'Miner Throne',
+    type: 'craft',
+  },
+  miner_throne_usage: {
+    id: 'miner_throne',
+    label: 'Miner Throne',
+    type: 'usage',
+  },
+  endium_tnt_craft: {
+    id: 'endium_tnt',
+    label: 'Endium TNT',
+    type: 'craft',
+  },
+  endium_tnt_usage: {
+    id: 'endium_tnt',
+    label: 'Endium TNT',
+    type: 'usage',
+  },
+  endium_builder_wand_craft: {
+    id: 'endium_builder_wand',
+    label: 'Endium Builder Wand',
+    type: 'craft',
+  },
+  endium_builder_wand_usage: {
+    id: 'endium_builder_wand',
+    label: 'Endium Builder Wand',
+    type: 'usage',
+  },
+  endium_pickaxe_craft: {
+    id: 'endium_pickaxe',
+    label: 'Endium Pickaxe',
+    type: 'craft',
+  },
+  endium_pickaxe_usage: {
+    id: 'endium_pickaxe',
+    label: 'Endium Pickaxe',
+    type: 'usage',
+  },
+  withered_obsidian_craft: {
+    id: 'withered_obsidian',
+    label: 'Withered Obsidian',
+    type: 'craft',
+  },
+  withered_obsidian_usage: {
+    id: 'withered_obsidian',
+    label: 'Withered Obsidian',
+    type: 'usage',
+  },
+} satisfies Record<string, Pick<Reward, 'label' | 'id' | 'type'>>
+
+type MultipleBuilderOptions = { reward: keyof typeof rewards; quantity?: number }[]
+
+function rewardBuilder(...options: MultipleBuilderOptions) {
+  return options.map((option) => {
+    const reward = rewards[option.reward]
+
+    if ('quantity' in option && option.quantity !== undefined) {
+      return {
+        ...reward,
+        quantity: option.quantity,
+      }
+    }
+
+    return reward
+  })
+}
+
+const globalJobRewards = {
+  1: [],
+  2: rewardBuilder(
+    { reward: 'paladium', quantity: 1 },
+    { reward: 'trixium', quantity: 2 },
+    { reward: 'jeton', quantity: 1 }
+  ),
+  3: rewardBuilder({ reward: 'paladium', quantity: 1 }, { reward: 'trixium', quantity: 3 }),
+  4: rewardBuilder({ reward: 'paladium', quantity: 2 }, { reward: 'trixium', quantity: 4 }),
+  5: rewardBuilder(
+    { reward: 'paladium', quantity: 2 },
+    { reward: 'trixium', quantity: 5 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 5000 }
+  ),
+  6: rewardBuilder({ reward: 'paladium', quantity: 3 }, { reward: 'trixium', quantity: 6 }),
+  7: rewardBuilder({ reward: 'paladium', quantity: 3 }, { reward: 'trixium', quantity: 7 }),
+  8: rewardBuilder({ reward: 'paladium', quantity: 4 }, { reward: 'trixium', quantity: 8 }),
+  9: rewardBuilder({ reward: 'paladium', quantity: 4 }, { reward: 'trixium', quantity: 9 }),
+  10: rewardBuilder(
+    { reward: 'paladium', quantity: 5 },
+    { reward: 'trixium', quantity: 10 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 5000 }
+  ),
+  11: rewardBuilder({ reward: 'paladium', quantity: 5 }, { reward: 'trixium', quantity: 11 }),
+  12: rewardBuilder({ reward: 'paladium', quantity: 6 }, { reward: 'trixium', quantity: 12 }),
+  13: rewardBuilder({ reward: 'paladium', quantity: 6 }, { reward: 'trixium', quantity: 13 }),
+  14: rewardBuilder({ reward: 'paladium', quantity: 7 }, { reward: 'trixium', quantity: 14 }),
+  15: rewardBuilder(
+    { reward: 'paladium', quantity: 7 },
+    { reward: 'trixium', quantity: 15 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 6000 }
+  ),
+  16: rewardBuilder({ reward: 'paladium', quantity: 8 }, { reward: 'trixium', quantity: 16 }),
+  17: rewardBuilder({ reward: 'paladium', quantity: 8 }, { reward: 'trixium', quantity: 17 }),
+  18: rewardBuilder({ reward: 'paladium', quantity: 9 }, { reward: 'trixium', quantity: 18 }),
+  19: rewardBuilder({ reward: 'paladium', quantity: 9 }, { reward: 'trixium', quantity: 19 }),
+  20: rewardBuilder(
+    { reward: 'paladium', quantity: 10 },
+    { reward: 'trixium', quantity: 20 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 6000 }
+  ),
+  21: rewardBuilder({ reward: 'paladium', quantity: 10 }, { reward: 'trixium', quantity: 21 }),
+  22: rewardBuilder({ reward: 'paladium', quantity: 11 }, { reward: 'trixium', quantity: 22 }),
+  23: rewardBuilder({ reward: 'paladium', quantity: 11 }, { reward: 'trixium', quantity: 23 }),
+  24: rewardBuilder({ reward: 'paladium', quantity: 12 }, { reward: 'trixium', quantity: 24 }),
+  25: rewardBuilder(
+    { reward: 'paladium', quantity: 12 },
+    { reward: 'trixium', quantity: 25 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 7500 }
+  ),
+  26: rewardBuilder({ reward: 'paladium', quantity: 13 }, { reward: 'trixium', quantity: 26 }),
+  27: rewardBuilder({ reward: 'paladium', quantity: 13 }, { reward: 'trixium', quantity: 27 }),
+  28: rewardBuilder({ reward: 'paladium', quantity: 14 }, { reward: 'trixium', quantity: 28 }),
+  29: rewardBuilder({ reward: 'paladium', quantity: 14 }, { reward: 'trixium', quantity: 29 }),
+  30: rewardBuilder(
+    { reward: 'paladium', quantity: 15 },
+    { reward: 'trixium', quantity: 30 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 7500 }
+  ),
+  31: rewardBuilder({ reward: 'paladium', quantity: 15 }, { reward: 'trixium', quantity: 31 }),
+  32: rewardBuilder({ reward: 'paladium', quantity: 16 }, { reward: 'trixium', quantity: 32 }),
+  33: rewardBuilder({ reward: 'paladium', quantity: 16 }, { reward: 'trixium', quantity: 33 }),
+  34: rewardBuilder({ reward: 'paladium', quantity: 17 }, { reward: 'trixium', quantity: 34 }),
+  35: rewardBuilder(
+    { reward: 'paladium', quantity: 17 },
+    { reward: 'trixium', quantity: 35 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 9500 }
+  ),
+  36: rewardBuilder({ reward: 'paladium', quantity: 18 }, { reward: 'trixium', quantity: 36 }),
+  37: rewardBuilder({ reward: 'paladium', quantity: 18 }, { reward: 'trixium', quantity: 37 }),
+  38: rewardBuilder({ reward: 'paladium', quantity: 19 }, { reward: 'trixium', quantity: 38 }),
+  39: rewardBuilder({ reward: 'paladium', quantity: 19 }, { reward: 'trixium', quantity: 39 }),
+  40: rewardBuilder(
+    { reward: 'paladium', quantity: 20 },
+    { reward: 'trixium', quantity: 40 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 9500 }
+  ),
+  41: rewardBuilder({ reward: 'paladium', quantity: 20 }, { reward: 'trixium', quantity: 41 }),
+  42: rewardBuilder({ reward: 'paladium', quantity: 21 }, { reward: 'trixium', quantity: 42 }),
+  43: rewardBuilder({ reward: 'paladium', quantity: 21 }, { reward: 'trixium', quantity: 43 }),
+  44: rewardBuilder({ reward: 'paladium', quantity: 22 }, { reward: 'trixium', quantity: 44 }),
+  45: rewardBuilder(
+    { reward: 'paladium', quantity: 22 },
+    { reward: 'trixium', quantity: 45 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 12000 }
+  ),
+  46: rewardBuilder({ reward: 'paladium', quantity: 23 }, { reward: 'trixium', quantity: 46 }),
+  47: rewardBuilder({ reward: 'paladium', quantity: 23 }, { reward: 'trixium', quantity: 47 }),
+  48: rewardBuilder({ reward: 'paladium', quantity: 24 }, { reward: 'trixium', quantity: 48 }),
+  49: rewardBuilder({ reward: 'paladium', quantity: 24 }, { reward: 'trixium', quantity: 49 }),
+  50: rewardBuilder(
+    { reward: 'paladium', quantity: 25 },
+    { reward: 'trixium', quantity: 50 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 12000 }
+  ),
+  51: rewardBuilder({ reward: 'paladium', quantity: 25 }, { reward: 'trixium', quantity: 51 }),
+  52: rewardBuilder({ reward: 'paladium', quantity: 26 }, { reward: 'trixium', quantity: 52 }),
+  53: rewardBuilder({ reward: 'paladium', quantity: 26 }, { reward: 'trixium', quantity: 53 }),
+  54: rewardBuilder({ reward: 'paladium', quantity: 27 }, { reward: 'trixium', quantity: 54 }),
+  55: rewardBuilder(
+    { reward: 'paladium', quantity: 27 },
+    { reward: 'trixium', quantity: 55 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 15000 },
+    { reward: 'double_xp_30', quantity: 1 }
+  ),
+  56: rewardBuilder({ reward: 'paladium', quantity: 28 }, { reward: 'trixium', quantity: 56 }),
+  57: rewardBuilder({ reward: 'paladium', quantity: 28 }, { reward: 'trixium', quantity: 57 }),
+  58: rewardBuilder({ reward: 'paladium', quantity: 29 }, { reward: 'trixium', quantity: 58 }),
+  59: rewardBuilder({ reward: 'paladium', quantity: 29 }, { reward: 'trixium', quantity: 59 }),
+  60: rewardBuilder(
+    { reward: 'paladium', quantity: 30 },
+    { reward: 'trixium', quantity: 60 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 15000 }
+  ),
+  61: rewardBuilder({ reward: 'paladium', quantity: 30 }, { reward: 'trixium', quantity: 61 }),
+  62: rewardBuilder({ reward: 'paladium', quantity: 31 }, { reward: 'trixium', quantity: 62 }),
+  63: rewardBuilder({ reward: 'paladium', quantity: 31 }, { reward: 'trixium', quantity: 63 }),
+  64: rewardBuilder({ reward: 'paladium', quantity: 32 }, { reward: 'trixium', quantity: 64 }),
+  65: rewardBuilder(
+    { reward: 'paladium', quantity: 32 },
+    { reward: 'trixium', quantity: 65 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 15000 }
+  ),
+  66: rewardBuilder({ reward: 'paladium', quantity: 33 }, { reward: 'trixium', quantity: 66 }),
+  67: rewardBuilder({ reward: 'paladium', quantity: 33 }, { reward: 'trixium', quantity: 67 }),
+  68: rewardBuilder({ reward: 'paladium', quantity: 34 }, { reward: 'trixium', quantity: 68 }),
+  69: rewardBuilder({ reward: 'paladium', quantity: 34 }, { reward: 'trixium', quantity: 69 }),
+  70: rewardBuilder(
+    { reward: 'paladium', quantity: 35 },
+    { reward: 'trixium', quantity: 70 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 15000 }
+  ),
+  71: rewardBuilder({ reward: 'paladium', quantity: 35 }, { reward: 'trixium', quantity: 71 }),
+  72: rewardBuilder(
+    { reward: 'paladium', quantity: 36 },
+    { reward: 'trixium', quantity: 72 },
+    { reward: 'jeton', quantity: 1 }
+  ),
+  73: rewardBuilder({ reward: 'paladium', quantity: 36 }, { reward: 'trixium', quantity: 73 }),
+  74: rewardBuilder({ reward: 'paladium', quantity: 37 }, { reward: 'trixium', quantity: 74 }),
+  75: rewardBuilder(
+    { reward: 'paladium', quantity: 37 },
+    { reward: 'trixium', quantity: 75 },
+    { reward: 'jeton', quantity: 1 }
+  ),
+  76: rewardBuilder(
+    { reward: 'paladium', quantity: 38 },
+    { reward: 'trixium', quantity: 76 },
+    { reward: 'money', quantity: 17500 }
+  ),
+  77: rewardBuilder(
+    { reward: 'paladium', quantity: 38 },
+    { reward: 'trixium', quantity: 77 },
+    { reward: 'jeton', quantity: 1 }
+  ),
+  78: rewardBuilder({ reward: 'paladium', quantity: 39 }, { reward: 'trixium', quantity: 78 }),
+  79: rewardBuilder({ reward: 'paladium', quantity: 39 }, { reward: 'trixium', quantity: 79 }),
+  80: rewardBuilder(
+    { reward: 'paladium', quantity: 40 },
+    { reward: 'trixium', quantity: 80 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 17500 }
+  ),
+  81: rewardBuilder({ reward: 'paladium', quantity: 40 }, { reward: 'trixium', quantity: 81 }),
+  82: rewardBuilder(
+    { reward: 'paladium', quantity: 41 },
+    { reward: 'trixium', quantity: 82 },
+    { reward: 'jeton', quantity: 1 }
+  ),
+  83: rewardBuilder({ reward: 'paladium', quantity: 41 }, { reward: 'trixium', quantity: 83 }),
+  84: rewardBuilder({ reward: 'paladium', quantity: 42 }, { reward: 'trixium', quantity: 84 }),
+  85: rewardBuilder(
+    { reward: 'paladium', quantity: 42 },
+    { reward: 'trixium', quantity: 85 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 20000 }
+  ),
+  86: rewardBuilder({ reward: 'paladium', quantity: 43 }, { reward: 'trixium', quantity: 86 }),
+  87: rewardBuilder(
+    { reward: 'paladium', quantity: 43 },
+    { reward: 'trixium', quantity: 87 },
+    { reward: 'jeton', quantity: 1 }
+  ),
+  88: rewardBuilder({ reward: 'paladium', quantity: 44 }, { reward: 'trixium', quantity: 88 }),
+  89: rewardBuilder({ reward: 'paladium', quantity: 44 }, { reward: 'trixium', quantity: 89 }),
+  90: rewardBuilder(
+    { reward: 'paladium', quantity: 45 },
+    { reward: 'trixium', quantity: 90 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 20000 },
+    { reward: 'unwrap_candy', quantity: 1 }
+  ),
+  91: rewardBuilder({ reward: 'paladium', quantity: 45 }, { reward: 'trixium', quantity: 91 }),
+  92: rewardBuilder({ reward: 'paladium', quantity: 46 }, { reward: 'trixium', quantity: 92 }),
+  93: rewardBuilder({ reward: 'paladium', quantity: 46 }, { reward: 'trixium', quantity: 93 }),
+  94: rewardBuilder({ reward: 'paladium', quantity: 47 }, { reward: 'trixium', quantity: 94 }),
+  95: rewardBuilder(
+    { reward: 'paladium', quantity: 47 },
+    { reward: 'trixium', quantity: 95 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 25000 }
+  ),
+  96: rewardBuilder(
+    { reward: 'paladium', quantity: 48 },
+    { reward: 'trixium', quantity: 96 },
+    { reward: 'jeton', quantity: 1 }
+  ),
+  97: rewardBuilder(
+    { reward: 'paladium', quantity: 48 },
+    { reward: 'trixium', quantity: 97 },
+    { reward: 'jeton', quantity: 1 }
+  ),
+  98: rewardBuilder(
+    { reward: 'paladium', quantity: 49 },
+    { reward: 'trixium', quantity: 98 },
+    { reward: 'jeton', quantity: 1 }
+  ),
+  99: rewardBuilder(
+    { reward: 'paladium', quantity: 49 },
+    { reward: 'trixium', quantity: 99 },
+    { reward: 'jeton', quantity: 1 }
+  ),
+  100: rewardBuilder(
+    { reward: 'paladium', quantity: 50 },
+    { reward: 'trixium', quantity: 100 },
+    { reward: 'jeton', quantity: 1 },
+    { reward: 'money', quantity: 50000 },
+    { reward: 'double_xp_1', quantity: 1 },
+    { reward: 'endium_nugget', quantity: 1 }
+  ),
+}
+
+const rewardsPerJob = {
+  miner: {
+    ...globalJobRewards,
+    3: globalJobRewards[3].concat(
+      rewardBuilder({ reward: 'voidstone_craft' }, { reward: 'voidstone_usage' })
+    ),
+    5: globalJobRewards[5].concat(
+      rewardBuilder({ reward: 'amethyst_excavator_craft' }, { reward: 'amethyst_excavator_craft' })
+    ),
+    10: globalJobRewards[10].concat(rewardBuilder({ reward: 'cave_block_craft' })),
+    12: globalJobRewards[12].concat(rewardBuilder({ reward: 'command_nether_craft' })),
+    15: globalJobRewards[15].concat(rewardBuilder({ reward: 'boom_obsidian_craft' })),
+    18: globalJobRewards[18].concat(rewardBuilder({ reward: 'big_tnt_craft' })),
+    20: globalJobRewards[20].concat(rewardBuilder({ reward: 'amethyst_builder_wand_craft' })),
+    22: globalJobRewards[22].concat(rewardBuilder({ reward: 'big_obsidian_craft' })),
+    23: globalJobRewards[23].concat(rewardBuilder({ reward: 'mega_boom_obsidian_craft' })),
+    25: globalJobRewards[25].concat(
+      rewardBuilder(
+        { reward: 'paladium_pickaxe', quantity: 1 },
+        { reward: 'effect_tnt_craft' },
+        { reward: 'cobblebreaker_craft' },
+        { reward: 'cobblebreaker_usage' }
+      )
+    ),
+    27: globalJobRewards[27].concat(rewardBuilder({ reward: 'spike_obsidian_wood_craft' })),
+    28: globalJobRewards[28].concat(rewardBuilder({ reward: 'spike_obsidian_iron_craft' })),
+    29: globalJobRewards[29].concat(rewardBuilder({ reward: 'spike_obsidian_gold_craft' })),
+    30: globalJobRewards[30].concat(rewardBuilder({ reward: 'voidstone_minage_craft' })),
+    31: globalJobRewards[31].concat(rewardBuilder({ reward: 'spike_obsidian_diamond_craft' })),
+    32: globalJobRewards[32].concat(rewardBuilder({ reward: 'spike_obsidian_amethyst_craft' })),
+    33: globalJobRewards[33].concat(rewardBuilder({ reward: 'spike_obsidian_titane_craft' })),
+    34: globalJobRewards[34].concat(rewardBuilder({ reward: 'spike_obsidian_paladium_craft' })),
+    35: globalJobRewards[35].concat(
+      rewardBuilder({ reward: 'magnet_craft' }, { reward: 'magnet_usage' })
+    ),
+    36: globalJobRewards[36].concat(rewardBuilder({ reward: 'knockback_obsidian_craft' })),
+    37: globalJobRewards[37].concat(
+      rewardBuilder({ reward: 'dollars_stone_craft' }, { reward: 'dollars_stone_usage' })
+    ),
+    39: globalJobRewards[39].concat(rewardBuilder({ reward: 'lava_obsidian_craft' })),
+    40: globalJobRewards[40].concat(
+      rewardBuilder(
+        { reward: 'paladium_hopper_craft' },
+        { reward: 'paladium_hopper_usage' },
+        { reward: 'amethyst_cobblebreaker_upgrade_craft' },
+        { reward: 'amethyst_cobblebreaker_upgrade_usage' }
+      )
+    ),
+    41: globalJobRewards[41].concat(rewardBuilder({ reward: 'frozen_obsidian_craft' })),
+    42: globalJobRewards[42].concat(rewardBuilder({ reward: 'sulfuric_obsidian_craft' })),
+    44: globalJobRewards[44].concat(rewardBuilder({ reward: 'slime_obsidian_craft' })),
+    45: globalJobRewards[45].concat(
+      rewardBuilder({ reward: 'titane_excavator_craft' }, { reward: 'titane_excavator_usage' })
+    ),
+    48: globalJobRewards[48].concat(rewardBuilder({ reward: 'wither_tnt_craft' })),
+    50: globalJobRewards[50].concat(
+      rewardBuilder(
+        { reward: 'sealed_xp_bottle_craft' },
+        { reward: 'enchanted_experience_bottle_craft' }
+      )
+    ),
+    52: globalJobRewards[52].concat(rewardBuilder({ reward: 'titane_builder_wand_craft' })),
+    55: globalJobRewards[55].concat(
+      rewardBuilder(
+        { reward: 'titane_cobblebreaker_upgrade_craft' },
+        { reward: 'titane_cobblebreaker_upgrade_usage' }
+      )
+    ),
+    56: globalJobRewards[56].concat(
+      rewardBuilder({ reward: 'palaforge_craft' }, { reward: 'palaforge_usage' })
+    ),
+    60: globalJobRewards[60].concat(rewardBuilder({ reward: 'poison_obsidian_craft' })),
+    65: globalJobRewards[65].concat(rewardBuilder({ reward: 'autocrafter_craft' })),
+    67: globalJobRewards[67].concat(
+      rewardBuilder({ reward: 'paladium_excavator_craft' }, { reward: 'paladium_excavator_usage' })
+    ),
+    70: globalJobRewards[70].concat(
+      rewardBuilder(
+        { reward: 'paladium_cobblebreaker_upgrade_craft' },
+        { reward: 'paladium_cobblebreaker_upgrade_usage' }
+      )
+    ),
+    72: globalJobRewards[72].concat(rewardBuilder({ reward: 'wither_obsidian_craft' })),
+    73: globalJobRewards[73].concat(rewardBuilder({ reward: 'hardness_potion_usage' })),
+    74: globalJobRewards[74].concat(rewardBuilder({ reward: 'sponge_tnt_craft' })),
+    76: globalJobRewards[76].concat(rewardBuilder({ reward: 'paladium_builder_wand_craft' })),
+    80: globalJobRewards[80].concat(rewardBuilder({ reward: 'anti_aggro_obsidian_craft' })),
+    85: globalJobRewards[85].concat(
+      rewardBuilder({ reward: 'speed_upgrade_craft' }, { reward: 'speed_upgrade_usage' })
+    ),
+    90: globalJobRewards[90].concat(rewardBuilder({ reward: 'withered_reinforced_piston_craft' })),
+    95: globalJobRewards[95].concat(rewardBuilder({ reward: 'miner_throne_craft' })),
+    100: globalJobRewards[100].concat(
+      rewardBuilder(
+        { reward: 'endium_tnt_craft' },
+        { reward: 'endium_tnt_usage' },
+        { reward: 'endium_builder_wand_craft' },
+        { reward: 'endium_builder_wand_usage' },
+        { reward: 'endium_pickaxe_craft' },
+        { reward: 'endium_pickaxe_usage' },
+        { reward: 'withered_obsidian_craft' },
+        { reward: 'withered_obsidian_usage' }
+      )
+    ),
+  },
+  farmer: globalJobRewards,
+  hunter: globalJobRewards,
+  alchemist: globalJobRewards,
+}
+
 const ACTION = {
   SMELT: 'Smelt',
   BREAK: 'Break',
@@ -510,4 +1289,4 @@ const xpPerItem: Record<(typeof jobCategories)[number], Item[]> = {
   ],
 }
 
-export { jobCategories, xpPerItem, jobXp }
+export { jobCategories, xpPerItem, jobXp, rewardsPerJob }
