@@ -562,7 +562,7 @@ const buildings = [
   },
   {
     name: 'bottomless_pit_1',
-    label: 'Cordre en fibre de carbone',
+    label: 'Corde en fibre de carbone',
     price: 855000000,
     item: ['bottomless_pit'],
     conditions: [
