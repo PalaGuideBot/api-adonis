@@ -14,7 +14,9 @@ const jobXp: number[] = [
 type Reward = {
   label: string
   id: string
-} & ({ type: 'item' | 'currency'; quantity: number } | { type: 'craft' | 'usage' | 'command' })
+  type: 'item' | 'currency' | 'craft' | 'usage' | 'command'
+  quantity?: number
+}
 
 const rewards = {
   paladium: {
@@ -34,9 +36,9 @@ const rewards = {
   },
 } satisfies Record<string, Pick<Reward, 'label' | 'id' | 'type'>>
 
-type MultipleBuilderOptions = { reward: keyof typeof rewards; quantity?: number }[]
+type BuilderOptions = { reward: keyof typeof rewards; quantity?: number }
 
-function rewardBuilder(...options: MultipleBuilderOptions) {
+function rewardBuilder(...options: BuilderOptions[]): Reward[] {
   return options.map((option) => {
     const reward = rewards[option.reward]
 
@@ -51,7 +53,7 @@ function rewardBuilder(...options: MultipleBuilderOptions) {
   })
 }
 
-const globalJobRewards = {
+const globalJobRewards: Record<number, Reward[]> = {
   1: [],
   2: rewardBuilder({ reward: 'paladium', quantity: 1 }, { reward: 'trixium', quantity: 2 }),
   3: rewardBuilder({ reward: 'paladium', quantity: 1 }, { reward: 'trixium', quantity: 3 }),
@@ -234,7 +236,7 @@ const globalJobRewards = {
   ),
 }
 
-const rewardsPerJob = {
+const rewardsPerJob: Record<(typeof jobCategories)[number], typeof globalJobRewards> = {
   miner: {
     ...globalJobRewards,
   },
