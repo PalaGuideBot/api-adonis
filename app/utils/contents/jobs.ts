@@ -1,3 +1,5 @@
+import type { JobReward } from '#utils/types'
+
 const jobCategories = ['miner', 'farmer', 'hunter', 'alchemist'] as const
 
 const jobXp: number[] = [
@@ -10,11 +12,6 @@ const jobXp: number[] = [
   626901, 644714, 662809, 681186, 699846, 718791, 738021, 757537, 777339, 797430, 817810, 838479,
   859438, 880690, 902234, 924071, 946202, 968628, 991349, 1004368, 1037683, 1061297, 1085210,
 ]
-
-type Reward = {
-  label: string
-  id: string
-} & ({ type: 'item' | 'currency'; quantity: number } | { type: 'craft' | 'usage' | 'command' })
 
 const rewards = {
   paladium: {
@@ -32,11 +29,11 @@ const rewards = {
     label: 'Money',
     type: 'currency',
   },
-} satisfies Record<string, Pick<Reward, 'label' | 'id' | 'type'>>
+} satisfies Record<string, Pick<JobReward, 'label' | 'id' | 'type'>>
 
-type MultipleBuilderOptions = { reward: keyof typeof rewards; quantity?: number }[]
+type BuilderOptions = { reward: keyof typeof rewards; quantity?: number }
 
-function rewardBuilder(...options: MultipleBuilderOptions) {
+function rewardBuilder(...options: BuilderOptions[]): JobReward[] {
   return options.map((option) => {
     const reward = rewards[option.reward]
 
@@ -51,7 +48,7 @@ function rewardBuilder(...options: MultipleBuilderOptions) {
   })
 }
 
-const globalJobRewards = {
+const globalJobRewards: Record<number, JobReward[]> = {
   1: [],
   2: rewardBuilder({ reward: 'paladium', quantity: 1 }, { reward: 'trixium', quantity: 2 }),
   3: rewardBuilder({ reward: 'paladium', quantity: 1 }, { reward: 'trixium', quantity: 3 }),
@@ -234,7 +231,7 @@ const globalJobRewards = {
   ),
 }
 
-const rewardsPerJob = {
+const rewardsPerJob: Record<(typeof jobCategories)[number], typeof globalJobRewards> = {
   miner: {
     ...globalJobRewards,
   },

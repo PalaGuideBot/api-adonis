@@ -1,7 +1,8 @@
 import { Infer } from '@vinejs/vine/types'
 
-import { jobXp, xpPerItem } from '#utils/contents/jobs'
+import { jobXp, rewardsPerJob, xpPerItem } from '#utils/contents/jobs'
 import { calculateJobValidator } from '#utils/validators/calculate_validator'
+import { JobReward } from '#utils/types'
 
 interface Item {
   currLevel: number
@@ -79,9 +80,12 @@ class JobRepository {
       {} as Record<string, Item[]>
     )
 
+    const rewards = this.getRewards(job, currentLevel + 1, targetLevel)
+
     return {
       xpTotal: xpTotal,
       items: itemsMapFiltered,
+      rewards,
     }
   }
 
@@ -145,7 +149,7 @@ class JobRepository {
         for (const item of jobItems) {
           items.push({
             type: item.type,
-            id: item.type.toLowerCase().replaceAll(/ /g, '-'),
+            id: item.id,
             job: job as CalculateJobResult['job'],
           })
         }
@@ -157,6 +161,33 @@ class JobRepository {
 
   getLevels() {
     return jobXp
+  }
+
+  getRewards(job: keyof typeof rewardsPerJob, from: number, to: number) {
+    const target = rewardsPerJob[job]
+
+    const rewards = Object.entries(target)
+      .filter(([key]) => Number(key) >= from && Number(key) <= to)
+      .flatMap(([, value]) => value)
+
+    return Object.values(
+      rewards.reduce(
+        (acc, item) => {
+          if (!acc[item.id]) {
+            acc[item.id] = { ...item }
+          } else {
+            const existing = acc[item.id]
+
+            if (existing.quantity && item.quantity) {
+              existing.quantity += item.quantity
+            }
+          }
+
+          return acc
+        },
+        {} as Record<string, JobReward>
+      )
+    )
   }
 }
 
