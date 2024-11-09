@@ -1,6 +1,7 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
+import { DiscordService } from '#core/services/discord'
 import { UserRepository } from '#user/repositories/user_repository'
 import {
   createUserValidator,
@@ -10,11 +11,21 @@ import {
 
 @inject()
 export default class UserController {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private discordService: DiscordService
+  ) {}
 
   async index({ response }: HttpContext) {
     const users = await this.userRepository.findAll()
-    return response.ok(users)
+    return response.ok(
+      await Promise.all(
+        users.map(async (user) => {
+          const { id, ...discordUser } = await this.discordService.getUser(user.discordId)
+          return { ...user, ...discordUser }
+        })
+      )
+    )
   }
 
   async show({ response, params }: HttpContext) {
@@ -24,7 +35,9 @@ export default class UserController {
       return response.notFound({ message: 'User not found' })
     }
 
-    return response.ok(user)
+    const { id, ...discordUser } = await this.discordService.getUser(user.discordId)
+
+    return response.ok({ ...user, ...discordUser })
   }
 
   async create({ response, request }: HttpContext) {

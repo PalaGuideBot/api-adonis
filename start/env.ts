@@ -30,4 +30,6 @@ export default await Env.create(new URL('../', import.meta.url), {
   PALAGUIDEBOT_IMAGE_KEY: Env.schema.string(),
 
   MOJANG_API_URL: Env.schema.string(),
+
+  DISCORD_API_TOKEN: Env.schema.string(),
 })
