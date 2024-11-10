@@ -76,7 +76,7 @@ const player: Player = {
     total: 808,
   },
   pet: {
-    currentSkin: 'kapio_koi',
+    currentSkin: 'pet_arty',
     happiness: 100,
     level: 2,
     experience: 100,
