@@ -9,6 +9,14 @@ export const factionProfileValidator = vine.compile(
       .parse((value) => (value ? Object.values(value) : ([] as number[]))),
     name: vine.string(),
     uuid: vine.string(),
+    players: vine.array(
+      vine.object({
+        group: vine.string(),
+        joinedAt: vine.number(),
+        username: vine.string(),
+        uuid: vine.string(),
+      })
+    ),
   })
 )
 
