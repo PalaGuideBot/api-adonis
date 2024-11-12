@@ -294,7 +294,7 @@ class PaladiumService {
   async getAllFactionData(name: string) {
     const profile = await this.getFactionProfile(name)
     //const members = await this.getFactionMembers(profile.uuid)
-    const members = profile.players
+    const members = { data: profile.players }
 
     return { ...profile, members }
   }
