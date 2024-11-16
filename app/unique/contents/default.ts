@@ -95,6 +95,7 @@ const player: Player = {
     food: 100,
     sharedXpPercent: 100,
     xp: 100,
+    level: 15,
   },
   firstJoin: 1708112953001,
   friends: [
