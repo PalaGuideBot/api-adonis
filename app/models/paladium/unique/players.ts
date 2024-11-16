@@ -74,6 +74,7 @@ interface Mount {
   food: number
   sharedXpPercent: number
   xp: number
+  level: number
 }
 
 interface Pet {
@@ -136,6 +137,7 @@ const playerSchema: Schema = new Schema<Player>({
     food: Number,
     sharedXpPercent: Number,
     xp: Number,
+    level: Number,
   },
   pet: {
     currentSkin: String,

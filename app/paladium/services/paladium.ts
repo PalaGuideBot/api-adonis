@@ -6,6 +6,7 @@ import ky, { HTTPError } from 'ky'
 
 import { getOnYourMarksGoalItem } from '#event/contents/events'
 import { LeaderboardCategory, LeaderboardTrixiumCategory } from '#leaderboard/types'
+import { getMountLevel } from '#paladium/helpers/mount'
 import { getPetLevel } from '#paladium/helpers/pet'
 import { ImageService } from '#paladium/services/image'
 import type { ApiResponseError } from '#paladium/types'
@@ -170,7 +171,9 @@ class PaladiumService {
       const response = await this.client.get(`paladium/player/profile/${uuid}/mount`)
       const data = await response.json()
 
-      return playerMountValidator.validate(data)
+      const mount = await playerMountValidator.validate(data)
+
+      return { ...mount, level: getMountLevel(mount.xp) }
     } catch (error: unknown) {
       return null // Mount is not required
     }
