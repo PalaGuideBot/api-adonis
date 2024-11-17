@@ -8,6 +8,7 @@ import { LinkRepository } from '#link/repositories/link_repository'
 import { MojangService } from '#minecraft/services/mojang'
 import { PlayerRepository } from '#unique/repositories/player_repository'
 import { UserRepository } from '#user/repositories/user_repository'
+import { getJobNeededXpForLevel } from '#utils/contents/jobs'
 
 @inject()
 export default class PlayerController {
@@ -168,11 +169,24 @@ export default class PlayerController {
       return response.notFound({ message: 'Player not found' })
     }
 
-    const jobs =
-      player.data
-        .toSorted((a, b) => new Date(a.date).getMilliseconds() - new Date(b.date).getMilliseconds())
-        .at(-1)?.data.jobs || null
+    const jobs = player.data
+      .toSorted((a, b) => new Date(a.date).getMilliseconds() - new Date(b.date).getMilliseconds())
+      .at(-1)?.data.jobs
 
-    return response.ok(jobs)
+    if (!jobs) {
+      return response.ok(null)
+    }
+
+    return response.ok(
+      Object.fromEntries(
+        Object.entries(jobs).map(([key, value]) => [
+          key,
+          {
+            ...value,
+            xp: Math.floor(Math.max(0, value.xp - getJobNeededXpForLevel(value.level))),
+          },
+        ])
+      )
+    )
   }
 }

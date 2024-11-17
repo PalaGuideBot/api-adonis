@@ -31,6 +31,8 @@ const rewards = {
   },
 } satisfies Record<string, Pick<JobReward, 'label' | 'id' | 'type'>>
 
+const JOB_MAX_LEVEL = 100
+
 type BuilderOptions = { reward: keyof typeof rewards; quantity?: number }
 
 function rewardBuilder(...options: BuilderOptions[]): JobReward[] {
@@ -745,4 +747,23 @@ const xpPerItem: Record<(typeof jobCategories)[number], Item[]> = {
   ],
 }
 
-export { jobCategories, xpPerItem, jobXp, rewardsPerJob }
+const getJobNeededXpForLevel = (level: number) => {
+  let sum = 0
+  for (let i = 2; i <= level; i++) {
+    sum = Math.floor(sum + Math.pow(i, 2.27) * 30.0 + 450 * i)
+  }
+  return sum
+}
+
+const getJobLevel = (experience: number) => {
+  let sum = 0
+  for (let i = 2; i <= JOB_MAX_LEVEL; i++) {
+    sum = Math.floor(sum + Math.pow(i, 2.27) * 30.0 + 450 * i)
+    if (experience < sum) {
+      return Math.floor(i - 1)
+    }
+  }
+  return JOB_MAX_LEVEL
+}
+
+export { jobCategories, xpPerItem, jobXp, rewardsPerJob, getJobNeededXpForLevel, getJobLevel }
