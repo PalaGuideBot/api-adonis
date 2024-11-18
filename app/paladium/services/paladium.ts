@@ -283,26 +283,13 @@ class PaladiumService {
       let image = null
 
       try {
-        if (result.extra) {
-          switch (result.goalType) {
-            case 'FISHING':
-            case 'WALK':
-              break
-            case 'MOB_KILL':
-              image = await this.imageService.getMinecraftEntity(result.extra)
-              break
-            default:
-              image = await this.imageService.getMinecraftItem(result.extra)
-              break
-          }
-        }
-
-        if (result.goalType === 'FISHING') {
-          image = await this.imageService.getMinecraftItem('fishing_rod')
-        }
-
-        if (result.goalType === 'WALK') {
-          image = await this.imageService.getMinecraftItem('leather_boots')
+        switch (result.goalType) {
+          case 'MOB_KILL':
+            image = await this.imageService.getMinecraftEntity(getOnYourMarksGoalItem(result))
+            break
+          default:
+            image = await this.imageService.getMinecraftItem(getOnYourMarksGoalItem(result))
+            break
         }
       } catch {}
 
