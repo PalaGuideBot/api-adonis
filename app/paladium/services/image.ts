@@ -47,6 +47,22 @@ export class ImageService {
     }
   }
 
+  async getMinecraftEntity(id: string) {
+    try {
+      const response = await imageClient.get(
+        `minecraft/entities/${encodeURIComponent(id)}/informations`
+      )
+      const data = await response.json()
+
+      return await minecraftItemValidator.validate(data)
+    } catch (error: unknown) {
+      if (error instanceof HTTPError && error.response.status === 404) {
+        throw new Error(`Minecraft entity with id "${id}" not found`)
+      }
+      throw error
+    }
+  }
+
   async getCraftImage(
     table: string,
     craft: (string | null)[],
