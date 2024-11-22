@@ -29,7 +29,7 @@ export default class SyncPlayers extends BaseCommand {
             },
           },
         },
-        'retry.count': { $lt: 10 },
+        'retry.count': { $lte: 10 },
         'retry.disabled': false,
       })
       .limit(280)
