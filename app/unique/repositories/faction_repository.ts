@@ -1,9 +1,9 @@
 import { inject } from '@adonisjs/core'
+import { DateTime } from 'luxon'
 
 import { db } from '#core/services/db'
 import { PaladiumService } from '#paladium/services/paladium'
 import { faction as defaultFaction } from '#unique/contents/default'
-import { DateTime } from 'luxon'
 
 @inject()
 class FactionRepository {
@@ -29,6 +29,7 @@ class FactionRepository {
       description: factionData.description,
       createdAt: factionData.createdAt,
       emblem: factionData.emblem,
+      alliance: factionData.alliance,
       players: factionData.members.data,
       retry: {
         count: 0,

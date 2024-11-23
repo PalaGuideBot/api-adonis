@@ -7,6 +7,7 @@ export const factionProfileValidator = vine.compile(
     emblem: vine
       .array(vine.number())
       .parse((value) => (value ? Object.values(value) : ([] as number[]))),
+    alliance: vine.enum(['CHAOS', 'ORDER']),
     name: vine.string(),
     uuid: vine.string(),
     players: vine.array(

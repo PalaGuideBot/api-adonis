@@ -28,6 +28,7 @@ interface Faction {
   description: string
   createdAt: number
   emblem: number[]
+  alliance: string
   players: FactionPlayer[]
   retry: Retry
 }
@@ -41,6 +42,7 @@ const factionSchema = new Schema<Faction>({
   description: String,
   createdAt: Number,
   emblem: [Number],
+  alliance: String,
   players: [factionPlayerSchema],
   retry: {
     count: Number,
