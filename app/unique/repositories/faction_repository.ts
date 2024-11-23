@@ -37,7 +37,9 @@ class FactionRepository {
       },
     })
 
-    return faction.save()
+    await faction.save()
+
+    return faction.toObject()
   }
 
   async countByDate() {
