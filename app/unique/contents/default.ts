@@ -46,6 +46,7 @@ const faction: Faction = {
     },
   ],
   emblem: [-16777216, 5, -13312, -16777216, 3, -1, -27392, 17],
+  alliance: 'ORDER',
   retry: {
     count: 0,
     disabled: false,
