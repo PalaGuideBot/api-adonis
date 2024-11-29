@@ -1,8 +1,8 @@
-export type PogItem = {
+export type Item = {
   name: string
+  id: string
+  durability: number
   xp: number
-  from: number
-  to: number
 }
 
 export type JobReward = {
