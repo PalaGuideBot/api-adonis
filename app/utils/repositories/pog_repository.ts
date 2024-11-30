@@ -96,6 +96,8 @@ class PogRepository {
     const { currentLevel, targetLevel, petSkillPercentage } = body
 
     const xpTotal = this.getXpTotal(body)
+    const currentTier = getToolTier(currentLevel)!
+    const targetTier = getToolTier(targetLevel)!
 
     const result = items.map((item) => ({
       ...item,
@@ -129,6 +131,8 @@ class PogRepository {
 
     return {
       xpTotal,
+      currentTier: currentTier.tier,
+      targetTier: targetTier.tier,
       items: result,
     }
   }
