@@ -70,7 +70,10 @@ class PogRepository {
 
     return {
       from: from,
-      amount: Math.ceil(this.getXpTotal({ currentLevel: from, targetLevel }) / item.xp),
+      amount: Math.ceil(
+        this.getXpTotal({ currentLevel: currentLevel > from ? currentLevel : from, targetLevel }) /
+          item.xp
+      ),
       targeted: isItemInstantMine(
         item,
         calculateToolDamage({
