@@ -31,6 +31,11 @@ export const calculatePogValidator = vine.compile(
     body: vine.object({
       currentLevel: vine.number().min(0).max(100),
       targetLevel: vine.number().min(0).max(100),
+      petSkillPercentage: vine
+        .number()
+        .min(0)
+        .max(40)
+        .parse((value) => value || 0),
     }),
   })
 )
