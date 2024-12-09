@@ -1,142 +1,136 @@
+import { Exception } from '@adonisjs/core/exceptions'
 import { Infer } from '@vinejs/vine/types'
 
-import {
-  calculateToolDamage,
-  getToolTier,
-  isItemInstantMine,
-  items,
-  pogXp,
-} from '#utils/contents/pogs'
+import { getToolTier, items, pogXp } from '#utils/contents/pogs'
+import { Item } from '#utils/types'
 import { calculatePogValidator } from '#utils/validators/calculate_validator'
-
-const MULTIPLIERS = {
-  MIXED: 1.8,
-}
 
 type CalculatePogOptions = Infer<typeof calculatePogValidator>['body']
 
 class PogRepository {
-  getXpTotal(body: Omit<CalculatePogOptions, 'petSkillPercentage'>) {
-    const { currentLevel, targetLevel } = body
+  getItems() {
+    return items.map(({ from, ...item }) => item)
+  }
+
+  getXpTotal(
+    body: Pick<CalculatePogOptions, 'currentLevel' | 'currentXp'> & { targetLevel: number }
+  ) {
+    const { currentLevel, currentXp, targetLevel } = body
 
     let xpTotal: number = 0
 
-    for (let i = currentLevel; i < targetLevel; i++) {
-      xpTotal += pogXp[i]
+    for (let i = currentLevel; i < pogXp.length; i++) {
+      if (i > targetLevel) {
+        break
+      }
+
+      let xp = pogXp[i]
+
+      if (i === currentLevel) {
+        xp -= Math.max(0, xp - currentXp)
+      }
+
+      xpTotal += xp
     }
 
     return xpTotal
   }
 
-  getItemLevelInstantMine(
-    item: Parameters<typeof isItemInstantMine>[0],
-    options: Pick<
-      Parameters<typeof calculateToolDamage>[0],
-      'hasteMultiplier' | 'petSkillMultiplier'
-    >
-  ) {
-    for (let i = 1; i <= 100; i++) {
-      const toolTier = getToolTier(i)!
-      if (
-        isItemInstantMine(
-          item,
-          calculateToolDamage({
-            enchantementBonus: toolTier.enchantementBonus,
-            toolSpeed: toolTier.toolSpeed,
-            ...options,
-          })
-        )
-      ) {
-        return i
-      }
-    }
-    return 100
-  }
-
-  getItemOSState(
-    item: Parameters<typeof isItemInstantMine>[0],
-    options: Omit<CalculatePogOptions, 'petSkillPercentage'> &
-      Parameters<typeof this.getItemLevelInstantMine>[1]
-  ) {
-    const { currentLevel, targetLevel, hasteMultiplier, petSkillMultiplier } = options
-
-    const currentToolTier = getToolTier(currentLevel)!
-    const targetToolTier = getToolTier(targetLevel)!
-
-    const from = this.getItemLevelInstantMine(item, {
-      hasteMultiplier,
-      petSkillMultiplier,
-    })
-
-    return {
-      from: from,
-      amount: Math.ceil(
-        this.getXpTotal({ currentLevel: currentLevel > from ? currentLevel : from, targetLevel }) /
-          item.xp
-      ),
-      targeted: isItemInstantMine(
-        item,
-        calculateToolDamage({
-          enchantementBonus: targetToolTier.enchantementBonus,
-          toolSpeed: targetToolTier.toolSpeed,
-          hasteMultiplier,
-          petSkillMultiplier,
-        })
-      ),
-      current: isItemInstantMine(
-        item,
-        calculateToolDamage({
-          enchantementBonus: currentToolTier.enchantementBonus,
-          toolSpeed: currentToolTier.toolSpeed,
-          hasteMultiplier,
-          petSkillMultiplier,
-        })
-      ),
-    }
-  }
-
   calculate(body: CalculatePogOptions) {
-    const { currentLevel, targetLevel, petSkillPercentage } = body
+    const { block, ...options } = body
 
-    const xpTotal = this.getXpTotal(body)
-    const currentTier = getToolTier(currentLevel)!
-    const targetTier = getToolTier(targetLevel)!
+    const targetItem = items.find((i) => i.id === block)
+
+    if (!targetItem) {
+      throw new Exception('Item not found', { code: 'E_POG_ITEM_NOT_FOUND', status: 404 })
+    }
+
+    const currentTier = getToolTier(options.currentLevel)!
 
     const result = items.map((item) => ({
-      ...item,
+      id: item.id,
+      name: item.name,
+      xp: item.xp,
       os: {
-        default: this.getItemOSState(item, {
-          currentLevel,
-          targetLevel,
-          hasteMultiplier: 0,
-          petSkillMultiplier: 0,
-        }),
-        with_mixed: this.getItemOSState(item, {
-          currentLevel,
-          targetLevel,
-          hasteMultiplier: MULTIPLIERS.MIXED,
-          petSkillMultiplier: 0,
-        }),
-        with_pet_skill: this.getItemOSState(item, {
-          currentLevel,
-          targetLevel,
-          hasteMultiplier: 0,
-          petSkillMultiplier: petSkillPercentage !== 0 ? petSkillPercentage / 100 + 1 : 0,
-        }),
-        with_pet_skill_and_mixed: this.getItemOSState(item, {
-          currentLevel,
-          targetLevel,
-          hasteMultiplier: MULTIPLIERS.MIXED,
-          petSkillMultiplier: petSkillPercentage !== 0 ? petSkillPercentage / 100 + 1 : 0,
-        }),
+        default: this.resolveItemOSState('default', item, targetItem, options),
+        with_mixed: this.resolveItemOSState('with_mixed', item, targetItem, options),
+        with_green: this.resolveItemOSState('with_green', item, targetItem, options),
+        with_pet_skill: this.resolveItemOSState('with_pet_skill', item, targetItem, options),
+        with_pet_skill_and_mixed: this.resolveItemOSState(
+          'with_pet_skill_and_mixed',
+          item,
+          targetItem,
+          options
+        ),
       },
     }))
 
     return {
-      xpTotal,
+      item: result.find((i) => i.id === block)!,
       currentTier: currentTier.tier,
-      targetTier: targetTier.tier,
       items: result,
+    }
+  }
+
+  protected resolveItemFrom<T extends keyof Item['from']>(
+    item: Item,
+    state: T,
+    options: Pick<CalculatePogOptions, 'goodPickaxePercentage'>
+  ) {
+    const { goodPickaxePercentage } = options
+
+    let from = 0
+
+    switch (state) {
+      case 'default':
+        from = item.from.default
+        break
+      case 'with_mixed':
+        from = item.from.with_mixed
+        break
+      case 'with_green':
+        from = item.from.with_green
+        break
+      case 'with_pet_skill':
+        from = item.from.with_pet_skill(goodPickaxePercentage)
+        break
+      case 'with_pet_skill_and_mixed':
+        from = item.from.with_pet_skill_and_mixed(goodPickaxePercentage, item.from.with_mixed)
+        break
+    }
+
+    return from
+  }
+
+  protected resolveItemOSState<T extends keyof Item['from']>(
+    state: T,
+    item: Item,
+    targetItem: Item,
+    options: Omit<CalculatePogOptions, 'block'>
+  ) {
+    const { currentLevel, currentXp, goodPickaxePercentage, experiencedPickaxePercentage } = options
+
+    const from = this.resolveItemFrom(item, state, { goodPickaxePercentage })
+    const targetFrom = this.resolveItemFrom(targetItem, state, { goodPickaxePercentage })
+    const targetTier = getToolTier(from)!
+
+    return {
+      from: from,
+      targetTier: targetTier.tier,
+      xp: this.getXpTotal({
+        currentXp: currentXp,
+        currentLevel: currentLevel,
+        targetLevel: targetFrom > from ? targetFrom : from,
+      }),
+      amount: Math.ceil(
+        this.getXpTotal({
+          currentXp: currentXp,
+          currentLevel: currentLevel,
+          targetLevel: targetFrom > from ? targetFrom : from,
+        }) /
+          (item.xp * (1 + experiencedPickaxePercentage / 100))
+      ),
+      current: currentLevel >= from,
     }
   }
 }

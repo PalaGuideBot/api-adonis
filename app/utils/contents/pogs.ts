@@ -1,37 +1,5 @@
 import type { Item } from '#utils/types'
 
-function calculateItemInstantMine(item: Item) {
-  return item.durability * 30
-}
-
-function calculateToolDamage(options: {
-  toolSpeed: number
-  enchantementBonus: number
-  hasteMultiplier: number
-  petSkillMultiplier: number
-}) {
-  const { toolSpeed, enchantementBonus, hasteMultiplier, petSkillMultiplier } = options
-  let damage = toolSpeed + enchantementBonus
-
-  if (hasteMultiplier > 1) {
-    damage *= hasteMultiplier
-  }
-
-  if (petSkillMultiplier > 1) {
-    damage *= petSkillMultiplier
-  }
-
-  return damage
-}
-
-function isItemInstantMine(item: Item, toolDamage: number) {
-  return toolDamage >= calculateItemInstantMine(item)
-}
-
-function calculateEfficiencyBonus(level: number) {
-  return Math.pow(level, 2) + 1
-}
-
 function getToolTier(level: number) {
   return pogTiers.find((tier) => tier.levels.includes(level))
 }
@@ -50,122 +18,82 @@ const pogTiers = [
   {
     tier: 0,
     levels: [1, 2, 3, 4, 5],
-    toolSpeed: 2,
-    enchantementBonus: 0,
   },
   {
     tier: 1,
     levels: [6, 7, 8, 9, 10],
-    toolSpeed: 4,
-    enchantementBonus: 0,
   },
   {
     tier: 2,
     levels: [11, 12, 13, 14, 15],
-    toolSpeed: 6,
-    enchantementBonus: 0,
   },
   {
     tier: 3,
     levels: [16, 17, 18, 19, 20],
-    toolSpeed: 8,
-    enchantementBonus: 0,
   },
   {
     tier: 4,
     levels: [21, 22, 23, 24, 25],
-    toolSpeed: 12,
-    enchantementBonus: 0,
   },
   {
     tier: 5,
     levels: [26, 27, 28, 29, 30],
-    toolSpeed: 15,
-    enchantementBonus: 0,
   },
   {
     tier: 6,
     levels: [31, 32, 33, 34, 35],
-    toolSpeed: 24,
-    enchantementBonus: 0,
   },
   {
     tier: 7,
     levels: [36, 37, 38, 39, 40],
-    toolSpeed: 24,
-    enchantementBonus: 0,
   },
   {
     tier: 8,
     levels: [41, 42, 43, 44, 45],
-    toolSpeed: 28,
-    enchantementBonus: calculateEfficiencyBonus(1),
   },
   {
     tier: 9,
     levels: [46, 47, 48, 49, 50],
-    toolSpeed: 28,
-    enchantementBonus: calculateEfficiencyBonus(2),
   },
   {
     tier: 10,
     levels: [51, 52, 53, 54, 55],
-    toolSpeed: 28,
-    enchantementBonus: calculateEfficiencyBonus(3),
   },
   {
     tier: 11,
     levels: [56, 57, 58, 59, 60],
-    toolSpeed: 28,
-    enchantementBonus: calculateEfficiencyBonus(4),
   },
   {
     tier: 12,
     levels: [61, 62, 63, 64, 65],
-    toolSpeed: 28,
-    enchantementBonus: calculateEfficiencyBonus(5),
   },
   {
     tier: 13,
     levels: [66, 67, 68, 69, 70],
-    toolSpeed: 28,
-    enchantementBonus: calculateEfficiencyBonus(5),
   },
   {
     tier: 14,
     levels: [71, 72, 73, 74, 75],
-    toolSpeed: 28,
-    enchantementBonus: calculateEfficiencyBonus(5),
   },
   {
     tier: 15,
     levels: [76, 77, 78, 79, 80],
-    toolSpeed: 28,
-    enchantementBonus: calculateEfficiencyBonus(5),
   },
   {
     tier: 16,
     levels: [81, 82, 83, 84, 85],
-    toolSpeed: 28,
-    enchantementBonus: calculateEfficiencyBonus(5),
   },
   {
     tier: 17,
     levels: [86, 87, 88, 89, 90],
-    toolSpeed: 28,
-    enchantementBonus: calculateEfficiencyBonus(5),
   },
   {
     tier: 18,
     levels: [91, 92, 93, 94, 95],
-    toolSpeed: 28,
-    enchantementBonus: calculateEfficiencyBonus(5),
   },
   {
     tier: 19,
     levels: [96, 97, 98, 99, 100],
-    toolSpeed: 28,
-    enchantementBonus: calculateEfficiencyBonus(5),
   },
 ]
 
@@ -173,87 +101,171 @@ const items: Item[] = [
   {
     name: 'Snow',
     id: 'snow-0',
-    durability: 0.2,
     xp: 1,
+    from: {
+      default: 11,
+      with_mixed: 6,
+      with_green: 11,
+      with_pet_skill: (_) => 6,
+      with_pet_skill_and_mixed: (_, __) => 6,
+    },
   },
   {
     name: 'Leaves',
     id: 'leaves-0',
-    durability: 0.2,
     xp: 1,
+    from: {
+      default: 11,
+      with_mixed: 6,
+      with_green: 11,
+      with_pet_skill: (_) => 6,
+      with_pet_skill_and_mixed: (_, __) => 6,
+    },
   },
   {
     name: 'Netherrack',
     id: 'netherrack-0',
-    durability: 0.4,
     xp: 1,
+    from: {
+      default: 21,
+      with_mixed: 16,
+      with_green: 21,
+      with_pet_skill: (_) => 16,
+      with_pet_skill_and_mixed: (_, __) => 16,
+    },
   },
   {
     name: 'Cactus',
     id: 'cactus-0',
-    durability: 0.4,
     xp: 1,
+    from: {
+      default: 21,
+      with_mixed: 16,
+      with_green: 21,
+      with_pet_skill: (_) => 16,
+      with_pet_skill_and_mixed: (_, __) => 16,
+    },
   },
   {
     name: 'Dirt',
     id: 'dirt-0',
-    durability: 0.5,
     xp: 1,
+    from: {
+      default: 26,
+      with_mixed: 21,
+      with_green: 26,
+      with_pet_skill: (_) => 21,
+      with_pet_skill_and_mixed: (_, __) => 21,
+    },
   },
   {
     name: 'Sand',
     id: 'sand-0',
-    durability: 0.5,
     xp: 1,
+    from: {
+      default: 26,
+      with_mixed: 21,
+      with_green: 26,
+      with_pet_skill: (_) => 21,
+      with_pet_skill_and_mixed: (_, __) => 21,
+    },
   },
   {
     name: 'Red Sand',
     id: 'sand-1',
-    durability: 0.5,
     xp: 1,
+    from: {
+      default: 26,
+      with_mixed: 21,
+      with_green: 26,
+      with_pet_skill: (_) => 21,
+      with_pet_skill_and_mixed: (_, __) => 21,
+    },
   },
   {
     name: 'Soul Sand',
     id: 'soul_sand-0',
-    durability: 0.5,
     xp: 1,
+    from: {
+      default: 26,
+      with_mixed: 21,
+      with_green: 26,
+      with_pet_skill: (_) => 21,
+      with_pet_skill_and_mixed: (_, __) => 21,
+    },
   },
   {
     name: 'Gravel',
     id: 'gravel-0',
-    durability: 0.5,
     xp: 1,
+    from: {
+      default: 26,
+      with_mixed: 21,
+      with_green: 26,
+      with_pet_skill: (_) => 21,
+      with_pet_skill_and_mixed: (_, __) => 21,
+    },
   },
   {
     name: 'Ice',
     id: 'ice-0',
-    durability: 0.5,
     xp: 1,
+    from: {
+      default: 26,
+      with_mixed: 21,
+      with_green: 26,
+      with_pet_skill: (_) => 21,
+      with_pet_skill_and_mixed: (_, __) => 21,
+    },
   },
   {
     name: 'Wool',
     id: 'wool-0',
-    durability: 0.8,
     xp: 1,
+    from: {
+      default: 31,
+      with_mixed: 26,
+      with_green: 31,
+      with_pet_skill: (_) => 26,
+      with_pet_skill_and_mixed: (_, __) => 21,
+    },
   },
   {
     name: 'Sandstone',
     id: 'sandstone-0',
-    durability: 1,
     xp: 1,
+    from: {
+      default: 41,
+      with_mixed: 31,
+      with_green: 36,
+      with_pet_skill: (_) => 31,
+      with_pet_skill_and_mixed: (_, __) => 33,
+    },
   },
   {
     name: 'Hardened Clay',
     id: 'hardened_clay-0',
-    durability: 1.25,
     xp: 1,
+    from: {
+      default: 51,
+      with_mixed: 41,
+      with_green: 46,
+      with_pet_skill: (_) => 41,
+      with_pet_skill_and_mixed: (_, __) => 43,
+    },
   },
   {
     name: 'Stone',
     id: 'stone-0',
-    durability: 1.5,
     xp: 1,
+    from: {
+      default: 56,
+      with_mixed: 46,
+      with_green: 51,
+      with_pet_skill: (_) => 46,
+      with_pet_skill_and_mixed: (_, __) => 41,
+    },
   },
 ]
 
-export { items, pogXp, calculateToolDamage, isItemInstantMine, getToolTier }
+export { items, pogXp, getToolTier }
