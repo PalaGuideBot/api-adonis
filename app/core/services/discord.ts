@@ -21,7 +21,9 @@ export class DiscordService {
         return {
           id: result.id,
           username: result.global_name || result.username,
-          avatarUrl: `https://cdn.discordapp.com/avatars/${result.id}/${result.avatar}${result.avatar.startsWith('a_') ? '.gif' : '.png'}`,
+          avatarUrl: result.avatar
+            ? `https://cdn.discordapp.com/avatars/${result.id}/${result.avatar}${result.avatar.startsWith('a_') ? '.gif' : '.png'}`
+            : `https://api.dicebear.com/9.x/initials/svg?seed=${result.username}`,
         }
       })
     } catch (error: unknown) {
