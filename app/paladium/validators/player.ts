@@ -148,7 +148,7 @@ export const playerMarketValidator = vine.compile(
         name: vine.string(),
         price: vine.number(),
         pricePb: vine.number(),
-        rename: vine.boolean(),
+        renamed: vine.boolean(),
         skin: vine.number(),
         slot: vine.number(),
         type: vine.string(),
