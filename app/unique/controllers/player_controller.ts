@@ -9,6 +9,7 @@ import { MojangService } from '#minecraft/services/mojang'
 import { PlayerRepository } from '#unique/repositories/player_repository'
 import { UserRepository } from '#user/repositories/user_repository'
 import { getJobNeededXpForLevel } from '#utils/contents/jobs'
+import { PaladiumService } from '#paladium/services/paladium'
 
 @inject()
 export default class PlayerController {
@@ -16,7 +17,8 @@ export default class PlayerController {
     private playerRepository: PlayerRepository,
     private mojangService: MojangService,
     private linkRepository: LinkRepository,
-    private userRepository: UserRepository
+    private userRepository: UserRepository,
+    private paladiumService: PaladiumService
   ) {}
 
   async index({ response, request }: HttpContext) {
@@ -60,7 +62,9 @@ export default class PlayerController {
       flags = user?.roles || []
     }
 
-    return response.ok({ ...player, flags })
+    const market = (await this.paladiumService.getPlayerMarket(player.uuid)) || []
+
+    return response.ok({ ...player, flags, market })
   }
 
   async flags({ response, params }: HttpContext) {
