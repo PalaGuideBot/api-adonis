@@ -62,18 +62,13 @@ export default class PlayerController {
       flags = user?.roles || []
     }
 
-    const cacheKey = `player:market:${player.uuid}`
+    const market = await cache.getOrSet({
+      key: `player:market:${player.uuid}`,
+      factory: () => this.paladiumService.getPlayerMarket(player.uuid),
+      ttl: '30m',
+    })
 
-    if (await !cache.has(cacheKey)) {
-      const market = await this.paladiumService.getPlayerMarket(player.uuid)
-      await cache.set({
-        key: cacheKey,
-        value: market,
-        ttl: '30m',
-      })
-    }
-
-    return response.ok({ ...player, flags, market: await cache.get(cacheKey) })
+    return response.ok({ ...player, flags, market })
   }
 
   async flags({ response, params }: HttpContext) {
