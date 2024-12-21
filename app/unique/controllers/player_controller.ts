@@ -64,7 +64,15 @@ export default class PlayerController {
 
     const market = await cache.getOrSet({
       key: `player:market:${player.uuid}`,
-      factory: () => this.paladiumService.getPlayerMarket(player.uuid),
+      factory: async () => {
+        const data = await this.paladiumService.getPlayerMarket(player.uuid)
+        const date = DateTime.now().toISO()
+
+        return {
+          ...data,
+          lastUpdate: date,
+        }
+      },
       ttl: '30m',
     })
 
