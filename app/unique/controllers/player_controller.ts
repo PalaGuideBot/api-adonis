@@ -73,7 +73,7 @@ export default class PlayerController {
           lastUpdate: date,
         }
       },
-      ttl: '30m',
+      ttl: '5m',
     })
 
     return response.ok({ ...player, flags, market })
