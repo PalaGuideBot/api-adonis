@@ -122,3 +122,38 @@ export const playerClickerValidator = vine.compile(
     uuid: vine.string(),
   })
 )
+
+export const playerMarketValidator = vine.compile(
+  vine.object({
+    data: vine.array(
+      vine.object({
+        category: vine.enum([
+          'PVP',
+          'LUCKY_BLOCK',
+          'BUILD',
+          'TOOLS',
+          'RARE',
+          'OTHER',
+          'LUCKYDRAWER',
+          'STUFF',
+        ]),
+        createdAt: vine.number(),
+        durability: vine.number(),
+        expireAt: vine.number(),
+        item: vine.object({
+          meta: vine.number(),
+          name: vine.string(),
+          quantity: vine.number(),
+        }),
+        name: vine.string(),
+        price: vine.number(),
+        pricePb: vine.number(),
+        renamed: vine.boolean(),
+        skin: vine.number(),
+        slot: vine.number(),
+        type: vine.string(),
+      })
+    ),
+    totalCount: vine.number(),
+  })
+)

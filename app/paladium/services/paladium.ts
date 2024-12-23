@@ -26,6 +26,7 @@ import {
   playerClickerValidator,
   playerFriendsValidator,
   playerJobsValidator,
+  playerMarketValidator,
   playerMountValidator,
   playerPetValidator,
   playerProfileValidator,
@@ -176,6 +177,21 @@ class PaladiumService {
       return { ...mount, level: getMountLevel(mount.xp) }
     } catch (error: unknown) {
       return null // Mount is not required
+    }
+  }
+
+  async getPlayerMarket(uuid: string) {
+    try {
+      const response = await this.client.get(
+        `paladium/shop/market/players/${uuid}/items?offset=0&limit=50`
+      )
+      const data = await response.json()
+
+      const market = await playerMarketValidator.validate(data)
+
+      return market
+    } catch (error: unknown) {
+      return null // Market is not required
     }
   }
 
