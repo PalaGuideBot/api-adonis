@@ -69,7 +69,8 @@ export default class PlayerController {
         const date = DateTime.now().toISO()
 
         return {
-          ...data,
+          data: data?.data || [],
+          totalCount: data?.totalCount || 0,
           lastUpdate: date,
         }
       },
