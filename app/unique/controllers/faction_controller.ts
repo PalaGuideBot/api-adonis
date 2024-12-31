@@ -18,7 +18,11 @@ export default class FactionController {
 
     const emblem = await this.imageService.getOrCreateEmblem(factionData.emblem)
 
-    return response.ok({ ...factionData, emblemUrl: emblem.url })
+    return response.ok({
+      ...factionData,
+      emblemUrl: emblem.url,
+      name: factionData.name.toLowerCase(),
+    })
 
     /*let faction = await this.factionRepository.findByName(params.name)
 
