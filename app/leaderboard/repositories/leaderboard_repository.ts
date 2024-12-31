@@ -9,6 +9,8 @@ import { CategoryItem } from '#leaderboard/types'
 import { ImageService } from '#paladium/services/image'
 import { PaladiumService } from '#paladium/services/paladium'
 
+import { faction as defaultFaction } from '#unique/contents/default'
+
 const DEFAULT_DAY_INTERVAL = 7
 
 @inject()
@@ -86,18 +88,21 @@ class LeaderboardRepository {
                 factionData = await this.paladiumService.getFactionProfile(item.name)
               } catch {}
 
-              if (!factionData) {
-                return item
-              }
+              let emblemArray
+
+              if (factionData) emblemArray = factionData.emblem
+              else emblemArray = defaultFaction.emblem
 
               let emblem
               try {
-                emblem = await this.imageService.getOrCreateEmblem(factionData.emblem)
+                emblem = await this.imageService.getOrCreateEmblem(emblemArray)
               } catch {}
 
               if (emblem) {
                 item.emblemUrl = emblem.url
               }
+
+              return item
             }
             return item
           })
