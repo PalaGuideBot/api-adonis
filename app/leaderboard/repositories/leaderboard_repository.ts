@@ -81,7 +81,10 @@ class LeaderboardRepository {
         data: await Promise.all(
           lastData.data.map(async (item, index) => {
             if (index < 3) {
-              const factionData = await this.paladiumService.getFactionProfile(item.name)
+              let factionData
+              try {
+                factionData = await this.paladiumService.getFactionProfile(item.name)
+              } catch {}
 
               if (!factionData) {
                 return item
