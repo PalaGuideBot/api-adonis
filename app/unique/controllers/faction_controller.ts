@@ -22,6 +22,7 @@ export default class FactionController {
       ...factionData,
       emblemUrl: emblem.url,
       name: factionData.name.toLowerCase(),
+      bgName: factionData.name,
     })
 
     /*let faction = await this.factionRepository.findByName(params.name)
