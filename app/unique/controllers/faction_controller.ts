@@ -20,9 +20,9 @@ export default class FactionController {
     let factionData
     if (params.name.toLowerCase() === 'guidebot') {
       factionData = defaultFaction
+    } else {
+      factionData = await this.paladiumService.getAllFactionData(params.name)
     }
-
-    factionData = await this.paladiumService.getAllFactionData(params.name)
 
     const emblem = await this.imageService.getOrCreateEmblem(factionData.emblem)
 
