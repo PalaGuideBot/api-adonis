@@ -17,11 +17,12 @@ export default class FactionController {
   ) {}
 
   async show({ response, params }: HttpContext) {
+    let factionData
     if (params.name.toLowerCase() === 'guidebot') {
-      return response.ok(defaultFaction)
+      factionData = defaultFaction
     }
 
-    const factionData = await this.paladiumService.getAllFactionData(params.name)
+    factionData = await this.paladiumService.getAllFactionData(params.name)
 
     const emblem = await this.imageService.getOrCreateEmblem(factionData.emblem)
 
