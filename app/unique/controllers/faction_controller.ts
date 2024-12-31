@@ -1,12 +1,11 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
+import cache from '#cache/cache'
 import { ImageService } from '#paladium/services/image'
-import { FactionRepository } from '#unique/repositories/faction_repository'
 import { PaladiumService } from '#paladium/services/paladium'
 import { faction as defaultFaction } from '#unique/contents/default'
-
-import cache from '#cache/cache'
+import { FactionRepository } from '#unique/repositories/faction_repository'
 
 @inject()
 export default class FactionController {
@@ -17,23 +16,21 @@ export default class FactionController {
   ) {}
 
   async show({ response, params }: HttpContext) {
-    let factionData
-    if (params.name.toLowerCase() === 'guidebot') {
-      factionData = defaultFaction
-    } else {
-      factionData = await this.paladiumService.getAllFactionData(params.name)
-    }
-
-    const emblem = await this.imageService.getOrCreateEmblem(factionData.emblem)
-
     const result = await cache.getOrSet({
       key: `faction:${params.name}`,
       factory: async () => {
+        const faction =
+          params.name.toLowerCase() === 'guidebot'
+            ? defaultFaction
+            : await this.paladiumService.getAllFactionData(params.name)
+
+        const emblem = await this.imageService.getOrCreateEmblem(faction.emblem)
+
         return {
-          ...factionData,
+          ...faction,
           emblemUrl: emblem.url,
-          name: factionData.name.toLowerCase(),
-          bgName: factionData.name,
+          name: faction.name.toLowerCase(),
+          bgName: faction.name,
         }
       },
       ttl: '1h',
