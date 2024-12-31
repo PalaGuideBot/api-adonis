@@ -7,12 +7,16 @@ import type { DistanceFilter } from '#core/validators/filter_validator'
 import { config } from '#leaderboard/contents/categories'
 import { CategoryItem } from '#leaderboard/types'
 import { ImageService } from '#paladium/services/image'
+import { PaladiumService } from '#paladium/services/paladium'
 
 const DEFAULT_DAY_INTERVAL = 7
 
 @inject()
 class LeaderboardRepository {
-  constructor(private imageService: ImageService) {}
+  constructor(
+    private imageService: ImageService,
+    private paladiumService: PaladiumService
+  ) {}
 
   async get(category: CategoryItem, options: Partial<DistanceFilter> = {}) {
     const {
@@ -77,15 +81,15 @@ class LeaderboardRepository {
         data: await Promise.all(
           lastData.data.map(async (item, index) => {
             if (index < 3) {
-              const faction = await db.factions.findOne({ name: item.name.toLowerCase() }).lean()
+              const factionData = await this.paladiumService.getFactionProfile(item.name)
 
-              if (!faction) {
+              if (!factionData) {
                 return item
               }
 
               let emblem
               try {
-                emblem = await this.imageService.getOrCreateEmblem(faction.emblem)
+                emblem = await this.imageService.getOrCreateEmblem(factionData.emblem)
               } catch {}
 
               if (emblem) {

@@ -4,6 +4,7 @@ import { HttpContext } from '@adonisjs/core/http'
 import { ImageService } from '#paladium/services/image'
 import { FactionRepository } from '#unique/repositories/faction_repository'
 import { PaladiumService } from '#paladium/services/paladium'
+import cache from '#cache/cache'
 
 @inject()
 export default class FactionController {
@@ -18,12 +19,20 @@ export default class FactionController {
 
     const emblem = await this.imageService.getOrCreateEmblem(factionData.emblem)
 
-    return response.ok({
-      ...factionData,
-      emblemUrl: emblem.url,
-      name: factionData.name.toLowerCase(),
-      bgName: factionData.name,
+    const result = await cache.getOrSet({
+      key: `faction:${params.name}`,
+      factory: async () => {
+        return {
+          ...factionData,
+          emblemUrl: emblem.url,
+          name: factionData.name.toLowerCase(),
+          bgName: factionData.name,
+        }
+      },
+      ttl: '1h',
     })
+
+    return response.ok(result)
 
     /*let faction = await this.factionRepository.findByName(params.name)
 
