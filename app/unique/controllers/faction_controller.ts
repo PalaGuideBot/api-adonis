@@ -4,6 +4,8 @@ import { HttpContext } from '@adonisjs/core/http'
 import { ImageService } from '#paladium/services/image'
 import { FactionRepository } from '#unique/repositories/faction_repository'
 import { PaladiumService } from '#paladium/services/paladium'
+import { faction as defaultFaction } from '#unique/contents/default'
+
 import cache from '#cache/cache'
 
 @inject()
@@ -15,6 +17,10 @@ export default class FactionController {
   ) {}
 
   async show({ response, params }: HttpContext) {
+    if (params.name.toLowerCase() === 'guidebot') {
+      return response.ok(defaultFaction)
+    }
+
     const factionData = await this.paladiumService.getAllFactionData(params.name)
 
     const emblem = await this.imageService.getOrCreateEmblem(factionData.emblem)
