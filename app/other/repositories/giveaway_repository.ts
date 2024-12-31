@@ -1,17 +1,24 @@
 import { inject } from '@adonisjs/core'
 import { Exception } from '@adonisjs/core/exceptions'
 import { Infer } from '@vinejs/vine/types'
+import { DateTime } from 'luxon'
 
 import { db } from '#core/services/db'
+import { DiscordService } from '#core/services/discord'
 import { LinkRepository } from '#link/repositories/link_repository'
 import type {
   createGiveawayValidator,
   updateGiveawayValidator,
 } from '#other/validators/giveaway_validator'
+import { UserRepository } from '#user/repositories/user_repository'
 
 @inject()
 class GiveawayRepository {
-  constructor(private linkRepository: LinkRepository) {}
+  constructor(
+    private linkRepository: LinkRepository,
+    private userRepository: UserRepository,
+    private discordService: DiscordService
+  ) {}
 
   async findAll() {
     return db.giveaway.find().lean()
@@ -26,11 +33,27 @@ class GiveawayRepository {
   }
 
   async findActive() {
-    return db.giveaway.findOne().sort({ start: 1 }).lean()
+    const giveaway = await db.giveaway.findOne({ active: true }).lean()
+
+    const ids = giveaway ? [...giveaway.participants, ...giveaway.winners] : []
+    let users = await this.userRepository.findAll()
+    users = users.filter((user) => ids.includes(user.discordId))
+    const parsedUsers = await Promise.all(
+      users.map(async (user) => {
+        const { id, ...discordUser } = await this.discordService.getUser(user.discordId)
+        return { ...user, ...discordUser }
+      })
+    )
+
+    return {
+      ...giveaway,
+      participants: parsedUsers.filter((user) => giveaway?.participants.includes(user.discordId)),
+      winners: parsedUsers.filter((user) => giveaway?.winners.includes(user.discordId)),
+    }
   }
 
   async create(data: Infer<typeof createGiveawayValidator>) {
-    const giveaway = await db.giveaway.create(data)
+    const giveaway = await db.giveaway.create({ ...data, active: false })
     return giveaway.toObject()
   }
 
@@ -50,6 +73,9 @@ class GiveawayRepository {
     }
     if (giveaway.participants.includes(discordId)) {
       throw new Exception('User already in giveaway', { status: 400 })
+    }
+    if (DateTime.now().toMillis() > DateTime.fromJSDate(giveaway.end).toMillis()) {
+      throw new Exception('Giveaway has ended', { status: 400 })
     }
     const newParticipants = [...new Set([...giveaway.participants, discordId])]
     await db.giveaway.updateOne({ _id: id }, { participants: newParticipants })

@@ -12,6 +12,7 @@ export const createGiveawayValidator = vine.compile(
 export const updateGiveawayValidator = vine.compile(
   vine.object({
     title: vine.string().optional(),
+    active: vine.boolean().optional(),
     start: vine.date().optional(),
     end: vine.date().optional(),
     prizes: vine.array(vine.string()).optional(),
