@@ -3,16 +3,24 @@ import { HttpContext } from '@adonisjs/core/http'
 
 import { ImageService } from '#paladium/services/image'
 import { FactionRepository } from '#unique/repositories/faction_repository'
+import { PaladiumService } from '#paladium/services/paladium'
 
 @inject()
 export default class FactionController {
   constructor(
     private factionRepository: FactionRepository,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private paladiumService: PaladiumService
   ) {}
 
   async show({ response, params }: HttpContext) {
-    let faction = await this.factionRepository.findByName(params.name)
+    const factionData = await this.paladiumService.getAllFactionData(params.name)
+
+    const emblem = await this.imageService.getOrCreateEmblem(factionData.emblem)
+
+    return response.ok({ ...factionData, emblemUrl: emblem.url })
+
+    /*let faction = await this.factionRepository.findByName(params.name)
 
     if (!faction) {
       try {
@@ -24,7 +32,7 @@ export default class FactionController {
 
     const emblem = await this.imageService.getOrCreateEmblem(faction.emblem)
 
-    return response.ok({ ...faction, emblemUrl: emblem.url })
+    return response.ok({ ...faction, emblemUrl: emblem.url })*/
   }
 
   async create({ response, params }: HttpContext) {
@@ -34,8 +42,8 @@ export default class FactionController {
       return response.badRequest({ message: 'Faction already exists' })
     }
 
-    const faction = await this.factionRepository.create(params.name)
+    //const faction = await this.factionRepository.create(params.name)
 
-    return response.ok({ message: `Faction "${faction.name}" created` })
+    return response.ok({ message: `Faction create has removed for now` })
   }
 }
