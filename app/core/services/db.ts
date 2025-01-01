@@ -1,5 +1,6 @@
 import Bot from '#models/api/bot'
 import EndpointAndKey from '#models/api/endpoint_and_key'
+import Giveaway from '#models/api/giveaway'
 import MinecraftLink from '#models/api/minecraft_link'
 import Role from '#models/api/role'
 import User from '#models/api/user'
@@ -36,4 +37,5 @@ export const db = {
   bot: Bot,
   role: Role,
   user: User,
+  giveaway: Giveaway,
 }
