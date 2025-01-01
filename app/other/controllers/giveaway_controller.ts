@@ -35,6 +35,12 @@ export default class GiveawayController {
     return response.ok(giveaway)
   }
 
+  async check({ response }: HttpContext) {
+    const active = await this.giveawayRepository.checkActive()
+
+    return response.ok({ active })
+  }
+
   async create({ request, response }: HttpContext) {
     const payload = await request.validateUsing(createGiveawayValidator)
     const giveaway = await this.giveawayRepository.create(payload)

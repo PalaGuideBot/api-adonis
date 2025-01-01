@@ -10,6 +10,7 @@ router
   .group(() => {
     router.get('/', [GiveawayController, 'index']).as('index')
     router.get('/active', [GiveawayController, 'active']).as('active')
+    router.get('/check', [GiveawayController, 'check']).as('check')
     router.get('/:id', [GiveawayController, 'show']).as('show')
     router.post('/', [GiveawayController, 'create']).as('create')
     router.put('/:id', [GiveawayController, 'update']).as('update')

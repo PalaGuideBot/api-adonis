@@ -21,7 +21,12 @@ class GiveawayRepository {
   ) {}
 
   async findAll() {
-    return db.giveaway.find().lean()
+    const giveaways = await db.giveaway.find().lean()
+
+    const ids = giveaways.flatMap((giveaway) => [...giveaway.participants, ...giveaway.winners])
+    const parsedUsers = await this.parseUsers(ids)
+
+    return giveaways.map((giveaway) => this.parseGiveaway(giveaway, parsedUsers))
   }
 
   async findById(id: string) {
@@ -36,20 +41,14 @@ class GiveawayRepository {
     const giveaway = await db.giveaway.findOne({ active: true }).lean()
 
     const ids = giveaway ? [...giveaway.participants, ...giveaway.winners] : []
-    let users = await this.userRepository.findAll()
-    users = users.filter((user) => ids.includes(user.discordId))
-    const parsedUsers = await Promise.all(
-      users.map(async (user) => {
-        const { id, ...discordUser } = await this.discordService.getUser(user.discordId)
-        return { ...user, ...discordUser }
-      })
-    )
+    const parsedUsers = await this.parseUsers(ids)
 
-    return {
-      ...giveaway,
-      participants: parsedUsers.filter((user) => giveaway?.participants.includes(user.discordId)),
-      winners: parsedUsers.filter((user) => giveaway?.winners.includes(user.discordId)),
-    }
+    return giveaway ? this.parseGiveaway(giveaway, parsedUsers) : null
+  }
+
+  async checkActive() {
+    const exists = await db.giveaway.exists({ active: true })
+    return exists !== null
   }
 
   async create(data: Infer<typeof createGiveawayValidator>) {
@@ -132,6 +131,32 @@ class GiveawayRepository {
     const linked = await this.linkRepository.findByDiscordId(discordId)
 
     return { participated, linked: Boolean(linked?.minecraftUUID) }
+  }
+
+  private async parseUsers(ids: string[]) {
+    if (ids.length === 0) {
+      return []
+    }
+
+    let users = await this.userRepository.findAll()
+    users = users.filter((user) => ids.includes(user.discordId))
+    return await Promise.all(
+      users.map(async (user) => {
+        const { id, ...discordUser } = await this.discordService.getUser(user.discordId)
+        return { ...user, ...discordUser }
+      })
+    )
+  }
+
+  private parseGiveaway(
+    giveaway: Awaited<ReturnType<typeof this.findById>>,
+    users: Awaited<ReturnType<typeof this.parseUsers>>
+  ) {
+    return {
+      ...giveaway,
+      participants: users.filter((user) => giveaway?.participants.includes(user.discordId)),
+      winners: users.filter((user) => giveaway?.winners.includes(user.discordId)),
+    }
   }
 }
 
