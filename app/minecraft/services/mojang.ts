@@ -3,16 +3,17 @@ import ky from 'ky'
 
 import { formatUUID } from '#core/helpers'
 import { minecraftUserProfileValidator } from '#minecraft/validators/mojang_validator'
-import env from '#start/env'
+// import env from '#start/env'
 
 class MojangService {
   protected client = ky.create({
-    prefixUrl: env.get('MOJANG_API_URL'),
+    prefixUrl: 'https://api.minecraftservices.com', // env.get('MOJANG_API_URL')
   })
 
   async getUUIDByUsername(username: string) {
     try {
-      const response = await this.client.get(`users/profiles/minecraft/${username}`)
+      // const response = await this.client.get(`users/profiles/minecraft/${username}`)
+      const response = await this.client.get(`minecraft/profile/lookup/name/${username}`)
       const data = await response.json()
 
       const result = await minecraftUserProfileValidator.validate(data)
