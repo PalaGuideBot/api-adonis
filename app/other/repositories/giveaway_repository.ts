@@ -152,10 +152,15 @@ class GiveawayRepository {
     giveaway: Awaited<ReturnType<typeof this.findById>>,
     users: Awaited<ReturnType<typeof this.parseUsers>>
   ) {
+    if (!giveaway) {
+      return null
+    }
     return {
       ...giveaway,
-      participants: users.filter((user) => giveaway?.participants.includes(user.discordId)),
-      winners: users.filter((user) => giveaway?.winners.includes(user.discordId)),
+      participants: giveaway.participants.map(
+        (participant) => users.find((user) => user.discordId === participant)!
+      ),
+      winners: giveaway.winners.map((winner) => users.find((user) => user.discordId === winner)!),
     }
   }
 }
