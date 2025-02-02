@@ -13,7 +13,9 @@ class MojangService {
   async getUUIDByUsername(username: string) {
     try {
       // const response = await this.client.get(`users/profiles/minecraft/${username}`)
-      const response = await this.client.get(`minecraft/profile/lookup/name/${username}`)
+      const response = await this.client.get(`minecraft/profile/lookup/name/${username}`, {
+        timeout: false,
+      })
       const data = await response.json()
 
       const result = await minecraftUserProfileValidator.validate(data)
