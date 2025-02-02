@@ -7,19 +7,18 @@ import { minecraftUserProfileValidator } from '#minecraft/validators/mojang_vali
 
 class MojangService {
   protected client = ky.create({
-    prefixUrl: 'https://api.minecraftservices.com', // env.get('MOJANG_API_URL')
+    prefixUrl: 'https://playerdb.co/api', // env.get('MOJANG_API_URL')
+    timeout: false,
   })
 
   async getUUIDByUsername(username: string) {
     try {
       // const response = await this.client.get(`users/profiles/minecraft/${username}`)
-      const response = await this.client.get(`minecraft/profile/lookup/name/${username}`, {
-        timeout: false,
-      })
+      const response = await this.client.get(`player/minecraft/${username}`)
       const data = await response.json()
 
       const result = await minecraftUserProfileValidator.validate(data)
-      return formatUUID(result.id)
+      return formatUUID(result.data.player.raw_id)
     } catch (error: unknown) {
       throw new Exception('Player not found', { status: 404, code: 'E_MOJANG_PLAYER_NOT_FOUND' })
     }
