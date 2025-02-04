@@ -9,7 +9,10 @@ type InferedPaladiumStatusData = InferSchemaType<typeof db.paladiumStatus.schema
 class StatusRepository {
   async findAll() {
     const now = DateTime.now()
-    const status = await db.paladiumStatus.find().lean()
+    const status = await db.paladiumStatus
+      .find()
+      .where({ newDate: { $gte: now.minus({ day: 30 }).startOf('day').toJSDate() } })
+      .lean()
     return {
       day: this.parseDataByDay(status),
       hour: this.parseDataByHour(
