@@ -13,18 +13,21 @@ const client = ky.create({
 export class DiscordService {
   async getUser(id: string) {
     try {
-      return cache.getOrSet(`discord:user:${id}`, async () => {
-        const response = await client.get(`users/${id}`)
-        const data = await response.json()
-        const result = await discordUserValidator.validate(data)
+      return cache.getOrSet({
+        key: `discord:user:${id}`,
+        factory: async () => {
+          const response = await client.get(`users/${id}`)
+          const data = await response.json()
+          const result = await discordUserValidator.validate(data)
 
-        return {
-          id: result.id,
-          username: result.global_name || result.username,
-          avatarUrl: result.avatar
-            ? `https://cdn.discordapp.com/avatars/${result.id}/${result.avatar}${result.avatar.startsWith('a_') ? '.gif' : '.png'}`
-            : `https://api.dicebear.com/9.x/initials/svg?seed=${result.username}`,
-        }
+          return {
+            id: result.id,
+            username: result.global_name || result.username,
+            avatarUrl: result.avatar
+              ? `https://cdn.discordapp.com/avatars/${result.id}/${result.avatar}${result.avatar.startsWith('a_') ? '.gif' : '.png'}`
+              : `https://api.dicebear.com/9.x/initials/svg?seed=${result.username}`,
+          }
+        },
       })
     } catch (error: unknown) {
       throw new Exception('Failed to fetch user from Discord', {
