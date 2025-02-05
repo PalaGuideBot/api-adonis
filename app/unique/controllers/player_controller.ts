@@ -6,10 +6,10 @@ import cache from '#cache/cache'
 import { distanceValidator } from '#core/validators/filter_validator'
 import { LinkRepository } from '#link/repositories/link_repository'
 import { MojangService } from '#minecraft/services/mojang'
+import { PaladiumService } from '#paladium/services/paladium'
 import { PlayerRepository } from '#unique/repositories/player_repository'
 import { UserRepository } from '#user/repositories/user_repository'
 import { getJobNeededXpForLevel } from '#utils/contents/jobs'
-import { PaladiumService } from '#paladium/services/paladium'
 
 @inject()
 export default class PlayerController {
@@ -129,8 +129,8 @@ export default class PlayerController {
   async clicker({ response, params }: HttpContext) {
     const cacheKey = `player:clicker:${params.username}`
 
-    if (await cache.has(cacheKey)) {
-      return response.ok(await cache.get(cacheKey))
+    if (await cache.has({ key: cacheKey })) {
+      return response.ok(await cache.get({ key: cacheKey }))
     }
 
     let uuid: string
