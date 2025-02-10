@@ -15,6 +15,7 @@ const dailyEvents: DailyEvent[] = [
       { time: '17h00', id: 'blackmarket', name: 'Black Market' },
       { time: '18h00', id: 'boss', name: 'Boss' },
       { time: '19h00', id: 'egg-hunt', name: 'Egghunt' },
+      { time: '20h30', id: 'on-your-marks', name: 'A vos marques' },
       { time: '21h00', id: 'blackmarket', name: 'Black Market' },
       { time: '22h00', id: 'boss', name: 'Boss' },
     ],
