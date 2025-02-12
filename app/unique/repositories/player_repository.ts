@@ -5,7 +5,9 @@ import type { InferSchemaType } from 'mongoose'
 import { db } from '#core/services/db'
 import type { DistanceFilter } from '#core/validators/filter_validator'
 import { MojangService } from '#minecraft/services/mojang'
+import upgrades from '#paladium/contents/clicker/upgrades'
 import { mergeBuildings } from '#paladium/helpers/clicker'
+import { ImageService } from '#paladium/services/image'
 import { PaladiumService } from '#paladium/services/paladium'
 import { player as defaultPlayer } from '#unique/contents/default'
 
@@ -15,7 +17,8 @@ const DEFAULT_DAY_INTERVAL = 30
 class PlayerRepository {
   constructor(
     private paladiumService: PaladiumService,
-    private mojangService: MojangService
+    private mojangService: MojangService,
+    private imageService: ImageService
   ) {}
 
   async findByUUID(uuid: string, options: Partial<DistanceFilter> = {}) {
@@ -156,6 +159,157 @@ class PlayerRepository {
     const clicker = await this.paladiumService.getPlayerClicker(uuid)
 
     return { ...clicker, buildings: mergeBuildings(clicker.buildings) }
+  }
+
+  async findByUUIDWrapped(uuid: string) {
+    const query = await db.players.aggregate([
+      { $match: { uuid: uuid } },
+      {
+        $project: {
+          '_id': 0,
+          'username': 1,
+          'uuid': 1,
+          'achievements.completed': 1,
+          'achievements.total': 1,
+          'mount.mountType': 1,
+          'mount.name': 1,
+          'mount.level': 1,
+          'pet.currentSkin': 1,
+          'pet.level': 1,
+          'friends': { $size: '$friends' },
+          'faction': {
+            $arrayElemAt: [
+              {
+                $map: {
+                  input: { $sortArray: { input: '$data', sortBy: { newDate: -1 } } },
+                  in: '$$this.data.faction',
+                },
+              },
+              0,
+            ],
+          },
+          'factionsCount': {
+            $size: {
+              $setUnion: {
+                $map: {
+                  input: {
+                    $filter: {
+                      input: '$data',
+                      as: 'one',
+                      cond: { $ne: ['$$one.data.faction', ''] },
+                    },
+                  },
+                  in: '$$this.data.faction',
+                },
+              },
+            },
+          },
+          'timePlayed': {
+            $max: { $map: { input: '$data', in: { $max: '$$this.data.timePlayed' } } },
+          },
+          'jobs': {
+            $arrayToObject: {
+              $map: {
+                input: {
+                  $objectToArray: {
+                    $arrayElemAt: [
+                      {
+                        $map: {
+                          input: { $sortArray: { input: '$data', sortBy: { newDate: -1 } } },
+                          in: '$$this.data.jobs',
+                        },
+                      },
+                      0,
+                    ],
+                  },
+                },
+                as: 'job',
+                in: { k: '$$job.k', v: '$$job.v.level' },
+              },
+            },
+          },
+          'moneyMax': { $max: { $map: { input: '$data', in: { $max: '$$this.data.money' } } } },
+          'bestLeaderboard': {
+            $reduce: {
+              input: {
+                $filter: {
+                  input: { $objectToArray: '$leaderboard' },
+                  as: 'entry',
+                  cond: { $ne: ['$$entry.v', -1] },
+                },
+              },
+              initialValue: { name: null, value: Infinity },
+              in: {
+                $cond: {
+                  if: { $lt: ['$$this.v', '$$value.value'] },
+                  then: { name: '$$this.k', value: '$$this.v' },
+                  else: '$$value',
+                },
+              },
+            },
+          },
+        },
+      },
+    ])
+
+    const player = query[0] as
+      | {
+          username: string
+          uuid: string
+          achievements: { completed: number; total: number }
+          mount: { mountType: string; name: string; level: number }
+          pet: { currentSkin: string; level: number }
+          friends: number
+          faction: string
+          factionsCount: number
+          timePlayed: number
+          jobs: Record<string, number>
+          moneyMax: number
+          bestLeaderboard: { name: string; value: number }
+        }
+      | undefined
+
+    if (!player) {
+      return null
+    }
+
+    const clicker = await this.getClickerData(player.uuid)
+    const lastBuildingUnlockedIndex = clicker.buildings.findIndex(
+      (building) => building.quantity === 0
+    )
+
+    const faction =
+      player.faction !== '' ? await this.paladiumService.getFactionProfile(player.faction) : null
+    const factionEmblem = faction ? await this.imageService.getOrCreateEmblem(faction.emblem) : null
+
+    return {
+      ...player,
+      bestLeaderboard: player.bestLeaderboard.name === null ? null : player.bestLeaderboard,
+      faction: {
+        name: player.faction,
+        alliance: faction?.alliance,
+        emblemUrl: factionEmblem?.url,
+      },
+      clicker: {
+        production: clicker.buildings
+          .filter((building) => building.quantity > 0)
+          .reduce((acc, building) => acc + building.production, 0),
+        buildings: {
+          lastUnlocked:
+            clicker.buildings[
+              lastBuildingUnlockedIndex !== -1
+                ? lastBuildingUnlockedIndex - 1
+                : clicker.buildings.length - 1
+            ],
+          unlocked: clicker.buildings.filter((building) => building.quantity > 0).length,
+          total: clicker.buildings.length,
+        },
+        upgrades: {
+          unlocked: clicker.upgrades.length,
+          total: Object.values(upgrades).flat().length,
+        },
+      },
+    }
   }
 }
 
