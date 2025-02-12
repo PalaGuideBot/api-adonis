@@ -206,4 +206,35 @@ export default class PlayerController {
       )
     )
   }
+
+  async wrapped({ response, params }: HttpContext) {
+    const cacheKey = `player:wrapped:${params.username}`
+
+    if (await cache.has({ key: cacheKey })) {
+      return response.ok(await cache.get({ key: cacheKey }))
+    }
+
+    let uuid: string
+    try {
+      uuid = await this.mojangService.getUUIDByUsername(params.username)
+    } catch (error) {
+      return response.badRequest({
+        message: "Player don't exists or is invalid",
+      })
+    }
+
+    const player = await this.playerRepository.findByUUIDWrapped(uuid)
+
+    if (!player) {
+      return response.notFound({ message: 'Player not found' })
+    }
+
+    await cache.set({
+      key: cacheKey,
+      value: player,
+      ttl: '15m',
+    })
+
+    return response.ok(player)
+  }
 }
