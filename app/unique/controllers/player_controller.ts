@@ -208,7 +208,7 @@ export default class PlayerController {
   }
 
   async wrapped({ response, params }: HttpContext) {
-    const cacheKey = `player:clicker:${params.username}`
+    const cacheKey = `player:wrapped:${params.username}`
 
     if (await cache.has({ key: cacheKey })) {
       return response.ok(await cache.get({ key: cacheKey }))
