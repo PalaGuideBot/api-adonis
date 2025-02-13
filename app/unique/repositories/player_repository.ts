@@ -235,7 +235,9 @@ class PlayerRepository {
                 $filter: {
                   input: { $objectToArray: '$leaderboard' },
                   as: 'entry',
-                  cond: { $ne: ['$$entry.v', -1] },
+                  cond: {
+                    $gt: ['$$entry.v', 0],
+                  },
                 },
               },
               initialValue: { name: null, value: Infinity },
