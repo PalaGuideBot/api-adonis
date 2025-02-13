@@ -164,6 +164,24 @@ class PlayerRepository {
   async findByUUIDWrapped(uuid: string) {
     const query = await db.players.aggregate([
       { $match: { uuid: uuid } },
+      // First unwind data to sort it
+      { $unwind: '$data' },
+      // Sort by newDate
+      { $sort: { 'data.newDate': -1 } },
+      // Group back to get the first (most recent) document
+      {
+        $group: {
+          _id: '$_id',
+          username: { $first: '$username' },
+          uuid: { $first: '$uuid' },
+          achievements: { $first: '$achievements' },
+          mount: { $first: '$mount' },
+          pet: { $first: '$pet' },
+          friends: { $first: '$friends' },
+          data: { $push: '$data' },
+          leaderboard: { $first: '$leaderboard' },
+        },
+      },
       {
         $project: {
           '_id': 0,
@@ -177,17 +195,7 @@ class PlayerRepository {
           'pet.currentSkin': 1,
           'pet.level': 1,
           'friends': { $size: '$friends' },
-          'faction': {
-            $arrayElemAt: [
-              {
-                $map: {
-                  input: { $sortArray: { input: '$data', sortBy: { newDate: -1 } } },
-                  in: '$$this.data.faction',
-                },
-              },
-              0,
-            ],
-          },
+          'faction': { $arrayElemAt: ['$data.data.faction', 0] },
           'factionsCount': {
             $size: {
               $setUnion: {
@@ -211,17 +219,7 @@ class PlayerRepository {
             $arrayToObject: {
               $map: {
                 input: {
-                  $objectToArray: {
-                    $arrayElemAt: [
-                      {
-                        $map: {
-                          input: { $sortArray: { input: '$data', sortBy: { newDate: -1 } } },
-                          in: '$$this.data.jobs',
-                        },
-                      },
-                      0,
-                    ],
-                  },
+                  $objectToArray: { $arrayElemAt: ['$data.data.jobs', 0] },
                 },
                 as: 'job',
                 in: { k: '$$job.k', v: '$$job.v.level' },
@@ -235,7 +233,7 @@ class PlayerRepository {
                 $filter: {
                   input: { $objectToArray: '$leaderboard' },
                   as: 'entry',
-                  cond: { $ne: ['$$entry.v', -1] },
+                  cond: { $gt: ['$$entry.v', 0] },
                 },
               },
               initialValue: { name: null, value: Infinity },
