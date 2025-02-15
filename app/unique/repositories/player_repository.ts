@@ -212,9 +212,7 @@ class PlayerRepository {
               },
             },
           },
-          'timePlayed': {
-            $max: { $map: { input: '$data', in: { $max: '$$this.data.timePlayed' } } },
-          },
+          'timePlayed': { $arrayElemAt: ['$data.data.timePlayed', 0] },
           'jobs': {
             $arrayToObject: {
               $map: {
