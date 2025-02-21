@@ -5,6 +5,7 @@ import type { InferSchemaType } from 'mongoose'
 import { db } from '#core/services/db'
 import type { DistanceFilter } from '#core/validators/filter_validator'
 import { MojangService } from '#minecraft/services/mojang'
+import { getSeasons } from '#paladium/contents/seasons'
 import { mergeBuildings } from '#paladium/helpers/clicker'
 import { PaladiumService } from '#paladium/services/paladium'
 import { player as defaultPlayer } from '#unique/contents/default'
@@ -159,10 +160,28 @@ class PlayerRepository {
   }
 
   async findByUUIDWrapped(uuid: string) {
+    const season = getSeasons()['v10']
+
     const query = await db.players.aggregate([
-      { $match: { uuid: uuid } },
+      {
+        $match: {
+          'uuid': uuid,
+          'data.newDate': {
+            $lte: season.end.toJSDate(),
+          },
+        },
+      },
       // First unwind data to sort it
       { $unwind: '$data' },
+      // Add date filter here
+      {
+        $match: {
+          'data.newDate': {
+            $gte: season.start.toJSDate(),
+            $lte: season.end.toJSDate(),
+          },
+        },
+      },
       // Sort by newDate
       { $sort: { 'data.newDate': -1 } },
       // Group back to get the first (most recent) document
