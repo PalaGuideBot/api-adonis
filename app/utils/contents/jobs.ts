@@ -433,7 +433,7 @@ const xpPerItem: Record<(typeof jobCategories)[number], Item[]> = {
       from: 80,
       to: 100,
     },
-    { type: 'Kiwano', id: 'kiwano', action: ACTION.BREAK, xp: 200, from: 80, to: 100 },
+    { type: 'Kiwano', id: 'kiwano', action: ACTION.BREAK, xp: 50, from: 80, to: 100 },
   ],
   hunter: [
     {
