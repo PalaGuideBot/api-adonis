@@ -94,7 +94,7 @@ export default class SyncPlayers extends BaseCommand {
                   trixium: playerData.ranks.trixium ?? player.leaderboard?.trixium ?? -1,
                 },
                 achievements: playerData.achievements,
-                firstJoin: playerData.profile.firstJoin,
+                firstSeen: playerData.profile.firstSeen,
                 retry: {
                   count: 0,
                   disabled: false,

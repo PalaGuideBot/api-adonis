@@ -11,7 +11,7 @@ export const playerProfileValidator = vine.compile(
   vine.object({
     faction: vine.string().optional().nullable(),
     factionRank: vine.string().optional().nullable(),
-    firstJoin: vine.number().optional().nullable(),
+    firstSeen: vine.number().optional().nullable(),
     money: vine.number().optional().nullable(),
     rank: vine.string().optional().nullable(),
     timePlayed: vine.number().optional().nullable(),
