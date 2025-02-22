@@ -98,7 +98,7 @@ const player: Player = {
     xp: 100,
     level: 15,
   },
-  firstJoin: 1708112953001,
+  firstSeen: 1740092400000,
   friends: [
     {
       username: 'TonyKun7',

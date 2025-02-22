@@ -107,7 +107,7 @@ class PlayerRepository {
         job_miner: playerData.ranks['jobMiner'] || -1,
       },
       achievements: playerData.achievements,
-      firstJoin: playerData.profile.firstJoin,
+      firstSeen: playerData.profile.firstSeen,
       data: [
         {
           date: DateTime.now().toFormat('yyyy-MM-dd'),

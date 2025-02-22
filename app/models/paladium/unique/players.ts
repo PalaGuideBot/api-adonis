@@ -94,7 +94,7 @@ interface Player {
   username: string
   leaderboard: PlayerLeaderboard
   achievements: PlayerAchievements
-  firstJoin: number
+  firstSeen: number
   retry: Retry
   mount: Mount
   pet: Pet
@@ -125,7 +125,7 @@ const playerSchema: Schema = new Schema<Player>({
     incomplete: Number,
     total: Number,
   },
-  firstJoin: Number,
+  firstSeen: Number,
   retry: {
     count: Number,
     disabled: Boolean,
