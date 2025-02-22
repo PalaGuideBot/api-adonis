@@ -35,14 +35,10 @@ import {
 } from '#paladium/validators/player'
 import { statusValidator } from '#paladium/validators/status'
 import env from '#start/env'
-import { MojangService } from '#minecraft/services/mojang'
 
 @inject()
 class PaladiumService {
-  constructor(
-    private imageService: ImageService,
-    private mojangService: MojangService
-  ) {}
+  constructor(private imageService: ImageService) {}
 
   protected client = ky.create({
     prefixUrl: env.get('PALADIUM_BASE_URL'),
@@ -200,7 +196,6 @@ class PaladiumService {
   }
 
   async getAllPlayerData(uuid: string) {
-    const username = await this.mojangService.getUUIDByUsername(uuid)
     const profile = await this.getPlayerProfile(uuid)
     const jobs = await this.getPlayerJobs(uuid)
     const ranks = await this.getPlayerRank(uuid)
@@ -212,7 +207,6 @@ class PaladiumService {
     const clicker = await this.getPlayerClicker(uuid)
 
     return {
-      username: username,
       profile,
       jobs: jobs ?? {
         alchemist: { level: 0, xp: 0 },
