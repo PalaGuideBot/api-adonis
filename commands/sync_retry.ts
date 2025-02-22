@@ -16,11 +16,7 @@ export default class SyncRetry extends BaseCommand {
 
   @inject()
   async run() {
-    const players = await db.players.find({
-      retry: {
-        count: { $gt: 0 },
-      },
-    })
+    const players = await db.players.find({ 'retry.count': { $gt: 0 } }).select(['_id'])
 
     const bulkOperationsPlayers = []
 
