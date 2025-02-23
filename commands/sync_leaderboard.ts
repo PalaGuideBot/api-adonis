@@ -2,15 +2,11 @@ import { inject } from '@adonisjs/core'
 import { BaseCommand } from '@adonisjs/core/ace'
 import type { CommandOptions } from '@adonisjs/core/types/ace'
 import { DateTime } from 'luxon'
+import { Model } from 'mongoose'
 
 import { db } from '#core/services/db'
+import type { Category } from '#leaderboard/types'
 import { PaladiumService } from '#paladium/services/paladium'
-import { Model } from 'mongoose'
-import { LeaderboardCategory, LeaderboardTrixiumCategory } from '#leaderboard/types'
-
-type Category =
-  | Exclude<LeaderboardCategory, 'job.alchemist' | 'job.hunter' | 'job.miner' | 'job.farmer'>
-  | `trixium.${LeaderboardTrixiumCategory}`
 
 type CategoryItem = {
   category: Category
@@ -80,6 +76,31 @@ export default class SyncLeaderboard extends BaseCommand {
         category: 'clicker',
         label: 'Clicker',
         model: db.leaderboardClicker,
+      },
+      {
+        category: 'alliance',
+        label: 'Alliance',
+        model: db.leaderboardAlliance,
+      },
+      {
+        category: 'job.alchemist',
+        label: 'Job Alchemist',
+        model: db.leaderboardJobAlchemist,
+      },
+      {
+        category: 'job.farmer',
+        label: 'Job Farmer',
+        model: db.leaderboardJobFarmer,
+      },
+      {
+        category: 'job.hunter',
+        label: 'Job Hunter',
+        model: db.leaderboardJobHunter,
+      },
+      {
+        category: 'job.miner',
+        label: 'Job Miner',
+        model: db.leaderboardJobMiner,
       },
     ]
 

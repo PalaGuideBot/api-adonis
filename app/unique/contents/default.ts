@@ -44,6 +44,12 @@ const faction: Faction = {
       username: 'volcanofr',
       uuid: '0b1c3f16-b735-457a-b588-b51c4391d630',
     },
+    {
+      group: 'contributor',
+      joinedAt: 1717818694035,
+      username: 'Razi_Gold',
+      uuid: '6a193fcb-2cad-48df-abb0-c98cb64fe26b',
+    },
   ],
   emblem: [-16777216, 5, -13312, -16777216, 3, -1, -27392, 17],
   alliance: 'ORDER',

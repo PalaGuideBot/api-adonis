@@ -4,12 +4,17 @@ import Giveaway from '#models/api/giveaway'
 import MinecraftLink from '#models/api/minecraft_link'
 import Role from '#models/api/role'
 import User from '#models/api/user'
+import LeaderboardAlliance from '#models/paladium/leaderboard/leaderboard_alliance'
 import LeaderboardBoss from '#models/paladium/leaderboard/leaderboard_boss'
 import LeaderboardChorus from '#models/paladium/leaderboard/leaderboard_chorus'
 import LeaderboardClicker from '#models/paladium/leaderboard/leaderboard_clicker'
 import LeaderboardEggHunt from '#models/paladium/leaderboard/leaderboard_egg_hunt'
 import LeadearboardEnd from '#models/paladium/leaderboard/leaderboard_end'
 import LeaderboardFactions from '#models/paladium/leaderboard/leaderboard_factions'
+import LeaderboardJobAlchemist from '#models/paladium/leaderboard/leaderboard_job_alchemist'
+import LeaderboardJobFarmer from '#models/paladium/leaderboard/leaderboard_job_farmer'
+import LeaderboardJobHunter from '#models/paladium/leaderboard/leaderboard_job_hunter'
+import LeaderboardJobMiner from '#models/paladium/leaderboard/leaderboard_job_miner'
 import LeaderboardKoth from '#models/paladium/leaderboard/leaderboard_koth'
 import LeaderboardMoney from '#models/paladium/leaderboard/leaderboard_money'
 import LeaderboardTrixiumFaction from '#models/paladium/leaderboard/leaderboard_trixium_faction'
@@ -31,6 +36,11 @@ export const db = {
   leaderboardMoney: LeaderboardMoney,
   leaderboardTrixiumFaction: LeaderboardTrixiumFaction,
   leaderboardTrixiumPlayer: LeaderboardTrixiumPlayer,
+  leaderboardAlliance: LeaderboardAlliance,
+  leaderboardJobMiner: LeaderboardJobMiner,
+  leaderboardJobFarmer: LeaderboardJobFarmer,
+  leaderboardJobHunter: LeaderboardJobHunter,
+  leaderboardJobAlchemist: LeaderboardJobAlchemist,
   paladiumStatus: PaladiumStatus,
   endpointAndKey: EndpointAndKey,
   minecraftLink: MinecraftLink,

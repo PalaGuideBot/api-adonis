@@ -1,5 +1,5 @@
 import { db } from '#core/services/db'
-import { CategoryItem } from '#leaderboard/types'
+import type { CategoryItem } from '#leaderboard/types'
 
 const categories = [
   'money',
@@ -14,6 +14,7 @@ const categories = [
   'koth',
   'clicker',
   'factions',
+  'alliance',
 ] as const
 
 const trixiumCategories = ['player', 'faction'] as const
@@ -69,6 +70,31 @@ const config = [
     cacheKey: 'leaderboard:trixium.player',
     model: db.leaderboardTrixiumPlayer,
   },
+  {
+    name: 'alliance',
+    cacheKey: 'leaderboard:alliance',
+    model: db.leaderboardAlliance,
+  },
+  {
+    name: 'job.alchemist',
+    cacheKey: 'leaderboard:job.alchemist',
+    model: db.leaderboardJobAlchemist,
+  },
+  {
+    name: 'job.farmer',
+    cacheKey: 'leaderboard:job.farmer',
+    model: db.leaderboardJobFarmer,
+  },
+  {
+    name: 'job.hunter',
+    cacheKey: 'leaderboard:job.hunter',
+    model: db.leaderboardJobHunter,
+  },
+  {
+    name: 'job.miner',
+    cacheKey: 'leaderboard:job.miner',
+    model: db.leaderboardJobMiner,
+  },
 ] satisfies CategoryItem[]
 
-export { categories, trixiumCategories, config }
+export { categories, config, trixiumCategories }
