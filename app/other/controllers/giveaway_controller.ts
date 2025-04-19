@@ -5,6 +5,7 @@ import { GiveawayRepository } from '#other/repositories/giveaway_repository'
 import {
   createGiveawayValidator,
   drawGiveawayValidator,
+  leaveGiveawayValidator,
   participateGiveawayValidator,
   updateGiveawayValidator,
 } from '#other/validators/giveaway_validator'
@@ -64,6 +65,13 @@ export default class GiveawayController {
   async participate({ request, response, params }: HttpContext) {
     const { id } = await request.validateUsing(participateGiveawayValidator)
     const giveaway = await this.giveawayRepository.addParticipant(params.id, id)
+
+    return response.ok(giveaway)
+  }
+
+  async leave({ request, response, params }: HttpContext) {
+    const { id } = await request.validateUsing(leaveGiveawayValidator)
+    const giveaway = await this.giveawayRepository.removeParticipant(params.id, id)
 
     return response.ok(giveaway)
   }

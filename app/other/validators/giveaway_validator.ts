@@ -25,6 +25,12 @@ export const participateGiveawayValidator = vine.compile(
   })
 )
 
+export const leaveGiveawayValidator = vine.compile(
+  vine.object({
+    id: vine.string(),
+  })
+)
+
 export const drawGiveawayValidator = vine.compile(
   vine.object({
     count: vine.number().parse((value) => Number(value || 1)),

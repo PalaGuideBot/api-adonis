@@ -81,6 +81,19 @@ class GiveawayRepository {
     return await this.findById(id)
   }
 
+  async removeParticipant(id: string, discordId: string) {
+    const giveaway = await this.findById(id)
+    if (!giveaway) {
+      throw new Exception('Giveaway not found', { status: 404 })
+    }
+    if (!giveaway.participants.includes(discordId)) {
+      throw new Exception('User not in giveaway', { status: 400 })
+    }
+    const newParticipants = giveaway.participants.filter((participant) => participant !== discordId)
+    await db.giveaway.updateOne({ _id: id }, { participants: newParticipants })
+    return await this.findById(id)
+  }
+
   async drawWinners(id: string, count: number) {
     const giveaway = await this.findById(id)
     if (!giveaway) {

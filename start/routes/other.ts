@@ -16,6 +16,7 @@ router
     router.put('/:id', [GiveawayController, 'update']).as('update')
     router.delete('/:id', [GiveawayController, 'delete']).as('delete')
     router.post('/:id/participate', [GiveawayController, 'participate']).as('participate')
+    router.post('/:id/leave', [GiveawayController, 'leave']).as('leave')
     router.post('/:id/draw', [GiveawayController, 'draw']).as('draw')
     router.get('/:id/state/:discordId', [GiveawayController, 'state']).as('state')
   })
