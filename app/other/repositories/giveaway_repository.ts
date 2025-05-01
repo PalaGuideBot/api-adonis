@@ -155,8 +155,16 @@ class GiveawayRepository {
     users = users.filter((user) => ids.includes(user.discordId))
     return await Promise.all(
       users.map(async (user) => {
-        const { id, ...discordUser } = await this.discordService.getUser(user.discordId)
-        return { ...user, ...discordUser }
+        try {
+          const { id, ...discordUser } = await this.discordService.getUser(user.discordId)
+          return { ...user, ...discordUser }
+        } catch {
+          return {
+            ...user,
+            username: user.discordId,
+            avatarUrl: `https://api.dicebear.com/9.x/initials/svg?seed=${user.discordId}`,
+          }
+        }
       })
     )
   }
