@@ -17,7 +17,7 @@ FROM base AS build
 WORKDIR /app
 COPY --from=deps /app/node_modules /app/node_modules
 ADD . .
-RUN NODE_OPTIONS="--max-old-space-size=2048" node ace build
+RUN node ace build
 
 # Production stage
 FROM base
