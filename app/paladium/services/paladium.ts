@@ -255,7 +255,7 @@ class PaladiumService {
 
       return factionProfileValidator.validate(data)
     } catch (error: unknown) {
-      /*       throw await buildError(error) */
+      throw await buildError(error)
     }
   }
 
@@ -266,7 +266,7 @@ class PaladiumService {
 
       return factionMembersValidator.validate(data)
     } catch (error: unknown) {
-      /*       throw await buildError(error) */
+      throw await buildError(error)
     }
   }
 
