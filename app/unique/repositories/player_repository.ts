@@ -160,7 +160,7 @@ class PlayerRepository {
   }
 
   async findByUUIDWrapped(uuid: string) {
-    const season = getSeasons()['v10']
+    const season = getSeasons()['v10.5']
 
     const query = await db.players.aggregate([
       {
