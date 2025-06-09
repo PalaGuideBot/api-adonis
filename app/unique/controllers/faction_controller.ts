@@ -16,25 +16,33 @@ export default class FactionController {
   ) {}
 
   async show({ response, params }: HttpContext) {
-    const result = await cache.getOrSet({
-      key: `faction:${params.name}`,
-      factory: async () => {
-        const faction =
-          params.name.toLowerCase() === 'guidebot'
-            ? defaultFaction
-            : await this.paladiumService.getAllFactionData(params.name)
+    let result = null
 
-        const emblem = await this.imageService.getOrCreateEmblem(faction.emblem)
+    try {
+      result = await cache.getOrSet({
+        key: `faction:${params.name}`,
+        factory: async () => {
+          const faction =
+            params.name.toLowerCase() === 'guidebot'
+              ? defaultFaction
+              : await this.paladiumService.getAllFactionData(params.name)
 
-        return {
-          ...faction,
-          emblemUrl: emblem.url,
-          name: faction.name.toLowerCase(),
-          bgName: faction.name,
-        }
-      },
-      ttl: '1h',
-    })
+          const emblem = await this.imageService.getOrCreateEmblem(faction.emblem)
+
+          return {
+            ...faction,
+            emblemUrl: emblem.url,
+            name: faction.name.toLowerCase(),
+            bgName: faction.name,
+          }
+        },
+        ttl: '1h',
+      })
+    } catch {}
+
+    if (!result) {
+      return response.notFound({ message: `Faction '${params.name}' not found.` })
+    }
 
     return response.ok(result)
 
