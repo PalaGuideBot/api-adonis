@@ -9,6 +9,8 @@ const rolesValidator = vine.array(
 export const createUserValidator = vine.compile(
   vine.object({
     discordId: vine.string(),
+    username: vine.string(),
+    avatarUrl: vine.string(),
     roles: rolesValidator.clone(),
   })
 )
@@ -16,6 +18,8 @@ export const createUserValidator = vine.compile(
 export const updateUserValidator = vine.compile(
   vine.object({
     discordId: vine.string().optional(),
+    username: vine.string().optional(),
+    avatarUrl: vine.string().optional(),
     roles: rolesValidator.clone().optional(),
   })
 )

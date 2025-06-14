@@ -2,11 +2,17 @@ import mongoose, { Connection, Schema } from 'mongoose'
 
 interface User {
   discordId: string
+  username: string
+  avatarUrl: string
   roles: string[]
+  lastUpdated: string
 }
 
 const userSchema = new Schema<User>({
   discordId: String,
+  username: String,
+  avatarUrl: String,
+  lastUpdated: String,
   roles: [String],
 })
 
