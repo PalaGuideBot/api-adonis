@@ -4,7 +4,6 @@ import { Infer } from '@vinejs/vine/types'
 import { DateTime } from 'luxon'
 
 import { db } from '#core/services/db'
-import { DiscordService } from '#core/services/discord'
 import { LinkRepository } from '#link/repositories/link_repository'
 import type {
   createGiveawayValidator,
@@ -16,8 +15,7 @@ import { UserRepository } from '#user/repositories/user_repository'
 class GiveawayRepository {
   constructor(
     private linkRepository: LinkRepository,
-    private userRepository: UserRepository,
-    private discordService: DiscordService
+    private userRepository: UserRepository
   ) {}
 
   async findAll() {
@@ -152,21 +150,7 @@ class GiveawayRepository {
     }
 
     let users = await this.userRepository.findAll()
-    users = users.filter((user) => ids.includes(user.discordId))
-    return await Promise.all(
-      users.map(async (user) => {
-        try {
-          const { id, ...discordUser } = await this.discordService.getUser(user.discordId)
-          return { ...user, ...discordUser }
-        } catch {
-          return {
-            ...user,
-            username: user.discordId,
-            avatarUrl: `https://api.dicebear.com/9.x/initials/svg?seed=${user.discordId}`,
-          }
-        }
-      })
-    )
+    return users.filter((user) => ids.includes(user.discordId))
   }
 
   private parseGiveaway(
