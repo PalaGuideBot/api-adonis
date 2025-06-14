@@ -19,7 +19,7 @@ export default class EndpointProvider {
     const manager = await this.app.container.make('endpoint.manager')
 
     // Schedule the task to run every 5 minutes
-    manager.schedule('*/5 * * * *', { scheduled: true })
+    manager.schedule('*/5 * * * *')
   }
 
   /**

@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import cron, { ScheduledTask, ScheduleOptions } from 'node-cron'
+import cron, { ScheduledTask, TaskOptions } from 'node-cron'
 
 import { db } from '#core/services/db'
 
@@ -101,7 +101,7 @@ class EndpointManager {
     this.keys.clear()
   }
 
-  schedule(expression: string, options?: ScheduleOptions) {
+  schedule(expression: string, options?: TaskOptions) {
     this.task = cron.schedule(expression, () => this.syncToDatabase(), options)
     return this.task
   }

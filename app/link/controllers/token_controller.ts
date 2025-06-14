@@ -38,7 +38,12 @@ export default class TokenController {
     })
 
     try {
-      await this.userRepository.create({ discordId, roles: [] })
+      await this.userRepository.create({
+        discordId,
+        username: discordId,
+        avatarUrl: `https://api.dicebear.com/9.x/initials/svg?seed=${discordId}`,
+        roles: [],
+      })
     } catch {}
 
     return response.ok({ token, expiredAt, message: 'Token generated' })
