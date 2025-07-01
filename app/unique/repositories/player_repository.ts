@@ -5,8 +5,10 @@ import type { InferSchemaType } from 'mongoose'
 import { db } from '#core/services/db'
 import type { DistanceFilter } from '#core/validators/filter_validator'
 import { MojangService } from '#minecraft/services/mojang'
+import upgrades from '#paladium/contents/clicker/upgrades'
 import { getSeasons } from '#paladium/contents/seasons'
 import { mergeBuildings } from '#paladium/helpers/clicker'
+import { ImageService } from '#paladium/services/image'
 import { PaladiumService } from '#paladium/services/paladium'
 import { player as defaultPlayer } from '#unique/contents/default'
 
@@ -16,7 +18,8 @@ const DEFAULT_DAY_INTERVAL = 30
 class PlayerRepository {
   constructor(
     private paladiumService: PaladiumService,
-    private mojangService: MojangService
+    private mojangService: MojangService,
+    private imageService: ImageService
   ) {}
 
   async findByUUID(uuid: string, options: Partial<DistanceFilter> = {}) {
@@ -212,7 +215,6 @@ class PlayerRepository {
           'pet.level': 1,
           'friends': { $size: '$friends' },
           'faction': { $arrayElemAt: ['$data.data.faction', 0] },
-          'clicker': { $arrayElemAt: ['$data.data.clicker', 0] },
           'factionsCount': {
             $size: {
               $setUnion: {
@@ -274,7 +276,6 @@ class PlayerRepository {
           pet: { currentSkin: string; level: number }
           friends: number
           faction: string
-          clicker: { rps: number; production: number }
           factionsCount: number
           timePlayed: number
           jobs: Record<string, number>
@@ -287,11 +288,42 @@ class PlayerRepository {
       return null
     }
 
+    const clicker = await this.getClickerData(player.uuid)
+    const lastBuildingUnlockedIndex = clicker.buildings.findIndex(
+      (building) => building.quantity === 0
+    )
+
+    const faction =
+      player.faction !== '' ? await this.paladiumService.getFactionProfile(player.faction) : null
+    const factionEmblem = faction ? await this.imageService.getOrCreateEmblem(faction.emblem) : null
+
     return {
       ...player,
       bestLeaderboard: player.bestLeaderboard.name === null ? null : player.bestLeaderboard,
       faction: {
         name: player.faction,
+        alliance: faction?.alliance,
+        emblemUrl: factionEmblem?.url,
+      },
+      clicker: {
+        production: clicker.buildings
+          .filter((building) => building.quantity > 0)
+          .reduce((acc, building) => acc + building.production, 0),
+        rps: clicker.rps,
+        buildings: {
+          lastUnlocked:
+            clicker.buildings[
+              lastBuildingUnlockedIndex !== -1
+                ? lastBuildingUnlockedIndex - 1
+                : clicker.buildings.length - 1
+            ],
+          unlocked: clicker.buildings.filter((building) => building.quantity > 0).length,
+          total: clicker.buildings.length,
+        },
+        upgrades: {
+          unlocked: clicker.upgrades.length,
+          total: Object.values(upgrades).flat().length,
+        },
       },
     }
   }
