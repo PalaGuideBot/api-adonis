@@ -37,6 +37,7 @@ interface PlayerWrappedInterface {
   } | null
   clicker: {
     production: number
+    rps: number
     buildings: {
       lastUnlocked?: {
         name: string
@@ -89,6 +90,7 @@ const playerWrappedSchema: Schema = new Schema<PlayerWrappedInterface>({
   },
   clicker: {
     production: { type: Number, required: true },
+    rps: { type: Number, required: true },
     buildings: {
       lastUnlocked: {
         name: { type: String, required: false },

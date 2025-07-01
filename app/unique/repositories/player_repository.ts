@@ -309,6 +309,7 @@ class PlayerRepository {
         production: clicker.buildings
           .filter((building) => building.quantity > 0)
           .reduce((acc, building) => acc + building.production, 0),
+        rps: clicker.rps,
         buildings: {
           lastUnlocked:
             clicker.buildings[
