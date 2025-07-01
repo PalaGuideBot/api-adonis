@@ -66,7 +66,7 @@ export default class SyncPlayersWrapped extends BaseCommand {
     }
 
     if (bulkOperations.length > 0) {
-      await db.players.bulkWrite(bulkOperations)
+      await db.playersWrapped.bulkWrite(bulkOperations)
       if (updated > 0)
         this.logger.info(`${updated} players wrapped synced !`, { prefix: this.prefix })
     }
