@@ -21,11 +21,13 @@ import LeaderboardTrixiumFaction from '#models/paladium/leaderboard/leaderboard_
 import LeaderboardTrixiumPlayer from '#models/paladium/leaderboard/leaderboard_trixium_player'
 import PaladiumStatus from '#models/paladium/paladium_status'
 import Factions from '#models/paladium/unique/factions'
+import PlayerWrapped from '#models/paladium/unique/player_wrapped'
 import Players from '#models/paladium/unique/players'
 
 export const db = {
   factions: Factions,
   players: Players,
+  playersWrapped: PlayerWrapped,
   leaderboardBoss: LeaderboardBoss,
   leaderboardChorus: LeaderboardChorus,
   leaderboardClicker: LeaderboardClicker,

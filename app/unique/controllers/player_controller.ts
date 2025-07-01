@@ -3,6 +3,7 @@ import { HttpContext } from '@adonisjs/core/http'
 import { DateTime } from 'luxon'
 
 import cache from '#cache/cache'
+import { db } from '#core/services/db'
 import { distanceValidator } from '#core/validators/filter_validator'
 import { LinkRepository } from '#link/repositories/link_repository'
 import { MojangService } from '#minecraft/services/mojang'
@@ -223,7 +224,7 @@ export default class PlayerController {
       })
     }
 
-    const player = await this.playerRepository.findByUUIDWrapped(uuid)
+    const player = await db.playersWrapped.findOne({ uuid }).lean()
 
     if (!player) {
       return response.notFound({ message: 'Player not found' })
