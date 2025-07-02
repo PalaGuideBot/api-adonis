@@ -293,8 +293,13 @@ class PlayerRepository {
       (building) => building.quantity === 0
     )
 
-    const faction =
-      player.faction !== '' ? await this.paladiumService.getFactionProfile(player.faction) : null
+    let faction = null
+
+    try {
+      faction =
+        player.faction !== '' ? await this.paladiumService.getFactionProfile(player.faction) : null
+    } catch {}
+
     const factionEmblem = faction ? await this.imageService.getOrCreateEmblem(faction.emblem) : null
 
     return {
@@ -302,7 +307,7 @@ class PlayerRepository {
       bestLeaderboard: player.bestLeaderboard.name === null ? null : player.bestLeaderboard,
       faction: {
         name: player.faction,
-        alliance: faction?.alliance,
+        alliance: faction ? faction.alliance : null,
         emblemUrl: factionEmblem?.url,
       },
       clicker: {
