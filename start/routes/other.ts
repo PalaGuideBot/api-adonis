@@ -1,10 +1,26 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 
+const DropController = () => import('#other/controllers/drop_controller')
 const GiveawayController = () => import('#other/controllers/giveaway_controller')
 const UpdateController = () => import('#other/controllers/update_controller')
 
 router.get('/update', [UpdateController, 'show']).as('update').middleware(middleware.auth())
+
+router
+  .group(() => {
+    router.get('/', [DropController, 'index']).as('index')
+    router.get('/active', [DropController, 'active']).as('active')
+    router.get('/:id', [DropController, 'show']).as('show')
+    router.post('/', [DropController, 'create']).as('create')
+    router.put('/:id', [DropController, 'update']).as('update')
+    router.delete('/:id', [DropController, 'delete']).as('delete')
+    router.post('/:id/participate', [DropController, 'participate']).as('participate')
+    router.post('/:id/winner', [DropController, 'addWinner']).as('addWinner')
+  })
+  .prefix('drops')
+  .as('drops')
+  .middleware(middleware.auth())
 
 router
   .group(() => {
