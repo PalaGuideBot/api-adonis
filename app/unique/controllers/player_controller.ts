@@ -34,18 +34,18 @@ export default class PlayerController {
   }
 
   async show({ response, request, params }: HttpContext) {
-    let uuid: string
+    /* let uuid: string
     try {
       uuid = await this.mojangService.getUUIDByUsername(params.username)
     } catch (error) {
       return response.badRequest({
         message: "Player don't exists or is invalid",
       })
-    }
+    } */
 
     const options = await distanceValidator.validate(request.qs())
 
-    let player = await this.playerRepository.findByUUID(uuid, options)
+    let player = await this.playerRepository.findByUsername(params.username, options)
     if (!player) {
       try {
         player = await this.playerRepository.create(params.username)
@@ -107,16 +107,16 @@ export default class PlayerController {
   }
 
   async create({ response, params }: HttpContext) {
-    let uuid: string
+    /* let uuid: string
     try {
       uuid = await this.mojangService.getUUIDByUsername(params.username)
     } catch (error) {
       return response.badRequest({
         message: "Player don't exists or is invalid",
       })
-    }
+    } */
 
-    const exists = await this.playerRepository.findByUUID(uuid)
+    const exists = await this.playerRepository.findByUsername(params.username)
 
     if (exists) {
       return response.badRequest({ message: 'Player already exists' })
@@ -134,16 +134,16 @@ export default class PlayerController {
       return response.ok(await cache.get({ key: cacheKey }))
     }
 
-    let uuid: string
+    /* let uuid: string
     try {
       uuid = await this.mojangService.getUUIDByUsername(params.username)
     } catch (error) {
       return response.badRequest({
         message: "Player don't exists or is invalid",
       })
-    }
+    } */
 
-    let player = await this.playerRepository.findByUUID(uuid)
+    let player = await this.playerRepository.findByUsername(params.username)
 
     if (!player) {
       return response.notFound({ message: 'Player not found' })
@@ -154,7 +154,7 @@ export default class PlayerController {
         .toSorted((a, b) => new Date(a.date).getMilliseconds() - new Date(b.date).getMilliseconds())
         .at(-1)?.data.jobs || null
 
-    let clicker = await this.playerRepository.getClickerData(uuid)
+    let clicker = await this.playerRepository.getClickerData(player.uuid)
 
     const result = {
       username: player.username,
@@ -172,16 +172,16 @@ export default class PlayerController {
   }
 
   async jobs({ response, params }: HttpContext) {
-    let uuid: string
+    /* let uuid: string
     try {
       uuid = await this.mojangService.getUUIDByUsername(params.username)
     } catch (error) {
       return response.badRequest({
         message: "Player don't exists or is invalid",
       })
-    }
+    } */
 
-    let player = await this.playerRepository.findByUUID(uuid)
+    let player = await this.playerRepository.findByUsername(params.username)
 
     if (!player) {
       return response.notFound({ message: 'Player not found' })

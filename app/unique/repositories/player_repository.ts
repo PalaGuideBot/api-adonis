@@ -4,7 +4,7 @@ import type { InferSchemaType } from 'mongoose'
 
 import { db } from '#core/services/db'
 import type { DistanceFilter } from '#core/validators/filter_validator'
-import { MojangService } from '#minecraft/services/mojang'
+// import { MojangService } from '#minecraft/services/mojang'
 import upgrades from '#paladium/contents/clicker/upgrades'
 import { getSeasons } from '#paladium/contents/seasons'
 import { mergeBuildings } from '#paladium/helpers/clicker'
@@ -18,7 +18,7 @@ const DEFAULT_DAY_INTERVAL = 30
 class PlayerRepository {
   constructor(
     private paladiumService: PaladiumService,
-    private mojangService: MojangService,
+    // private mojangService: MojangService,
     private imageService: ImageService
   ) {}
 
@@ -40,6 +40,47 @@ class PlayerRepository {
 
     const data = await db.players.aggregate([
       { $match: { uuid } },
+      { $unwind: '$data' },
+      {
+        $match: {
+          'data.newDate': {
+            $gte: from.startOf('day').toJSDate(),
+            $lte: to.endOf('day').toJSDate(),
+          },
+        },
+      },
+      { $sort: { 'data.newDate': 1 } },
+      {
+        $group: {
+          _id: '$_id',
+          data: { $push: '$data' },
+        },
+      },
+    ])
+
+    player.data = data[0]?.data || []
+
+    return player
+  }
+
+  async findByUsername(username: string, options: Partial<DistanceFilter> = {}) {
+    const {
+      from = DateTime.now().minus({ day: DEFAULT_DAY_INTERVAL }).startOf('day'),
+      to = DateTime.now().endOf('day'),
+    } = options
+
+    if (username === 'PalaGuideBot') {
+      return defaultPlayer
+    }
+
+    const player = await db.players.findOne({ username: username }, { data: 0 }).lean()
+
+    if (!player) {
+      return null
+    }
+
+    const data = await db.players.aggregate([
+      { $match: { uuid: player.uuid } },
       { $unwind: '$data' },
       {
         $match: {
@@ -87,12 +128,10 @@ class PlayerRepository {
   }
 
   async create(username: string) {
-    const uuid = await this.mojangService.getUUIDByUsername(username)
-
-    const playerData = await this.paladiumService.getAllPlayerData(uuid)
+    const playerData = await this.paladiumService.getAllPlayerData(username)
 
     const player = new db.players({
-      uuid,
+      uuid: playerData.profile.uuid,
       username,
       leaderboard: {
         boss: playerData.ranks?.boss || -1,
