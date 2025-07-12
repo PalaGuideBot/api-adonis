@@ -38,12 +38,12 @@ export default class SyncPlayers extends BaseCommand {
     let updated = 0
 
     for (const player of players) {
-      const uuid = player.uuid
+      const username = player.username
       const id = player._id
 
       let playerData = null
       try {
-        playerData = await paladiumService.getAllPlayerData(uuid)
+        playerData = await paladiumService.getAllPlayerData(username)
       } catch {}
 
       if (playerData) {
@@ -65,8 +65,8 @@ export default class SyncPlayers extends BaseCommand {
                       hunter: playerData.jobs.hunter,
                       miner: playerData.jobs.miner,
                     },
-                    money: playerData.profile.money,
-                    rank: playerData.profile.rank,
+                    money: -1, // A RETIRER AU PLUS VITE !!!!!!! playerData.profile.money,
+                    rank: 'SHOULD_BE_REMOVED_UNAVAILABLE', // A RETIRER AU PLUS VITE !!!!!!!!!! playerData.profile.rank,
                     timePlayed: playerData.profile.timePlayed,
                     clicker: {
                       rps: playerData.clicker.rps,
