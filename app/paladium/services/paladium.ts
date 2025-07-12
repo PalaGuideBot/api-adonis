@@ -50,9 +50,9 @@ class PaladiumService {
 
   // PLAYER REQUESTS
 
-  async getPlayerProfile(uuid: string) {
+  async getPlayerProfile(username: string) {
     try {
-      const response = await this.client.get(`paladium/player/profile/${uuid}`)
+      const response = await this.client.get(`paladium/player/profile/${username}`)
       const data = await response.json()
 
       return playerProfileValidator.validate(data)
@@ -195,8 +195,11 @@ class PaladiumService {
     }
   }
 
-  async getAllPlayerData(uuid: string) {
-    const profile = await this.getPlayerProfile(uuid)
+  async getAllPlayerData(username: string) {
+    const profile = await this.getPlayerProfile(username)
+
+    const uuid = profile.uuid
+
     const jobs = await this.getPlayerJobs(uuid)
     const ranks = await this.getPlayerRank(uuid)
     const trixiumRank = await this.getPlayerTrixiumRank(uuid)
