@@ -66,7 +66,7 @@ export default class SyncPlayers extends BaseCommand {
                       miner: playerData.jobs.miner,
                     },
                     money: playerData.profile.money,
-                    rank: 'SHOULD_BE_REMOVED_UNAVAILABLE', // A RETIRER AU PLUS VITE !!!!!!!!!! playerData.profile.rank,
+                    rank: playerData.profile.rank,
                     timePlayed: playerData.profile.timePlayed,
                     clicker: {
                       rps: playerData.clicker.rps,
