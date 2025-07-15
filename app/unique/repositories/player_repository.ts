@@ -73,7 +73,12 @@ class PlayerRepository {
       return defaultPlayer
     }
 
-    const player = await db.players.findOne({ username: username }, { data: 0 }).lean()
+    const player = await db.players
+      .findOne(
+        { username: { $regex: new RegExp(`^${username.toLowerCase()}$`, 'i') } },
+        { data: 0 }
+      )
+      .lean()
 
     if (!player) {
       return null
@@ -132,7 +137,7 @@ class PlayerRepository {
 
     const player = new db.players({
       uuid: playerData.profile.uuid,
-      username,
+      username: playerData.profile.username,
       leaderboard: {
         boss: playerData.ranks?.boss || -1,
         money: playerData.ranks.money || -1,
