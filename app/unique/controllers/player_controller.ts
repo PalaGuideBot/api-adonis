@@ -8,6 +8,7 @@ import { distanceValidator } from '#core/validators/filter_validator'
 import { LinkRepository } from '#link/repositories/link_repository'
 import { MojangService } from '#minecraft/services/mojang'
 import { PaladiumService } from '#paladium/services/paladium'
+import { aurelian } from '#unique/contents/aurelian'
 import { PlayerRepository } from '#unique/repositories/player_repository'
 import { UserRepository } from '#user/repositories/user_repository'
 import { getJobNeededXpForLevel } from '#utils/contents/jobs'
@@ -66,6 +67,9 @@ export default class PlayerController {
     const market = await cache.getOrSet({
       key: `player:market:${player.uuid}`,
       factory: async () => {
+        if (player.uuid === aurelian.player.uuid) {
+          return { ...aurelian.market, lastUpdate: DateTime.now().toISO() }
+        }
         const data = await this.paladiumService.getPlayerMarket(player.uuid)
         const date = DateTime.now().toISO()
 

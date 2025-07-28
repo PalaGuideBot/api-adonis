@@ -10,6 +10,7 @@ import { getSeasons } from '#paladium/contents/seasons'
 import { mergeBuildings } from '#paladium/helpers/clicker'
 import { ImageService } from '#paladium/services/image'
 import { PaladiumService } from '#paladium/services/paladium'
+import { aurelian } from '#unique/contents/aurelian'
 import { player as defaultPlayer } from '#unique/contents/default'
 
 const DEFAULT_DAY_INTERVAL = 30
@@ -30,6 +31,10 @@ class PlayerRepository {
 
     if (uuid === 'e7c62d78-f0f6-4122-b194-53782dd0a06f') {
       return defaultPlayer
+    }
+
+    if (uuid === aurelian.player.uuid) {
+      return aurelian.player
     }
 
     const player = await db.players.findOne({ uuid }, { data: 0 }).lean()
@@ -71,6 +76,10 @@ class PlayerRepository {
 
     if (username === 'PalaGuideBot') {
       return defaultPlayer
+    }
+
+    if (username === aurelian.player.username) {
+      return aurelian.player
     }
 
     const player = await db.players
