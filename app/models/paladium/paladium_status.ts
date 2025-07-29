@@ -13,7 +13,6 @@ interface PaladiumStatusData {
         Aeloria: string
         Egopolis: string
         Runegard: string
-        Event: string
         Kilmordra: string
         Xanoth: string
       }
@@ -55,10 +54,6 @@ const paladiumStatusSchema = new Schema<PaladiumStatusData>({
           required: true,
         },
         Runegard: {
-          type: String,
-          required: true,
-        },
-        Event: {
           type: String,
           required: true,
         },

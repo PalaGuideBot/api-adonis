@@ -11,7 +11,6 @@ export const statusValidator = vine.compile(
         Aeloria: vine.string(),
         Egopolis: vine.string(),
         Runegard: vine.string(),
-        Event: vine.string(),
         Kilmordra: vine.string(),
         Xanoth: vine.string(),
       }),
