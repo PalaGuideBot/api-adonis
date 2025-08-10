@@ -76,7 +76,7 @@ export default class SyncPlayers extends BaseCommand {
                 },
               },
               $set: {
-                username: playerData.profile.username, // Update username by mojang
+                username: playerData.profile.username, 
                 leaderboard: {
                   boss: playerData.ranks.boss ?? player.leaderboard?.boss ?? -1,
                   money: playerData.ranks.money ?? player.leaderboard?.money ?? -1,
