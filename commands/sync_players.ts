@@ -38,12 +38,12 @@ export default class SyncPlayers extends BaseCommand {
     let updated = 0
 
     for (const player of players) {
-      const username = player.username
+      const uuid = player.uuid
       const id = player._id
 
       let playerData = null
       try {
-        playerData = await paladiumService.getAllPlayerData(username)
+        playerData = await paladiumService.getAllPlayerData(uuid)
       } catch {}
 
       if (playerData) {
