@@ -144,6 +144,15 @@ class PlayerRepository {
   async create(username: string) {
     const playerData = await this.paladiumService.getAllPlayerData(username)
 
+    const exists = await db.players.exists({ uuid: playerData.profile.uuid })
+
+    if (exists) {
+      await db.players.updateOne({ uuid: playerData.profile.uuid }, { $set: { username } })
+      return this.findByUsername(username) as Promise<
+        NonNullable<Awaited<ReturnType<typeof this.findByUsername>>>
+      >
+    }
+
     const player = new db.players({
       uuid: playerData.profile.uuid,
       username: playerData.profile.username,
@@ -198,7 +207,9 @@ class PlayerRepository {
 
     await player.save()
 
-    return player.toObject()
+    return this.findByUsername(player.username) as Promise<
+      NonNullable<Awaited<ReturnType<typeof this.findByUsername>>>
+    >
   }
 
   async countByDate() {
