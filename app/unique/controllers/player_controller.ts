@@ -86,16 +86,22 @@ export default class PlayerController {
   }
 
   async flags({ response, params }: HttpContext) {
-    let uuid: string
+    /* let uuid: string
     try {
       uuid = await this.mojangService.getUUIDByUsername(params.username)
     } catch (error) {
       return response.badRequest({
         message: "Player don't exists or is invalid",
       })
+    } */
+
+    const player = await this.playerRepository.findByUsername(params.username)
+
+    if (!player) {
+      return response.notFound({ message: 'Player not found' })
     }
 
-    const link = await this.linkRepository.findByUUID(uuid)
+    const link = await this.linkRepository.findByUUID(player.uuid)
 
     if (!link) {
       return response.notFound({ message: 'Player not linked' })
