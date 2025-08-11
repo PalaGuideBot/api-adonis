@@ -147,7 +147,10 @@ class PlayerRepository {
     const exists = await db.players.exists({ uuid: playerData.profile.uuid })
 
     if (exists) {
-      await db.players.updateOne({ uuid: playerData.profile.uuid }, { $set: { username } })
+      await db.players.updateOne(
+        { uuid: playerData.profile.uuid },
+        { $set: { username: playerData.profile.username } }
+      )
       return this.findByUsername(username) as Promise<
         NonNullable<Awaited<ReturnType<typeof this.findByUsername>>>
       >
