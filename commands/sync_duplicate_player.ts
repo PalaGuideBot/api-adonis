@@ -43,7 +43,7 @@ export default class SyncDuplicatePlayer extends BaseCommand {
       )
 
       for (const player of playersToDelete) {
-        this.logger.info(`Deleting player ${player._id}`)
+        this.logger.info(`Deleting player ${player._id}\n ${player.uuid}`)
         bulkOperations.push({
           deleteOne: {
             filter: { _id: player._id },
