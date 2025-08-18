@@ -1,8 +1,8 @@
 import { Infer } from '@vinejs/vine/types'
 
-import { jobXp, rewardsPerJob, xpPerItem } from '#utils/contents/jobs'
+import { getNextNeededXpForLevel, jobXp, rewardsPerJob, xpPerItem } from '#utils/contents/jobs'
+import type { JobReward } from '#utils/types'
 import { calculateJobValidator } from '#utils/validators/calculate_validator'
-import { JobReward } from '#utils/types'
 
 interface Item {
   currLevel: number
@@ -27,7 +27,7 @@ class JobRepository {
     let totalXp: number = 0
 
     for (let i = currentLevel; i < targetLevel; i++) {
-      totalXp += jobXp[i]
+      totalXp += getNextNeededXpForLevel(i)
     }
 
     totalXp -= currentXp
@@ -93,8 +93,8 @@ class JobRepository {
     let xpTotal = currentXp
     let level = currentLevel
 
-    while (xpTotal < xp && level < jobXp.length) {
-      xpTotal += jobXp[level]
+    while (xpTotal < xp) {
+      xpTotal += getNextNeededXpForLevel(level)
       level++
     }
 

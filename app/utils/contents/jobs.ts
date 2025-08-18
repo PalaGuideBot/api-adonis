@@ -755,15 +755,43 @@ const getJobNeededXpForLevel = (level: number) => {
   return sum
 }
 
-const getJobLevel = (experience: number) => {
-  let sum = 0
-  for (let i = 2; i <= JOB_MAX_LEVEL; i++) {
-    sum = Math.floor(sum + Math.pow(i, 2.27) * 30.0 + 450 * i)
-    if (experience < sum) {
-      return Math.floor(i - 1)
-    }
+const getNextNeededXpForLevel = (level: number) => {
+  if (level < 1) {
+    return 0
   }
-  return JOB_MAX_LEVEL
+
+  if (level >= JOB_MAX_LEVEL) {
+    return getJobNeededXpForLevel(JOB_MAX_LEVEL) - getJobNeededXpForLevel(JOB_MAX_LEVEL - 1)
+  }
+
+  return getJobNeededXpForLevel(level + 1) - getJobNeededXpForLevel(level)
 }
 
-export { jobCategories, xpPerItem, jobXp, rewardsPerJob, getJobNeededXpForLevel, getJobLevel }
+const getJobLevel = (experience: number) => {
+  let sum = 0
+  let level = 0
+  while (experience > sum) {
+    if (level > JOB_MAX_LEVEL) {
+      sum = Math.floor(sum + Math.pow(JOB_MAX_LEVEL, 2.27) * 30.0 + 450 * JOB_MAX_LEVEL)
+    } else {
+      sum = Math.floor(sum + Math.pow(level, 2.27) * 30.0 + 450 * level)
+    }
+    level++
+  }
+
+  if (level < 0) {
+    return 1
+  }
+
+  return level - 2
+}
+
+export {
+  jobCategories,
+  xpPerItem,
+  jobXp,
+  rewardsPerJob,
+  getJobNeededXpForLevel,
+  getNextNeededXpForLevel,
+  getJobLevel,
+}
