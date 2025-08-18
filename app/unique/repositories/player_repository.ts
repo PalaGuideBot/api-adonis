@@ -1,4 +1,5 @@
 import { inject } from '@adonisjs/core'
+import type { Infer } from '@vinejs/vine/types'
 import { DateTime } from 'luxon'
 import type { InferSchemaType } from 'mongoose'
 
@@ -10,8 +11,10 @@ import { getSeasons } from '#paladium/contents/seasons'
 import { mergeBuildings } from '#paladium/helpers/clicker'
 import { ImageService } from '#paladium/services/image'
 import { PaladiumService } from '#paladium/services/paladium'
+import type { playerJobsValidator } from '#paladium/validators/player'
 import { aurelian } from '#unique/contents/aurelian'
 import { player as defaultPlayer } from '#unique/contents/default'
+import { getJobLevel } from '#utils/contents/jobs'
 
 const DEFAULT_DAY_INTERVAL = 30
 
@@ -65,6 +68,16 @@ class PlayerRepository {
 
     player.data = data[0]?.data || []
 
+    player.data = player.data.map((d) => ({
+      ...d,
+      data: {
+        ...d.data,
+        jobs: Object.fromEntries(
+          Object.entries(d.data.jobs).map(([job, value]) => [job, this.#transformPlayerJob(value)])
+        ) as typeof d.data.jobs,
+      },
+    }))
+
     return player
   }
 
@@ -114,6 +127,16 @@ class PlayerRepository {
     ])
 
     player.data = data[0]?.data || []
+
+    player.data = player.data.map((d) => ({
+      ...d,
+      data: {
+        ...d.data,
+        jobs: Object.fromEntries(
+          Object.entries(d.data.jobs).map(([job, value]) => [job, this.#transformPlayerJob(value)])
+        ) as typeof d.data.jobs,
+      },
+    }))
 
     return player
   }
@@ -306,7 +329,7 @@ class PlayerRepository {
                   $objectToArray: { $arrayElemAt: ['$data.data.jobs', 0] },
                 },
                 as: 'job',
-                in: { k: '$$job.k', v: '$$job.v.level' },
+                in: { k: '$$job.k', v: '$$job.v.xp' },
               },
             },
           },
@@ -397,7 +420,14 @@ class PlayerRepository {
           total: Object.values(upgrades).flat().length,
         },
       },
+      jobs: Object.fromEntries(
+        Object.entries(player.jobs).map(([job, xp]) => [job, getJobLevel(xp)])
+      ),
     }
+  }
+
+  #transformPlayerJob(job: Infer<typeof playerJobsValidator>['alchemist']) {
+    return { ...job, level: getJobLevel(job.xp) }
   }
 }
 
