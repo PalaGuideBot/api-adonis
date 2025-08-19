@@ -779,11 +779,7 @@ const getJobLevel = (experience: number) => {
     level++
   }
 
-  if (level < 0) {
-    return 1
-  }
-
-  return level - 2
+  return Math.max(0, level - 2)
 }
 
 export {
