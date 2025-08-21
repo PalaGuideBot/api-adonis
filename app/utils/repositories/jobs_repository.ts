@@ -19,9 +19,11 @@ interface Item {
 }
 
 type CalculateJobResult = Infer<typeof calculateJobValidator>['body']
+type StandardCalculateJobResult = Extract<CalculateJobResult, { mode: 'standard' }>
+type ReverseCalculateJobResult = Extract<CalculateJobResult, { mode: 'reverse' }>
 
 class JobRepository {
-  getXpTotal(body: Omit<CalculateJobResult, 'job'>) {
+  getXpTotal(body: Omit<StandardCalculateJobResult, 'job' | 'mode'>) {
     const { currentLevel, targetLevel, bonusXp, currentXp } = body
 
     let totalXp: number = 0
@@ -35,7 +37,7 @@ class JobRepository {
     return Math.ceil(totalXp / bonusXp)
   }
 
-  getXpPerItemForJob(body: CalculateJobResult) {
+  getXpPerItemForJob(body: StandardCalculateJobResult) {
     const { currentLevel, targetLevel, job, bonusXp } = body
 
     const xpTotal = this.getXpTotal({
@@ -142,7 +144,14 @@ class JobRepository {
   }
 
   getItems() {
-    const items: Array<{ type: string; id: string; job: CalculateJobResult['job'] }> = []
+    const items: Array<{
+      type: string
+      id: string
+      action: string
+      from: number
+      xp: number
+      job: CalculateJobResult['job']
+    }> = []
 
     for (const [job, jobItems] of Object.entries(xpPerItem)) {
       if (['miner', 'farmer', 'hunter', 'alchemist'].includes(job)) {
@@ -150,6 +159,9 @@ class JobRepository {
           items.push({
             type: item.type,
             id: item.id,
+            action: item.action,
+            from: item.from,
+            xp: item.xp,
             job: job as CalculateJobResult['job'],
           })
         }
@@ -188,6 +200,64 @@ class JobRepository {
         {} as Record<string, JobReward>
       )
     )
+  }
+
+  calculateXpFromItems(options: ReverseCalculateJobResult) {
+    const { job, currentLevel, currentXp, bonusXp, items } = options
+
+    const targetItems = xpPerItem[job].filter((item) =>
+      items.some((i) => i.itemId === item.id && i.action === item.action)
+    )
+
+    let result: Record<
+      string,
+      {
+        items: Array<{ item: Item['item']; xp: number }>
+        totalXp: number
+        reachedLevel: number
+        rewards: JobReward[]
+      }
+    > = {}
+
+    for (const item of targetItems) {
+      const quantity = items.find((i) => i.itemId === item.id && i.action === item.action)!.quantity
+
+      for (let multiplier of [1, 2, 10]) {
+        const multiplierString = multiplier === 1 ? 'without' : `x${multiplier}`
+
+        if (!result[multiplierString]) {
+          result[multiplierString] = {
+            items: [],
+            totalXp: 0,
+            reachedLevel: currentLevel,
+            rewards: [],
+          }
+        }
+
+        if (Number.isNaN(item.xp)) {
+          continue
+        }
+
+        if (item.type.includes('Bottle') && multiplier !== 1) {
+          multiplier = 1
+        }
+
+        const xp = Math.ceil(quantity * item.xp * (multiplier + bonusXp / 100))
+
+        result[multiplierString].items.push({ item, xp })
+      }
+    }
+
+    result = Object.fromEntries(
+      Object.entries(result).map(([key, value]) => {
+        const totalXp = value.items.reduce((sum, item) => sum + item.xp, 0)
+        const { level: reachedLevel } = this.getLevelReachedWithXp(totalXp, currentXp, currentLevel)
+        const rewards = this.getRewards(job, currentLevel + 1, reachedLevel)
+        return [key, { ...value, totalXp, reachedLevel, rewards }]
+      })
+    )
+
+    return result
   }
 }
 
