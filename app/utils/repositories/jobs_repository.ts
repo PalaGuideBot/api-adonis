@@ -97,7 +97,10 @@ class JobRepository {
 
     while (xpTotal < xp) {
       xpTotal += getNextNeededXpForLevel(level)
-      level++
+
+      if (xpTotal < xp) {
+        level++
+      }
     }
 
     return { level, xpTotal }
