@@ -92,11 +92,15 @@ class JobRepository {
   }
 
   getLevelReachedWithXp(xp: number, currentXp: number, currentLevel: number) {
-    let xpTotal = currentXp
+    let xpTotal = 0
     let level = currentLevel
 
     while (xpTotal < xp) {
-      xpTotal += getNextNeededXpForLevel(level)
+      if (level === currentLevel && currentXp !== 0) {
+        xpTotal += getNextNeededXpForLevel(level) - currentXp
+      } else {
+        xpTotal += getNextNeededXpForLevel(level)
+      }
 
       if (xpTotal < xp) {
         level++
