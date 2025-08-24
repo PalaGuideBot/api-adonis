@@ -2,10 +2,7 @@ import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
 import { JobRepository } from '#utils/repositories/jobs_repository'
-import {
-  calculateJobValidator,
-  reverseCalculateJobValidator,
-} from '#utils/validators/calculate_validator'
+import { calculateJobValidator } from '#utils/validators/calculate_validator'
 
 @inject()
 export default class JobsController {
@@ -14,25 +11,21 @@ export default class JobsController {
   async calculate({ response, request }: HttpContext) {
     const { body } = await request.validateUsing(calculateJobValidator)
 
-    const result = this.jobRepository.getXpPerItemForJob(body)
+    let result
 
-    return response.ok(result)
-  }
-
-  async reverseCalculate({ response, request }: HttpContext) {
-    const { body } = await request.validateUsing(reverseCalculateJobValidator)
-
-    const types = this.jobRepository.getItems()
-    const type = types.find(({ id }) => id === body.item)
-
-    if (!type) {
-      return response.badRequest({ message: 'Invalid item' })
+    if (body.mode === 'standard') {
+      result = {
+        mode: body.mode,
+        result: this.jobRepository.getXpPerItemForJob(body),
+      }
     }
 
-    const result = this.jobRepository.getXpTotalForItem({
-      ...body,
-      job: type.job,
-    })
+    if (body.mode === 'reverse') {
+      result = {
+        mode: body.mode,
+        result: this.jobRepository.calculateXpFromItems(body),
+      }
+    }
 
     return response.ok(result)
   }

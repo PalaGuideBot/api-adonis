@@ -9,9 +9,6 @@ const CraftController = () => import('#utils/controllers/craft_controller')
 router
   .group(() => {
     router.post('/jobs/calculate', [JobsController, 'calculate']).as('jobs.calculate')
-    router
-      .post('/jobs/reverse-calculate', [JobsController, 'reverseCalculate'])
-      .as('jobs.reverse-calculate')
     router.get('/jobs/items', [JobsController, 'items']).as('jobs.items')
     router.get('/jobs/levels', [JobsController, 'levels']).as('jobs.levels')
     router.post('/pog/calculate', [PogController, 'calculate']).as('pog.calculate')
