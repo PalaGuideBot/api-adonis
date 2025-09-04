@@ -31,7 +31,7 @@ function addPath(method: string, path: string, operation: any) {
 addPath('get', '/bot/statistics', {
   tags: ['bot'],
   summary: 'Get bot statistics',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('post', '/bot/commands', {
   tags: ['bot'],
@@ -44,7 +44,7 @@ addPath('post', '/bot/commands', {
       },
     },
   },
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('post', '/bot/guilds', {
   tags: ['bot'],
@@ -69,7 +69,7 @@ addPath('post', '/bot/guilds', {
       },
     },
   },
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('post', '/bot/users', {
   tags: ['bot'],
@@ -82,24 +82,24 @@ addPath('post', '/bot/users', {
       },
     },
   },
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 
 // Events
 addPath('get', '/events/qdf', {
   tags: ['events'],
   summary: 'Faction quest',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('get', '/events/on-your-marks', {
   tags: ['events'],
   summary: 'On your marks',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('get', '/events/daily', {
   tags: ['events'],
   summary: 'Agenda events',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 
 // Leaderboard
@@ -133,7 +133,7 @@ addPath('get', '/leaderboard/{category}', {
     { name: 'from', in: 'query', schema: { type: 'string', format: 'date' } },
     { name: 'to', in: 'query', schema: { type: 'string', format: 'date' } },
   ],
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('get', '/leaderboard/trixium/{category}', {
   tags: ['leaderboard'],
@@ -148,7 +148,7 @@ addPath('get', '/leaderboard/trixium/{category}', {
     { name: 'from', in: 'query', schema: { type: 'string', format: 'date' } },
     { name: 'to', in: 'query', schema: { type: 'string', format: 'date' } },
   ],
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 
 // Link/Minecraft
@@ -167,7 +167,7 @@ addPath('post', '/link/generate-token', {
       },
     },
   },
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('post', '/link/verify-token', {
   tags: ['link'],
@@ -184,64 +184,84 @@ addPath('post', '/link/verify-token', {
       },
     },
   },
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('get', '/link/discord/{discordId}', {
   tags: ['link'],
   summary: 'Get linked Minecraft by Discord',
   parameters: [{ name: 'discordId', in: 'path', required: true, schema: { type: 'string' } }],
-  responses: { 200: { description: 'OK' }, 404: { description: 'Not found' } },
+  responses: {
+    200: { description: 'OK' },
+    404: { description: 'Not found' },
+    401: { description: 'Unauthorized' },
+  },
 })
 addPath('delete', '/link/discord/{discordId}', {
   tags: ['link'],
   summary: 'Unlink by Discord',
   parameters: [{ name: 'discordId', in: 'path', required: true, schema: { type: 'string' } }],
-  responses: { 200: { description: 'OK' }, 404: { description: 'Not found' } },
+  responses: {
+    200: { description: 'OK' },
+    404: { description: 'Not found' },
+    401: { description: 'Unauthorized' },
+  },
 })
 addPath('get', '/link/discord', {
   tags: ['link'],
   summary: 'List linked Discord IDs',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('get', '/link/minecraft/{minecraftUUID}', {
   tags: ['link'],
   summary: 'Get linked Discord by Minecraft',
   parameters: [{ name: 'minecraftUUID', in: 'path', required: true, schema: { type: 'string' } }],
-  responses: { 200: { description: 'OK' }, 404: { description: 'Not found' } },
+  responses: {
+    200: { description: 'OK' },
+    404: { description: 'Not found' },
+    401: { description: 'Unauthorized' },
+  },
 })
 addPath('delete', '/link/minecraft/{minecraftUUID}', {
   tags: ['link'],
   summary: 'Unlink by Minecraft',
   parameters: [{ name: 'minecraftUUID', in: 'path', required: true, schema: { type: 'string' } }],
-  responses: { 200: { description: 'OK' }, 404: { description: 'Not found' } },
+  responses: {
+    200: { description: 'OK' },
+    404: { description: 'Not found' },
+    401: { description: 'Unauthorized' },
+  },
 })
 addPath('get', '/link/minecraft', {
   tags: ['link'],
   summary: 'List linked Minecraft UUIDs',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 
 // Other / Giveaways
 addPath('get', '/giveaways', {
   tags: ['giveaways'],
   summary: 'List giveaways',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('get', '/giveaways/active', {
   tags: ['giveaways'],
   summary: 'Active giveaway',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('get', '/giveaways/check', {
   tags: ['giveaways'],
   summary: 'Check active state',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('get', '/giveaways/{id}', {
   tags: ['giveaways'],
   summary: 'Get giveaway by id',
   parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
-  responses: { 200: { description: 'OK' }, 404: { description: 'Not found' } },
+  responses: {
+    200: { description: 'OK' },
+    404: { description: 'Not found' },
+    401: { description: 'Unauthorized' },
+  },
 })
 addPath('post', '/giveaways', {
   tags: ['giveaways'],
@@ -263,7 +283,7 @@ addPath('post', '/giveaways', {
       },
     },
   },
-  responses: { 201: { description: 'Created' } },
+  responses: { 201: { description: 'Created' }, 401: { description: 'Unauthorized' } },
 })
 addPath('put', '/giveaways/{id}', {
   tags: ['giveaways'],
@@ -286,13 +306,13 @@ addPath('put', '/giveaways/{id}', {
       },
     },
   },
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('delete', '/giveaways/{id}', {
   tags: ['giveaways'],
   summary: 'Delete giveaway',
   parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
-  responses: { 204: { description: 'No Content' } },
+  responses: { 204: { description: 'No Content' }, 401: { description: 'Unauthorized' } },
 })
 addPath('post', '/giveaways/{id}/participate', {
   tags: ['giveaways'],
@@ -306,7 +326,7 @@ addPath('post', '/giveaways/{id}/participate', {
       },
     },
   },
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('post', '/giveaways/{id}/leave', {
   tags: ['giveaways'],
@@ -320,7 +340,7 @@ addPath('post', '/giveaways/{id}/leave', {
       },
     },
   },
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('post', '/giveaways/{id}/draw', {
   tags: ['giveaways'],
@@ -334,31 +354,35 @@ addPath('post', '/giveaways/{id}/draw', {
       },
     },
   },
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('get', '/update', {
   tags: ['other'],
   summary: 'Statistics scheduler update',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 
 // Paladium
 addPath('get', '/paladium/seasons', {
   tags: ['paladium'],
   summary: 'Seasons list',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 
 // Status
 addPath('get', '/status/database', {
   tags: ['status'],
   summary: 'Database status',
-  responses: { 200: { description: 'OK' }, 400: { description: 'Bad' } },
+  responses: {
+    200: { description: 'OK' },
+    400: { description: 'Bad' },
+    401: { description: 'Unauthorized' },
+  },
 })
 addPath('get', '/status/paladium', {
   tags: ['status'],
   summary: 'Paladium servers informations',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 
 // Unique
@@ -366,7 +390,7 @@ addPath('get', '/players', {
   tags: ['players'],
   summary: 'Latest players added (latest when ?latest=1)',
   parameters: [{ name: 'latest', in: 'query', schema: { type: 'string' } }],
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('get', '/players/{username}', {
   tags: ['players'],
@@ -376,44 +400,60 @@ addPath('get', '/players/{username}', {
     { name: 'from', in: 'query', schema: { type: 'string', format: 'date' } },
     { name: 'to', in: 'query', schema: { type: 'string', format: 'date' } },
   ],
-  responses: { 200: { description: 'OK' }, 404: { description: 'Not found' } },
+  responses: {
+    200: { description: 'OK' },
+    404: { description: 'Not found' },
+    401: { description: 'Unauthorized' },
+  },
 })
 addPath('post', '/players/{username}', {
   tags: ['players'],
   summary: 'Create player',
   parameters: [{ name: 'username', in: 'path', required: true, schema: { type: 'string' } }],
-  responses: { 200: { description: 'OK' }, 400: { description: 'Bad request' } },
+  responses: {
+    200: { description: 'OK' },
+    400: { description: 'Bad request' },
+    401: { description: 'Unauthorized' },
+  },
 })
 addPath('get', '/players/{username}/clicker', {
   tags: ['players'],
   summary: 'Get clicker info',
   parameters: [{ name: 'username', in: 'path', required: true, schema: { type: 'string' } }],
-  responses: { 200: { description: 'OK' }, 404: { description: 'Not found' } },
+  responses: {
+    200: { description: 'OK' },
+    404: { description: 'Not found' },
+    401: { description: 'Unauthorized' },
+  },
 })
 addPath('get', '/players/{username}/flags', {
   tags: ['players'],
   summary: 'Get user flags',
   parameters: [{ name: 'username', in: 'path', required: true, schema: { type: 'string' } }],
-  responses: { 200: { description: 'OK' }, 404: { description: 'Not found' } },
+  responses: {
+    200: { description: 'OK' },
+    404: { description: 'Not found' },
+    401: { description: 'Unauthorized' },
+  },
 })
 addPath('get', '/players/{username}/jobs', {
   tags: ['players'],
   summary: 'Get player jobs',
   parameters: [{ name: 'username', in: 'path', required: true, schema: { type: 'string' } }],
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('get', '/players/{username}/wrapped', {
   tags: ['players'],
   summary: 'Get player wrapped',
   parameters: [{ name: 'username', in: 'path', required: true, schema: { type: 'string' } }],
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 
 // Usage
 addPath('get', '/usage/statistics', {
   tags: ['usage'],
   summary: 'Usage statistics',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 
 // Utils
@@ -426,17 +466,17 @@ addPath('post', '/utils/jobs/calculate', {
       'application/json': { schema: { $ref: '#/components/schemas/JobsCalculateInput' } },
     },
   },
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('get', '/utils/jobs/items', {
   tags: ['utils'],
   summary: 'Jobs items',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('get', '/utils/jobs/levels', {
   tags: ['utils'],
   summary: 'Jobs levels',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('post', '/utils/pog/calculate', {
   tags: ['utils'],
@@ -445,22 +485,22 @@ addPath('post', '/utils/pog/calculate', {
     required: true,
     content: { 'application/json': { schema: { $ref: '#/components/schemas/PogCalculateInput' } } },
   },
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('get', '/utils/pog/items', {
   tags: ['utils'],
   summary: 'POG items',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('get', '/utils/clicker/buildings', {
   tags: ['utils'],
   summary: 'Clicker buildings',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('get', '/utils/clicker/upgrades', {
   tags: ['utils'],
   summary: 'Clicker upgrades',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('get', '/utils/craft/{item}/{amount}', {
   tags: ['utils'],
@@ -469,12 +509,12 @@ addPath('get', '/utils/craft/{item}/{amount}', {
     { name: 'item', in: 'path', required: true, schema: { type: 'string' } },
     { name: 'amount', in: 'path', required: true, schema: { type: 'string' } },
   ],
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 addPath('get', '/utils/craft/items', {
   tags: ['utils'],
   summary: 'Craft items',
-  responses: { 200: { description: 'OK' } },
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
 
 // Schemas
