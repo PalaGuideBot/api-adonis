@@ -34,8 +34,10 @@
     "#providers/*": "./providers/*.js",
     "#start/*": "./start/*.js",
     "#tests/*": "./tests/*.js",
-    "#config/*": "./config/*.js"
+    "#config/*": "./config/*.js",
+    "#docs/*": "./app/docs/*.js"
   },
+  "_imports_note": "The #docs alias is added for the OpenAPI spec module",
   "devDependencies": {
     "@adonisjs/assembler": "^7.8.2",
     "@adonisjs/eslint-config": "^2.1.0",

@@ -52,184 +52,180 @@ function rewardBuilder(...options: BuilderOptions[]): JobReward[] {
 
 const globalJobRewards: Record<number, JobReward[]> = {
   1: [],
-  2: rewardBuilder({ reward: 'paladium', quantity: 1 }, { reward: 'trixium', quantity: 2 }),
-  3: rewardBuilder({ reward: 'paladium', quantity: 1 }, { reward: 'trixium', quantity: 3 }),
-  4: rewardBuilder({ reward: 'paladium', quantity: 2 }, { reward: 'trixium', quantity: 4 }),
-  5: rewardBuilder(
-    { reward: 'paladium', quantity: 2 },
-    { reward: 'trixium', quantity: 5 },
-    { reward: 'money', quantity: 5000 }
-  ),
-  6: rewardBuilder({ reward: 'paladium', quantity: 3 }, { reward: 'trixium', quantity: 6 }),
-  7: rewardBuilder({ reward: 'paladium', quantity: 3 }, { reward: 'trixium', quantity: 7 }),
-  8: rewardBuilder({ reward: 'paladium', quantity: 4 }, { reward: 'trixium', quantity: 8 }),
-  9: rewardBuilder({ reward: 'paladium', quantity: 4 }, { reward: 'trixium', quantity: 9 }),
+  2: rewardBuilder({ reward: 'paladium', quantity: 2 }),
+  3: rewardBuilder({ reward: 'trixium', quantity: 2 }),
+  4: rewardBuilder({ reward: 'paladium', quantity: 3 }),
+  5: rewardBuilder({ reward: 'trixium', quantity: 3 }, { reward: 'money', quantity: 500 }),
+  6: rewardBuilder({ reward: 'paladium', quantity: 3 }),
+  7: rewardBuilder({ reward: 'trixium', quantity: 3 }),
+  8: rewardBuilder({ reward: 'paladium', quantity: 4 }),
+  9: rewardBuilder({ reward: 'trixium', quantity: 4 }),
   10: rewardBuilder(
-    { reward: 'paladium', quantity: 5 },
+    { reward: 'paladium', quantity: 3 },
+    { reward: 'trixium', quantity: 3 },
+    { reward: 'money', quantity: 1000 }
+  ),
+  11: rewardBuilder({ reward: 'paladium', quantity: 4 }),
+  12: rewardBuilder({ reward: 'trixium', quantity: 4 }),
+  13: rewardBuilder({ reward: 'paladium', quantity: 5 }),
+  14: rewardBuilder({ reward: 'trixium', quantity: 5 }),
+  15: rewardBuilder(
+    { reward: 'paladium', quantity: 6 },
+    { reward: 'trixium', quantity: 6 },
+    { reward: 'money', quantity: 1500 }
+  ),
+  16: rewardBuilder({ reward: 'paladium', quantity: 6 }),
+  17: rewardBuilder({ reward: 'trixium', quantity: 6 }),
+  18: rewardBuilder({ reward: 'paladium', quantity: 7 }),
+  19: rewardBuilder({ reward: 'trixium', quantity: 7 }),
+  20: rewardBuilder(
+    { reward: 'paladium', quantity: 7 },
+    { reward: 'trixium', quantity: 7 },
+    { reward: 'money', quantity: 2000 }
+  ),
+  21: rewardBuilder({ reward: 'paladium', quantity: 6 }),
+  22: rewardBuilder({ reward: 'trixium', quantity: 6 }),
+  23: rewardBuilder({ reward: 'paladium', quantity: 7 }),
+  24: rewardBuilder({ reward: 'trixium', quantity: 7 }),
+  25: rewardBuilder(
+    { reward: 'paladium', quantity: 7 },
+    { reward: 'trixium', quantity: 7 },
+    { reward: 'money', quantity: 2000 }
+  ),
+  26: rewardBuilder({ reward: 'paladium', quantity: 7 }),
+  27: rewardBuilder({ reward: 'trixium', quantity: 7 }),
+  28: rewardBuilder({ reward: 'paladium', quantity: 8 }),
+  29: rewardBuilder({ reward: 'trixium', quantity: 8 }),
+  30: rewardBuilder(
+    { reward: 'paladium', quantity: 10 },
     { reward: 'trixium', quantity: 10 },
+    { reward: 'money', quantity: 3000 }
+  ),
+  31: rewardBuilder({ reward: 'paladium', quantity: 11 }),
+  32: rewardBuilder({ reward: 'trixium', quantity: 11 }),
+  33: rewardBuilder({ reward: 'paladium', quantity: 12 }),
+  34: rewardBuilder({ reward: 'trixium', quantity: 12 }),
+  35: rewardBuilder(
+    { reward: 'paladium', quantity: 12 },
+    { reward: 'trixium', quantity: 12 },
+    { reward: 'money', quantity: 3500 }
+  ),
+  36: rewardBuilder({ reward: 'paladium', quantity: 12 }),
+  37: rewardBuilder({ reward: 'trixium', quantity: 12 }),
+  38: rewardBuilder({ reward: 'paladium', quantity: 13 }),
+  39: rewardBuilder({ reward: 'trixium', quantity: 13 }),
+  40: rewardBuilder(
+    { reward: 'paladium', quantity: 15 },
+    { reward: 'trixium', quantity: 15 },
+    { reward: 'money', quantity: 4000 }
+  ),
+  41: rewardBuilder({ reward: 'paladium', quantity: 14 }),
+  42: rewardBuilder({ reward: 'trixium', quantity: 14 }),
+  43: rewardBuilder({ reward: 'paladium', quantity: 15 }),
+  44: rewardBuilder({ reward: 'trixium', quantity: 15 }),
+  45: rewardBuilder(
+    { reward: 'paladium', quantity: 16 },
+    { reward: 'trixium', quantity: 16 },
+    { reward: 'money', quantity: 4500 }
+  ),
+  46: rewardBuilder({ reward: 'paladium', quantity: 16 }),
+  47: rewardBuilder({ reward: 'trixium', quantity: 16 }),
+  48: rewardBuilder({ reward: 'paladium', quantity: 17 }),
+  49: rewardBuilder({ reward: 'trixium', quantity: 17 }),
+  50: rewardBuilder(
+    { reward: 'paladium', quantity: 17 },
+    { reward: 'trixium', quantity: 17 },
     { reward: 'money', quantity: 5000 }
   ),
-  11: rewardBuilder({ reward: 'paladium', quantity: 5 }, { reward: 'trixium', quantity: 11 }),
-  12: rewardBuilder({ reward: 'paladium', quantity: 6 }, { reward: 'trixium', quantity: 12 }),
-  13: rewardBuilder({ reward: 'paladium', quantity: 6 }, { reward: 'trixium', quantity: 13 }),
-  14: rewardBuilder({ reward: 'paladium', quantity: 7 }, { reward: 'trixium', quantity: 14 }),
-  15: rewardBuilder(
-    { reward: 'paladium', quantity: 7 },
-    { reward: 'trixium', quantity: 15 },
-    { reward: 'money', quantity: 6000 }
-  ),
-  16: rewardBuilder({ reward: 'paladium', quantity: 8 }, { reward: 'trixium', quantity: 16 }),
-  17: rewardBuilder({ reward: 'paladium', quantity: 8 }, { reward: 'trixium', quantity: 17 }),
-  18: rewardBuilder({ reward: 'paladium', quantity: 9 }, { reward: 'trixium', quantity: 18 }),
-  19: rewardBuilder({ reward: 'paladium', quantity: 9 }, { reward: 'trixium', quantity: 19 }),
-  20: rewardBuilder(
-    { reward: 'paladium', quantity: 10 },
-    { reward: 'trixium', quantity: 20 },
-    { reward: 'money', quantity: 6000 }
-  ),
-  21: rewardBuilder({ reward: 'paladium', quantity: 10 }, { reward: 'trixium', quantity: 21 }),
-  22: rewardBuilder({ reward: 'paladium', quantity: 11 }, { reward: 'trixium', quantity: 22 }),
-  23: rewardBuilder({ reward: 'paladium', quantity: 11 }, { reward: 'trixium', quantity: 23 }),
-  24: rewardBuilder({ reward: 'paladium', quantity: 12 }, { reward: 'trixium', quantity: 24 }),
-  25: rewardBuilder(
-    { reward: 'paladium', quantity: 12 },
-    { reward: 'trixium', quantity: 25 },
-    { reward: 'money', quantity: 7500 }
-  ),
-  26: rewardBuilder({ reward: 'paladium', quantity: 13 }, { reward: 'trixium', quantity: 26 }),
-  27: rewardBuilder({ reward: 'paladium', quantity: 13 }, { reward: 'trixium', quantity: 27 }),
-  28: rewardBuilder({ reward: 'paladium', quantity: 14 }, { reward: 'trixium', quantity: 28 }),
-  29: rewardBuilder({ reward: 'paladium', quantity: 14 }, { reward: 'trixium', quantity: 29 }),
-  30: rewardBuilder(
-    { reward: 'paladium', quantity: 15 },
-    { reward: 'trixium', quantity: 30 },
-    { reward: 'money', quantity: 7500 }
-  ),
-  31: rewardBuilder({ reward: 'paladium', quantity: 15 }, { reward: 'trixium', quantity: 31 }),
-  32: rewardBuilder({ reward: 'paladium', quantity: 16 }, { reward: 'trixium', quantity: 32 }),
-  33: rewardBuilder({ reward: 'paladium', quantity: 16 }, { reward: 'trixium', quantity: 33 }),
-  34: rewardBuilder({ reward: 'paladium', quantity: 17 }, { reward: 'trixium', quantity: 34 }),
-  35: rewardBuilder(
-    { reward: 'paladium', quantity: 17 },
-    { reward: 'trixium', quantity: 35 },
-    { reward: 'money', quantity: 9500 }
-  ),
-  36: rewardBuilder({ reward: 'paladium', quantity: 18 }, { reward: 'trixium', quantity: 36 }),
-  37: rewardBuilder({ reward: 'paladium', quantity: 18 }, { reward: 'trixium', quantity: 37 }),
-  38: rewardBuilder({ reward: 'paladium', quantity: 19 }, { reward: 'trixium', quantity: 38 }),
-  39: rewardBuilder({ reward: 'paladium', quantity: 19 }, { reward: 'trixium', quantity: 39 }),
-  40: rewardBuilder(
-    { reward: 'paladium', quantity: 20 },
-    { reward: 'trixium', quantity: 40 },
-    { reward: 'money', quantity: 9500 }
-  ),
-  41: rewardBuilder({ reward: 'paladium', quantity: 20 }, { reward: 'trixium', quantity: 41 }),
-  42: rewardBuilder({ reward: 'paladium', quantity: 21 }, { reward: 'trixium', quantity: 42 }),
-  43: rewardBuilder({ reward: 'paladium', quantity: 21 }, { reward: 'trixium', quantity: 43 }),
-  44: rewardBuilder({ reward: 'paladium', quantity: 22 }, { reward: 'trixium', quantity: 44 }),
-  45: rewardBuilder(
-    { reward: 'paladium', quantity: 22 },
-    { reward: 'trixium', quantity: 45 },
-    { reward: 'money', quantity: 12000 }
-  ),
-  46: rewardBuilder({ reward: 'paladium', quantity: 23 }, { reward: 'trixium', quantity: 46 }),
-  47: rewardBuilder({ reward: 'paladium', quantity: 23 }, { reward: 'trixium', quantity: 47 }),
-  48: rewardBuilder({ reward: 'paladium', quantity: 24 }, { reward: 'trixium', quantity: 48 }),
-  49: rewardBuilder({ reward: 'paladium', quantity: 24 }, { reward: 'trixium', quantity: 49 }),
-  50: rewardBuilder(
-    { reward: 'paladium', quantity: 25 },
-    { reward: 'trixium', quantity: 50 },
-    { reward: 'money', quantity: 12000 }
-  ),
-  51: rewardBuilder({ reward: 'paladium', quantity: 25 }, { reward: 'trixium', quantity: 51 }),
-  52: rewardBuilder({ reward: 'paladium', quantity: 26 }, { reward: 'trixium', quantity: 52 }),
-  53: rewardBuilder({ reward: 'paladium', quantity: 26 }, { reward: 'trixium', quantity: 53 }),
-  54: rewardBuilder({ reward: 'paladium', quantity: 27 }, { reward: 'trixium', quantity: 54 }),
+  51: rewardBuilder({ reward: 'paladium', quantity: 17 }),
+  52: rewardBuilder({ reward: 'trixium', quantity: 17 }),
+  53: rewardBuilder({ reward: 'paladium', quantity: 18 }),
+  54: rewardBuilder({ reward: 'trixium', quantity: 18 }),
   55: rewardBuilder(
-    { reward: 'paladium', quantity: 27 },
-    { reward: 'trixium', quantity: 55 },
-    { reward: 'money', quantity: 15000 }
+    { reward: 'paladium', quantity: 20 },
+    { reward: 'trixium', quantity: 20 },
+    { reward: 'money', quantity: 5500 }
   ),
-  56: rewardBuilder({ reward: 'paladium', quantity: 28 }, { reward: 'trixium', quantity: 56 }),
-  57: rewardBuilder({ reward: 'paladium', quantity: 28 }, { reward: 'trixium', quantity: 57 }),
-  58: rewardBuilder({ reward: 'paladium', quantity: 29 }, { reward: 'trixium', quantity: 58 }),
-  59: rewardBuilder({ reward: 'paladium', quantity: 29 }, { reward: 'trixium', quantity: 59 }),
+  56: rewardBuilder({ reward: 'paladium', quantity: 19 }),
+  57: rewardBuilder({ reward: 'trixium', quantity: 19 }),
+  58: rewardBuilder({ reward: 'paladium', quantity: 20 }),
+  59: rewardBuilder({ reward: 'trixium', quantity: 20 }),
   60: rewardBuilder(
-    { reward: 'paladium', quantity: 30 },
-    { reward: 'trixium', quantity: 60 },
-    { reward: 'money', quantity: 15000 }
+    { reward: 'paladium', quantity: 21 },
+    { reward: 'trixium', quantity: 21 },
+    { reward: 'money', quantity: 6000 }
   ),
-  61: rewardBuilder({ reward: 'paladium', quantity: 30 }, { reward: 'trixium', quantity: 61 }),
-  62: rewardBuilder({ reward: 'paladium', quantity: 31 }, { reward: 'trixium', quantity: 62 }),
-  63: rewardBuilder({ reward: 'paladium', quantity: 31 }, { reward: 'trixium', quantity: 63 }),
-  64: rewardBuilder({ reward: 'paladium', quantity: 32 }, { reward: 'trixium', quantity: 64 }),
+  61: rewardBuilder({ reward: 'paladium', quantity: 21 }),
+  62: rewardBuilder({ reward: 'trixium', quantity: 21 }),
+  63: rewardBuilder({ reward: 'paladium', quantity: 22 }),
+  64: rewardBuilder({ reward: 'trixium', quantity: 22 }),
   65: rewardBuilder(
-    { reward: 'paladium', quantity: 32 },
-    { reward: 'trixium', quantity: 65 },
-    { reward: 'money', quantity: 15000 }
+    { reward: 'paladium', quantity: 22 },
+    { reward: 'trixium', quantity: 22 },
+    { reward: 'money', quantity: 6500 }
   ),
-  66: rewardBuilder({ reward: 'paladium', quantity: 33 }, { reward: 'trixium', quantity: 66 }),
-  67: rewardBuilder({ reward: 'paladium', quantity: 33 }, { reward: 'trixium', quantity: 67 }),
-  68: rewardBuilder({ reward: 'paladium', quantity: 34 }, { reward: 'trixium', quantity: 68 }),
-  69: rewardBuilder({ reward: 'paladium', quantity: 34 }, { reward: 'trixium', quantity: 69 }),
+  66: rewardBuilder({ reward: 'paladium', quantity: 21 }),
+  67: rewardBuilder({ reward: 'trixium', quantity: 21 }),
+  68: rewardBuilder({ reward: 'paladium', quantity: 22 }),
+  69: rewardBuilder({ reward: 'trixium', quantity: 22 }),
   70: rewardBuilder(
-    { reward: 'paladium', quantity: 35 },
-    { reward: 'trixium', quantity: 70 },
-    { reward: 'money', quantity: 15000 }
+    { reward: 'paladium', quantity: 22 },
+    { reward: 'trixium', quantity: 22 },
+    { reward: 'money', quantity: 7000 }
   ),
-  71: rewardBuilder({ reward: 'paladium', quantity: 35 }, { reward: 'trixium', quantity: 71 }),
-  72: rewardBuilder({ reward: 'paladium', quantity: 36 }, { reward: 'trixium', quantity: 72 }),
-  73: rewardBuilder({ reward: 'paladium', quantity: 36 }, { reward: 'trixium', quantity: 73 }),
-  74: rewardBuilder({ reward: 'paladium', quantity: 37 }, { reward: 'trixium', quantity: 74 }),
-  75: rewardBuilder({ reward: 'paladium', quantity: 37 }, { reward: 'trixium', quantity: 75 }),
-  76: rewardBuilder(
-    { reward: 'paladium', quantity: 38 },
-    { reward: 'trixium', quantity: 76 },
-    { reward: 'money', quantity: 17500 }
+  71: rewardBuilder({ reward: 'paladium', quantity: 24 }),
+  72: rewardBuilder({ reward: 'trixium', quantity: 24 }),
+  73: rewardBuilder({ reward: 'paladium', quantity: 25 }),
+  74: rewardBuilder({ reward: 'trixium', quantity: 25 }),
+  75: rewardBuilder(
+    { reward: 'paladium', quantity: 26 },
+    { reward: 'trixium', quantity: 26 },
+    { reward: 'money', quantity: 7500 }
   ),
-  77: rewardBuilder({ reward: 'paladium', quantity: 38 }, { reward: 'trixium', quantity: 77 }),
-  78: rewardBuilder({ reward: 'paladium', quantity: 39 }, { reward: 'trixium', quantity: 78 }),
-  79: rewardBuilder({ reward: 'paladium', quantity: 39 }, { reward: 'trixium', quantity: 79 }),
+  76: rewardBuilder({ reward: 'paladium', quantity: 26 }),
+  77: rewardBuilder({ reward: 'trixium', quantity: 26 }),
+  78: rewardBuilder({ reward: 'paladium', quantity: 27 }),
+  79: rewardBuilder({ reward: 'trixium', quantity: 27 }),
   80: rewardBuilder(
-    { reward: 'paladium', quantity: 40 },
-    { reward: 'trixium', quantity: 80 },
-    { reward: 'money', quantity: 17500 }
+    { reward: 'paladium', quantity: 27 },
+    { reward: 'trixium', quantity: 27 },
+    { reward: 'money', quantity: 8000 }
   ),
-  81: rewardBuilder({ reward: 'paladium', quantity: 40 }, { reward: 'trixium', quantity: 81 }),
-  82: rewardBuilder({ reward: 'paladium', quantity: 41 }, { reward: 'trixium', quantity: 82 }),
-  83: rewardBuilder({ reward: 'paladium', quantity: 41 }, { reward: 'trixium', quantity: 83 }),
-  84: rewardBuilder({ reward: 'paladium', quantity: 42 }, { reward: 'trixium', quantity: 84 }),
+  81: rewardBuilder({ reward: 'paladium', quantity: 27 }),
+  82: rewardBuilder({ reward: 'trixium', quantity: 27 }),
+  83: rewardBuilder({ reward: 'paladium', quantity: 28 }),
+  84: rewardBuilder({ reward: 'trixium', quantity: 28 }),
   85: rewardBuilder(
-    { reward: 'paladium', quantity: 42 },
-    { reward: 'trixium', quantity: 85 },
-    { reward: 'money', quantity: 20000 }
+    { reward: 'paladium', quantity: 30 },
+    { reward: 'trixium', quantity: 30 },
+    { reward: 'money', quantity: 8500 }
   ),
-  86: rewardBuilder({ reward: 'paladium', quantity: 43 }, { reward: 'trixium', quantity: 86 }),
-  87: rewardBuilder({ reward: 'paladium', quantity: 43 }, { reward: 'trixium', quantity: 87 }),
-  88: rewardBuilder({ reward: 'paladium', quantity: 44 }, { reward: 'trixium', quantity: 88 }),
-  89: rewardBuilder({ reward: 'paladium', quantity: 44 }, { reward: 'trixium', quantity: 89 }),
+  86: rewardBuilder({ reward: 'paladium', quantity: 29 }),
+  87: rewardBuilder({ reward: 'trixium', quantity: 29 }),
+  88: rewardBuilder({ reward: 'paladium', quantity: 30 }),
+  89: rewardBuilder({ reward: 'trixium', quantity: 30 }),
   90: rewardBuilder(
-    { reward: 'paladium', quantity: 45 },
-    { reward: 'trixium', quantity: 90 },
-    { reward: 'money', quantity: 20000 }
+    { reward: 'paladium', quantity: 31 },
+    { reward: 'trixium', quantity: 31 },
+    { reward: 'money', quantity: 9000 }
   ),
-  91: rewardBuilder({ reward: 'paladium', quantity: 45 }, { reward: 'trixium', quantity: 91 }),
-  92: rewardBuilder({ reward: 'paladium', quantity: 46 }, { reward: 'trixium', quantity: 92 }),
-  93: rewardBuilder({ reward: 'paladium', quantity: 46 }, { reward: 'trixium', quantity: 93 }),
-  94: rewardBuilder({ reward: 'paladium', quantity: 47 }, { reward: 'trixium', quantity: 94 }),
+  91: rewardBuilder({ reward: 'paladium', quantity: 31 }),
+  92: rewardBuilder({ reward: 'trixium', quantity: 31 }),
+  93: rewardBuilder({ reward: 'paladium', quantity: 32 }),
+  94: rewardBuilder({ reward: 'trixium', quantity: 32 }),
   95: rewardBuilder(
-    { reward: 'paladium', quantity: 47 },
-    { reward: 'trixium', quantity: 95 },
-    { reward: 'money', quantity: 25000 }
+    { reward: 'paladium', quantity: 32 },
+    { reward: 'trixium', quantity: 32 },
+    { reward: 'money', quantity: 9500 }
   ),
-  96: rewardBuilder({ reward: 'paladium', quantity: 48 }, { reward: 'trixium', quantity: 96 }),
-  97: rewardBuilder({ reward: 'paladium', quantity: 48 }, { reward: 'trixium', quantity: 97 }),
-  98: rewardBuilder({ reward: 'paladium', quantity: 49 }, { reward: 'trixium', quantity: 98 }),
-  99: rewardBuilder({ reward: 'paladium', quantity: 49 }, { reward: 'trixium', quantity: 99 }),
+  96: rewardBuilder({ reward: 'paladium', quantity: 32 }),
+  97: rewardBuilder({ reward: 'trixium', quantity: 32 }),
+  98: rewardBuilder({ reward: 'paladium', quantity: 33 }),
+  99: rewardBuilder({ reward: 'trixium', quantity: 33 }),
   100: rewardBuilder(
-    { reward: 'paladium', quantity: 50 },
-    { reward: 'trixium', quantity: 100 },
-    { reward: 'money', quantity: 50000 }
+    { reward: 'paladium', quantity: 34 },
+    { reward: 'trixium', quantity: 34 },
+    { reward: 'money', quantity: 10000 }
   ),
 }
 
