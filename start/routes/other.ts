@@ -30,6 +30,6 @@ router
     router.get('/duplicates', [DuplicateController, 'index']).as('duplicates.index')
     router.post('/duplicates', [DuplicateController, 'create']).as('duplicates.create')
   })
-  .prefix('utils')
-  .as('utils')
+  .prefix('other')
+  .as('other')
   .middleware(middleware.auth())
