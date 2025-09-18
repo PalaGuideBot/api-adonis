@@ -1,5 +1,5 @@
 import Bot from '#models/api/bot'
-import Duplicate from '#models/api/duplicate'
+import Duplicate from '#models/paladium/duplicate'
 import EndpointAndKey from '#models/api/endpoint_and_key'
 import Giveaway from '#models/api/giveaway'
 import MinecraftLink from '#models/api/minecraft_link'
