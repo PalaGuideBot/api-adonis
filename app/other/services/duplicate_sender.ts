@@ -1,27 +1,21 @@
-import env from '#start/env'
-import ky, { HTTPError } from 'ky'
+import { inject } from '@adonisjs/core'
+
+import { PaladiumService } from '#paladium/services/paladium'
 
 type DuplicatePayload = { uuid: string }
 
+@inject()
 export class DuplicateSender {
-  protected client = ky.create({
-    prefixUrl: env.get('PALADIUM_BASE_URL'),
-    timeout: 10000,
-    headers: { Authorization: `Bearer ${env.get('PALADIUM_API_KEY')}` },
-  })
+  constructor(private paladium: PaladiumService) {}
 
   async sendMany(duplicates: DuplicatePayload[]) {
     if (duplicates.length === 0) return { ok: true as const }
     try {
       for (const { uuid } of duplicates) {
-        await this.client.get(`paladium/player/profile/${uuid}`)
+        await this.paladium.getPlayerProfile(uuid)
       }
       return { ok: true as const }
     } catch (error: unknown) {
-      if (error instanceof HTTPError) {
-        const text = await error.response.text().catch(() => '')
-        throw new Error(`Failed to query Paladium: ${error.response.status} ${text}`)
-      }
       throw error
     }
   }
