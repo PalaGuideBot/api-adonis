@@ -1,3 +1,4 @@
+import { inject } from '@adonisjs/core'
 import { BaseCommand } from '@adonisjs/core/ace'
 import type { CommandOptions } from '@adonisjs/core/types/ace'
 
@@ -11,10 +12,8 @@ export default class SyncSendDuplicates extends BaseCommand {
     startApp: true,
   }
 
-  async run() {
-    const repo = new DuplicateRepository()
-    const sender = new DuplicateSender()
-
+  @inject()
+  async run(repo: DuplicateRepository, sender: DuplicateSender) {
     const pending = await repo.list(200)
     if (pending.length === 0) {
       this.logger.info('No pending duplicates to send')
