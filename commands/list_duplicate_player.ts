@@ -3,10 +3,10 @@ import type { CommandOptions } from '@adonisjs/core/types/ace'
 
 import { db } from '#core/services/db'
 
-export default class SyncGetDuplicate extends BaseCommand {
-  static commandName = 'sync:get_duplicate_db'
+export default class ListDuplicatePlayer extends BaseCommand {
+  static commandName = 'list:duplicate_player'
 
-  protected prefix = 'SyncGetDuplicateDB'
+  protected prefix = 'ListDuplicatePlayer'
 
   static options: CommandOptions = {
     startApp: true,
