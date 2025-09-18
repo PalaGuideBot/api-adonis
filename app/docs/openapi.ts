@@ -361,6 +361,30 @@ addPath('get', '/update', {
   summary: 'Statistics scheduler update',
   responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
 })
+addPath('get', '/other/duplicates', {
+  tags: ['other'],
+  summary: 'List duplicate usernames',
+  responses: { 200: { description: 'OK' }, 401: { description: 'Unauthorized' } },
+})
+addPath('post', '/other/duplicates', {
+  tags: ['other'],
+  summary: 'Create duplicate usernames',
+  requestBody: {
+    required: true,
+    content: {
+      'application/json': {
+        schema: {
+          type: 'object',
+          properties: {
+            uuid: { type: 'string' },
+          },
+          required: ['uuid'],
+        },
+      },
+    },
+  },
+  responses: { 201: { description: 'Created' }, 401: { description: 'Unauthorized' } },
+})
 
 // Paladium
 addPath('get', '/paladium/seasons', {
