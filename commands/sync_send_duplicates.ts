@@ -1,8 +1,8 @@
 import { BaseCommand } from '@adonisjs/core/ace'
 import type { CommandOptions } from '@adonisjs/core/types/ace'
 
-import { DuplicateRepository } from '#utils/repositories/duplicate_repository'
-import { DuplicateSender } from '#utils/services/duplicate_sender'
+import { DuplicateRepository } from '#other/repositories/duplicate_repository'
+import { DuplicateSender } from '#other/services/duplicate_sender'
 
 export default class SyncSendDuplicates extends BaseCommand {
   static commandName = 'sync:send_duplicates'

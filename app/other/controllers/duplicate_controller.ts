@@ -1,8 +1,8 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
 
-import { DuplicateRepository } from '#utils/repositories/duplicate_repository'
-import { duplicateCreateValidator } from '#utils/validators/duplicate_validator'
+import { DuplicateRepository } from '#other/repositories/duplicate_repository'
+import { duplicateCreateValidator } from '#other/validators/duplicate_validator'
 
 @inject()
 export default class DuplicateController {
