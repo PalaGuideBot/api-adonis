@@ -5,8 +5,8 @@ import type { CommandOptions } from '@adonisjs/core/types/ace'
 import { DuplicateRepository } from '#other/repositories/duplicate_repository'
 import { DuplicateSender } from '#other/services/duplicate_sender'
 
-export default class SyncSendDuplicates extends BaseCommand {
-  static commandName = 'sync:send_duplicates'
+export default class PalaRefreshUUID extends BaseCommand {
+  static commandName = 'pala:refresh_uuid'
 
   static options: CommandOptions = {
     startApp: true,
