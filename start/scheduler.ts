@@ -6,6 +6,7 @@ import SyncLink from '#commands/sync_link'
 import SyncPlayers from '#commands/sync_players'
 /* import SyncPlayersWrapped from '#commands/sync_players_wrapped' */
 import SyncRetry from '#commands/sync_retry'
+import SyncSendDuplicates from '#commands/sync_send_duplicates'
 import SyncStatus from '#commands/sync_status'
 
 scheduler.command(SyncPlayers).everyMinutes(5)
@@ -15,3 +16,4 @@ scheduler.command(SyncLink).everyMinutes(5)
 scheduler.command(SyncStatus).everyMinutes(5)
 scheduler.command(SyncRetry).daily()
 scheduler.command(SyncFactions).everyMinutes(5)
+scheduler.command(SyncSendDuplicates).everyHours(3)
