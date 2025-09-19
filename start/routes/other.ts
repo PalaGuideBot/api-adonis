@@ -1,5 +1,6 @@
-import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
+import router from '@adonisjs/core/services/router'
+const DuplicateController = () => import('#other/controllers/duplicate_controller')
 
 const GiveawayController = () => import('#other/controllers/giveaway_controller')
 const UpdateController = () => import('#other/controllers/update_controller')
@@ -22,4 +23,13 @@ router
   })
   .prefix('giveaways')
   .as('giveaways')
+  .middleware(middleware.auth())
+
+router
+  .group(() => {
+    router.get('/duplicates', [DuplicateController, 'index']).as('duplicates.index')
+    router.post('/duplicates', [DuplicateController, 'create']).as('duplicates.create')
+  })
+  .prefix('other')
+  .as('other')
   .middleware(middleware.auth())
