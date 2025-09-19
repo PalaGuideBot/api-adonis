@@ -12,9 +12,13 @@ export function getSeasons() {
     },
     'Summer Rush': {
       start: DateTime.fromMillis(1752336000000).startOf('day'),
+      end: DateTime.fromSQL('2025-09-12').endOf('day'),
+    },
+    'Summer Rush | Course au Trixium': {
+      start: DateTime.fromMillis(1757721600000).startOf('day'),
       end: DateTime.now().endOf('day'),
     },
   }
 }
 
-export const CURRENT_SEASON = 'Summer Rush'
+export const CURRENT_SEASON = 'Summer Rush | Course au Trixium'
