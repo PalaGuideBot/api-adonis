@@ -4,6 +4,7 @@ import EndpointAndKey from '#models/api/endpoint_and_key'
 import Giveaway from '#models/api/giveaway'
 import MinecraftLink from '#models/api/minecraft_link'
 import Role from '#models/api/role'
+import SyncState from '#models/api/sync_state'
 import User from '#models/api/user'
 import LeaderboardAlliance from '#models/paladium/leaderboard/leaderboard_alliance'
 import LeaderboardBoss from '#models/paladium/leaderboard/leaderboard_boss'
@@ -52,4 +53,5 @@ export const db = {
   user: User,
   giveaway: Giveaway,
   duplicate: Duplicate,
+  syncState: SyncState,
 }
