@@ -665,6 +665,23 @@ const getJobLevel = (experience: number) => {
   return Math.max(0, level - 2)
 }
 
+/**
+ * Calculate the correct job level based on XP using the jobXp thresholds array
+ * @param experience
+ * @returns
+ */
+const getJobLevelFromXp = (experience: number): number => {
+  if (experience < 0) return 1
+
+  for (let i = jobXp.length - 1; i >= 0; i--) {
+    if (experience >= jobXp[i]) {
+      return i + 2
+    }
+  }
+
+  return 1
+}
+
 export {
   jobCategories,
   xpPerItem,
@@ -673,4 +690,5 @@ export {
   getJobNeededXpForLevel,
   getNextNeededXpForLevel,
   getJobLevel,
+  getJobLevelFromXp,
 }
