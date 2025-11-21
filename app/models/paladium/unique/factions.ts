@@ -28,7 +28,7 @@ interface Faction {
   description: string
   createdAt: number
   emblem: number[]
-  alliance: string
+  alliance?: string
   players: FactionPlayer[]
   retry: Retry
 }
