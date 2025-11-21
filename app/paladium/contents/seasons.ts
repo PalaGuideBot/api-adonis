@@ -16,9 +16,17 @@ export function getSeasons() {
     },
     'Summer Rush | Course au Trixium': {
       start: DateTime.fromMillis(1757721600000).startOf('day'),
+      end: DateTime.fromSQL('2025-10-09').endOf('day'),
+    },
+    'Summer Rush | Apocalypse': {
+      start: DateTime.fromMillis(1760108400000).startOf('day'),
+      end: DateTime.fromSQL('2025-10-31').endOf('day'),
+    },
+    'v11': {
+      start: DateTime.fromMillis(1763751600000).startOf('day'),
       end: DateTime.now().endOf('day'),
     },
   }
 }
 
-export const CURRENT_SEASON = 'Summer Rush | Course au Trixium'
+export const CURRENT_SEASON = 'v11'
