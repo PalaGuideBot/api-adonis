@@ -159,10 +159,14 @@ export default class PlayerController {
       return response.notFound({ message: 'Player not found' })
     }
 
-    const jobs =
-      player.data
-        .toSorted((a, b) => new Date(a.date).getMilliseconds() - new Date(b.date).getMilliseconds())
-        .at(-1)?.data.jobs || null
+    const jobs = player.data
+      .toSorted((a, b) => new Date(a.date).getMilliseconds() - new Date(b.date).getMilliseconds())
+      .at(-1)?.data.jobs || {
+      alchemist: { level: 0, xp: 0 },
+      farmer: { level: 0, xp: 0 },
+      hunter: { level: 0, xp: 0 },
+      miner: { level: 0, xp: 0 },
+    }
 
     let clicker = await this.playerRepository.getClickerData(player.uuid)
 

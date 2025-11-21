@@ -4,7 +4,7 @@ function getToolTier(level: number) {
   return pogTiers.find((tier) => tier.levels.includes(level))
 }
 
-const SUMMER_RUSH_XP_PER_ITEM = 1 * (300 / 100)
+const XP_PER_ITEM = 1
 
 const pogXp: number[] = [
   0, 52, 208, 404, 625, 866, 1125, 1398, 1683, 1981, 2289, 2607, 2935, 3270, 3615, 3967, 4326, 4692,
@@ -103,7 +103,7 @@ const items: Item[] = [
   {
     name: 'Snow',
     id: 'snow-0',
-    xp: SUMMER_RUSH_XP_PER_ITEM,
+    xp: XP_PER_ITEM,
     from: {
       default: 11,
       with_mixed: 6,
@@ -115,7 +115,7 @@ const items: Item[] = [
   {
     name: 'Leaves',
     id: 'leaves-0',
-    xp: SUMMER_RUSH_XP_PER_ITEM,
+    xp: XP_PER_ITEM,
     from: {
       default: 11,
       with_mixed: 6,
@@ -127,7 +127,7 @@ const items: Item[] = [
   {
     name: 'Netherrack',
     id: 'netherrack-0',
-    xp: SUMMER_RUSH_XP_PER_ITEM,
+    xp: XP_PER_ITEM,
     from: {
       default: 21,
       with_mixed: 16,
@@ -139,7 +139,7 @@ const items: Item[] = [
   {
     name: 'Cactus',
     id: 'cactus-0',
-    xp: SUMMER_RUSH_XP_PER_ITEM,
+    xp: XP_PER_ITEM,
     from: {
       default: 21,
       with_mixed: 16,
@@ -151,7 +151,7 @@ const items: Item[] = [
   {
     name: 'Dirt',
     id: 'dirt-0',
-    xp: SUMMER_RUSH_XP_PER_ITEM,
+    xp: XP_PER_ITEM,
     from: {
       default: 26,
       with_mixed: 21,
@@ -163,7 +163,7 @@ const items: Item[] = [
   {
     name: 'Sand',
     id: 'sand-0',
-    xp: SUMMER_RUSH_XP_PER_ITEM,
+    xp: XP_PER_ITEM,
     from: {
       default: 26,
       with_mixed: 21,
@@ -175,7 +175,7 @@ const items: Item[] = [
   {
     name: 'Red Sand',
     id: 'sand-1',
-    xp: SUMMER_RUSH_XP_PER_ITEM,
+    xp: XP_PER_ITEM,
     from: {
       default: 26,
       with_mixed: 21,
@@ -187,7 +187,7 @@ const items: Item[] = [
   {
     name: 'Soul Sand',
     id: 'soul_sand-0',
-    xp: SUMMER_RUSH_XP_PER_ITEM,
+    xp: XP_PER_ITEM,
     from: {
       default: 26,
       with_mixed: 21,
@@ -199,7 +199,7 @@ const items: Item[] = [
   {
     name: 'Gravel',
     id: 'gravel-0',
-    xp: SUMMER_RUSH_XP_PER_ITEM,
+    xp: XP_PER_ITEM,
     from: {
       default: 26,
       with_mixed: 21,
@@ -211,7 +211,7 @@ const items: Item[] = [
   {
     name: 'Ice',
     id: 'ice-0',
-    xp: SUMMER_RUSH_XP_PER_ITEM,
+    xp: XP_PER_ITEM,
     from: {
       default: 26,
       with_mixed: 21,
@@ -223,7 +223,7 @@ const items: Item[] = [
   {
     name: 'Wool',
     id: 'wool-0',
-    xp: SUMMER_RUSH_XP_PER_ITEM,
+    xp: XP_PER_ITEM,
     from: {
       default: 31,
       with_mixed: 26,
@@ -235,7 +235,7 @@ const items: Item[] = [
   {
     name: 'Sandstone',
     id: 'sandstone-0',
-    xp: SUMMER_RUSH_XP_PER_ITEM,
+    xp: XP_PER_ITEM,
     from: {
       default: 41,
       with_mixed: 31,
@@ -247,7 +247,7 @@ const items: Item[] = [
   {
     name: 'Hardened Clay',
     id: 'hardened_clay-0',
-    xp: SUMMER_RUSH_XP_PER_ITEM,
+    xp: XP_PER_ITEM,
     from: {
       default: 51,
       with_mixed: 41,
@@ -259,7 +259,7 @@ const items: Item[] = [
   {
     name: 'Stone',
     id: 'stone-0',
-    xp: SUMMER_RUSH_XP_PER_ITEM,
+    xp: XP_PER_ITEM,
     from: {
       default: 56,
       with_mixed: 46,
