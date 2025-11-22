@@ -5,7 +5,7 @@ import { DateTime } from 'luxon'
 
 import { db } from '#core/services/db'
 import { PaladiumService } from '#paladium/services/paladium'
-import { getJobLevelFromXp } from '#utils/contents/jobs'
+import { getJobLevel } from '#utils/contents/jobs'
 
 export default class SyncPlayers extends BaseCommand {
   static commandName = 'sync:players'
@@ -62,19 +62,19 @@ export default class SyncPlayers extends BaseCommand {
                     factionRank: playerData.profile.factionRank ?? null,
                     jobs: {
                       alchemist: {
-                        level: getJobLevelFromXp(playerData.jobs.alchemist.xp),
+                        level: getJobLevel(playerData.jobs.alchemist.xp),
                         xp: playerData.jobs.alchemist.xp,
                       },
                       farmer: {
-                        level: getJobLevelFromXp(playerData.jobs.farmer.xp),
+                        level: getJobLevel(playerData.jobs.farmer.xp),
                         xp: playerData.jobs.farmer.xp,
                       },
                       hunter: {
-                        level: getJobLevelFromXp(playerData.jobs.hunter.xp),
+                        level: getJobLevel(playerData.jobs.hunter.xp),
                         xp: playerData.jobs.hunter.xp,
                       },
                       miner: {
-                        level: getJobLevelFromXp(playerData.jobs.miner.xp),
+                        level: getJobLevel(playerData.jobs.miner.xp),
                         xp: playerData.jobs.miner.xp,
                       },
                     },
