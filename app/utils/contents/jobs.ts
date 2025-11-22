@@ -3,7 +3,7 @@ import type { JobReward } from '#utils/types'
 const jobCategories = ['miner', 'farmer', 'hunter', 'alchemist'] as const
 
 const jobXp: number[] = [
-  22123, 40390, 73751, 118886, 176611, 247616, 332507, 431826, 546062, 675669, 821062, 982632,
+  0, 22123, 40390, 73751, 118886, 176611, 247616, 332507, 431826, 546062, 675669, 821062, 982632,
   1160743, 1355741, 1567953, 1797690, 2045248, 2310912, 2594953,
 ]
 
@@ -25,7 +25,7 @@ const rewards = {
   },
 } satisfies Record<string, Pick<JobReward, 'label' | 'id' | 'type'>>
 
-const JOB_MAX_LEVEL = 100
+const JOB_MAX_LEVEL = jobXp.length
 
 type BuilderOptions = { reward: keyof typeof rewards; quantity?: number }
 
@@ -632,9 +632,16 @@ const xpPerItem: Record<(typeof jobCategories)[number], Item[]> = {
 
 const getJobNeededXpForLevel = (level: number) => {
   let sum = 0
+  const xpMax = jobXp.at(-1)!
+
   for (let i = 2; i <= level; i++) {
-    sum = Math.floor(sum + Math.pow(i, 2.27) * 30.0 + 450 * i)
+    if (i <= JOB_MAX_LEVEL) {
+      sum += jobXp[i - 1]
+    } else {
+      sum += xpMax
+    }
   }
+
   return sum
 }
 
@@ -652,34 +659,18 @@ const getNextNeededXpForLevel = (level: number) => {
 
 const getJobLevel = (experience: number) => {
   let sum = 0
-  let level = 0
-  while (experience > sum) {
-    if (level > JOB_MAX_LEVEL) {
-      sum = Math.floor(sum + Math.pow(JOB_MAX_LEVEL, 2.27) * 30.0 + 450 * JOB_MAX_LEVEL)
-    } else {
-      sum = Math.floor(sum + Math.pow(level, 2.27) * 30.0 + 450 * level)
-    }
-    level++
-  }
+  let xpMax = jobXp.at(-1)!
 
-  return Math.max(0, level - 2)
-}
+  for (let i = 2; i < Number.MAX_SAFE_INTEGER; i++) {
+    let xpToAdd = i <= JOB_MAX_LEVEL ? jobXp[i - 1] : xpMax
 
-/**
- * Calculate the correct job level based on XP using the jobXp thresholds array
- * @param experience
- * @returns
- */
-const getJobLevelFromXp = (experience: number): number => {
-  if (experience < 0) return 1
-
-  for (let i = jobXp.length - 1; i >= 0; i--) {
-    if (experience >= jobXp[i]) {
-      return i + 2
+    sum += xpToAdd
+    if (experience < sum) {
+      return i - 1
     }
   }
 
-  return 1
+  return Number.MAX_SAFE_INTEGER
 }
 
 export {
@@ -690,5 +681,4 @@ export {
   getJobNeededXpForLevel,
   getNextNeededXpForLevel,
   getJobLevel,
-  getJobLevelFromXp,
 }

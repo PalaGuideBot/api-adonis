@@ -427,6 +427,11 @@ class PlayerRepository {
   }
 
   #transformPlayerJob(job: Infer<typeof playerJobsValidator>['alchemist']) {
+    console.log({
+      xp: job.xp,
+      level: job.level,
+      computedLevel: getJobLevel(job.xp),
+    })
     return { ...job, level: getJobLevel(job.xp) }
   }
 }
