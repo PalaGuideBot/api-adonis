@@ -426,6 +426,18 @@ class PlayerRepository {
     }
   }
 
+  async search(query: string) {
+    const regex = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i')
+
+    return await db.players
+      .find({ $or: [{ username: { $regex: regex } }, { uuid: { $regex: regex } }] })
+      .select<Pick<InferSchemaType<typeof db.players.schema>, 'uuid' | 'username'>>([
+        'uuid',
+        'username',
+      ])
+      .lean()
+  }
+
   #transformPlayerJob(job: Infer<typeof playerJobsValidator>['alchemist']) {
     return { ...job, level: getJobLevel(job.xp) }
   }
