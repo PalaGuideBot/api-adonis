@@ -1,5 +1,7 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
+import { errors as vineErrors } from '@vinejs/vine'
+import { errors as bentoErrors } from 'bentocache'
 
 import cache from '#cache/cache'
 import { ImageService } from '#paladium/services/image'
@@ -38,7 +40,15 @@ export default class FactionController {
         },
         ttl: '1h',
       })
-    } catch {}
+    } catch (error: unknown) {
+      if (!(error instanceof bentoErrors.E_FACTORY_ERROR)) {
+        return response.internalServerError({ message: 'Une erreur inconnue est survenue.' })
+      }
+
+      if (error.cause instanceof vineErrors.E_VALIDATION_ERROR) {
+        return response.badRequest({ message: 'Les données de faction reçus sont incorrects.' })
+      }
+    }
 
     if (!result) {
       return response.notFound({ message: `Faction '${params.name}' not found.` })

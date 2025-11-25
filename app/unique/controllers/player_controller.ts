@@ -1,5 +1,6 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
+import vine from '@vinejs/vine'
 import { DateTime } from 'luxon'
 
 import cache from '#cache/cache'
@@ -251,5 +252,15 @@ export default class PlayerController {
     })
 
     return response.ok(player)
+  }
+
+  async search({ request, response }: HttpContext) {
+    const { q: query } = await request.validateUsing(
+      vine.compile(vine.object({ q: vine.string() }))
+    )
+
+    const players = await this.playerRepository.search(query)
+
+    return response.ok(players)
   }
 }
