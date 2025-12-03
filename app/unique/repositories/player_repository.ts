@@ -97,7 +97,14 @@ class PlayerRepository {
 
     const player = await db.players
       .findOne(
-        { username: { $regex: new RegExp(`^${username.toLowerCase()}$`, 'i') } },
+        {
+          username: {
+            $regex: new RegExp(
+              `^${username.toLowerCase().replace(/[^a-zA-Z0-9\s\-\_]/g, '')}$`,
+              'i'
+            ),
+          },
+        },
         { data: 0 }
       )
       .lean()
