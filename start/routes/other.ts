@@ -4,6 +4,7 @@ const DuplicateController = () => import('#other/controllers/duplicate_controlle
 
 const GiveawayController = () => import('#other/controllers/giveaway_controller')
 const UpdateController = () => import('#other/controllers/update_controller')
+const VuesController = () => import('#other/controllers/vues_controller')
 
 router.get('/update', [UpdateController, 'show']).as('update').middleware(middleware.auth())
 
@@ -29,6 +30,8 @@ router
   .group(() => {
     router.get('/duplicates', [DuplicateController, 'index']).as('duplicates.index')
     router.post('/duplicates', [DuplicateController, 'create']).as('duplicates.create')
+    router.get('/vues/:uuid', [VuesController, 'show']).as('vues.show')
+    router.post('/vues', [VuesController, 'increment']).as('vues.increment')
   })
   .prefix('other')
   .as('other')
