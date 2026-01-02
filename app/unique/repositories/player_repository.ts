@@ -464,7 +464,7 @@ class PlayerRepository {
     )
 
     if (todayDataIndex === -1) {
-      return { vues: 0, created: false, message: 'No data entry for today' }
+      return { views: 0, created: false, message: 'No data entry for today' }
     }
 
     const dbConnection = mongoose.connection.useDb('paladium')
@@ -473,7 +473,7 @@ class PlayerRepository {
     await collection.updateOne(
       { 'uuid': payload.uuid, 'data.date': today },
       {
-        $inc: { 'data.$.vues': 1 },
+        $inc: { 'data.$.views': 1 },
       }
     )
 
@@ -481,9 +481,9 @@ class PlayerRepository {
     const updatedData = updatedPlayer?.data?.find(
       (d: InferSchemaType<typeof db.players.schema>['data'][number]) => d.date === today
     )
-    const vues = updatedData?.vues || 1
+    const views = updatedData?.views || 1
 
-    return { vues, uuid: payload.uuid, date: today }
+    return { views, uuid: payload.uuid, date: today }
   }
 
   async getViews(payload: { uuid: string }) {
@@ -493,15 +493,15 @@ class PlayerRepository {
       return null
     }
 
-    const totalVues = player.data.reduce(
+    const totalViews = player.data.reduce(
       (sum: number, d: InferSchemaType<typeof db.players.schema>['data'][number]) => {
-        return sum + (d.vues || 0)
+        return sum + (d.views || 0)
       },
       0
     )
 
     return {
-      total: totalVues,
+      total: totalViews,
       uuid: payload.uuid,
     }
   }

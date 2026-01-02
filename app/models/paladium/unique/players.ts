@@ -30,7 +30,7 @@ interface Retry {
 interface PlayerData {
   date: string
   newDate: Date
-  vues: number
+  views: number
   data: {
     faction: string
     factionRank: string
@@ -164,7 +164,7 @@ const playerSchema: Schema = new Schema<Player>({
     {
       date: String,
       newDate: Date,
-      vues: Number,
+      views: Number,
       data: {
         faction: String,
         factionRank: String,
