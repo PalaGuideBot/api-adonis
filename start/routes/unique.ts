@@ -14,6 +14,8 @@ router
     router.get(':username/flags', [PlayerController, 'flags']).as('players.flags')
     router.get(':username/jobs', [PlayerController, 'jobs']).as('players.jobs')
     router.get(':username/wrapped', [PlayerController, 'wrapped']).as('players.wrapped')
+    router.get(':uuid/views', [PlayerController, 'showViews']).as('players.views')
+    router.post(':uuid/views', [PlayerController, 'incrementViews']).as('players.views.increment')
   })
   .prefix('players')
   .middleware(middleware.auth())

@@ -1,6 +1,7 @@
 import { inject } from '@adonisjs/core'
 import type { Infer } from '@vinejs/vine/types'
 import { DateTime } from 'luxon'
+import mongoose from 'mongoose'
 import type { InferSchemaType } from 'mongoose'
 
 import { db } from '#core/services/db'
@@ -447,6 +448,62 @@ class PlayerRepository {
 
   #transformPlayerJob(job: Infer<typeof playerJobsValidator>['alchemist']) {
     return { ...job, level: getJobLevel(job.xp) }
+  }
+
+  async incrementViews(payload: { uuid: string }) {
+    const today = DateTime.now().toFormat('yyyy-MM-dd')
+
+    const player = await db.players.findOne({ uuid: payload.uuid })
+
+    if (!player) {
+      return null
+    }
+
+    const todayDataIndex = player.data.findIndex(
+      (d: InferSchemaType<typeof db.players.schema>['data'][number]) => d.date === today
+    )
+
+    if (todayDataIndex === -1) {
+      return { vues: 0, created: false, message: 'No data entry for today' }
+    }
+
+    const dbConnection = mongoose.connection.useDb('paladium')
+    const collection = dbConnection.collection('unique.players')
+
+    await collection.updateOne(
+      { 'uuid': payload.uuid, 'data.date': today },
+      {
+        $inc: { 'data.$.vues': 1 },
+      }
+    )
+
+    const updatedPlayer = await collection.findOne({ uuid: payload.uuid })
+    const updatedData = updatedPlayer?.data?.find(
+      (d: InferSchemaType<typeof db.players.schema>['data'][number]) => d.date === today
+    )
+    const vues = updatedData?.vues || 1
+
+    return { vues, uuid: payload.uuid, date: today }
+  }
+
+  async getViews(payload: { uuid: string }) {
+    const player = await db.players.findOne({ uuid: payload.uuid })
+
+    if (!player) {
+      return null
+    }
+
+    const totalVues = player.data.reduce(
+      (sum: number, d: InferSchemaType<typeof db.players.schema>['data'][number]) => {
+        return sum + (d.vues || 0)
+      },
+      0
+    )
+
+    return {
+      total: totalVues,
+      uuid: payload.uuid,
+    }
   }
 }
 

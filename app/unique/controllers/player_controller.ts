@@ -8,10 +8,10 @@ import { db } from '#core/services/db'
 import { distanceValidator } from '#core/validators/filter_validator'
 import { LinkRepository } from '#link/repositories/link_repository'
 import { MojangService } from '#minecraft/services/mojang'
-import { VuesRepository } from '#other/repositories/vues_repository'
 import { PaladiumService } from '#paladium/services/paladium'
 import { aurelian } from '#unique/contents/aurelian'
 import { PlayerRepository } from '#unique/repositories/player_repository'
+import { viewsIncrementValidator } from '#unique/validators/views_validator'
 import { UserRepository } from '#user/repositories/user_repository'
 import { getJobNeededXpForLevel } from '#utils/contents/jobs'
 
@@ -22,8 +22,7 @@ export default class PlayerController {
     private mojangService: MojangService,
     private linkRepository: LinkRepository,
     private userRepository: UserRepository,
-    private paladiumService: PaladiumService,
-    private vuesRepository: VuesRepository
+    private paladiumService: PaladiumService
   ) {}
 
   async index({ response, request }: HttpContext) {
@@ -58,7 +57,7 @@ export default class PlayerController {
       }
     }
 
-    await this.vuesRepository.increment({ uuid: player.uuid })
+    await this.playerRepository.incrementViews({ uuid: player.uuid })
 
     let flags: NonNullable<Awaited<ReturnType<typeof this.userRepository.findById>>>['roles'] = []
 
@@ -266,5 +265,25 @@ export default class PlayerController {
     const players = await this.playerRepository.search(query)
 
     return response.ok(players)
+  }
+
+  async incrementViews({ request, response }: HttpContext) {
+    const payload = await request.validateUsing(viewsIncrementValidator)
+    const result = await this.playerRepository.incrementViews(payload)
+    if (!result) {
+      return response.notFound({ message: 'Player not found' })
+    }
+
+    return response.ok(result)
+  }
+
+  async showViews({ params, response }: HttpContext) {
+    const result = await this.playerRepository.getViews({ uuid: params.uuid })
+
+    if (!result) {
+      return response.notFound({ message: 'Player not found' })
+    }
+
+    return response.ok(result)
   }
 }

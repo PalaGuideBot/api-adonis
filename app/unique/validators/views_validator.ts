@@ -1,6 +1,6 @@
 import vine from '@vinejs/vine'
 
-export const vuesIncrementValidator = vine.compile(
+export const viewsIncrementValidator = vine.compile(
   vine.object({
     uuid: vine.string(),
   })
