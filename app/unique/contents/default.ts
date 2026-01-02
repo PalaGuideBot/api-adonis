@@ -128,6 +128,7 @@ const player: Player = {
   data: [
     {
       date: '2024-01-05',
+      views: 0,
       newDate: new Date('2024-01-05'),
       data: {
         faction: 'GuideBot',
@@ -161,6 +162,7 @@ const player: Player = {
     },
     {
       date: '2024-01-04',
+      views: 0,
       newDate: new Date('2024-01-04'),
       data: {
         faction: 'GuideBot',
@@ -194,6 +196,7 @@ const player: Player = {
     },
     {
       date: '2024-01-03',
+      views: 0,
       newDate: new Date('2024-01-03'),
       data: {
         faction: 'GuideBot',
@@ -227,6 +230,7 @@ const player: Player = {
     },
     {
       date: '2024-01-02',
+      views: 0,
       newDate: new Date('2024-01-02'),
       data: {
         faction: 'GuideBot',
@@ -260,6 +264,7 @@ const player: Player = {
     },
     {
       date: '2024-01-01',
+      views: 0,
       newDate: new Date('2024-01-01'),
       data: {
         faction: 'GuideBot',

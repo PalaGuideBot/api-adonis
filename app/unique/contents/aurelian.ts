@@ -61,6 +61,7 @@ const player: Player = {
   data: [
     {
       date: '2025-07-23',
+      views: 0,
       newDate: new Date('2025-07-23'),
       data: {
         faction: '',
