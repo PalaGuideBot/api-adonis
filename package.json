@@ -40,7 +40,7 @@
   "_imports_note": "The #docs alias is added for the OpenAPI spec module",
   "devDependencies": {
     "@adonisjs/assembler": "^7.8.2",
-    "@adonisjs/eslint-config": "^2.1.0",
+    "@adonisjs/eslint-config": "^2.1.2",
     "@adonisjs/prettier-config": "^1.4.5",
     "@adonisjs/tsconfig": "^1.4.1",
     "@swc/core": "^1.12.1",
