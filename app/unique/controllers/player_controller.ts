@@ -56,6 +56,8 @@ export default class PlayerController {
       }
     }
 
+    await this.playerRepository.incrementViews({ uuid: player.uuid })
+
     let flags: NonNullable<Awaited<ReturnType<typeof this.userRepository.findById>>>['roles'] = []
 
     const link = await this.linkRepository.findByUUID(player.uuid)
@@ -262,5 +264,24 @@ export default class PlayerController {
     const players = await this.playerRepository.search(query)
 
     return response.ok(players)
+  }
+
+  async incrementViews({ params, response }: HttpContext) {
+    const result = await this.playerRepository.incrementViews({ uuid: params.uuid })
+    if (!result) {
+      return response.notFound({ message: 'Player not found' })
+    }
+
+    return response.ok(result)
+  }
+
+  async showViews({ params, response }: HttpContext) {
+    const result = await this.playerRepository.getViews({ uuid: params.uuid })
+
+    if (!result) {
+      return response.notFound({ message: 'Player not found' })
+    }
+
+    return response.ok(result)
   }
 }
