@@ -11,7 +11,6 @@ import { MojangService } from '#minecraft/services/mojang'
 import { PaladiumService } from '#paladium/services/paladium'
 import { aurelian } from '#unique/contents/aurelian'
 import { PlayerRepository } from '#unique/repositories/player_repository'
-import { viewsIncrementValidator } from '#unique/validators/views_validator'
 import { UserRepository } from '#user/repositories/user_repository'
 import { getJobNeededXpForLevel } from '#utils/contents/jobs'
 
@@ -267,9 +266,8 @@ export default class PlayerController {
     return response.ok(players)
   }
 
-  async incrementViews({ request, response }: HttpContext) {
-    const payload = await request.validateUsing(viewsIncrementValidator)
-    const result = await this.playerRepository.incrementViews(payload)
+  async incrementViews({ params, response }: HttpContext) {
+    const result = await this.playerRepository.incrementViews({ uuid: params.uuid })
     if (!result) {
       return response.notFound({ message: 'Player not found' })
     }

@@ -8,6 +8,7 @@ router
   .group(() => {
     router.get('/', [PlayerController, 'index']).as('players.index')
     router.post('/', [PlayerController, 'search']).as('players.search')
+    router.post(':uuid/views', [PlayerController, 'incrementViews']).as('players.views.increment')
     router.get(':username', [PlayerController, 'show']).as('players')
     router.post(':username', [PlayerController, 'create'])
     router.get(':username/clicker', [PlayerController, 'clicker']).as('players.clicker')
@@ -15,7 +16,6 @@ router
     router.get(':username/jobs', [PlayerController, 'jobs']).as('players.jobs')
     router.get(':username/wrapped', [PlayerController, 'wrapped']).as('players.wrapped')
     router.get(':uuid/views', [PlayerController, 'showViews']).as('players.views')
-    router.post(':uuid/views', [PlayerController, 'incrementViews']).as('players.views.increment')
   })
   .prefix('players')
   .middleware(middleware.auth())
