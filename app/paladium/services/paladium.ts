@@ -3,6 +3,7 @@ import { Exception } from '@adonisjs/core/exceptions'
 import { errors } from '@vinejs/vine'
 import { Infer } from '@vinejs/vine/types'
 import ky, { HTTPError } from 'ky'
+import { Agent } from 'undici'
 
 import { getOnYourMarksGoalItem } from '#event/contents/events'
 import { LeaderboardCategory, LeaderboardTrixiumCategory } from '#leaderboard/types'
@@ -46,6 +47,13 @@ class PaladiumService {
     headers: {
       Authorization: `Bearer ${env.get('PALADIUM_API_KEY')}`,
     },
+    // TODO: Temporary fix for SSL issue Paladium API
+    // @ts-ignore - undici Agent type incompatibility with undici-types used by ky
+    dispatcher: new Agent({
+      connect: {
+        rejectUnauthorized: false,
+      },
+    }),
   })
 
   // PLAYER REQUESTS
