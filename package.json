@@ -65,8 +65,7 @@
     "mongoose": "^8.15.2",
     "nanoid": "^5.1.6",
     "node-cron": "^4.2.1",
-    "reflect-metadata": "^0.2.2",
-    "undici": "^7.22.0"
+    "reflect-metadata": "^0.2.2"
   },
   "hotHook": {
     "boundaries": [
