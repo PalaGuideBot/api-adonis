@@ -51,7 +51,7 @@ export default class SyncPlayersWrapped extends BaseCommand {
                 faction: wrapped.faction,
                 factionsCount: wrapped.factionsCount,
                 timePlayed: wrapped.timePlayed,
-                jobs: wrapped.jobs,
+                /*                 jobs: wrapped.jobs, */
                 moneyMax: wrapped.moneyMax,
                 bestLeaderboard: wrapped.bestLeaderboard,
                 clicker: wrapped.clicker,
