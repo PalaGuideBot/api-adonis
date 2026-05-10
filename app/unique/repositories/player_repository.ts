@@ -261,7 +261,7 @@ class PlayerRepository {
   }
 
   async findByUUIDWrapped(uuid: string) {
-    const season = getSeasons()['v10.5']
+    const season = getSeasons()['v11']
 
     const query = await db.players.aggregate([
       {
@@ -330,7 +330,7 @@ class PlayerRepository {
             },
           },
           'timePlayed': { $arrayElemAt: ['$data.data.timePlayed', 0] },
-          'jobs': {
+          /*           'jobs': {
             $arrayToObject: {
               $map: {
                 input: {
@@ -340,7 +340,7 @@ class PlayerRepository {
                 in: { k: '$$job.k', v: '$$job.v.xp' },
               },
             },
-          },
+          }, */
           'moneyMax': { $max: { $map: { input: '$data', in: { $max: '$$this.data.money' } } } },
           'bestLeaderboard': {
             $reduce: {
@@ -376,7 +376,7 @@ class PlayerRepository {
           faction: string
           factionsCount: number
           timePlayed: number
-          jobs: Record<string, number>
+          /*           jobs: Record<string, number> */
           moneyMax: number
           bestLeaderboard: { name: string; value: number }
         }
@@ -428,9 +428,9 @@ class PlayerRepository {
           total: Object.values(upgrades).flat().length,
         },
       },
-      jobs: Object.fromEntries(
+      /*       jobs: Object.fromEntries(
         Object.entries(player.jobs).map(([job, xp]) => [job, getJobLevel(xp)])
-      ),
+      ), */
     }
   }
 
