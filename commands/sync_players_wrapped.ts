@@ -32,23 +32,17 @@ export default class SyncPlayersWrapped extends BaseCommand {
       const uuid = player.uuid
 
       let wrapped = null
-      const maxRetries = 3
-      let attempt = 0
 
-      while (attempt <= maxRetries && !wrapped) {
-        try {
-          wrapped = await playerRepository.findByUUIDWrapped(uuid)
-        } catch (error) {
-          attempt++
-          if (attempt > maxRetries) {
-            this.logger.warning(
-              `Player ${uuid} wrapped not found after ${maxRetries + 1} attempts`,
-              {
-                prefix: this.prefix,
-              }
-            )
+      try {
+        wrapped = await playerRepository.findByUUIDWrapped(uuid)
+      } catch (error) {
+        this.logger.warning(
+          `Failed to fetch player ${uuid} wrapped data`,
+          {
+            prefix: this.prefix,
           }
-        }
+        )
+        continue
       }
 
       if (wrapped) {
