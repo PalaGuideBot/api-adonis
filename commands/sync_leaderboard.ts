@@ -57,11 +57,11 @@ export default class SyncLeaderboard extends BaseCommand {
         label: 'KOTH',
         model: db.leaderboardKoth,
       },
-      {
+      /*       {
         category: 'trixium.player',
         label: 'Trixium Player',
         model: db.leaderboardTrixiumPlayer,
-      },
+      }, */
       {
         category: 'trixium.faction',
         label: 'Trixium Faction',
