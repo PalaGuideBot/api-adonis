@@ -32,18 +32,9 @@ export default class SyncPlayersWrapped extends BaseCommand {
       const uuid = player.uuid
 
       let wrapped = null
-
       try {
         wrapped = await playerRepository.findByUUIDWrapped(uuid)
-      } catch (error) {
-        this.logger.warning(
-          `Failed to fetch player ${uuid} wrapped data`,
-          {
-            prefix: this.prefix,
-          }
-        )
-        continue
-      }
+      } catch {}
 
       if (wrapped) {
         updated++
@@ -69,6 +60,8 @@ export default class SyncPlayersWrapped extends BaseCommand {
             upsert: true,
           },
         })
+      } else {
+        this.logger.warning(`Player ${uuid} wrapped not found`, { prefix: this.prefix })
       }
     }
 
