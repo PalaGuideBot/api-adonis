@@ -24,9 +24,17 @@ export function getSeasons() {
     },
     'v11': {
       start: DateTime.fromMillis(1763751600000).startOf('day'),
+      end: DateTime.fromSQL('2026-05-12').endOf('day'),
+    },
+    'v11 | Course au Trixium': {
+      start: DateTime.fromMillis(1778688000000).startOf('day'),
+      end: DateTime.fromSQL('2026-06-12').endOf('day'),
+    },
+    'v12': {
+      start: DateTime.fromMillis(1781884800000).startOf('day'),
       end: DateTime.now().endOf('day'),
     },
   }
 }
 
-export const CURRENT_SEASON = 'v11'
+export const CURRENT_SEASON = 'v12'
