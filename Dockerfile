@@ -1,4 +1,4 @@
-FROM node:22.13.1-alpine3.21 AS base
+FROM node:24.18.0-alpine3.24 AS base
 
 # All deps stage
 FROM base AS deps
