@@ -1,4 +1,4 @@
-import mongoose, { Connection, Schema } from 'mongoose'
+import mongoose, { type Connection, Schema } from 'mongoose'
 
 interface SyncStateData {
   key: string
@@ -13,10 +13,6 @@ const syncStateSchema = new Schema<SyncStateData>({
 })
 
 const dbConnection: Connection = mongoose.connection.useDb('api')
-const SyncState = dbConnection.model<SyncStateData>(
-  'sync_state',
-  syncStateSchema,
-  'sync_states'
-)
+const SyncState = dbConnection.model<SyncStateData>('sync_state', syncStateSchema, 'sync_states')
 
 export default SyncState

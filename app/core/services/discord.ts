@@ -6,7 +6,7 @@ import { discordUserValidator } from '#core/validators/discord_validator'
 import env from '#start/env'
 
 const client = ky.create({
-  prefixUrl: 'https://discord.com/api/v9',
+  prefix: 'https://discord.com/api/v9',
   headers: { Authorization: `Bot ${env.get('DISCORD_API_TOKEN')}`, Accept: 'application/json' },
 })
 

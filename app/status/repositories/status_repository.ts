@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { InferSchemaType } from 'mongoose'
+import { type InferSchemaType } from 'mongoose'
 
 import { db } from '#core/services/db'
 import type { Period, StatusData, StatusDataWithHour } from '#status/types'

@@ -132,7 +132,7 @@ export default class SyncLeaderboard extends BaseCommand {
           })
         }
       } catch (error) {
-        this.logger.error(`Error processing ${category.label}: ${error.message}`, {
+        this.logger.error(`Error processing ${category.label}: ${(error as Error).message}`, {
           prefix: this.prefix,
         })
       }

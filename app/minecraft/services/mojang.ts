@@ -7,7 +7,7 @@ import env from '#start/env'
 
 class MojangService {
   protected client = ky.create({
-    prefixUrl: env.get('MOJANG_API_URL'),
+    prefix: env.get('MOJANG_API_URL'),
     timeout: false,
   })
 

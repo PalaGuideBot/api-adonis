@@ -1,8 +1,8 @@
-import { Infer } from '@vinejs/vine/types'
+import { type Infer } from '@vinejs/vine/types'
 
 import { getNextNeededXpForLevel, jobXp, rewardsPerJob, xpPerItem } from '#utils/contents/jobs'
 import type { JobReward } from '#utils/types'
-import { calculateJobValidator } from '#utils/validators/calculate_validator'
+import { type calculateJobValidator } from '#utils/validators/calculate_validator'
 
 interface Item {
   currLevel: number

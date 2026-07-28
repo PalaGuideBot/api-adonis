@@ -1,5 +1,5 @@
-import { categories, trixiumCategories } from '#leaderboard/contents/categories'
-import { Model } from 'mongoose'
+import { type categories, type trixiumCategories } from '#leaderboard/contents/categories'
+import { type Model } from 'mongoose'
 
 export type LeaderboardCategory = (typeof categories)[number]
 

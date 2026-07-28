@@ -1,4 +1,4 @@
-import mongoose, { Connection, Schema } from 'mongoose'
+import mongoose, { type Connection, Schema } from 'mongoose'
 
 interface PlayerWrappedInterface {
   uuid: string
@@ -19,7 +19,7 @@ interface PlayerWrappedInterface {
   friends: number
   faction: {
     name: string
-    alliance?: 'ORDER' | 'CHAOS'
+    alliance?: string
     emblemUrl?: string
   }
   factionsCount: number
@@ -72,7 +72,7 @@ const playerWrappedSchema: Schema = new Schema<PlayerWrappedInterface>({
   friends: { type: Number, required: true },
   faction: {
     name: { type: String, required: true },
-    alliance: { type: String, enum: ['ORDER', 'CHAOS'], required: false },
+    alliance: { type: String, required: false },
     emblemUrl: { type: String, required: false },
   },
   factionsCount: { type: Number, required: true },

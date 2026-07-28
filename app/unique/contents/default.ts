@@ -1,6 +1,6 @@
-import { InferSchemaType } from 'mongoose'
+import { type InferSchemaType } from 'mongoose'
 
-import { db } from '#core/services/db'
+import { type db } from '#core/services/db'
 
 type Faction = InferSchemaType<typeof db.factions.schema>
 type Player = InferSchemaType<typeof db.players.schema>

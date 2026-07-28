@@ -3,7 +3,7 @@ import { inject } from '@adonisjs/core'
 import { FactionRepository } from '#unique/repositories/faction_repository'
 
 @inject()
-export default class FactionNotFound {
+export default class FactionNotFoundListener {
   constructor(private factionRepository: FactionRepository) {}
 
   async handle(name: string) {

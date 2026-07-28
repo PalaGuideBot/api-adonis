@@ -1,11 +1,11 @@
-import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
-const PaladiumController = () => import('#paladium/controllers/paladium_controller')
+import { controllers } from '#generated/controllers'
+import { middleware } from '#start/kernel'
 
 router
   .group(() => {
-    router.get('/seasons', [PaladiumController, 'seasons']).as('seasons')
+    router.get('/seasons', [controllers.paladium.Paladium, 'seasons']).as('seasons')
   })
   .prefix('paladium')
   .as('paladium')

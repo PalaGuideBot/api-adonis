@@ -1,8 +1,8 @@
-import { InferSchemaType } from 'mongoose'
+import { type InferSchemaType } from 'mongoose'
 
-import { db } from '#core/services/db'
-import { playerMarketValidator } from '#paladium/validators/player'
-import { Infer } from '@vinejs/vine/types'
+import { type db } from '#core/services/db'
+import { type playerMarketValidator } from '#paladium/validators/player'
+import { type Infer } from '@vinejs/vine/types'
 import { DateTime } from 'luxon'
 
 type Player = InferSchemaType<typeof db.players.schema>

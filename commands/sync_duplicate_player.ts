@@ -87,7 +87,7 @@ export default class SyncDuplicatePlayer extends BaseCommand {
           totalDeleted += result.deletedCount || 0
           this.logger.info(`Deleted ${result.deletedCount || 0} players in this batch`)
         } catch (error) {
-          this.logger.error('Error during bulk delete operations', error)
+          this.logger.error('Error during bulk delete operations', error as any)
         }
       }
 

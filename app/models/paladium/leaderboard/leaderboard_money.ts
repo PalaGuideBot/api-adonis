@@ -1,4 +1,4 @@
-import mongoose, { Connection, Schema } from 'mongoose'
+import mongoose, { type Connection, Schema } from 'mongoose'
 
 interface MoneyData {
   username: string

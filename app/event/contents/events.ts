@@ -1,7 +1,7 @@
-import { Infer } from '@vinejs/vine/types'
+import { type Infer } from '@vinejs/vine/types'
 
 import type { DailyEvent } from '#event/types'
-import { factionOnYourMarksValidator } from '#paladium/validators/faction'
+import { type factionOnYourMarksValidator } from '#paladium/validators/faction'
 
 type FactionEventOnYourMarks = Infer<typeof factionOnYourMarksValidator>
 

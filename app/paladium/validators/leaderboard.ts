@@ -1,6 +1,6 @@
-import vine, { VineValidator } from '@vinejs/vine'
+import vine, { type VineValidator } from '@vinejs/vine'
 
-import { LeaderboardTrixiumCategory } from '#leaderboard/types'
+import { type LeaderboardTrixiumCategory } from '#leaderboard/types'
 
 export const factionsLeaderboardValidator = vine.compile(
   vine.array(
