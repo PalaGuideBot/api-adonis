@@ -23,9 +23,6 @@ export default await Env.create(new URL('../', import.meta.url), {
   PALADIUM_BASE_URL: Env.schema.string(),
   PALADIUM_API_KEY: Env.schema.string(),
 
-  PALAGUIDEBOT_BASE_URL: Env.schema.string(),
-  PALAGUIDEBOT_KEY: Env.schema.string(),
-
   PALAGUIDEBOT_IMAGE_URL: Env.schema.string(),
   PALAGUIDEBOT_IMAGE_KEY: Env.schema.string(),
 
