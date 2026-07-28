@@ -1,7 +1,7 @@
-import { Infer } from '@vinejs/vine/types'
+import { type Infer } from '@vinejs/vine/types'
 
 import buildings from '#paladium/contents/clicker/buildings'
-import { playerClickerValidator } from '#paladium/validators/player'
+import { type playerClickerValidator } from '#paladium/validators/player'
 
 type PlayerClikerData = Infer<typeof playerClickerValidator>
 

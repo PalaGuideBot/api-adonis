@@ -1,8 +1,8 @@
 import { inject } from '@adonisjs/core'
 import type { Infer } from '@vinejs/vine/types'
 import { DateTime } from 'luxon'
-import mongoose from 'mongoose'
 import type { InferSchemaType } from 'mongoose'
+import mongoose from 'mongoose'
 
 import { db } from '#core/services/db'
 import type { DistanceFilter } from '#core/validators/filter_validator'
@@ -370,7 +370,7 @@ class PlayerRepository {
           username: string
           uuid: string
           achievements: { completed: number; total: number }
-          mount: { mountType: string; name: string; level: number }
+          mount: { mountType: number; name: string; level: number }
           pet: { currentSkin: string; level: number }
           friends: number
           faction: string
@@ -405,7 +405,7 @@ class PlayerRepository {
       bestLeaderboard: player.bestLeaderboard.name === null ? null : player.bestLeaderboard,
       faction: {
         name: player.faction,
-        alliance: faction ? faction.alliance : null,
+        alliance: faction?.alliance ?? '',
         emblemUrl: factionEmblem?.url,
       },
       clicker: {

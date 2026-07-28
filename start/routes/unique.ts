@@ -1,29 +1,30 @@
 import router from '@adonisjs/core/services/router'
-import { middleware } from '#start/kernel'
 
-const PlayerController = () => import('#unique/controllers/player_controller')
-const FactionController = () => import('#unique/controllers/faction_controller')
+import { controllers } from '#generated/controllers'
+import { middleware } from '#start/kernel'
 
 router
   .group(() => {
-    router.get('/', [PlayerController, 'index']).as('players.index')
-    router.post('/', [PlayerController, 'search']).as('players.search')
-    router.post(':uuid/views', [PlayerController, 'incrementViews']).as('players.views.increment')
-    router.get(':username', [PlayerController, 'show']).as('players')
-    router.post(':username', [PlayerController, 'create'])
-    router.get(':username/clicker', [PlayerController, 'clicker']).as('players.clicker')
-    router.get(':username/flags', [PlayerController, 'flags']).as('players.flags')
-    router.get(':username/jobs', [PlayerController, 'jobs']).as('players.jobs')
-    router.get(':username/wrapped', [PlayerController, 'wrapped']).as('players.wrapped')
-    router.get(':uuid/views', [PlayerController, 'showViews']).as('players.views')
+    router.get('/', [controllers.unique.Player, 'index']).as('players.index')
+    router.post('/', [controllers.unique.Player, 'search']).as('players.search')
+    router
+      .post(':uuid/views', [controllers.unique.Player, 'incrementViews'])
+      .as('players.views.increment')
+    router.get(':username', [controllers.unique.Player, 'show']).as('players')
+    router.post(':username', [controllers.unique.Player, 'create'])
+    router.get(':username/clicker', [controllers.unique.Player, 'clicker']).as('players.clicker')
+    router.get(':username/flags', [controllers.unique.Player, 'flags']).as('players.flags')
+    router.get(':username/jobs', [controllers.unique.Player, 'jobs']).as('players.jobs')
+    router.get(':username/wrapped', [controllers.unique.Player, 'wrapped']).as('players.wrapped')
+    router.get(':uuid/views', [controllers.unique.Player, 'showViews']).as('players.views')
   })
   .prefix('players')
   .middleware(middleware.auth())
 
 router
   .group(() => {
-    router.get(':name', [FactionController, 'show']).as('factions')
-    router.post(':name', [FactionController, 'create'])
+    router.get(':name', [controllers.unique.Faction, 'show']).as('factions')
+    router.post(':name', [controllers.unique.Faction, 'create'])
   })
   .prefix('factions')
   .middleware(middleware.auth())

@@ -1,12 +1,12 @@
 import router from '@adonisjs/core/services/router'
-import { middleware } from '#start/kernel'
 
-const StatusController = () => import('#status/controllers/status_controller')
+import { controllers } from '#generated/controllers'
+import { middleware } from '#start/kernel'
 
 router
   .group(() => {
-    router.get('/database', [StatusController, 'database']).as('database')
-    router.get('/paladium', [StatusController, 'paladium']).as('paladium')
+    router.get('/database', [controllers.status.Status, 'database']).as('database')
+    router.get('/paladium', [controllers.status.Status, 'paladium']).as('paladium')
   })
   .prefix('status')
   .as('status')

@@ -1,5 +1,5 @@
 import { RuntimeException } from '@adonisjs/core/exceptions'
-import { Secret } from '@adonisjs/core/helpers'
+import { type Secret } from '@adonisjs/core/helpers'
 import type { ApplicationService } from '@adonisjs/core/types'
 import fs from 'node:fs/promises'
 import path from 'node:path'

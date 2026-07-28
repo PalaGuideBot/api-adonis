@@ -1,6 +1,6 @@
 import vine from '@vinejs/vine'
-import { FieldContext } from '@vinejs/vine/types'
-import { InferSchemaType } from 'mongoose'
+import { type FieldContext } from '@vinejs/vine/types'
+import { type InferSchemaType } from 'mongoose'
 
 import { db } from '#core/services/db'
 

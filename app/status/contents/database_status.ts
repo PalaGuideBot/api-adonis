@@ -1,4 +1,4 @@
-import { ConnectionStates } from 'mongoose'
+import { type ConnectionStates } from 'mongoose'
 
 const status: Record<ConnectionStates, string> = {
   0: 'disconnected',

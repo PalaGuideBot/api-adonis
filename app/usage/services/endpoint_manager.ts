@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import cron, { ScheduledTask, TaskOptions } from 'node-cron'
+import cron, { type ScheduledTask, type TaskOptions } from 'node-cron'
 
 import { db } from '#core/services/db'
 

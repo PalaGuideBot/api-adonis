@@ -57,9 +57,10 @@ export default class SyncPlayers extends BaseCommand {
                 data: {
                   date: now,
                   newDate: new Date(),
+                  views: player.data.at(-1)?.views ?? 0,
                   data: {
-                    faction: playerData.profile.faction,
-                    factionRank: playerData.profile.factionRank ?? null,
+                    faction: playerData.profile.faction ?? '',
+                    factionRank: playerData.profile.factionRank ?? '',
                     jobs: {
                       alchemist: {
                         level: getJobLevel(playerData.jobs.alchemist.xp),
@@ -78,9 +79,9 @@ export default class SyncPlayers extends BaseCommand {
                         xp: playerData.jobs.miner.xp,
                       },
                     },
-                    money: playerData.profile.money,
-                    rank: playerData.profile.rank,
-                    timePlayed: playerData.profile.timePlayed,
+                    money: playerData.profile.money ?? 0,
+                    rank: playerData.profile.rank ?? '',
+                    timePlayed: playerData.profile.timePlayed ?? 0,
                     clicker: {
                       rps: playerData.clicker.rps,
                       production: playerData.clicker.production,
@@ -97,7 +98,8 @@ export default class SyncPlayers extends BaseCommand {
                   koth: playerData.ranks.koth ?? player.leaderboard?.koth ?? -1,
                   chorus: playerData.ranks.chorus ?? player.leaderboard?.chorus ?? -1,
                   egghunt: playerData.ranks.egghunt ?? player.leaderboard?.egghunt ?? -1,
-                  // corruption: playerData.ranks.corruption ?? player.leaderboard?.corruption ?? -1,
+                  // Invalid
+                  corruption: -1,
                   clicker: playerData.ranks.clicker ?? player.leaderboard?.clicker ?? -1,
                   job_alchemist:
                     playerData.ranks['jobAlchemist'] ?? player.leaderboard?.job_alchemist ?? -1,
@@ -107,14 +109,16 @@ export default class SyncPlayers extends BaseCommand {
                   trixium: playerData.ranks.trixium ?? player.leaderboard?.trixium ?? -1,
                 },
                 achievements: playerData.achievements,
-                firstSeen: playerData.profile.firstSeen,
+                firstSeen: playerData.profile.firstSeen ?? undefined,
                 retry: {
                   count: 0,
                   disabled: false,
                 },
                 friends: playerData.friends,
-                pet: playerData.pet,
-                mount: playerData.mount,
+                pet: playerData.pet ?? undefined,
+                mount: playerData.mount
+                  ? { ...playerData.mount, name: playerData.mount.name || '' }
+                  : undefined,
               },
             },
           },

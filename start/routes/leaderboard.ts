@@ -1,12 +1,13 @@
-import router from '@adonisjs/core/services/router'
+import { controllers } from '#generated/controllers'
 import { middleware } from '#start/kernel'
-
-const LeaderboardController = () => import('#leaderboard/controllers/leaderboard_controller')
+import router from '@adonisjs/core/services/router'
 
 router
   .group(() => {
-    router.get('/:category', [LeaderboardController, 'showGlobal']).as('global')
-    router.get('/trixium/:category', [LeaderboardController, 'showTrixium']).as('trixium')
+    router.get('/:category', [controllers.leaderboard.Leaderboard, 'showGlobal']).as('global')
+    router
+      .get('/trixium/:category', [controllers.leaderboard.Leaderboard, 'showTrixium'])
+      .as('trixium')
   })
   .prefix('leaderboard')
   .as('leaderboard')

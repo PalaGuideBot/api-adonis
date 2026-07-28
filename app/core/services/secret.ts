@@ -1,4 +1,4 @@
-import { Secret } from '@adonisjs/core/helpers'
+import { type Secret } from '@adonisjs/core/helpers'
 import app from '@adonisjs/core/services/app'
 
 let secret: Map<string, Secret<string>>

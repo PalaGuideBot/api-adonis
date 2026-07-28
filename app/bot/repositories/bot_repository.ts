@@ -1,4 +1,4 @@
-import { Document, InferSchemaType } from 'mongoose'
+import { type Document, type InferSchemaType } from 'mongoose'
 
 import { db } from '#core/services/db'
 

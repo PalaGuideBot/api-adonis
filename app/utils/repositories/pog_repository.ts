@@ -1,9 +1,9 @@
 import { Exception } from '@adonisjs/core/exceptions'
-import { Infer } from '@vinejs/vine/types'
+import { type Infer } from '@vinejs/vine/types'
 
 import { getToolTier, items, pogXp } from '#utils/contents/pogs'
-import { Item } from '#utils/types'
-import { calculatePogValidator } from '#utils/validators/calculate_validator'
+import { type Item } from '#utils/types'
+import { type calculatePogValidator } from '#utils/validators/calculate_validator'
 
 type CalculatePogOptions = Infer<typeof calculatePogValidator>['body']
 

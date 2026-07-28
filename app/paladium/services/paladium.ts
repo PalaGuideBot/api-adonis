@@ -41,7 +41,7 @@ class PaladiumService {
   constructor(private imageService: ImageService) {}
 
   protected client = ky.create({
-    prefixUrl: env.get('PALADIUM_BASE_URL'),
+    prefix: env.get('PALADIUM_BASE_URL'),
     timeout: 10000,
     headers: {
       Authorization: `Bearer ${env.get('PALADIUM_API_KEY')}`,

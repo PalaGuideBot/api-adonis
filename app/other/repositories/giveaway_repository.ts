@@ -162,8 +162,8 @@ class GiveawayRepository {
     }
     return {
       ...giveaway,
-      participants: giveaway.participants.map(
-        (participant) => users.find((user) => user.discordId === participant)!
+      participants: giveaway.participants.map((participant) =>
+        users.find((user) => user.discordId === participant)!
       ),
       winners: giveaway.winners.map((winner) => users.find((user) => user.discordId === winner)!),
     }

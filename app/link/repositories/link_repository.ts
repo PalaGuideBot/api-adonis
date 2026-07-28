@@ -1,5 +1,5 @@
 import { db } from '#core/services/db'
-import { Document, InferSchemaType } from 'mongoose'
+import { type Document, type InferSchemaType } from 'mongoose'
 
 import { customAlphabet } from 'nanoid'
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 8)

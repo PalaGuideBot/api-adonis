@@ -1,4 +1,5 @@
 import router from '@adonisjs/core/services/router'
+
 import docs from '#docs/openapi'
 
 router.get('/docs/docs.json', async ({ response }) => {

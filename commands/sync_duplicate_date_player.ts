@@ -37,11 +37,7 @@ export default class SyncDuplicatePlayerDate extends BaseCommand {
       )
 
       // Récupérer un lot de joueurs
-      const players = await db.players
-        .find()
-        .skip(currentOffset)
-        .limit(this.BATCH_SIZE)
-        .lean()
+      const players = await db.players.find().skip(currentOffset).limit(this.BATCH_SIZE).lean()
 
       const duplicate = []
 
@@ -89,7 +85,7 @@ export default class SyncDuplicatePlayerDate extends BaseCommand {
             totalProcessed += bulkOperations.length
             this.logger.info(`Processed ${bulkOperations.length} players in this batch`)
           } catch (error) {
-            this.logger.error('Error during bulk update operations', error)
+            this.logger.error('Error during bulk update operations', error as any)
             // Ne pas arrêter le processus, continuer avec le prochain lot
           }
         }

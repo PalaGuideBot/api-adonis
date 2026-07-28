@@ -1,4 +1,4 @@
-import { HttpContext } from '@adonisjs/core/http'
+import { type HttpContext } from '@adonisjs/core/http'
 
 import { CURRENT_SEASON, getSeasons } from '#paladium/contents/seasons'
 

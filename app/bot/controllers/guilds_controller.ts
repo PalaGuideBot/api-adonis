@@ -1,5 +1,6 @@
 import { inject } from '@adonisjs/core'
 import { HttpContext } from '@adonisjs/core/http'
+import { errors } from '@vinejs/vine'
 import { DateTime } from 'luxon'
 
 import { BotRepository } from '#bot/repositories/bot_repository'
@@ -29,7 +30,11 @@ export default class GuildsController {
 
       return response.ok({ message: 'Guilds updated' })
     } catch (error) {
-      return response.badRequest(error.messages)
+      if (error instanceof errors.E_VALIDATION_ERROR) {
+        return response.unprocessableEntity(error.messages)
+      }
+
+      return response.badRequest({ message: 'Une erreur inconnue est survenue' })
     }
   }
 }

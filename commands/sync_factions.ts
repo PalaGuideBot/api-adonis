@@ -57,7 +57,7 @@ export default class SyncFactions extends BaseCommand {
                   uuid: member.uuid,
                 })),
                 emblem: factionData.emblem,
-                alliance: factionData.alliance,
+                alliance: factionData.alliance ?? undefined,
                 retry: {
                   count: 0,
                   disabled: false,

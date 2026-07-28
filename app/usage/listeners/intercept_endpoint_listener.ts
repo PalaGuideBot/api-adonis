@@ -1,11 +1,11 @@
 import { ResponseStatus } from '@adonisjs/core/http'
 import app from '@adonisjs/core/services/app'
-import { HttpRequestFinishedPayload } from '@adonisjs/core/types/http'
+import { type HttpRequestFinishedPayload } from '@adonisjs/core/types/http'
 
 import { findSecretKeyByValue } from '#core/services/secret'
 import AuthMiddleware from '#middleware/auth_middleware'
 
-class InterceptEndpoint {
+class InterceptEndpointListener {
   constructor() {}
 
   async handle(payload: HttpRequestFinishedPayload) {
@@ -45,4 +45,4 @@ class InterceptEndpoint {
   }
 }
 
-export { InterceptEndpoint as default }
+export { InterceptEndpointListener as default }
