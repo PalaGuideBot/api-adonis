@@ -58,6 +58,7 @@
   "dependencies": {
     "@adonisjs/core": "^7.3.5",
     "@adonisjs/cors": "^3.0.0",
+    "@humanfs/node": "^0.16.8",
     "@vinejs/vine": "^4.4.0",
     "adonisjs-scheduler": "^2.8.0",
     "bentocache": "^1.6.1",
